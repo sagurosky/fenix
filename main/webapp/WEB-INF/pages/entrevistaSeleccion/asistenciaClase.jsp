@@ -1,0 +1,102 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
+<script type="text/javascript">
+	function enableDisableInasistencia() {
+		if ($("#cantidadInasistenciaAnioPasado").val() != 0) {
+			$("#motivosInasistenciaAnioPasado").removeAttr("disabled");
+		} else {
+			$("#motivosInasistenciaAnioPasado").attr("disabled", "disabled");
+			$("#motivosInasistenciaAnioPasado").val("")
+		}
+		if ($("#cantidadInasistenciaAnioCurso").val() != 0) {
+			$("#motivosInasistenciaAnioCurso").removeAttr("disabled");
+		} else {
+			$("#motivosInasistenciaAnioCurso").attr("disabled", "disabled");
+			$("#motivosInasistenciaAnioCurso").val("")
+		}
+	}
+</script>
+<table cellspacing="3">
+	<tr>
+		<td colspan="3">
+	</tr>
+	<tr>
+		<td valign="top">
+			<p>
+				<label><font color="green">Cantidad de inasistencias año pasado *</font></label>
+				<c:choose>
+					<c:when
+						test="${entrevistaSeleccionDTO.entrevistaSeleccion.cantidadInasistenciaAnioPasado == null}">
+						<input type="text"
+							name="entrevistaSeleccion.cantidadInasistenciaAnioPasado"
+							id="cantidadInasistenciaAnioPasado" class="required digits"
+							value="0" maxlength="3" onblur="enableDisableInasistencia()"
+							size="5" />
+					</c:when>
+					<c:otherwise>
+						<input type="text"
+							name="entrevistaSeleccion.cantidadInasistenciaAnioPasado"
+							id="cantidadInasistenciaAnioPasado" size="5"
+							class="required digits"
+							value="${entrevistaSeleccionDTO.entrevistaSeleccion.cantidadInasistenciaAnioPasado}"
+							maxlength="3" onblur="enableDisableInasistencia()" />
+					</c:otherwise>
+				</c:choose>
+
+			</p>
+		</td>
+		<td valign="top">
+			<p>
+				<label>Motivo de inasistencias año pasado</label>
+				<form:textarea
+					path="entrevistaSeleccion.motivosInasistenciaAnioPasado" rows="3"
+					cols="40" disabled="disabled" id="motivosInasistenciaAnioPasado"
+					onblur="chequearLongitud(this);"
+					onkeypress="chequearLongitud(this);" />
+			</p>
+		</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td valign="top">
+			<p>
+				<font color="green"><label>Cantidad de inasistencias año en curso *</label></font>
+				<c:choose>
+					<c:when
+						test="${entrevistaSeleccionDTO.entrevistaSeleccion.cantidadInasistenciaAnioCurso == null}">
+						<input type="text"
+							name="entrevistaSeleccion.cantidadInasistenciaAnioCurso"
+							id="cantidadInasistenciaAnioCurso" class="required digits"
+							value="0" maxlength="3" onblur="enableDisableInasistencia()"
+							size="5" />
+					</c:when>
+					<c:otherwise>
+						<input type="text"
+							name="entrevistaSeleccion.cantidadInasistenciaAnioCurso"
+							id="cantidadInasistenciaAnioCurso" class="required digits"
+							onblur="enableDisableInasistencia()"
+							value="${entrevistaSeleccionDTO.entrevistaSeleccion.cantidadInasistenciaAnioCurso}"
+							size="5" />
+					</c:otherwise>
+				</c:choose>
+			</p>
+		</td>
+		<td valign="top">
+			<p>
+				<label>Motivo de inasistencias año en curso</label>
+				<form:textarea
+					path="entrevistaSeleccion.motivosInasistenciaAnioCurso" rows="3"
+					disabled="true" cols="40" id="motivosInasistenciaAnioCurso"
+					onblur="chequearLongitud(this);"
+					onkeypress="chequearLongitud(this);" />
+			</p>
+		</td>
+		<td></td>
+	</tr>
+
+</table>

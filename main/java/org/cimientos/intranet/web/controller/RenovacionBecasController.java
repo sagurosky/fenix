@@ -1,0 +1,381 @@
+package org.cimientos.intranet.web.controller;
+
+import java.io.IOException;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang.StringUtils;
+import org.cimientos.intranet.dto.BecaDTO;
+import org.cimientos.intranet.modelo.Beca;
+import org.cimientos.intranet.modelo.EstadoBeca;
+import org.cimientos.intranet.modelo.informe.EstadoInforme;
+import org.cimientos.intranet.modelo.perfil.PerfilAlumno;
+import org.cimientos.intranet.modelo.perfilPadrino.PerfilPadrino;
+import org.cimientos.intranet.modelo.perfilPadrino.TipoPadrino;
+import org.cimientos.intranet.servicio.AlumnoPanelEASrv;
+import org.cimientos.intranet.servicio.AlumnoSrv;
+import org.cimientos.intranet.servicio.BecaSvr;
+import org.cimientos.intranet.servicio.ZonaCimientosSrv;
+import org.cimientos.intranet.utils.Formateador;
+import org.cimientos.intranet.utils.GeneradorInformesAutomaticos;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+/**
+ * @author plabaronnie
+ * Clase que se utiliza para  hacer la redireccion (mapeo) a las vistas.
+ * Extiende de BaseController para incluir el Template
+ */
+@Controller
+@RequestMapping("/renovacionBecas/*")
+public class RenovacionBecasController extends BaseController{
+	
+	@Autowired
+	private AlumnoSrv srvAlumno;
+	
+	@Autowired
+	public BecaSvr srvBeca;
+	
+	@Autowired
+	public ZonaCimientosSrv srvZona;
+	
+	@Autowired
+	public GeneradorInformesAutomaticos generadorInformes;
+	
+	@Autowired
+	private AlumnoPanelEASrv alumnoPanelEaSrv;
+
+	
+	/**
+	 * Recupera la lista de todos las Becas persistidos en la DB.
+	 * 
+	 * @return la vista la vista con las 2 tablas de becas y de alumnos
+	 */
+	@RequestMapping("/renovacionBecas/renovacionBecasPasoIView.do")
+	public ModelAndView verAsignacionBecasPasoI(){
+		Map<String, Object> resul = new HashMap<String, Object>();
+		List<Beca> becas = srvBeca.obtenerBecasCicloActualPorFecha(new Date());
+		List<PerfilAlumno> filtrados = new ArrayList<PerfilAlumno>();
+		List<Beca> result = new ArrayList<Beca>();
+		for (Beca beca : becas) {
+			filtrados = srvAlumno.obtenerAlumnosMismaBecaCicloAnterior(beca);
+			if(filtrados.size() > 0)
+				result.add(beca);
+		}
+		resul.put("becas", result);
+		resul.put("estadosBeca", EstadoBeca.getListaEstados());
+		resul.put("tiposPadrino", TipoPadrino.getListaTipos());
+		resul.put("renovacionPasoII", false);
+		return forward("renovacionBecas/renovacionBecasPasoI", resul);
+	}
+	
+	/**
+	 * Asigna los alumnos seleccionados a la beca seleccionada y actualiza el contador de asignaciones en la beca elegida.
+	 * 
+	 * @return la vista de la lista de Becas persistidas
+	 */
+	@RequestMapping("/renovacionBecas/renovacionBecas.do")
+	public ModelAndView renovarBecas(@RequestParam(required=false,value="idBeca") Long idBeca,
+			@RequestParam(required=false,value="alumnosSeleccionados") String alumnosSeleccionados,
+			@RequestParam(required=false,value="paso") Long paso){
+		Map<String, Object> resul = new HashMap<String, Object>();
+		Connection cn = null;
+        CallableStatement cl = null;
+        ResultSet rs = null;
+        String call=null;
+        Long idBeca2=0L;
+		if(idBeca != null && StringUtils.isNotBlank( alumnosSeleccionados )){
+			
+			Beca becaSeleccionada = srvBeca.obtenerPorId(idBeca);
+			List<Long> candidatosId = Formateador.toListOfLongs( alumnosSeleccionados);
+			if(becaTieneCupo(becaSeleccionada, candidatosId)){
+				List<PerfilAlumno> becados = srvAlumno.obtenerAlumnosPorIds(candidatosId);
+				for (PerfilAlumno perfilAlumno : becados){
+					
+					
+		        	try{
+		        		call = "{CALL SP_BuscarBecaParaBajar(?)}";
+		                cn = Conexion.getConexion();
+		                cl = cn.prepareCall(call);
+		                cl.setLong(1, idBeca);            
+		                rs = cl.executeQuery();		                
+		                while (rs.next()) {
+		                	 idBeca2= rs.getLong(3);            	                        	
+		                }
+		        		call = "{CALL SP_BajaBajaBeca(?)}";
+			            cn = Conexion.getConexion();
+			            cl = cn.prepareCall(call);                          
+			            cl.setLong(1, idBeca2); // numero de fp			             
+			            rs = cl.executeQuery();
+			            // cierro conexion
+			            call = "{CALL SP_ModificarBecaBajaBecado(?)}";
+			            //call ="insert into baja_becas values (?,CURDATE( ))";				            
+		        		cn = Conexion.getConexion();
+			            cl = cn.prepareCall(call);                          
+			            cl.setLong(1, idBeca);			             
+			            rs = cl.executeQuery();
+			            Conexion.cerrarCall(cl);
+				        Conexion.cerrarConexion(cn);
+			        }
+			        catch (SQLException e) {
+				        e.printStackTrace();
+				        Conexion.cerrarCall(cl);
+				        Conexion.cerrarConexion(cn);
+			        }			        
+					if(!perfilAlumno.getBeca().getPadrino().equals(becaSeleccionada.getPadrino())){
+						PerfilPadrino padrino = becaSeleccionada.getPadrino();
+						generadorInformes.generarInformeFP(padrino, becaSeleccionada, perfilAlumno, EstadoInforme.PENDIENTE_POR_RENOVACION, true, null);
+					}
+				}
+				srvBeca.renovarAlumnosBeca(becaSeleccionada, becados);
+				try{
+					call = "{CALL SP_ModificarBecaBajaBecado(?)}";
+		            //call ="insert into baja_becas values (?,CURDATE( ))";				            
+	        		cn = Conexion.getConexion();
+		            cl = cn.prepareCall(call);                          
+		            cl.setLong(1, idBeca);			             
+		            rs = cl.executeQuery();
+		            Conexion.cerrarCall(cl);
+			        Conexion.cerrarConexion(cn);
+				}
+		        catch (SQLException e) {
+			        e.printStackTrace();
+			        Conexion.cerrarCall(cl);
+			        Conexion.cerrarConexion(cn);
+		        }
+				
+				alumnoPanelEaSrv.activarAlumnos(becados);
+				resul.put("mensaje", "Se han asignado " + becados.size() + " alumnos a la beca seleccionada.");
+			}else{
+				resul.put("error", "La cantidad de candidatos seleccionados excede el máximo disponible de la beca.");
+			}
+			
+		}else {
+			resul.put("error", "Debe seleccionar 1 beca y al menos 1 alumno para realizar la asignación.");
+		}
+		resul.put("estadosBeca", EstadoBeca.getListaEstados());
+		resul.put("tiposPadrino", TipoPadrino.getListaTipos());
+		List<Beca> becas = srvBeca.obtenerBecasCicloActualPorFecha(new Date());
+		List<PerfilAlumno> filtrados = new ArrayList<PerfilAlumno>();
+		List<Beca> result = new ArrayList<Beca>();
+		if(paso.equals(1L)){			
+			for (Beca beca : becas) {
+				filtrados = srvAlumno.obtenerAlumnosMismaBecaCicloAnterior(beca);
+				if(filtrados.size() > 0)
+					result.add(beca);
+			}
+			resul.put("becas", result);
+			resul.put("renovacionPasoII", false);
+			return forward("renovacionBecas/renovacionBecasPasoI", resul);
+		}
+		for (Beca beca : becas) {
+			filtrados = srvAlumno.obtenerAlumnosMismaZonaBeca(beca);
+			if(filtrados.size() > 0)
+				result.add(beca);
+		}
+		resul.put("becas", result);
+		resul.put("renovacionPasoII", true);
+		return forward("renovacionBecas/renovacionBecasPasoII", resul);
+		
+	}
+
+	/**
+	 * Valida que la cantidad de alumnos seleccionados no exceda el cupo de la beca.
+	 * Suma la cantidad de alumnos asignados a la cantidad de alumnos a asignar y esta
+	 * debe ser menor o igual que el cupo total de la beca.
+	 * 
+	 * @param becaSeleccionada
+	 * @param candidatosId
+	 * @return
+	 */
+	private boolean becaTieneCupo(Beca becaSeleccionada,
+			List<Long> candidatosId) {
+		int cantAsignados = becaSeleccionada.getBecados().size() + candidatosId.size();
+		return cantAsignados <= becaSeleccionada.getCantidad();
+	}
+	
+	/**
+	 * Recupera la lista de todos las Becas persistidos en la DB.
+	 * 
+	 * @return la vista la vista con las 2 tablas de becas y de alumnos
+	 */
+	@RequestMapping("/renovacionBecas/renovacionBecasPasoIIView.do")
+	public ModelAndView verAsignacionBecasPasoII(){
+		Map<String, Object> resul = new HashMap<String, Object>();
+		List<Beca> becas = srvBeca.obtenerBecasCicloActualPorFecha(new Date());
+		List<PerfilAlumno> filtrados = new ArrayList<PerfilAlumno>();
+		List<Beca> result = new ArrayList<Beca>();
+		for (Beca beca : becas) {
+			filtrados = srvAlumno.obtenerAlumnosMismaZonaBeca(beca);
+			if(filtrados.size() > 0)
+				result.add(beca);
+		}
+		resul.put("becas", result);
+		resul.put("estadosBeca", EstadoBeca.getListaEstados());
+		resul.put("tiposPadrino", TipoPadrino.getListaTipos());
+		resul.put("renovacionPasoII", true);
+		return forward("renovacionBecas/renovacionBecasPasoII", resul);
+	}
+	/**
+	 * Busca alumnos que tengan la zona de la beca seleccionada.
+	 * 
+	 * @param request
+	 * @param response
+	 * @param becaId
+	 * @throws JSONException
+	 */
+	@RequestMapping("/renovacionBecas/buscarAlumnos.do")
+	public void buscarAlumnos(HttpServletResponse response,
+			@RequestParam(required=false, value="becaId") Long becaId,
+			@RequestParam(required=false, value="paso") Integer paso
+			) throws JSONException {
+
+			JSONObject resp = new JSONObject();
+			
+			try {
+	
+				JSONArray alumnos = new JSONArray();
+				List<PerfilAlumno> filtrados = new ArrayList<PerfilAlumno>();
+				if(becaId != null && !becaId.equals(0L)){	
+					Beca becaSeleccionada = srvBeca.obtenerPorId(becaId);	
+					
+					if(paso.equals(1)){
+						filtrados = srvAlumno.obtenerAlumnosMismaBecaCicloAnterior(becaSeleccionada);
+					}else if(paso.equals(2)){
+						filtrados = srvAlumno.obtenerAlumnosPorZonaParaRenovacionBecasPasoII(becaSeleccionada.getZona());
+					}
+	
+				}else {
+					if(paso.equals(1)){
+						filtrados = srvAlumno.obtenerAlumnosPorZonaParaRenovacionBecasPasoII(null);
+					}else if(paso.equals(2)){
+						filtrados = srvAlumno.obtenerAlumnosPorZonaParaRenovacionBecasPasoII(null);
+					}
+				}
+				for (PerfilAlumno alumno : filtrados) {
+					JSONArray alumnoObj = new JSONArray();
+					alumnoObj.put(alumno.getId());
+					alumnoObj.put(alumno.getEscuela().getLocalidad().getZona().getNombre());
+					alumnoObj.put(alumno.getDatosPersonales().getApellido() + ", " + alumno.getDatosPersonales().getNombre() );
+					if(paso.equals(2)){						
+						alumnoObj.put(alumno.getEscuela().getNombre());
+						alumnoObj.put(alumno.getAnioEscolar().getValor());
+					}
+					alumnoObj.put(alumno.getEstadoRenovacion()!= null ? alumno.getEstadoRenovacion().getValor() :"" );
+					alumnos.put(alumnoObj);
+				}
+				
+				resp.put("aaData", alumnos);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			response.setContentType("application/json");
+			response.setHeader("Cache-Control", "no-cache");
+			response.setCharacterEncoding("ISO-8859-1");
+			try {
+				response.getWriter().write(resp.toString());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+		}
+	
+	
+	@RequestMapping("/renovacionBecas/renovacionAutomaticaView.do")
+	public ModelAndView renovacionAutomaticaView(){
+		Map<String, Object> resul = new HashMap<String, Object>();
+		buscarBecasParaRenovar(resul);
+		return forward("renovacionBecas/renovacionAutomatica", resul);
+	}
+
+	private void buscarBecasParaRenovar(Map<String, Object> resul) {
+		int filtrados = 0;
+		List<Beca> becas = srvBeca.obtenerBecasCicloActualPorFecha(new Date());
+		List<BecaDTO> becasParaRenovar = new ArrayList<BecaDTO>();
+		BecaDTO becaDTO = null;
+		for (Beca beca : becas) {
+			filtrados = srvAlumno.cantidadAlumnosMismaBecaCicloAnterior(beca.getZona().getId(), beca.getPadrino().getId(), beca.getCiclo().getOrden());
+			if((beca.getCantidad() - beca.getCantidadAsignada()) >= filtrados && filtrados > 0){
+				becaDTO = new BecaDTO(beca,filtrados);
+				becasParaRenovar.add(becaDTO);
+			}
+		}
+		resul.put("becas", becasParaRenovar);
+		resul.put("estadosBeca", EstadoBeca.getListaEstados());
+		resul.put("tiposPadrino", TipoPadrino.getListaTipos());
+	}
+	
+	@RequestMapping("/renovacionBecas/renovacionAutomatica.do")
+	public ModelAndView renovacionAutomatica(@RequestParam(required=false,value="becasSeleccionadas") String becasSeleccionadas){
+		Map<String, Object> resul = new HashMap<String, Object>();
+		List<Long> becasIds = Formateador.toListOfLongs(becasSeleccionadas);
+		Beca beca = null;
+		int totalBecados = 0;
+		for (Long becaId : becasIds) {			
+			beca = srvBeca.obtenerPorId(becaId);			
+			List<PerfilAlumno> becados = srvAlumno.alumnosMismaBecaCicloAnterior(beca);
+			srvBeca.renovarAlumnosBeca(beca, becados);
+			alumnoPanelEaSrv.activarAlumnos(becados);
+			totalBecados = totalBecados + becados.size();  
+		}		
+		resul.put("mensaje", "Se han asignado " + totalBecados + " alumnos a la/s beca/s seleccionada.");		
+		
+		buscarBecasParaRenovar(resul);
+		return forward("renovacionBecas/renovacionAutomatica", resul);
+	}
+
+
+	
+	@RequestMapping("/renovacionBecas/buscarAlumnosAutomatico.do")
+	public void buscarAlumnosAutomatico(HttpServletResponse response,
+			@RequestParam(required=false, value="becaId") Long becaId) throws JSONException {
+
+			JSONObject resp = new JSONObject();			
+			try {	
+				JSONArray alumnos = new JSONArray();
+				List<PerfilAlumno> filtrados = new ArrayList<PerfilAlumno>();	
+				if(becaId != null){					
+					Beca becaSeleccionada = srvBeca.obtenerPorId(becaId);						
+					filtrados = srvAlumno.alumnosMismaBecaCicloAnterior(becaSeleccionada);
+					
+					for (PerfilAlumno alumno : filtrados) {
+						JSONArray alumnoObj = new JSONArray();
+						alumnoObj.put(alumno.getDatosPersonales().getApellido() + ", " + alumno.getDatosPersonales().getNombre() );
+						alumnoObj.put(alumno.getEscuela().getNombre());
+						alumnoObj.put(alumno.getAnioEscolar().getValor());
+						alumnoObj.put(alumno.getEstadoRenovacion()!= null ? alumno.getEstadoRenovacion().getValor() :"" );
+						alumnos.put(alumnoObj);
+					}
+				}
+				
+				resp.put("aaData", alumnos);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			response.setContentType("application/json");
+			response.setHeader("Cache-Control", "no-cache");
+			response.setCharacterEncoding("ISO-8859-1");
+			try {
+				response.getWriter().write(resp.toString());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+		}
+	
+}

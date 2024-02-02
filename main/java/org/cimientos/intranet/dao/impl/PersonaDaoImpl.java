@@ -1,0 +1,134 @@
+package org.cimientos.intranet.dao.impl;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.cimientos.intranet.dao.PersonaDao;
+import org.cimientos.intranet.dao.base.SpringHibernateDao;
+import org.cimientos.intranet.modelo.perfil.PerfilAlumno;
+import org.cimientos.intranet.modelo.persona.Persona;
+import org.hibernate.Criteria;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.googlecode.ehcache.annotations.Cacheable;
+
+
+@Repository
+public class PersonaDaoImpl extends SpringHibernateDao<Persona> implements PersonaDao {
+	
+	@Autowired
+	public PersonaDaoImpl(SessionFactory sessionFactory) {
+		super(sessionFactory);
+		
+	}
+
+	@Override
+	@Cacheable(cacheName = "org.cimientos.intranet.modelo.persona.Persona")
+	protected Class<Persona> getObjetoManejado() 
+	{
+		return Persona.class;
+	}
+	
+	
+	
+	@Override
+	public Persona buscarPorCuil(String cuil) {
+		Criteria criteria = getSession().createCriteria(getObjetoManejado());
+		criteria.add(Restrictions.eq("cuilCuit", cuil));
+
+		final List<Persona> personas = criteria.list();
+
+		if (personas != null && !personas.isEmpty()){
+			return personas.get(0);
+		} else {
+			return null;
+
+		}
+	}
+	
+	
+	@Override
+	public Persona buscarPorIgualCuil(String cuil, Long id) {
+		final DetachedCriteria criteria = DetachedCriteria.forClass(Persona.class);
+		criteria.add(Restrictions.eq("cuilCuit", cuil));
+		if(id != null){
+			criteria.add(Restrictions.ne("id", Long.valueOf(id)));
+		}
+
+		final List<Persona> personas = getHibernateTemplate().findByCriteria(criteria);
+
+		if (personas != null && !personas.isEmpty()){
+			return personas.get(0);
+		} else {
+			return null;
+
+		}
+	}
+
+	@Override
+	public List<Persona> obtenerParaUsuarios(ArrayList<Long> idsPersona) {
+		final DetachedCriteria criteria = DetachedCriteria.forClass(Persona.class);
+		criteria.add(Restrictions.or(Restrictions.isNotNull("perfilRR"), 
+				Restrictions.or(Restrictions.isNotNull("perfilEA"), Restrictions.isNotNull("perfilStaff"))));
+		criteria.add(Restrictions.not(Restrictions.in("id", idsPersona)));
+		final List<Persona> personas = getHibernateTemplate().findByCriteria(criteria);
+		return personas;
+	}
+
+	@Override
+	public List<Persona> buscarNombreApellido(String nombre) {
+		final Criteria criteria = getSession().createCriteria(Persona.class);
+		criteria.add(Restrictions.and(Restrictions.isNull("credenciales"), Restrictions.or(Restrictions.like("nombre", "%"+nombre+"%"),Restrictions.like("apellido", "%"+nombre+"%"))));
+		criteria.setMaxResults(15);
+		final List<Persona> personas = criteria.list();
+		return personas;
+	}
+
+	@Override
+	//@Cacheable(cacheName = "org.cimientos.intranet.modelo.persona.Persona")
+	public Persona buscarPorDNI(Integer dni) {
+		final Criteria criteria = getSession().createCriteria(getObjetoManejado());
+		criteria.add(Restrictions.eq("dni", dni));
+
+		final List<Persona> personas = criteria.list();
+
+		if (personas != null && !personas.isEmpty()){
+			//System.out.println("estoy dentro de PersonaDaoImpl. Encontré el dni "+dni);
+			return personas.get(0);
+		} else {
+			//System.out.println("estoy dentro de PersonaDaoImpl. NO Encontré el dni "+dni);
+			return null;
+
+		}
+	}
+	
+	@Override
+	public Persona buscarPorPerfilAlumno(PerfilAlumno perfilAlumno) {
+		Criteria criteria = getSession().createCriteria(getObjetoManejado());
+		criteria.add(Restrictions.eq("perfilAlumno", perfilAlumno));
+
+		final List<Persona> personas = criteria.list();
+
+		if (personas != null && !personas.isEmpty()){
+			return personas.get(0);
+		} else {
+			return null;
+
+		}
+	}
+
+	@Override
+	public List<Persona> buscarCorrectoraPorNombre(String nombre) {
+		final Criteria criteria = getSession().createCriteria(Persona.class);
+		criteria.createAlias("credenciales", "credenciales");
+		criteria.add(Restrictions.or(Restrictions.like("nombre", "%"+nombre+"%"),Restrictions.like("apellido", "%"+nombre+"%")));
+		criteria.add(Restrictions.eq("perfilCorrector", true));
+		criteria.add(Restrictions.eq("credenciales.activo", true));
+		final List<Persona> personas = criteria.list();
+		return personas;
+	}
+}

@@ -1,0 +1,952 @@
+package org.cimientos.intranet.dto;
+
+import com.cimientos.intranet.enumerativos.entrevista.EvaluacionCobroBeca;
+import com.cimientos.intranet.enumerativos.entrevista.EvaluacionIncorporacion;
+import com.cimientos.intranet.enumerativos.entrevista.EvaluacionRenovacionMergeada;
+import com.cimientos.intranet.enumerativos.entrevista.MotivoAusencia;
+import com.cimientos.intranet.enumerativos.entrevista.MotivoIncorporacionPendiente;
+import com.cimientos.intranet.enumerativos.entrevista.TipoContacto;
+
+
+
+/**
+ * @author plabaronnie
+ *
+ */
+public class ExportacionEntrevistaDTO {
+
+
+	private Long idAlumno;	
+	private String tipoEntrevista;
+	private String formaEntrevista;
+	private String zonaCimientos;
+	private String ea;
+	private String responsableRegional;
+	private String apellidoAlumno;
+	private String nombreAlumno;
+	private String tipoDocumentoAlumno;
+	private Integer numeroDocumentoAlumno;
+	private Integer edad;
+	private String sexo;
+	private String cicloLectivo;	
+	private String incorporacion;
+	private String motivoIncorporacionPendiente;
+	private String otroMotivoPendiente;
+	private String motivoNoIncorporacion;
+	private String observacionesNoIncorporacion;
+	private String situacionEscolarDiciembre;
+	private String situacionRenovacionDiciembre;
+	private String situacionEscolar;	
+	private String situacionRenovacion;
+	private String motivoPendiente;
+	private String otroMotivo;
+	private String motivoNoRenovacion;
+	private String realizoEntrevista;
+	private String tipoContacto;
+	private String observacionesMateriasExamenes;
+	private String escolaridadCompromisoAnterior;	
+	private String propositoAnioComienzaList;	
+	private String periodoEntrevista;
+	private String estadoAlumno;	
+	private String fechaAltaBeca;
+	private String fechaIncorporacionPBE;
+	private String fechaEntrevista;
+	private String fechaCargaEntrevista;
+	private String entrevistaReprogramada;
+	private String lugarEntrevista;
+	private String participoBecado;
+	private String motivoAusenciaBecado;
+	private String otroMotivoAusenciaBecado;
+	private String participoRA;
+	private String motivoAusenciaRA;
+	private String otroMotivoAusenciaRA;
+	private String escuela;	
+	private String anioEscolar;
+	private String anioAdicional;
+	private String materiasFechasDiciembre;
+	private String materiasFechasFebreroMarzo;
+	private String cantidadInasistencias;
+	private String motivoInasistencias;
+	private String materialCompleto;
+	private String rendicionGastos;
+	private String detalleGastos;	
+	private String evaluacionPropositoAnual;
+	private String resultadoAnioEscolar;
+	private String cambioEscuelaProximoAnio;	
+	private String proyeccionAnioProximoFinalizacionPBE;
+	private String fechaEntrevistaFebreroMarzo;
+	private String horaEntrevistaFebreroMarzo;
+	private String lugarEntrevistaFebreroMarzo;
+	private String evolucionMesAnterior;
+	private String logros;
+	private String dificultades;	
+	private String proposito;
+	private String contenidosAbordados;
+	private String compromisoRAEscolaridad;
+	private String recomendacionEstrategiaComplementaria;
+	private String situacionCrisis;
+	private String expectativasRA;
+	private String destinoDineroBeca;
+	private String fechaProximaEntrevista;
+	private String horaProximaEntrevista;
+	private String lugarProximaEntrevista;	
+	private String evaluacionCobroBeca;
+	private String comentariosRevision;
+	private String estadoPago;
+	private String motivoSuspension;
+	private String motivoCesacion;
+	private String observacionesGrales;	
+	private String previas;
+	private String previasCuales;
+	private String padrino;
+	private String tipoPadrino;
+	private String quienCargoEntrevista;
+	private String estadoEntrevista;	
+	private String otroTipoContacto;
+	private String otroMotivoNoIncorporacion;	
+	private Long idEntrevista;
+	private Long idTipoEntrevista;
+	/* private String nroCtesPlataformaContable;
+	
+	
+
+	public String getNroCtesPlataformaContable() {
+		return nroCtesPlataformaContable;
+	}
+
+	public void setNroCtesPlataformaContable(String nroCtesPlataformaContable) {
+		this.nroCtesPlataformaContable=nroCtesPlataformaContable;
+	}
+	*/
+	
+	public Long getIdAlumno() {
+		return idAlumno;
+	}
+
+	public void setIdAlumno(Long idAlumno) {
+		this.idAlumno = idAlumno;
+	}
+
+
+	public String getTipoEntrevista() {
+		return tipoEntrevista;
+	}
+
+	public void setTipoEntrevista(String tipoEntrevista) {
+		this.tipoEntrevista = tipoEntrevista;
+	}
+
+	public String getFormaEntrevista() {
+		return formaEntrevista;
+	}
+
+	public void setFormaEntrevista(String formaEntrevista) {
+		this.formaEntrevista = formaEntrevista;
+	}
+
+	public String getZonaCimientos() {
+		return zonaCimientos;
+	}
+
+	public void setZonaCimientos(String zonaCimientos) {
+		this.zonaCimientos = zonaCimientos;
+	}
+
+	public String getEa() {
+		return ea;
+	}
+
+	public void setEa(String ea) {
+		this.ea = ea;
+	}
+
+	public String getResponsableRegional() {
+		return responsableRegional;
+	}
+
+	public void setResponsableRegional(String responsableRegional) {
+		this.responsableRegional = responsableRegional;
+	}
+
+	public String getApellidoAlumno() {
+		return apellidoAlumno;
+	}
+
+	public void setApellidoAlumno(String apellidoAlumno) {
+		this.apellidoAlumno = apellidoAlumno;
+	}
+
+	public String getNombreAlumno() {
+		return nombreAlumno;
+	}
+
+	public void setNombreAlumno(String nombreAlumno) {
+		this.nombreAlumno = nombreAlumno;
+	}
+
+	public String getTipoDocumentoAlumno() {
+		return tipoDocumentoAlumno;
+	}
+
+	public void setTipoDocumentoAlumno(String tipoDocumentoAlumno) {
+		this.tipoDocumentoAlumno = tipoDocumentoAlumno;
+	}
+
+	public Integer getNumeroDocumentoAlumno() {
+		return numeroDocumentoAlumno;
+	}
+
+	public void setNumeroDocumentoAlumno(Integer numeroDocumentoAlumno) {
+		this.numeroDocumentoAlumno = numeroDocumentoAlumno;
+	}
+
+	public Integer getEdad() {
+		return edad;
+	}
+
+	public void setEdad(Integer edad) {
+		this.edad = edad;
+	}
+
+	public String getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
+	}
+
+	public String getCicloLectivo() {
+		return cicloLectivo;
+	}
+
+	public void setCicloLectivo(String cicloLectivo) {
+		this.cicloLectivo = cicloLectivo;
+	}
+
+	public String getIncorporacion() {
+		return incorporacion;
+	}
+
+	public void setIncorporacion(String incorporacion) {
+		this.incorporacion = incorporacion;
+	}
+
+	public String getMotivoNoIncorporacion() {
+		return motivoNoIncorporacion;
+	}
+
+	public void setMotivoNoIncorporacion(String motivoNoIncorporacion) {
+		this.motivoNoIncorporacion = motivoNoIncorporacion;
+	}
+
+	public String getObservacionesNoIncorporacion() {
+		return observacionesNoIncorporacion;
+	}
+
+	public void setObservacionesNoIncorporacion(String observacionesNoIncorporacion) {
+		this.observacionesNoIncorporacion = observacionesNoIncorporacion;
+	}
+
+	public String getSituacionEscolarDiciembre() {
+		return situacionEscolarDiciembre;
+	}
+
+	public void setSituacionEscolarDiciembre(String situacionEscolarDiciembre) {
+		this.situacionEscolarDiciembre = situacionEscolarDiciembre;
+	}
+
+	public String getSituacionRenovacionDiciembre() {
+		return situacionRenovacionDiciembre;
+	}
+
+	public void setSituacionRenovacionDiciembre(String situacionRenovacionDiciembre) {
+		this.situacionRenovacionDiciembre = situacionRenovacionDiciembre;
+	}
+
+	public String getSituacionEscolar() {
+		return situacionEscolar;
+	}
+
+	public void setSituacionEscolar(String situacionEscolar) {
+		this.situacionEscolar = situacionEscolar;
+	}
+
+	public String getSituacionRenovacion() {
+		return situacionRenovacion;
+	}
+
+	public void setSituacionRenovacion(String situacionRenovacion) {
+		this.situacionRenovacion = situacionRenovacion;
+	}
+
+	public String getMotivoPendiente() {
+		return motivoPendiente;
+	}
+
+	public void setMotivoPendiente(String motivoPendiente) {
+		this.motivoPendiente = motivoPendiente;
+	}
+
+	public String getOtroMotivo() {
+		return otroMotivo;
+	}
+
+	public void setOtroMotivo(String otroMotivo) {
+		this.otroMotivo = otroMotivo;
+	}
+
+	public String getMotivoNoRenovacion() {
+		return motivoNoRenovacion;
+	}
+
+	public void setMotivoNoRenovacion(String motivoNoRenovacion) {
+		this.motivoNoRenovacion = motivoNoRenovacion;
+	}
+
+	public String getRealizoEntrevista() {
+		return realizoEntrevista;
+	}
+
+	public void setRealizoEntrevista(String realizoEntrevista) {
+		this.realizoEntrevista = realizoEntrevista;
+	}
+
+	public String getTipoContacto() {
+		return tipoContacto;
+	}
+
+	public void setTipoContacto(String tipoContacto) {
+		this.tipoContacto = tipoContacto;
+	}
+
+	public String getObservacionesMateriasExamenes() {
+		return observacionesMateriasExamenes;
+	}
+
+	public void setObservacionesMateriasExamenes(
+			String observacionesMateriasExamenes) {
+		this.observacionesMateriasExamenes = observacionesMateriasExamenes;
+	}
+
+	public String getEscolaridadCompromisoAnterior() {
+		return escolaridadCompromisoAnterior;
+	}
+
+	public void setEscolaridadCompromisoAnterior(
+			String escolaridadCompromisoAnterior) {
+		this.escolaridadCompromisoAnterior = escolaridadCompromisoAnterior;
+	}
+
+	public String getPropositoAnioComienzaList() {
+		return propositoAnioComienzaList;
+	}
+
+	public void setPropositoAnioComienzaList(String propositoAnioComienzaList) {
+		this.propositoAnioComienzaList = propositoAnioComienzaList;
+	}
+
+	public String getPeriodoEntrevista() {
+		return periodoEntrevista;
+	}
+
+	public void setPeriodoEntrevista(String periodoEntrevista) {
+		this.periodoEntrevista = periodoEntrevista;
+	}
+
+	public String getEstadoAlumno() {
+		return estadoAlumno;
+	}
+
+	public void setEstadoAlumno(String estadoAlumno) {
+		this.estadoAlumno = estadoAlumno;
+	}
+
+	public String getFechaAltaBeca() {
+		return fechaAltaBeca;
+	}
+
+	public void setFechaAltaBeca(String fechaAltaBeca) {
+		this.fechaAltaBeca = fechaAltaBeca;
+	}
+
+	public String getFechaIncorporacionPBE() {
+		return fechaIncorporacionPBE;
+	}
+
+	public void setFechaIncorporacionPBE(String fechaIncorporacionPBE) {
+		this.fechaIncorporacionPBE = fechaIncorporacionPBE;
+	}
+
+	public String getFechaEntrevista() {
+		return fechaEntrevista;
+	}
+
+	public void setFechaEntrevista(String fechaEntrevista) {
+		this.fechaEntrevista = fechaEntrevista;
+	}
+
+	public String getFechaCargaEntrevista() {
+		return fechaCargaEntrevista;
+	}
+
+	public void setFechaCargaEntrevista(String fechaCargaEntrevista) {
+		this.fechaCargaEntrevista = fechaCargaEntrevista;
+	}
+
+	public String getEntrevistaReprogramada() {
+		return entrevistaReprogramada;
+	}
+
+	public void setEntrevistaReprogramada(String entrevistaReprogramada) {
+		this.entrevistaReprogramada = entrevistaReprogramada;
+	}
+
+	public String getLugarEntrevista() {
+		return lugarEntrevista;
+	}
+
+	public void setLugarEntrevista(String lugarEntrevista) {
+		this.lugarEntrevista = lugarEntrevista;
+	}
+
+	public String getParticipoBecado() {
+		return participoBecado;
+	}
+
+	public void setParticipoBecado(String participoBecado) {
+		this.participoBecado = participoBecado;
+	}
+
+	public String getMotivoAusenciaBecado() {
+		return motivoAusenciaBecado;
+	}
+
+	public void setMotivoAusenciaBecado(String motivoAusenciaBecado) {
+		this.motivoAusenciaBecado = motivoAusenciaBecado;
+	}
+
+	public String getOtroMotivoAusenciaBecado() {
+		return otroMotivoAusenciaBecado;
+	}
+
+	public void setOtroMotivoAusenciaBecado(String otroMotivoAusenciaBecado) {
+		this.otroMotivoAusenciaBecado = otroMotivoAusenciaBecado;
+	}
+
+	public String getParticipoRA() {
+		return participoRA;
+	}
+
+	public void setParticipoRA(String participoRA) {
+		this.participoRA = participoRA;
+	}
+
+	public String getMotivoAusenciaRA() {
+		return motivoAusenciaRA;
+	}
+
+	public void setMotivoAusenciaRA(String motivoAusenciaRA) {
+		this.motivoAusenciaRA = motivoAusenciaRA;
+	}
+
+	public String getOtroMotivoAusenciaRA() {
+		return otroMotivoAusenciaRA;
+	}
+
+	public void setOtroMotivoAusenciaRA(String otroMotivoAusenciaRA) {
+		this.otroMotivoAusenciaRA = otroMotivoAusenciaRA;
+	}
+
+	public String getEscuela() {
+		return escuela;
+	}
+
+	public void setEscuela(String escuela) {
+		this.escuela = escuela;
+	}
+
+	public String getAnioEscolar() {
+		return anioEscolar;
+	}
+
+	public void setAnioEscolar(String anioEscolar) {
+		this.anioEscolar = anioEscolar;
+	}
+
+	public String getMateriasFechasDiciembre() {
+		return materiasFechasDiciembre;
+	}
+
+	public void setMateriasFechasDiciembre(String materiasFechasDiciembre) {
+		this.materiasFechasDiciembre = materiasFechasDiciembre;
+	}
+
+	public String getMateriasFechasFebreroMarzo() {
+		return materiasFechasFebreroMarzo;
+	}
+
+	public void setMateriasFechasFebreroMarzo(String materiasFechasFebreroMarzo) {
+		this.materiasFechasFebreroMarzo = materiasFechasFebreroMarzo;
+	}
+
+
+	public String getCantidadInasistencias() {
+		return cantidadInasistencias;
+	}
+
+	public void setCantidadInasistencias(String cantidadInasistencias) {
+		this.cantidadInasistencias = cantidadInasistencias;
+	}
+
+	public String getMotivoInasistencias() {
+		return motivoInasistencias;
+	}
+
+	public void setMotivoInasistencias(String motivoInasistencias) {
+		this.motivoInasistencias = motivoInasistencias;
+	}
+
+	public String getMaterialCompleto() {
+		return materialCompleto;
+	}
+
+	public void setMaterialCompleto(String materialCompleto) {
+		this.materialCompleto = materialCompleto;
+	}
+
+	public String getRendicionGastos() {
+		return rendicionGastos;
+	}
+
+	public void setRendicionGastos(String rendicionGastos) {
+		this.rendicionGastos = rendicionGastos;
+	}
+
+	public String getDetalleGastos() {
+		return detalleGastos;
+	}
+
+	public void setDetalleGastos(String detalleGastos) {
+		this.detalleGastos = detalleGastos;
+	}
+
+	public String getEvaluacionPropositoAnual() {
+		return evaluacionPropositoAnual;
+	}
+
+	public void setEvaluacionPropositoAnual(String evaluacionPropositoAnual) {
+		this.evaluacionPropositoAnual = evaluacionPropositoAnual;
+	}
+
+	public String getResultadoAnioEscolar() {
+		return resultadoAnioEscolar;
+	}
+
+	public void setResultadoAnioEscolar(String resultadoAnioEscolar) {
+		this.resultadoAnioEscolar = resultadoAnioEscolar;
+	}
+
+	public String getCambioEscuelaProximoAnio() {
+		return cambioEscuelaProximoAnio;
+	}
+
+	public void setCambioEscuelaProximoAnio(String cambioEscuelaProximoAnio) {
+		this.cambioEscuelaProximoAnio = cambioEscuelaProximoAnio;
+	}
+
+	public String getProyeccionAnioProximoFinalizacionPBE() {
+		return proyeccionAnioProximoFinalizacionPBE;
+	}
+
+	public void setProyeccionAnioProximoFinalizacionPBE(
+			String proyeccionAnioProximoFinalizacionPBE) {
+		this.proyeccionAnioProximoFinalizacionPBE = proyeccionAnioProximoFinalizacionPBE;
+	}
+
+	public String getFechaEntrevistaFebreroMarzo() {
+		return fechaEntrevistaFebreroMarzo;
+	}
+
+	public void setFechaEntrevistaFebreroMarzo(String fechaEntrevistaFebreroMarzo) {
+		this.fechaEntrevistaFebreroMarzo = fechaEntrevistaFebreroMarzo;
+	}
+
+	public String getHoraEntrevistaFebreroMarzo() {
+		return horaEntrevistaFebreroMarzo;
+	}
+
+	public void setHoraEntrevistaFebreroMarzo(String horaEntrevistaFebreroMarzo) {
+		this.horaEntrevistaFebreroMarzo = horaEntrevistaFebreroMarzo;
+	}
+
+	public String getLugarEntrevistaFebreroMarzo() {
+		return lugarEntrevistaFebreroMarzo;
+	}
+
+	public void setLugarEntrevistaFebreroMarzo(String lugarEntrevistaFebreroMarzo) {
+		this.lugarEntrevistaFebreroMarzo = lugarEntrevistaFebreroMarzo;
+	}
+
+	public String getEvolucionMesAnterior() {
+		return evolucionMesAnterior;
+	}
+
+	public void setEvolucionMesAnterior(String evolucionMesAnterior) {
+		this.evolucionMesAnterior = evolucionMesAnterior;
+	}
+
+	public String getLogros() {
+		return logros;
+	}
+
+	public void setLogros(String logros) {
+		this.logros = logros;
+	}
+
+	public String getDificultades() {
+		return dificultades;
+	}
+
+	public void setDificultades(String dificultades) {
+		this.dificultades = dificultades;
+	}
+
+	public String getProposito() {
+		return proposito;
+	}
+
+	public void setProposito(String proposito) {
+		this.proposito = proposito;
+	}
+
+	public String getContenidosAbordados() {
+		return contenidosAbordados;
+	}
+
+	public void setContenidosAbordados(String contenidosAbordados) {
+		this.contenidosAbordados = contenidosAbordados;
+	}
+
+	public String getCompromisoRAEscolaridad() {
+		return compromisoRAEscolaridad;
+	}
+
+	public void setCompromisoRAEscolaridad(String compromisoRAEscolaridad) {
+		this.compromisoRAEscolaridad = compromisoRAEscolaridad;
+	}
+
+	public String getRecomendacionEstrategiaComplementaria() {
+		return recomendacionEstrategiaComplementaria;
+	}
+
+	public void setRecomendacionEstrategiaComplementaria(
+			String recomendacionEstrategiaComplementaria) {
+		this.recomendacionEstrategiaComplementaria = recomendacionEstrategiaComplementaria;
+	}
+
+	public String getSituacionCrisis() {
+		return situacionCrisis;
+	}
+
+	public void setSituacionCrisis(String situacionCrisis) {
+		this.situacionCrisis = situacionCrisis;
+	}
+
+	public String getExpectativasRA() {
+		return expectativasRA;
+	}
+
+	public void setExpectativasRA(String expectativasRA) {
+		this.expectativasRA = expectativasRA;
+	}
+
+	public String getDestinoDineroBeca() {
+		return destinoDineroBeca;
+	}
+
+	public void setDestinoDineroBeca(String destinoDineroBeca) {
+		this.destinoDineroBeca = destinoDineroBeca;
+	}
+
+	public String getFechaProximaEntrevista() {
+		return fechaProximaEntrevista;
+	}
+
+	public void setFechaProximaEntrevista(String fechaProximaEntrevista) {
+		this.fechaProximaEntrevista = fechaProximaEntrevista;
+	}
+
+	public String getHoraProximaEntrevista() {
+		return horaProximaEntrevista;
+	}
+
+	public void setHoraProximaEntrevista(String horaProximaEntrevista) {
+		this.horaProximaEntrevista = horaProximaEntrevista;
+	}
+
+	public String getLugarProximaEntrevista() {
+		return lugarProximaEntrevista;
+	}
+
+	public void setLugarProximaEntrevista(String lugarProximaEntrevista) {
+		this.lugarProximaEntrevista = lugarProximaEntrevista;
+	}
+
+	public String getEvaluacionCobroBeca() {
+		return evaluacionCobroBeca;
+	}
+
+	public void setEvaluacionCobroBeca(String evaluacionCobroBeca) {
+		this.evaluacionCobroBeca = evaluacionCobroBeca;
+	}
+
+	public String getComentariosRevision() {
+		return comentariosRevision;
+	}
+
+	public void setComentariosRevision(String comentariosRevision) {
+		this.comentariosRevision = comentariosRevision;
+	}
+	
+	public String getEstadoPago() {
+		return estadoPago;
+	}
+
+	public void setEstadoPago(String estadoPago) {
+		this.estadoPago = estadoPago;
+	}
+
+	public String getMotivoSuspension() {
+		return motivoSuspension;
+	}
+
+	public void setMotivoSuspension(String motivoSuspension) {
+		this.motivoSuspension = motivoSuspension;
+	}
+
+	public String getMotivoCesacion() {
+		return motivoCesacion;
+	}
+
+	public void setMotivoCesacion(String motivoCesacion) {
+		this.motivoCesacion = motivoCesacion;
+	}
+
+	public String getObservacionesGrales() {
+		return observacionesGrales;
+	}
+
+	public void setObservacionesGrales(String observacionesGrales) {
+		this.observacionesGrales = observacionesGrales;
+	}
+
+	public String getPrevias() {
+		return previas;
+	}
+
+	public void setPrevias(String previas) {
+		this.previas = previas;
+	}
+
+	public String getPreviasCuales() {
+		return previasCuales;
+	}
+
+	public void setPreviasCuales(String previasCuales) {
+		this.previasCuales = previasCuales;
+	}
+
+	public String getPadrino() {
+		return padrino;
+	}
+
+	public void setPadrino(String padrino) {
+		this.padrino = padrino;
+	}
+
+	public String getTipoPadrino() {
+		return tipoPadrino;
+	}
+
+	public void setTipoPadrino(String tipoPadrino) {
+		this.tipoPadrino = tipoPadrino;
+	}
+
+	public String getQuienCargoEntrevista() {
+		return quienCargoEntrevista;
+	}
+
+	public void setQuienCargoEntrevista(String quienCargoEntrevista) {
+		this.quienCargoEntrevista = quienCargoEntrevista;
+	}
+
+	public String getEstadoEntrevista() {
+		return estadoEntrevista;
+	}
+
+	public void setEstadoEntrevista(String estadoEntrevista) {
+		this.estadoEntrevista = estadoEntrevista;
+	}
+
+	public String getOtroTipoContacto() {
+		return otroTipoContacto;
+	}
+
+	public void setOtroTipoContacto(String otroTipoContacto) {
+		this.otroTipoContacto = otroTipoContacto;
+	}
+
+	public String getOtroMotivoNoIncorporacion() {
+		return otroMotivoNoIncorporacion;
+	}
+
+	public void setOtroMotivoNoIncorporacion(String otroMotivoNoIncorporacion) {
+		this.otroMotivoNoIncorporacion = otroMotivoNoIncorporacion;
+	}
+	
+	public String getAnioAdicional() {
+		return anioAdicional;
+	}
+	
+	public void setAnioAdicional(String anioAdicional) {
+		this.anioAdicional = anioAdicional;
+	}
+	
+	public String getMotivoIncorporacionPendiente() {
+		return motivoIncorporacionPendiente;
+	}
+	
+	public void setMotivoIncorporacionPendiente(String motivoIncorporacionPendiente) {
+		this.motivoIncorporacionPendiente = motivoIncorporacionPendiente;
+	}
+	
+	public String getOtroMotivoPendiente() {
+		return otroMotivoPendiente;
+	}
+	
+	public void setOtroMotivoPendiente(String otroMotivoPendiente) {
+		this.otroMotivoPendiente = otroMotivoPendiente;
+	}
+
+	public Long getIdEntrevista() {
+		return idEntrevista;
+	}
+
+	public void setIdEntrevista(Long idEntrevista) {
+		this.idEntrevista = idEntrevista;
+	}
+
+	public Long getIdTipoEntrevista() {
+		return idTipoEntrevista;
+	}
+
+	public void setIdTipoEntrevista(Long idTipoEntrevista) {
+		this.idTipoEntrevista = idTipoEntrevista;
+	}
+	
+	/**
+	 * Retorno el motivo de incorporacion o no incorporacion. Dependiendo de la incorporacion es cual usa
+	 * @return
+	 */
+	public String getMotivoIncorporacion() {
+		if(this.incorporacion.equals(EvaluacionIncorporacion.INCORPORA.getValor()))
+			return "";
+		else
+			if(this.incorporacion.equals(EvaluacionIncorporacion.INCORPORAPENDIENTE.getValor()))
+				if(this.motivoIncorporacionPendiente != null && this.motivoIncorporacionPendiente != "" 
+					&& this.motivoIncorporacionPendiente != MotivoIncorporacionPendiente.OTROMOTIVO.getValor())
+					return this.motivoIncorporacionPendiente;
+				else
+					return "Otro," + this.otroMotivoPendiente;
+			else
+				if(this.motivoNoIncorporacion != null && this.motivoNoIncorporacion != ""
+					&& this.motivoNoIncorporacion != "Otro")
+					return this.motivoNoIncorporacion;
+				else
+					return "Otro," + this.otroMotivoNoIncorporacion;
+				
+	}
+	
+	/**
+	 * Retorna tipo contacto u otro tipo contacto segun corresponda
+	 * @return
+	 */
+	public String getTipoContactoUnificado() {
+		if(this.tipoContacto != null && this.tipoContacto != "" && this.tipoContacto != TipoContacto.OTRO.getValor())
+			return this.tipoContacto;
+		else
+			if(this.otroTipoContacto != null && this.otroTipoContacto != "")
+				return "Otro," + this.otroTipoContacto;
+			else
+				return "Otro";
+	}
+	
+	/**
+	 * Retorna motivo ausencia u otro motivo ausencia segun corresponda
+	 * @return
+	 */
+	public String getMotivoAusenciaBecadoUnificado() {
+		if(this.motivoAusenciaBecado != null && this.motivoAusenciaBecado != "" 
+			&& this.motivoAusenciaBecado != MotivoAusencia.OTROS.getValor())
+			return this.motivoAusenciaBecado;
+		else
+			if(this.motivoAusenciaBecado != null && this.motivoAusenciaBecado != "")
+				return "Otro," + this.motivoAusenciaBecado;
+			else
+				return "Otro";
+	}
+	
+	/**
+	 * Retorna motivo ausencia RA u otro motivo ausencia RA segun corresponda
+	 * @return
+	 */
+	public String getMotivoAusenciaRAUnificado() {
+		if(this.motivoAusenciaRA != null && this.motivoAusenciaRA != ""
+			&& this.motivoAusenciaRA != MotivoAusencia.OTROS.getValor())
+			return this.motivoAusenciaRA;
+		else
+			if(this.motivoAusenciaRA != null && this.motivoAusenciaRA != "")
+				return "Otro," + this.motivoAusenciaRA;
+			else
+				return "Otro";
+	}
+	
+	/**
+	 * Retorna el motivo que corresponda segun la renovacion
+	 * @return
+	 */
+	public String getMotivoRenovacionUnificado() {
+		if(this.situacionRenovacion != null && this.situacionRenovacion == EvaluacionRenovacionMergeada.PENDIENTE.getValor()){
+			if(this.motivoPendiente != null && this.motivoPendiente != "")
+				return this.motivoPendiente;
+			else
+				if(this.otroMotivo != null && this.otroMotivo != "")
+					return "Otro," + this.otroMotivo;
+				else
+					return "";
+		}
+		else if(this.situacionRenovacion != null && this.situacionRenovacion == EvaluacionRenovacionMergeada.NO_RENUEVA.getValor()){
+				if(this.motivoNoRenovacion != null && this.motivoNoRenovacion != "")
+					return this.motivoNoRenovacion;
+				else
+					if(this.otroMotivo != null && this.otroMotivo != "")
+						return "Otro," + this.otroMotivo;
+					else
+						return "";
+			}
+		else
+			return "No aplica";		
+	}
+	
+	/**
+	 * Retorna el motivo de cesacion o suspencion segun corresponda
+	 * @return
+	 */
+	public String getMotivoSuspensionCesacion() {
+		if(this.evaluacionCobroBeca == EvaluacionCobroBeca.SUSPENDIDO.getValor())
+			return this.motivoSuspension;
+		else
+			return this.motivoCesacion;
+	}	
+}

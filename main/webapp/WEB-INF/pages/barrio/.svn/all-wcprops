@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/barrio
+END
+listaBarrios.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/barrio/listaBarrios.jsp
+END
+modificarView.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/barrio/modificarView.jsp
+END
+registrarView.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/barrio/registrarView.jsp
+END

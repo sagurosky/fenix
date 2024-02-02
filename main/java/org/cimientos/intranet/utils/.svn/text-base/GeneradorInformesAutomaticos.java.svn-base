@@ -1,0 +1,715 @@
+/**
+ * 
+ */
+package org.cimientos.intranet.utils;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.cimientos.intranet.modelo.Beca;
+import org.cimientos.intranet.modelo.Boletin;
+import org.cimientos.intranet.modelo.CicloPrograma;
+import org.cimientos.intranet.modelo.FichaFamiliar;
+import org.cimientos.intranet.modelo.Periodo;
+import org.cimientos.intranet.modelo.informe.ComunicadoNoRenovacion;
+import org.cimientos.intranet.modelo.informe.ComunicadoPendiente;
+import org.cimientos.intranet.modelo.informe.EstadoInforme;
+import org.cimientos.intranet.modelo.informe.FichaPresentacion;
+import org.cimientos.intranet.modelo.informe.InformeCesacion;
+import org.cimientos.intranet.modelo.informe.InformeIS1;
+import org.cimientos.intranet.modelo.informe.InformeIS2;
+import org.cimientos.intranet.modelo.informe.InformeIS3;
+import org.cimientos.intranet.modelo.pbe.evento.entrevistas.EntrevistaFinal;
+import org.cimientos.intranet.modelo.pbe.evento.entrevistas.EntrevistaIndividual;
+import org.cimientos.intranet.modelo.pbe.evento.entrevistas.EntrevistaRenovacion;
+import org.cimientos.intranet.modelo.perfil.AlumnoPanelEA;
+import org.cimientos.intranet.modelo.perfil.EstadoAlumno;
+import org.cimientos.intranet.modelo.perfil.PerfilAlumno;
+import org.cimientos.intranet.modelo.perfilPadrino.PerfilPadrino;
+import org.cimientos.intranet.modelo.perfilPadrino.TipoPadrino;
+import org.cimientos.intranet.modelo.seleccion.BoletinSeleccion;
+import org.cimientos.intranet.modelo.seleccion.EntrevistaSeleccion;
+import org.cimientos.intranet.servicio.AlumnoPanelEASrv;
+import org.cimientos.intranet.servicio.CicloProgramaSrv;
+import org.cimientos.intranet.servicio.ComunicadoNoRenovacionSrv;
+import org.cimientos.intranet.servicio.ComunicadoPendienteSrv;
+import org.cimientos.intranet.servicio.EntrevistaSeleccionSrv;
+import org.cimientos.intranet.servicio.EntrevistaSrv;
+import org.cimientos.intranet.servicio.InformeCesacionSrv;
+import org.cimientos.intranet.servicio.InformeFPSrv;
+import org.cimientos.intranet.servicio.InformeIS1Srv;
+import org.cimientos.intranet.servicio.InformeIS3Srv;
+import org.cimientos.intranet.servicio.InformeSrv;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+
+import com.cimientos.intranet.enumerativos.Convive;
+import com.cimientos.intranet.enumerativos.SituacionEscolarMergeada;
+import com.cimientos.intranet.enumerativos.entrevista.DetalleGastos;
+import com.cimientos.intranet.enumerativos.entrevista.EvaluacionCobroBeca;
+import com.cimientos.intranet.enumerativos.entrevista.EvaluacionRenovacionFinal;
+import com.cimientos.intranet.enumerativos.entrevista.GustosTiempoLibre;
+import com.cimientos.intranet.enumerativos.entrevista.MateriaBoletinSeleccion;
+import com.cimientos.intranet.enumerativos.entrevista.MotivoNoRenovacion;
+import com.cimientos.intranet.enumerativos.entrevista.MotivoSuspension;
+import com.cimientos.intranet.enumerativos.entrevista.PropositoAnioComienza;
+
+/**
+ * Genera informes automaticos con su correspondiente estado inicial.
+ * 
+ * @author plabaronnie
+ *
+ */
+@Service
+public class GeneradorInformesAutomaticos {
+
+	@Autowired
+	private CicloProgramaSrv srvCiclo;
+	
+	@Autowired
+	private InformeIS1Srv informeIS1Srv;
+	
+	@Autowired
+	private InformeIS3Srv informeIS3Srv;
+	
+	@Autowired
+	private InformeFPSrv informeFPSrv;
+	
+	@Autowired
+	private InformeCesacionSrv informeCesacionSrv;
+	
+	@Autowired
+	private ComunicadoNoRenovacionSrv srvComunicadoNoRenovacion;
+	
+	@Autowired
+	private ComunicadoPendienteSrv srvComunicadoRenovacion;
+	
+	@Autowired
+	private EntrevistaSeleccionSrv srvEntrevistaSeleccion;
+	
+	@Autowired
+	private AlumnoPanelEASrv alumnoPanelEaSrv;
+	
+	@Autowired
+	private EntrevistaSrv entrevistaSrv;
+	
+	@Autowired
+	private InformeSrv srvInforme;
+	
+	
+	
+	/**
+	 * Genera, previa validacion de las condiciones los informes automaticos
+	 * 
+	 * @param entrevista
+	 * @param request 
+	 * @param alumno
+	 */
+	public void generarInformeSI1(PerfilPadrino padrino, EntrevistaIndividual entrevista, Beca beca, PerfilAlumno alumno){
+		
+			EntrevistaRenovacion entrevistaRenovacion = (EntrevistaRenovacion)entrevista;
+			CicloPrograma cicloActual = srvCiclo.obtenerCicloActual();
+			//Se genera el informeIS1
+			InformeIS1 informe = new InformeIS1();
+			alumno.setEstadoAlumno(EstadoAlumno.RENOVADO);
+			informe.setBecado(alumno);
+			informe.setEr(entrevistaRenovacion);
+			informe.setBeca(beca);
+			//Boletin anio anterior
+			Boletin boletinAnterior = informeIS1Srv.getBoletinAnioAnterior(alumno);
+			informe.setBoletinAnioAnterior(boletinAnterior);
+			informe.setCicloActual(cicloActual);
+			informe.setFechaAlta(new Date());
+//			informe.setSituacion(informe.getEr().getSituacionEscolar());
+			informe.setSituacion(informe.getEr().getSituacionEscolarMergeada());	//!!!
+			informe.setEaPerfil(alumno.getEa());
+			informe.setRrPerfil(alumno.getEa().getRr());
+			informe.setNombre(ConstantesInformes.nombreInformeIS1);	
+			
+			Integer edad = Formateador.calcularEdad(alumno.getDatosPersonales().getFechaNacimiento()); 
+			informe.setEdad(edad);
+			informe.setFechaPBE(alumno.getFechaPBE());	
+			informe.setFechaReincorporacionPBE(alumno.getFechaReincorporacionPBE());	
+			informe.setPadrino(padrino);
+			informe.setEscolaridadCompromisoAnterior(informe.getEr().getEscolaridadCompromisoAnterior());
+			informe.setPropositoAnioComienza(informe.getEr().getPropositoAnioComienza());
+			informe.setObservaciones(informe.getEr().getObservacionesGenerales());
+			informe.setObservacionMateriasExamenes(informe.getEr().getObservacionMateriasExamenes());
+			informe.setActividadesVacaciones(informe.getEr().getRealizadoVacaciones());
+			informe.setExpectativasRA(informe.getEr().getExpectativasRA());
+			String utilizacion = "";
+			if(informe.getEr().getDestinoDinero() != null){
+				for (DetalleGastos detalle : informe.getEr().getDestinoDinero()) {
+					utilizacion = utilizacion + detalle.getValor() + ", ";
+				} 
+			}	
+			informe.setUtilizacionBeca(utilizacion);
+			informe.setFechaUltimaModificacion(new Date());
+			informe.setPropositoAnioComienzaList(buscarPropositos(entrevistaRenovacion.getPropositoAnioComienzaList()));
+			informe.setGustosTiempoLibre(buscarGustos(entrevistaRenovacion.getGustosTiempoLibre()));			
+			//nuevo campo pedido mes y motivo de suspension
+			informe.setInformacionSuspension(generarInformacionSuspension(entrevistaRenovacion));
+			
+			
+			//Se modifica el alumnoPanelEa, se cambia de color el boletin(se mando el anterior al historial) y cambia el color del IS1
+			AlumnoPanelEA ape = alumnoPanelEaSrv.obtenerAlumnoPanelPorIdPerfilAlumno(alumno.getId());
+			
+			FichaPresentacion fp = informeFPSrv.obtenerInformePorAlumnoPorCiclo(cicloActual, alumno.getId());
+			if(fp!=null){
+				if(fp.getEstado().equals(EstadoInforme.PENDIENTE_POR_RENOVACION)){
+					fp.setEstado(EstadoInforme.FINALIZADO);
+					fp.setFpPorReasignacion(true);
+					informe.setFp(fp);
+				}
+				else{
+					fp.setBeca(beca);
+					fp.setPadrino(padrino);
+					fp.setFechaAlta(new Date());
+					fp.setFechaUltimaModificacion(new Date());
+					fp.setFpPorReasignacion(false);
+				}
+				informeFPSrv.guardarInformeFP(fp);
+				informe.setEstado(EstadoInforme.REVISION);
+				ape.setColorIS1(ConstantesPaneles.YELLOW);
+			}
+			else{
+				informe.setEstado(EstadoInforme.FINALIZADO);
+				ape.setColorIS1(ConstantesPaneles.GREEN);
+			}			
+			informeIS1Srv.guardarInformeIS1(informe);
+			
+			ape.setColorBoletin(ConstantesPaneles.GRAY);
+			alumnoPanelEaSrv.modificarAlumnoPanelEA(ape);
+		
+			entrevista.getExportacionEspecial().setIdInforme(informe.getId());
+			entrevistaSrv.guardarEntrevista(entrevista);
+	}
+
+	private List<GustosTiempoLibre> buscarGustos(List<GustosTiempoLibre> gustosTiempoLibre) {
+		List<GustosTiempoLibre> result = new ArrayList<GustosTiempoLibre>();
+		for (GustosTiempoLibre gusto : gustosTiempoLibre) {
+			result.add(GustosTiempoLibre.getGustosTiempoLibre(gusto.getId()));
+		} 
+		return result;
+	}
+
+	private List<PropositoAnioComienza> buscarPropositos(List<PropositoAnioComienza> propositoAnioComienzaList) {
+		List<PropositoAnioComienza> result = new ArrayList<PropositoAnioComienza>();
+		for (PropositoAnioComienza propositoAnioComienza : propositoAnioComienzaList) {
+			result.add(PropositoAnioComienza.getPropositoAnioComienza(propositoAnioComienza.getId()));
+		} 
+		return result;
+	}
+
+	/**
+	 * @param entrevistaRenovacion
+	 * @return
+	 */
+	private String generarInformacionSuspension(
+			EntrevistaRenovacion entrevistaRenovacion) {
+		StringBuffer informacionSuspension = new StringBuffer("");
+		if(entrevistaRenovacion.getEvaluacionCobroBeca().equals(EvaluacionCobroBeca.SUSPENDIDO)){
+			informacionSuspension.append("Mes: " + entrevistaRenovacion.getPeriodoDePago().getNombre());
+			informacionSuspension.append(System.getProperty("line.separator"));
+			informacionSuspension.append("Motivo: " + entrevistaRenovacion.getMotivoSuspension().getValor());
+		}
+		return informacionSuspension.toString();
+	}
+	
+	
+	/**
+	 * Genera el detalle de entrevistas con pago suspendido, si las hubo.
+	 * @param entrevistasPagoSuspendido
+	 * @return
+	 */
+	private String generarDetalleSuspensionesParaCesacion(List<EntrevistaIndividual> entrevistasPagoSuspendido) {
+		StringBuffer informacionSuspension = new StringBuffer("");
+		if(entrevistasPagoSuspendido != null && !entrevistasPagoSuspendido.isEmpty()){
+			informacionSuspension.append("Cantidad: " + entrevistasPagoSuspendido.size());
+			informacionSuspension.append(System.getProperty("line.separator"));
+			for (EntrevistaIndividual entrevistaIndividual : entrevistasPagoSuspendido) {
+				informacionSuspension.append("Mes: " + entrevistaIndividual.getPeriodoDePago().getNombre());
+				informacionSuspension.append(", Motivo: " + entrevistaIndividual.getMotivoSuspension().getValor());
+				informacionSuspension.append(System.getProperty("line.separator"));
+			}
+		}
+		return informacionSuspension.toString();
+	}
+	
+	public void generarInformeCesacion(EntrevistaIndividual entrevista, Beca beca, PerfilAlumno alumno, 
+			List<EntrevistaIndividual> entrevistasPagosSuspendidos, PerfilPadrino padrino, InformeIS2 informeIS2) 
+	{		
+			//Se genera el informe de Cesacion
+		InformeCesacion informe = new InformeCesacion();
+		informe.setBecado(alumno);
+		informe.setBeca(beca);
+		informe.setEi(entrevista);
+		informe.setEaPerfil(alumno.getEa());
+		informe.setRrPerfil(alumno.getEa().getRr());
+		informe.setFechaPBE(alumno.getFechaPBE());
+		informe.setFechaReincorporacionPBE(alumno.getFechaReincorporacionPBE());
+		informe.setCicloActual(srvCiclo.obtenerCicloActual());
+		informe.setMotivoCesacion(informe.getEi().getMotivoCesacion().getValor());
+		informe.setNombre(ConstantesInformes.nombreInformeCesacion);
+		//El periodo se saca de la entrevista, ya que cuando un alumno se cesa se le saca la beca!
+		informe.setEstado(EstadoInforme.CONSTRUCCION);
+		informe.setFechaAlta(new Date());
+		Integer edad = Formateador.calcularEdad(alumno.getDatosPersonales().getFechaNacimiento()); 		
+		informe.setEdad(edad);
+		informe.setPadrino(padrino);		
+		informe.setMesCesacion(informe.getEi().getPeriodoDePago().getNombre()); 
+		String utilizacion = "";
+		if(informe.getEi().getDetalleGastos() != null){
+			List<DetalleGastos> detalles = informe.getEi().getDetalleGastos();
+			for (int i = 0; i <= detalles.size(); i++ ) 
+			{
+				if((detalles.size()-1) == i)
+					utilizacion = utilizacion + detalles.get(i).getValor() + ". ";
+				else if (detalles.size() != i)
+					utilizacion = utilizacion + detalles.get(i).getValor() + ", ";
+			}
+			
+			
+		}
+		informe.setDetalle(utilizacion);
+		informe.setFechaUltimaModificacion(new Date());
+
+		//nuevo campo pedido mes y motivo de suspension
+		informe.setDetallePagosSuspendidos(generarDetalleSuspensionesParaCesacion(entrevistasPagosSuspendidos));
+		
+		//nuevos campos pedidos incluir el boletin e incluir datos estimados
+		if(alumno.getBoletin()!=null)
+			informe.setIncluirBoletinCheck(true);
+		else
+			informe.setIncluirBoletinCheck(false);
+	
+		informe.setDatosEstimadosCheck(false);
+		//copio algunos campos del IS2 generado en el IC si es que el IS2 aún no fue enviado
+		if(informeIS2 != null){
+			if(!informeIS2.getEstado().equals(EstadoInforme.ENVIADO)){
+				informe.setActividadAcompanamiento(informeIS2.getActividadAcompanamiento());
+				srvInforme.eliminarInforme(informeIS2);
+			}
+		}
+		
+		informeCesacionSrv.guardarInformeCesacion(informe);
+		
+		//Se modifica el alumnoPanelEa, cuando se cesa un alumno se desactiva el AlumnoPanelEa para que no aparezca en el panel
+		AlumnoPanelEA ape = alumnoPanelEaSrv.obtenerAlumnoPanelPorIdPerfilAlumno(alumno.getId());
+		ape.setActivo(false);
+		alumnoPanelEaSrv.modificarAlumnoPanelEA(ape);
+		
+		entrevista.getExportacionEspecial().setIdInforme(informe.getId());
+		entrevistaSrv.guardarEntrevista(entrevista);
+		
+	}
+	
+	public void generarInformeFP(PerfilPadrino padrino, Beca beca, PerfilAlumno alumno, EstadoInforme estado, boolean porRevision,
+			InformeIS1 is1){
+			//Se genera la FP
+			FichaPresentacion ficha = new FichaPresentacion();
+			List<FichaFamiliar> convivientesList = new ArrayList<FichaFamiliar>();
+			FichaFamiliar fichaObject = null;
+				
+			EntrevistaSeleccion es = srvEntrevistaSeleccion.obtenerEntrevistaSeleccionPorAlumno(alumno);
+			if(es != null){
+				if(es.getBoletinSeleccions() != null)
+					if(es.getBoletinSeleccions().isEmpty())
+						ficha.setBoletinSeleccions(null);
+					else
+						ficha.setBoletinSeleccions(agregarBoletin(es));
+				ficha.setMateriasInteres(agregarMaterias(es));
+			}
+			else
+				ficha.setBoletinSeleccions(null);
+			ficha.setBeca(beca);
+			ficha.setBecado(alumno);
+			ficha.setFechaPBE(alumno.getFechaPBE());
+			ficha.setFechaReincorporacionPBE(alumno.getFechaReincorporacionPBE());
+			ficha.setFechaAlta(new Date());
+			ficha.setEstado(estado);
+			ficha.setFpPorReasignacion(porRevision);
+			ficha.setCicloActual(srvCiclo.obtenerCicloActual());
+			ficha.setEaPerfil(alumno.getEa());
+			//En la creacion del informe no seteaba el perfilRR (wtrujillo)
+			if (alumno.getEa()!=null)
+				ficha.setRrPerfil(alumno.getEa().getRr());
+			ficha.setNombre(ConstantesInformes.nombreInformeFP);	
+			ficha.setPadrino(padrino);
+			Integer edad = Formateador.calcularEdad(alumno.getDatosPersonales().getFechaNacimiento()); 
+			ficha.setEdad(edad);
+			if(alumno.getResponsable2() != null){
+				ficha.setRa1(alumno.getResponsable1());
+			}
+			else{
+				ficha.setRa1(alumno.getResponsable2());
+			}
+			
+			for(FichaFamiliar unaFicha : alumno.getFichaFamiliar()){
+				if(unaFicha.getConvive()!= null)
+					if(unaFicha.getConvive().equals(Convive.SI)){
+						fichaObject = new FichaFamiliar();
+						fichaObject = unaFicha;
+						convivientesList.add(fichaObject);
+					}
+			}
+			ficha.setConvivientes(convivientesList);
+			ficha.setFechaUltimaModificacion(new Date());
+			ficha.setIncluirBoletinCheck(false);
+			informeFPSrv.guardarInformeFP(ficha);	
+			if(is1 != null){
+				if(!is1.getEstado().equals(EstadoInforme.ENVIADO)){
+					is1.setPadrino(padrino);
+					is1.setBeca(beca);
+					is1.setFechaAlta(new Date());
+					is1.setFechaCambioUltimoEstado(new Date());
+					is1.setFp(ficha);
+					if(is1.getEstado().equals(EstadoInforme.FINALIZADO))
+						is1.setEstado(EstadoInforme.REVISION);
+					informeIS1Srv.guardarInformeIS1(is1);
+				}
+			}
+	}
+
+	
+	/**
+	 * Copia el boletin a la FP
+	 * 
+	 */
+	private List<BoletinSeleccion> agregarBoletin(EntrevistaSeleccion es) {
+		List<BoletinSeleccion> boletin = new ArrayList<BoletinSeleccion>();
+		for (BoletinSeleccion boletinSeleccion : es.getBoletinSeleccions()) 
+		{
+			if(!boletinSeleccion.esVacio())
+				boletin.add(boletinSeleccion);
+			
+		}
+		return boletin;
+	}
+
+	/**
+	 * Agrega todas las materias de interes que estan en la entrevista de seleccion
+	 * @param es
+	 * @return
+	 */
+	private String agregarMaterias(EntrevistaSeleccion es) {
+		String resul = "";
+		resul = validarMateria(MateriaBoletinSeleccion.LENGUA.getValor(), resul, es.getMateriaLengua());
+		resul = validarMateria(MateriaBoletinSeleccion.MATEMATICA.getValor(), resul, es.getMateriaMatem());
+		resul = validarMateria(MateriaBoletinSeleccion.CIENCIAS_SOCIALES.getValor(), resul, es.getMateriaCiencSociales());
+		resul = validarMateria(MateriaBoletinSeleccion.INGLES_LENGUA_EXTRANJERA.getValor(), resul, es.getMateriaInglesLengExt());
+		resul = validarMateria(MateriaBoletinSeleccion.EDUCACION_FISICA.getValor(), resul, es.getMateriaEduFisica());
+		resul = validarMateria(MateriaBoletinSeleccion.EDUCACION_PLASTICA_ARTISTICA.getValor(), resul, es.getMateriaEduArt());
+		resul +=(!resul.equals(""))?".":"";
+		return resul;
+	}
+
+	private String validarMateria(String materia, String resul, Boolean selMateria) {
+		if(resul.equals("") && (selMateria != null && selMateria)){
+			resul += materia;
+		}
+		else if(selMateria != null && selMateria){
+			resul += ", " + materia;
+		}
+		return resul;
+	}
+	
+	/**
+	 * Crea el comunicado de NO Renovacion
+	 * @param entrevista
+	 * @param alumno
+	 */
+	public void generarComunicadoNoRenovacion(PerfilPadrino padrino, Beca beca, EntrevistaIndividual entrevista,PerfilAlumno alumno){
+		
+		CicloPrograma cicloActual = srvCiclo.obtenerCicloActual();
+		FichaPresentacion fp = informeFPSrv.obtenerInformePorAlumnoPorCiclo(cicloActual, alumno.getId());
+		if(fp != null && fp.getFpPorReasignacion() && !fp.getEstado().equals(EstadoInforme.ENVIADO)){ //se inactiva la FP y no se genera el Comunicado
+			fp.setEstado(EstadoInforme.INACTIVO);
+			informeFPSrv.guardarInformeFP(fp);
+		}
+		else{
+			//Se genera el comunicado de NO renovacion
+			if(padrino.getTipo().equals(TipoPadrino.INDIVIDUAL)){
+				EntrevistaRenovacion er = (EntrevistaRenovacion) entrevista;
+				ComunicadoNoRenovacion comunicado = new ComunicadoNoRenovacion();
+				comunicado.setEstado(EstadoInforme.FINALIZADO);
+				comunicado.setBeca(beca);
+	
+				comunicado.setCicloActual(cicloActual);
+				comunicado.setFechaAlta(new Date());
+				comunicado.setPadrino(padrino);
+				comunicado.setEaPerfil(alumno.getEa());
+				comunicado.setRrPerfil(alumno.getEa().getRr());
+				comunicado.setNombre(ConstantesInformes.nombreComunicadoNoRenovacion);
+				comunicado.setBecado(alumno);
+				comunicado.setEr(er);
+				srvComunicadoNoRenovacion.agregarComunicadoNoRenovacion(comunicado);
+				entrevista.getExportacionEspecial().setIdInforme(comunicado.getId());
+				entrevistaSrv.guardarEntrevista(entrevista);
+			}
+		}
+	}
+
+	public void generarInformeIS3(PerfilPadrino padrino, Beca beca, EntrevistaIndividual ent, PerfilAlumno alumno, 
+			List<EntrevistaIndividual> entrevistasPagosSuspendidos, List<EntrevistaIndividual> entrevistasCicloActual) 
+	{
+		EntrevistaFinal entrevista = (EntrevistaFinal) ent;
+		InformeIS3 informe = new InformeIS3();		
+		informe.setNombre(ConstantesInformes.nombreInformeIS3);	
+		informe.setEi(entrevista);
+		informe.setBecado(alumno);
+		informe.setBeca(beca);
+		informe.setPadrino(padrino);
+		informe.setFechaAlta(new Date());
+		Integer edad = Formateador.calcularEdad(alumno.getDatosPersonales().getFechaNacimiento()); 
+		informe.setEdad(edad);
+		informe.setFechaPBE(alumno.getFechaPBE());	
+		informe.setFechaReincorporacionPBE(alumno.getFechaReincorporacionPBE());
+		informe.setEstado(EstadoInforme.CONSTRUCCION);
+		informe.setEaPerfil(alumno.getEa());
+		informe.setRrPerfil(alumno.getEa().getRr());
+		informe.setCicloActual(srvCiclo.obtenerCicloActual());		
+		generarSuspencionesParaIS3(entrevistasPagosSuspendidos, informe);
+		informe.setFechaUltimaModificacion(new Date());
+		completarCamposRenovacionEntrevistaFinal(informe, alumno, entrevista);
+		generarDetalleGastosParaIS3(entrevistasCicloActual, informe);
+		
+		informeIS3Srv.guardarInformeIS3(informe);	
+		
+		//Se modifica el alumnoPanelEa, se cambia el color del IS3
+		AlumnoPanelEA ape = alumnoPanelEaSrv.obtenerAlumnoPanelPorIdPerfilAlumno(alumno.getId());
+		ape.setColorIS3(ConstantesPaneles.YELLOW);
+		alumnoPanelEaSrv.modificarAlumnoPanelEA(ape);
+		
+		entrevista.getExportacionEspecial().setIdInforme(informe.getId());
+		entrevistaSrv.guardarEntrevista(entrevista);		
+	}
+	
+	/**
+	 * Luego que la entrevista final es aprobada se tiene que actualizar el IS3 con alguno de los campos de dicha entrevista
+	 * @param informeIS3
+	 * @param padrino
+	 * @param beca
+	 * @param entrevista
+	 * @param alumno
+	 */
+	public void actualizarInformeIS3(InformeIS3 informe, PerfilPadrino padrino,
+			Beca beca, EntrevistaIndividual ent, PerfilAlumno alumno, 
+			List<EntrevistaIndividual> entrevistasPagosSuspendidos,  List<EntrevistaIndividual> entrevistasCicloActual) {
+
+		EntrevistaFinal entrevista = (EntrevistaFinal) ent;
+		generarSuspencionesParaIS3(entrevistasPagosSuspendidos, informe);
+		generarDetalleGastosParaIS3(entrevistasCicloActual, informe);
+		completarCamposRenovacionEntrevistaFinal(informe, alumno, entrevista);
+		informeIS3Srv.guardarInformeIS3(informe);
+	}
+
+	private void completarCamposRenovacionEntrevistaFinal(InformeIS3 informe,
+			PerfilAlumno alumno, EntrevistaFinal entrevista) {
+		if(entrevista.getEvaluacionRenovacionFinal() != null){
+			informe.setEvalRenovacionBeca(entrevista.getEvaluacionRenovacionFinal().getValor());
+			if(entrevista.getEvaluacionRenovacionFinal().equals(EvaluacionRenovacionFinal.FIN_PARTICIPACION_PFE))
+				if(entrevista.getProyAnioProximo() != null)
+					informe.setProyAnioProximo(entrevista.getProyAnioProximo().getValor());
+			else{
+				informe.setProyAnioProximo(null);
+				informe.setObservaciones(null);
+			}			
+		}
+		else{
+			informe.setEvalRenovacionBeca("");
+		}		
+		
+		if (entrevista.getMotivoNoRenovacion() != null)	{
+			informe.setMotivoNoRenovacion(entrevista.getMotivoNoRenovacion().getValor());
+		}
+		else{			
+			informe.setMotivoNoRenovacion(null);
+		}	
+		
+		if(entrevista.getSituacionEscolarMergeada() != null ){
+			SituacionEscolarMergeada situacionRenovacion = SituacionEscolarMergeada.getResultadoAnioEscolarIS3(entrevista.getSituacionEscolarMergeada().getId());
+			informe.setSituacionRenovacion(situacionRenovacion.getValor());
+		}
+		else
+			informe.setSituacionRenovacion("");
+	}
+
+	/**
+	 * Crea el comunicado de Renovacion
+	 * @param entrevista
+	 * @param alumno
+	 */
+	public void generarComunicadoPendiente(PerfilPadrino padrino, Beca beca, EntrevistaIndividual entrevista,PerfilAlumno alumno){
+		CicloPrograma cicloActual = srvCiclo.obtenerCicloActual();
+		FichaPresentacion fp = informeFPSrv.obtenerInformePorAlumnoPorCiclo(cicloActual, alumno.getId());
+		if(fp == null){ //se genera el comunicado de renovacion
+			if(padrino.getTipo().equals(TipoPadrino.INDIVIDUAL)){
+				EntrevistaRenovacion er = (EntrevistaRenovacion) entrevista;
+				ComunicadoPendiente comunicado = new ComunicadoPendiente();
+				comunicado.setBeca(beca);
+				comunicado.setNombre(ConstantesInformes.nombreComunicadoPendiente);
+				comunicado.setCicloActual(cicloActual);
+				comunicado.setFechaAlta(new Date());
+				comunicado.setEaPerfil(alumno.getEa());
+				comunicado.setPadrino(padrino);
+				comunicado.setRrPerfil(alumno.getEa().getRr());
+				comunicado.setEstado(EstadoInforme.FINALIZADO);
+				comunicado.setBecado(alumno);
+				comunicado.setEr(er);
+				srvComunicadoRenovacion.agregarComunicadoPendiente(comunicado);
+				entrevista.getExportacionEspecial()
+						.setIdInforme(comunicado.getId());
+				entrevistaSrv.guardarEntrevista(entrevista);
+			}
+		}		
+	}
+	
+	private String obtenerTextoSituacionRenovacion(String becado, String anioEscolarSiguiente, String nombreCicloActual, MotivoNoRenovacion motivoNoRenovacion, EvaluacionRenovacionFinal evalRenovacionFinal)
+	{
+		String situacionRenovacion = "";
+		if(motivoNoRenovacion == null && evalRenovacionFinal.equals(EvaluacionRenovacionFinal.FIN_PARTICIPACION_PFE))
+			situacionRenovacion = FormateadorIS3.getTextoFinPbeNoAplica(becado);
+		if(motivoNoRenovacion == null && evalRenovacionFinal.equals(EvaluacionRenovacionFinal.EN_CONDICIONES_DE_RENOVAR))
+			situacionRenovacion = FormateadorIS3.getTextoEnCondicionesRenovarNoAplica(becado, anioEscolarSiguiente, nombreCicloActual);
+		if(motivoNoRenovacion == null && evalRenovacionFinal.equals(EvaluacionRenovacionFinal.PENDIENTE))
+			situacionRenovacion = FormateadorIS3.getTextoPendienteNoAplica(becado);
+		if(motivoNoRenovacion != null)
+		{
+			if(motivoNoRenovacion.equals(MotivoNoRenovacion.MUDANZA) && evalRenovacionFinal.equals(EvaluacionRenovacionFinal.NO_RENUEVA))
+				situacionRenovacion = FormateadorIS3.getTextoNoRenuevaMudanzaPbe(becado);
+			if(motivoNoRenovacion.equals(MotivoNoRenovacion.BAJOCOMPROMISO) && evalRenovacionFinal.equals(EvaluacionRenovacionFinal.NO_RENUEVA))
+				situacionRenovacion = FormateadorIS3.getTextoNoRenuevaIncumplimiento(becado);
+			if(motivoNoRenovacion.equals(MotivoNoRenovacion.RENUNCIABECA) && evalRenovacionFinal.equals(EvaluacionRenovacionFinal.NO_RENUEVA))
+				situacionRenovacion = FormateadorIS3.getTextoNoRenuevaRenunciaBeca(becado);
+			if(motivoNoRenovacion.equals(MotivoNoRenovacion.REPITENCIA) && evalRenovacionFinal.equals(EvaluacionRenovacionFinal.NO_RENUEVA))
+				situacionRenovacion = FormateadorIS3.getTextoNoRenuevaRepitencia(becado);
+			if(motivoNoRenovacion.equals(MotivoNoRenovacion.ABANDONO) && evalRenovacionFinal.equals(EvaluacionRenovacionFinal.NO_RENUEVA))
+				situacionRenovacion = FormateadorIS3.getTextoNoRenuevaAbandonoEscolar(becado);
+			if(motivoNoRenovacion.equals(MotivoNoRenovacion.CAMBIOSITUACIONECO) && evalRenovacionFinal.equals(EvaluacionRenovacionFinal.NO_RENUEVA))
+				situacionRenovacion = FormateadorIS3.getTextoNoRenuevaCambioSituacion(becado);
+			if(motivoNoRenovacion.equals(MotivoNoRenovacion.CAMBIOESCUELA) && evalRenovacionFinal.equals(EvaluacionRenovacionFinal.NO_RENUEVA))
+				situacionRenovacion = FormateadorIS3.getTextoNoRenuevaCambioEscuela(becado);
+		}
+		return situacionRenovacion;
+	}
+	
+	@InitBinder
+	public void initBinder(HttpServletRequest request,WebDataBinder binder) {
+		
+	    // custom date binding
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	    binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+	    
+	}
+	
+	private void generarDetalleGastosParaIS3(List<EntrevistaIndividual> entrevistasCicloActual, InformeIS3 informe) {
+		List<DetalleGastos> detalleGastos = new ArrayList<DetalleGastos>();
+		if(informe.getDetalleGastos() != null && !informe.getDetalleGastos().isEmpty())
+			detalleGastos.addAll(informe.getDetalleGastos());
+		String utilizacionBeca = "";
+		if(entrevistasCicloActual != null && !entrevistasCicloActual.isEmpty()){
+			for (EntrevistaIndividual entrevistaIndividual : entrevistasCicloActual) {		
+				this.getDetalleGastos(entrevistaIndividual.getDetalleGastos(), detalleGastos);
+			}
+			utilizacionBeca = this.convertirDetellaGastosString(detalleGastos);
+		}
+		informe.setUtilizacionBeca(utilizacionBeca);
+		informe.setDetalleGastos(detalleGastos);
+	}
+	
+	private void getDetalleGastos(List<DetalleGastos> detalleGastosEntrevista, List<DetalleGastos> detallesGastos){
+		if (detalleGastosEntrevista != null && !detalleGastosEntrevista.isEmpty()) {					
+			for (int i = 0; i <= (detalleGastosEntrevista.size() - 1); i++){
+				if(!detallesGastos.contains(detalleGastosEntrevista.get(i))){	
+					detallesGastos.add(detalleGastosEntrevista.get(i));
+				}
+			}		
+		}
+	}	
+	
+	private String convertirDetellaGastosString(List<DetalleGastos> detalleGastos){
+		String utilizacion = "";
+		if(detalleGastos != null && !detalleGastos.isEmpty()){
+			for (int i = 0; i <= detalleGastos.size(); i++ ){				
+				if((detalleGastos.size()-1) == i)				
+					utilizacion += detalleGastos.get(i).getValor().toLowerCase() + ". ";
+				else if (detalleGastos.size() != i)
+					utilizacion += detalleGastos.get(i).getValor().toLowerCase() + ", ";				
+			}
+			utilizacion = Formateador.capitalizarPrimerLetra(utilizacion);
+		}
+		return utilizacion;
+	}
+	
+	private void generarSuspencionesParaIS3(List<EntrevistaIndividual> entrevistasPagoSuspendido, InformeIS3 informe) {
+		List<MotivoSuspension> motivosSuspension = new ArrayList<MotivoSuspension>();
+		List<Periodo> periodosSuspension = new ArrayList<Periodo>();
+		String suspensionMotivos = "";
+		int cantidadSuspension = 0;
+		String suspensionPeriodos = "";
+		if(entrevistasPagoSuspendido != null && !entrevistasPagoSuspendido.isEmpty()){
+			cantidadSuspension =  entrevistasPagoSuspendido.size();
+			for (EntrevistaIndividual entrevistaIndividual : entrevistasPagoSuspendido) {
+				this.getPeriodosSuspenciones(entrevistaIndividual.getPeriodoDePago(), periodosSuspension);
+				this.getMotivosSuspenciones(entrevistaIndividual.getMotivoSuspension(), motivosSuspension);
+			}
+			suspensionMotivos = this.convertirMotivosSuspensionString(motivosSuspension);
+			suspensionPeriodos = this.convertirPeriodosSuspensionString(periodosSuspension);
+		}
+		informe.setSuspensionesCantidad(cantidadSuspension);
+		informe.setSuspensiones(suspensionMotivos);
+		informe.setSuspensionesPeriodo(suspensionPeriodos);
+	}
+
+	private void getMotivosSuspenciones(MotivoSuspension motivoSuspensionEntrevista, List<MotivoSuspension> motivosSuspension){
+		if (motivoSuspensionEntrevista != null) {			
+			if(!motivosSuspension.contains(motivoSuspensionEntrevista)){
+				motivosSuspension.add(motivoSuspensionEntrevista);
+			}			
+		}
+	}
+	
+	private void getPeriodosSuspenciones(Periodo periodoSuspensionEntrevista, List<Periodo> periodoSuspension){
+		if (periodoSuspensionEntrevista != null) {			
+			if(!periodoSuspension.contains(periodoSuspensionEntrevista)){
+				periodoSuspension.add(periodoSuspensionEntrevista);
+			}			
+		}
+	}
+	
+	private String convertirMotivosSuspensionString(List<MotivoSuspension> motivosSuspension){
+		String suspensiones = "";
+		if(motivosSuspension != null){
+			for (int i = 0; i <= motivosSuspension.size(); i++ ){
+				if((motivosSuspension.size()-1) == i)				
+					suspensiones += motivosSuspension.get(i).getValor().toLowerCase() + ". ";
+				else if (motivosSuspension.size() != i)
+					suspensiones += motivosSuspension.get(i).getValor().toLowerCase() + ", ";				
+			}
+			suspensiones = Formateador.capitalizarPrimerLetra(suspensiones);
+		}
+		return suspensiones;
+	}
+	
+	private String convertirPeriodosSuspensionString(List<Periodo> periodosSuspension){
+		String periodos = "";
+		if(periodosSuspension != null){
+			for (int i = 0; i <= periodosSuspension.size(); i++ ){
+				if((periodosSuspension.size()-1) == i)				
+					periodos += periodosSuspension.get(i).getNombre().toLowerCase() + ". ";
+				else if (periodosSuspension.size() != i)
+					periodos += periodosSuspension.get(i).getNombre().toLowerCase() + ", ";				
+			}
+			periodos = Formateador.capitalizarPrimerLetra(periodos);
+		}
+		return periodos;
+	}
+}

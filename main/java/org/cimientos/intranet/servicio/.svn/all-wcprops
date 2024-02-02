@@ -1,0 +1,371 @@
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/fenix/!svn/ver/311/src/main/java/org/cimientos/intranet/servicio
+END
+CuentaSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/fenix/!svn/ver/165/src/main/java/org/cimientos/intranet/servicio/CuentaSrv.java
+END
+EmpresaSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/fenix/!svn/ver/11/src/main/java/org/cimientos/intranet/servicio/EmpresaSrv.java
+END
+TablaSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/fenix/!svn/ver/11/src/main/java/org/cimientos/intranet/servicio/TablaSrv.java
+END
+PerfilTSSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/fenix/!svn/ver/11/src/main/java/org/cimientos/intranet/servicio/PerfilTSSrv.java
+END
+PerfilVoluntarioSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/fenix/!svn/ver/11/src/main/java/org/cimientos/intranet/servicio/PerfilVoluntarioSrv.java
+END
+PerfilRRSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/fenix/!svn/ver/11/src/main/java/org/cimientos/intranet/servicio/PerfilRRSrv.java
+END
+RegistrarEscuelasBecasSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/fenix/!svn/ver/165/src/main/java/org/cimientos/intranet/servicio/RegistrarEscuelasBecasSrv.java
+END
+RecordatorioSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/fenix/!svn/ver/11/src/main/java/org/cimientos/intranet/servicio/RecordatorioSrv.java
+END
+ReporteEntrevistasPendientesSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/fenix/!svn/ver/165/src/main/java/org/cimientos/intranet/servicio/ReporteEntrevistasPendientesSrv.java
+END
+EntrevistaSeleccionSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/fenix/!svn/ver/339/src/main/java/org/cimientos/intranet/servicio/EntrevistaSeleccionSrv.java
+END
+PeriodoSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/fenix/!svn/ver/318/src/main/java/org/cimientos/intranet/servicio/PeriodoSrv.java
+END
+BoletinSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/fenix/!svn/ver/165/src/main/java/org/cimientos/intranet/servicio/BoletinSrv.java
+END
+NotaMateriaSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/fenix/!svn/ver/165/src/main/java/org/cimientos/intranet/servicio/NotaMateriaSrv.java
+END
+TrimestreSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/fenix/!svn/ver/11/src/main/java/org/cimientos/intranet/servicio/TrimestreSrv.java
+END
+PagoSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/fenix/!svn/ver/334/src/main/java/org/cimientos/intranet/servicio/PagoSrv.java
+END
+AlumnoSeleccionSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/fenix/!svn/ver/11/src/main/java/org/cimientos/intranet/servicio/AlumnoSeleccionSrv.java
+END
+ReporteConvocatoriaServ.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/fenix/!svn/ver/11/src/main/java/org/cimientos/intranet/servicio/ReporteConvocatoriaServ.java
+END
+SucursalBancoSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/fenix/!svn/ver/165/src/main/java/org/cimientos/intranet/servicio/SucursalBancoSrv.java
+END
+InformeSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/fenix/!svn/ver/409/src/main/java/org/cimientos/intranet/servicio/InformeSrv.java
+END
+ComunicadoNoRenovacionSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/fenix/!svn/ver/11/src/main/java/org/cimientos/intranet/servicio/ComunicadoNoRenovacionSrv.java
+END
+ComunicadoPendienteSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/fenix/!svn/ver/11/src/main/java/org/cimientos/intranet/servicio/ComunicadoPendienteSrv.java
+END
+ObjetivoSeleccionSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/fenix/!svn/ver/165/src/main/java/org/cimientos/intranet/servicio/ObjetivoSeleccionSrv.java
+END
+ReporteBecasDisponiblesServ.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/fenix/!svn/ver/345/src/main/java/org/cimientos/intranet/servicio/ReporteBecasDisponiblesServ.java
+END
+TextoSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/fenix/!svn/ver/350/src/main/java/org/cimientos/intranet/servicio/TextoSrv.java
+END
+EscuelaSeleccionSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/fenix/!svn/ver/11/src/main/java/org/cimientos/intranet/servicio/EscuelaSeleccionSrv.java
+END
+ConvocadoSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/fenix/!svn/ver/165/src/main/java/org/cimientos/intranet/servicio/ConvocadoSrv.java
+END
+MateriaSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/fenix/!svn/ver/165/src/main/java/org/cimientos/intranet/servicio/MateriaSrv.java
+END
+InformeFPSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/fenix/!svn/ver/362/src/main/java/org/cimientos/intranet/servicio/InformeFPSrv.java
+END
+PerfilPadrinoSvr.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/fenix/!svn/ver/274/src/main/java/org/cimientos/intranet/servicio/PerfilPadrinoSvr.java
+END
+PerfilEASrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/fenix/!svn/ver/274/src/main/java/org/cimientos/intranet/servicio/PerfilEASrv.java
+END
+LocalidadSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/fenix/!svn/ver/11/src/main/java/org/cimientos/intranet/servicio/LocalidadSrv.java
+END
+BecaSvr.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/fenix/!svn/ver/348/src/main/java/org/cimientos/intranet/servicio/BecaSvr.java
+END
+InformeSASrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/fenix/!svn/ver/11/src/main/java/org/cimientos/intranet/servicio/InformeSASrv.java
+END
+InformeIS1Srv.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/fenix/!svn/ver/11/src/main/java/org/cimientos/intranet/servicio/InformeIS1Srv.java
+END
+PersonaSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/fenix/!svn/ver/11/src/main/java/org/cimientos/intranet/servicio/PersonaSrv.java
+END
+InformeIS2Srv.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/fenix/!svn/ver/362/src/main/java/org/cimientos/intranet/servicio/InformeIS2Srv.java
+END
+EventoGenericoSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/fenix/!svn/ver/165/src/main/java/org/cimientos/intranet/servicio/EventoGenericoSrv.java
+END
+InformeIS3Srv.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/fenix/!svn/ver/362/src/main/java/org/cimientos/intranet/servicio/InformeIS3Srv.java
+END
+ProvinciaSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/fenix/!svn/ver/259/src/main/java/org/cimientos/intranet/servicio/ProvinciaSrv.java
+END
+EntrevistaTSSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/fenix/!svn/ver/11/src/main/java/org/cimientos/intranet/servicio/EntrevistaTSSrv.java
+END
+UsuarioSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/fenix/!svn/ver/11/src/main/java/org/cimientos/intranet/servicio/UsuarioSrv.java
+END
+EntrevistaSupervisionEscolarSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/fenix/!svn/ver/11/src/main/java/org/cimientos/intranet/servicio/EntrevistaSupervisionEscolarSrv.java
+END
+EntrevistaSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/fenix/!svn/ver/338/src/main/java/org/cimientos/intranet/servicio/EntrevistaSrv.java
+END
+ViaticoSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/fenix/!svn/ver/11/src/main/java/org/cimientos/intranet/servicio/ViaticoSrv.java
+END
+SeguridadSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/fenix/!svn/ver/41/src/main/java/org/cimientos/intranet/servicio/SeguridadSrv.java
+END
+InformeCesacionSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/fenix/!svn/ver/11/src/main/java/org/cimientos/intranet/servicio/InformeCesacionSrv.java
+END
+PerfilStaffSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/fenix/!svn/ver/11/src/main/java/org/cimientos/intranet/servicio/PerfilStaffSrv.java
+END
+ConvocatoriaSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/fenix/!svn/ver/165/src/main/java/org/cimientos/intranet/servicio/ConvocatoriaSrv.java
+END
+ParametroSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/fenix/!svn/ver/11/src/main/java/org/cimientos/intranet/servicio/ParametroSrv.java
+END
+PanelControlSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/fenix/!svn/ver/165/src/main/java/org/cimientos/intranet/servicio/PanelControlSrv.java
+END
+ReporteBecasAlumnosDisponiblesSvr.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/fenix/!svn/ver/165/src/main/java/org/cimientos/intranet/servicio/ReporteBecasAlumnosDisponiblesSvr.java
+END
+EscuelaSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/fenix/!svn/ver/165/src/main/java/org/cimientos/intranet/servicio/EscuelaSrv.java
+END
+BancoSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/fenix/!svn/ver/165/src/main/java/org/cimientos/intranet/servicio/BancoSrv.java
+END
+SupervisorEscolarSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/fenix/!svn/ver/11/src/main/java/org/cimientos/intranet/servicio/SupervisorEscolarSrv.java
+END
+AlumnoPanelEASrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/fenix/!svn/ver/362/src/main/java/org/cimientos/intranet/servicio/AlumnoPanelEASrv.java
+END
+CicloProgramaSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/fenix/!svn/ver/220/src/main/java/org/cimientos/intranet/servicio/CicloProgramaSrv.java
+END
+SeleccionarCandidatosBecasSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/fenix/!svn/ver/165/src/main/java/org/cimientos/intranet/servicio/SeleccionarCandidatosBecasSrv.java
+END
+ResponsableSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/fenix/!svn/ver/11/src/main/java/org/cimientos/intranet/servicio/ResponsableSrv.java
+END
+CimientosExecptionInterceptorSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/fenix/!svn/ver/383/src/main/java/org/cimientos/intranet/servicio/CimientosExecptionInterceptorSrv.java
+END
+AlumnoSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/fenix/!svn/ver/365/src/main/java/org/cimientos/intranet/servicio/AlumnoSrv.java
+END
+ZonaCimientosSrv.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/fenix/!svn/ver/274/src/main/java/org/cimientos/intranet/servicio/ZonaCimientosSrv.java
+END

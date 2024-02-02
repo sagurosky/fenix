@@ -1,0 +1,36 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+
+
+<ul id="menuV" > 
+	<li>
+		<sec:authorize access="hasRole('ADM') or hasRole('CPBE') or hasRole('SYS') or hasRole('ASIST') or hasRole('RR')">
+			<a href="#" class="p">Pago de Becados</a>
+			<ul>
+				<li><a  href='<c:url value="/pago/verAprobadosNoAprobView.do" />'>Pagos Pendientes</a></li>
+				<sec:authorize access="not hasRole('ASIST')">				
+					<li><a  href='<c:url value="/pago/verPagosRealizadosView.do?idBanco=null" />'>Pagos Anteriores</a></li>
+				</sec:authorize>
+				<sec:authorize access="hasRole('ADM') or hasRole('SYS') or hasRole('SuperUsuario')">
+                      <li><a  href='<c:url value="/pago/verlistaPagosView.do" />'>Listado General de Pagos</a></li>
+                </sec:authorize>
+			</ul>
+		</sec:authorize>
+		<sec:authorize access="hasRole('ADM') or hasRole('CPBE') or hasRole('SEL') or hasRole('SYS') or hasRole('ASIST') or hasRole('RR')">				
+			<a href="#" class="p">Cuentas</a>
+			<ul>
+				<sec:authorize access="hasRole('ADM') or hasRole('SYS')">
+					<li><a  href='<c:url value="/cuenta/verCreacionCuentas.do" />'>Alta de Cuentas</a></li>
+					<li><a  href='<c:url value="/cuenta/importarArchivoView.do" />'>Importar Archivo</a></li>
+					<li><a  href='<c:url value="/cuenta/cargarAltaCuentaView.do" />'>Carga Manual Cuentas</a></li>
+				</sec:authorize>
+				<li><a  href='<c:url value="/cuenta/verInformeCuentas.do?idBanco=null" />'>Informe Cuentas</a></li>
+				<li><a  href='<c:url value="/cuenta/verCuentasInactivas.do?idBanco=null" />'>Cuentas Inactivas</a></li>
+			</ul>
+		</sec:authorize>
+	</li>
+</ul>

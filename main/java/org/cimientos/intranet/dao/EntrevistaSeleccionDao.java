@@ -1,0 +1,103 @@
+package org.cimientos.intranet.dao;
+
+import java.util.Date;
+import java.util.List;
+
+import org.cimientos.intranet.dao.base.Dao;
+import org.cimientos.intranet.modelo.CicloPrograma;
+import org.cimientos.intranet.modelo.candidato.convocatoria.Convocatoria;
+import org.cimientos.intranet.modelo.escuela.EscuelaSeleccion;
+import org.cimientos.intranet.modelo.perfil.EstadoAlumno;
+import org.cimientos.intranet.modelo.perfil.PerfilAlumno;
+import org.cimientos.intranet.modelo.seleccion.EntrevistaSeleccion;
+import org.cimientos.intranet.modelo.ubicacion.ZonaCimientos;
+import org.displaytag.properties.SortOrderEnum;
+
+import com.cimientos.intranet.enumerativos.AnioEscolar;
+
+/**
+ * The Interface EntrevistaSeleccionDao.
+ */
+public interface EntrevistaSeleccionDao extends Dao<EntrevistaSeleccion> {
+
+
+	/**
+	 * Obtener entrevistas finalizadas.
+	 *
+	 * @param estadoAlumno the estado alumno
+	 * @param zona the zona
+	 * @param convocatoria the convocatoria
+	 * @param cicloPrograma the ciclo programa
+	 * @param escuela the escuela
+	 * @param anioEscolar the anio escolar
+	 * @param firstResult the first result
+	 * @param maxResults the max results
+	 * @param sortDirection the sort direction
+	 * @param sortCriterion the sort criterion
+	 * @return the list
+	 * @since 29-abr-2011
+	 * @author cfigueroa
+	 * @param nombreAlumno 
+	 */
+	public List<EntrevistaSeleccion> obtenerEntrevistasFinalizadas(
+			EstadoAlumno estadoAlumno, ZonaCimientos zona,
+			Convocatoria convocatoria, CicloPrograma cicloPrograma,
+			EscuelaSeleccion escuela, AnioEscolar anioEscolar, String nombreAlumno, Date fechaDesde, Date fechaHasta, int firstResult,
+			int maxResults, SortOrderEnum sortDirection, String sortCriterion, String eae);
+	public List<EntrevistaSeleccion> obtenerEntrevistasConstruccion();
+
+	
+	/**
+	 * Obtener entrevista por dni alumno.
+	 *
+	 * @param alumnoDni the alumno dni
+	 * @return the {@link EntrevistaSeleccion}
+	 * @since 18-ene-2011
+	 * @author cfigueroa
+	 */
+	public EntrevistaSeleccion obtenerEntrevistaPorDniAlumno(	Integer alumnoDni);
+	
+	
+	public EntrevistaSeleccion obtenerEntrevistaSeleccionPorAlumno(PerfilAlumno alumno );
+
+	/**
+	 * Obtener alumnos sin beca seleccion.
+	 *
+	 * @return the list
+	 * @since 10-feb-2011
+	 * @author cfigueroa
+	 */
+	public List<PerfilAlumno> obtenerAlumnosSinBecaSeleccion();
+	
+	/**
+	 * Obtenter cantidad entrevistas.
+	 *
+	 * @param estadoAlumno the estado alumno
+	 * @param zona the zona
+	 * @param convocatoria the convocatoria
+	 * @param cicloPrograma the ciclo programa
+	 * @param escuela the escuela
+	 * @param anioEscolar the anio escolar
+	 * @param nombreAlumno the nombre alumno
+	 * @param firstResult the first result
+	 * @param maxResults the max results
+	 * @param sortDirection the sort direction
+	 * @param sortCriterion the sort criterion
+	 * @return the integer
+	 * @since 29-abr-2011
+	 * @author cfigueroa
+	 */
+	public Integer obtenterCantidadEntrevistas(
+			EstadoAlumno estadoAlumno, ZonaCimientos zona,
+			Convocatoria convocatoria, CicloPrograma cicloPrograma,
+			EscuelaSeleccion escuela, AnioEscolar anioEscolar,
+			String nombreAlumno, Date fechaDesde, Date fechaHasta, int firstResult, int maxResults,
+			SortOrderEnum sortDirection, String sortCriterion, String eae);
+	
+	
+	public EntrevistaSeleccion obtenerEntrevistaSeleccionPorAlumnoAprobado(PerfilAlumno perfil);
+	
+	public List<EntrevistaSeleccion> obtenerEntrevistasSeleccionPorAlumno(PerfilAlumno alumno );
+	
+	public List<EntrevistaSeleccion> obtenerEntrevistasSeleccionPorIdAlumno(Long idAlumno);
+}

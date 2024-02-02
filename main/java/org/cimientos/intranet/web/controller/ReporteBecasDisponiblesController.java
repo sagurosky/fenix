@@ -1,0 +1,196 @@
+package org.cimientos.intranet.web.controller;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.cimientos.intranet.modelo.Beca;
+import org.cimientos.intranet.modelo.CicloPrograma;
+import org.cimientos.intranet.modelo.EstadoBeca;
+import org.cimientos.intranet.modelo.Periodo;
+import org.cimientos.intranet.modelo.perfilPadrino.PerfilPadrino;
+import org.cimientos.intranet.modelo.perfilPadrino.TipoPadrino;
+import org.cimientos.intranet.modelo.ubicacion.ZonaCimientos;
+import org.cimientos.intranet.servicio.CicloProgramaSrv;
+import org.cimientos.intranet.servicio.PerfilPadrinoSvr;
+import org.cimientos.intranet.servicio.ReporteBecasDisponiblesServ;
+import org.cimientos.intranet.servicio.ZonaCimientosSrv;
+import org.cimientos.intranet.utils.PeriodoHelper;
+import org.cimientos.intranet.utils.paginacion.ExtendedPaginatedList;
+import org.cimientos.intranet.utils.paginacion.PaginateListFactory;
+import org.displaytag.tags.TableTagParameters;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+/**
+ * @author nlopez
+ *
+ */
+
+@Controller
+@RequestMapping( "/reporteBecasDisponibles/*" )
+public class ReporteBecasDisponiblesController extends BaseController{
+	
+	@Autowired
+	private ReporteBecasDisponiblesServ becasDisponiblesServ;
+	@Autowired
+	private PaginateListFactory paginateListFactory;
+	@Autowired
+	private CicloProgramaSrv cicloProgramaSrv;
+	@Autowired
+	private ZonaCimientosSrv zonaCimientosSrv;
+	@Autowired
+	private PerfilPadrinoSvr padrinoSvr;
+
+	
+/**
+ * View reporte becas disponibles.
+ *
+ * @return the model and view
+ * @since 15-nov-2010
+ * @author nlopez
+ */
+@RequestMapping("/reporteBecasDisponibles/reporteBecasDisponibles.do")
+	public ModelAndView viewReporteBecasDisponibles(HttpServletRequest request,
+													@RequestParam(required=false,value="idCiclo") Long idCiclo,
+													@RequestParam(required=false,value="idEstadoBeca") Integer idEstadoBeca,
+													@RequestParam(required=false,value="idPeriodo") Long idPeriodo,
+													@RequestParam(required=false,value="idZonaCimientos") Long idZonaCimientos,
+													@RequestParam(required= false, value="tipoId") Integer tipoId,
+													@RequestParam(required=false, value="disminucionBecas") boolean disminucionBecas,
+													@RequestParam(required=false,value="idPadrino") Long idPadrino	
+													
+													){
+		
+		//System.out.println(disminucionBecas);
+		Map<String,Object> map = new HashMap<String, Object>();
+		EstadoBeca estadoBeca = null;
+		ZonaCimientos zona=null;
+		PerfilPadrino padrino=null;
+		CicloPrograma cicloPrograma = null;
+		Periodo periodo = null;
+		Long cicloId = idCiclo != null && idCiclo == 0 ? null : idCiclo;
+		Integer estadoBecaId = idEstadoBeca != null && idEstadoBeca.equals(0) ? null : idEstadoBeca;
+		Long periodoId = idPeriodo != null && idPeriodo == 0 ? null : idPeriodo;
+		
+		Integer idTipo = tipoId != null && tipoId.equals(0) ? null : tipoId;
+		
+		map.put("disminucionBecas", disminucionBecas);
+		
+		//Filtros de busqueda
+		if(cicloId != null ){
+			cicloPrograma = cicloProgramaSrv.obtenerCiclo(cicloId);
+			map.put("ciclo", cicloPrograma);
+			map.put("listaPeriodos", cicloPrograma.getPeriodos());
+			if(periodoId != null ){
+				periodo = PeriodoHelper.obtenerPeriodoPorId(cicloPrograma.getPeriodos(), periodoId);
+				map.put("periodo", periodo);
+			}
+		}
+		if(estadoBecaId != null){
+			estadoBeca= EstadoBeca.getEstadoBeca(estadoBecaId);
+			map.put("estadoBeca", estadoBeca);
+		}
+		if(idZonaCimientos != null){
+			 zona = zonaCimientosSrv.obtenerZonaCimientos(idZonaCimientos);
+			map.put("zonaCimientos", zona);
+		}
+		if(idPadrino != null ){
+			 padrino = padrinoSvr.obtenerPorId(idPadrino);
+			map.put("padrino", padrino);
+		}
+		
+		map.put("tipos", TipoPadrino.getListaTipos());
+        map.put("tipoId", tipoId);
+		map.put("listBeca", paginarBecas(request,cicloPrograma,estadoBeca,periodo,zona,padrino,idTipo,disminucionBecas));
+		map.put("listaCiclos", cicloProgramaSrv.obtenerCiclosClonarBecas());
+		map.put("listEstadoBeca", getEstadoBecas());
+		return forward("reporteBecasDisponibles/reporteBecasDisponibles",map);
+	}
+
+	/**
+	 * Paginar becas.
+	 *
+	 * @param request the request
+	 * @return the extended paginated list
+	 * @since 04-may-2011
+	 * @author cfigueroa
+	 * @param padrino 
+	 * @param zona 
+	 * @param periodo 
+	 * @param estadoBeca 
+	 * @param cicloPrograma 
+	 */
+	private ExtendedPaginatedList paginarBecas(HttpServletRequest request, CicloPrograma cicloPrograma, 
+											   EstadoBeca estadoBeca, Periodo periodo, 
+											   ZonaCimientos zona, PerfilPadrino padrino, Integer idTipo, boolean db) {
+	
+		boolean export = request.getParameter(TableTagParameters.PARAMETER_EXPORTING) != null;
+		
+		List<Beca> dtos = null;
+		
+		
+		ExtendedPaginatedList listaPaginada = paginateListFactory.getPaginatedListFromRequest(request);
+		List<EstadoBeca> estadoBecas = getEstadoBecas();
+		
+		
+	
+		int totalRows = becasDisponiblesServ.cantidadBecasDisponibles(estadoBecas,cicloPrograma,estadoBeca,periodo,zona,padrino, idTipo,db);
+		//Si es un export debo cargar toda la lista entera, si no lo es entonces se carga la lista de a una pagina por vez
+		if(export || db){
+			//Este metodo le faltan los filtros de busqueda
+			dtos = becasDisponiblesServ.becasDisponibles(estadoBecas, 0, 
+														totalRows,listaPaginada.getSortDirection(), 
+														listaPaginada.getSortCriterion(),cicloPrograma,
+														estadoBeca,periodo,zona,padrino,idTipo,db);
+		}else{
+			dtos = becasDisponiblesServ.becasDisponibles(estadoBecas,listaPaginada.getFirstRecordIndex(), 
+												listaPaginada.getPageSize(),listaPaginada.getSortDirection(), 
+												listaPaginada.getSortCriterion(),cicloPrograma,
+												estadoBeca,periodo,zona,padrino,idTipo,db);
+		}
+				
+		//System.out.println(dtos.size());
+		
+		// filtro por disminucion hago iteracion sobre dtos y saco los que becas es mayor a beca asignada		
+		if(db){		
+			Iterator iterador = dtos.listIterator();		
+			while( iterador.hasNext() ) {			
+					Beca b = (Beca) iterador.next();		        
+					if(b.getCantidad()>=b.getCantidadAsignada()){
+						iterador.remove();
+						//System.out.println("Becados: "+b.getCantidadAsignada() + " Becas= "+ b.getCantidad());
+					}
+			}		
+			//System.out.println(dtos.size());		
+			totalRows=dtos.size();
+		}
+		listaPaginada.setList(dtos);
+		listaPaginada.setTotalNumberOfRows(totalRows);
+		
+		return listaPaginada;
+
+	}
+	
+	/**
+	 * Gets the estado becas.
+	 *
+	 * @return the estado becas
+	 * @since 04-may-2011
+	 * @author cfigueroa
+	 */
+	private List<EstadoBeca> getEstadoBecas() {
+		List<EstadoBeca> estadoBecas = new ArrayList<EstadoBeca>();
+		estadoBecas.add(EstadoBeca.PLANIFICADA);
+		estadoBecas.add(EstadoBeca.CONFIRMADA);
+		return estadoBecas;
+	}
+	
+}

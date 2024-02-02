@@ -1,0 +1,25 @@
+/**
+ * 
+ */
+package org.cimientos.intranet.utils;
+
+/**
+ * @author plabaronnie
+ *
+ */
+public class ConstantesBoletin {
+
+	public static final String 
+	PRIMER_TRIMESTRE = "1º Trimestre",
+	SEGUNDO_TRIMESTRE = "2º Trimestre",
+	TERCER_TRIMESTRE = "3º Trimestre",
+	FINAL = "Final",
+	DICIEMBRE = "Diciembre",
+	MARZO = "Marzo",
+	PREVIAS_JULIO = "Previas Julio",
+	PREVIAS_DICIEMBRE = "Previas Diciembre",
+	PREVIAS_MARZO = "Previas Marzo",
+	NO_APRUEBA = "No aprueba",
+	PREVIAS_MESA_ADICIONAL = "Previas Mesa Adicional",
+	PREVIAS_COMENTARIOS = "Previas Comentarios";
+}

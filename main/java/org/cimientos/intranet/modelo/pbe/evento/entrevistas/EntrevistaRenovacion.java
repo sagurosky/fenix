@@ -1,0 +1,327 @@
+package org.cimientos.intranet.modelo.pbe.evento.entrevistas;
+
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToOne;
+
+import org.cimientos.intranet.modelo.FichaFamiliar;
+import org.hibernate.annotations.CollectionOfElements;
+
+
+//import com.cimientos.intranet.enumerativos.ResultadoAnioEscolar;
+import com.cimientos.intranet.enumerativos.SituacionEscolarMergeada;
+import com.cimientos.intranet.enumerativos.entrevista.ContenidosTrabajarEnElAnio;
+import com.cimientos.intranet.enumerativos.entrevista.EvaluacionRenovacionFinal;
+import com.cimientos.intranet.enumerativos.entrevista.EvaluacionRenovacionMergeada;
+import com.cimientos.intranet.enumerativos.entrevista.GustosTiempoLibre;
+import com.cimientos.intranet.enumerativos.entrevista.MotivoPendiente;
+import com.cimientos.intranet.enumerativos.entrevista.PropositoAnioComienza;
+import com.cimientos.intranet.enumerativos.entrevista.TipoContacto;
+
+@Entity
+@DiscriminatorValue("renovacion")
+public class EntrevistaRenovacion extends EntrevistaIndividual {
+	
+	@Enumerated(EnumType.ORDINAL)
+	private EvaluacionRenovacionMergeada evaluacionRenovacionDiciembre;
+	
+
+	@Enumerated(EnumType.ORDINAL)
+	private SituacionEscolarMergeada situacionEscolarDiciembre;
+	
+	
+	
+	@Column(length=10000)
+	private String escolaridadCompromisoAnterior;
+	@Column(length=10000)
+	private String realizadoVacaciones;
+	@Column(length=10000)
+	private String propositoAnioComienza;
+	@Column(length=10000)
+	private String observacionMateriasExamenes;
+	
+	@OneToOne
+	private FichaFamiliar fichaFamiliar;
+	
+	@Enumerated(EnumType.ORDINAL)
+	private MotivoPendiente motivoPendiente;
+	
+	@Column(length=10000)
+	private String motivoOtro;
+	
+	private String mensajePadrino;
+	
+	@Enumerated(EnumType.ORDINAL)
+	private TipoContacto tipoContacto;
+	
+	@Column(length=10000)
+	private String motivoTipoContactoOtro;
+	
+	private boolean realizoEntrevista;
+	
+	
+	//@CollectionOfElements
+	//@JoinTable(name="contenidos_trabajar_en_el_anio")
+	//@Enumerated(EnumType.ORDINAL)
+	//private List<ContenidosTrabajarEnElAnio> contenidosTrabajarEnElAnio;
+	
+	
+	@Enumerated(EnumType.ORDINAL)
+	private EvaluacionRenovacionFinal evaluacionRenovacionFinal;
+	
+//	@Enumerated(EnumType.ORDINAL)
+//	private ResultadoAnioEscolar resultadoAnioEscolar;
+	
+	@CollectionOfElements
+	@JoinTable(name="proposito_anio_comienza_list_entrevistas")
+	@Enumerated(EnumType.ORDINAL)
+	private List<PropositoAnioComienza> propositoAnioComienzaList;
+	
+	@CollectionOfElements
+	@JoinTable(name="gustos_tiempo_libre_entrevistas")
+	@Enumerated(EnumType.ORDINAL)
+	private List<GustosTiempoLibre> gustosTiempoLibre;
+	
+	//2018
+	@Column(length=10000)
+	private String obsMateriasPendientes;
+	
+	
+	//2022
+	@Column(length=10000)
+	private String oeaioe;
+	
+	//2023
+	@Column(length=20)
+	private String actaCompromiso;
+	
+	
+	
+	
+	
+	
+	public String getActaCompromiso() {
+		return actaCompromiso;
+	}
+
+	public void setActaCompromiso(String actaCompromiso) {
+		this.actaCompromiso = actaCompromiso;
+	}
+
+	public String getOeaioe() {
+		return oeaioe;
+	}
+
+	public void setOeaioe(String oeaioe) {
+		this.oeaioe = oeaioe;
+	}
+
+	public String getOtroHSE() {
+		return otroHSE;
+	}
+
+	public void setOtroHSE(String otroHSE) {
+		this.otroHSE = otroHSE;
+	}
+
+	public String getOtroContenidoTrabajado() {
+		return otroContenidoTrabajado;
+	}
+
+	public void setOtroContenidoTrabajado(String otroContenidoTrabajado) {
+		this.otroContenidoTrabajado = otroContenidoTrabajado;
+	}
+
+	//2021
+	@Column(length=10000)
+	private String otroHSE;
+	
+	@Column(length=10000)
+	private String otroContenidoTrabajado;
+	
+
+	public boolean isRealizoEntrevista() {
+		return realizoEntrevista;
+	}
+
+	public void setRealizoEntrevista(boolean realizoEntrevista) {
+		this.realizoEntrevista = realizoEntrevista;
+	}
+
+	public String getObservacionMateriasExamenes() {
+		return observacionMateriasExamenes;
+	}
+
+	public void setObservacionMateriasExamenes(String observacionMateriasExamenes) {
+		this.observacionMateriasExamenes = observacionMateriasExamenes;
+	}
+
+	public TipoContacto getTipoContacto() {
+		return tipoContacto;
+	}
+
+	public void setTipoContacto(TipoContacto tipoContacto) {
+		this.tipoContacto = tipoContacto;
+	}
+
+
+	public String getObsMateriasPendientes() {
+		return obsMateriasPendientes;
+	}
+
+	public void setObsMateriasPendientes(String obsMateriasPendientes) {
+		this.obsMateriasPendientes = obsMateriasPendientes;
+	}
+
+	public EvaluacionRenovacionMergeada getEvaluacionRenovacionDiciembre() {
+		return evaluacionRenovacionDiciembre;
+	}
+
+	public void setEvaluacionRenovacionDiciembre(
+			EvaluacionRenovacionMergeada evaluacionRenovacionDiciembre) {
+		this.evaluacionRenovacionDiciembre = evaluacionRenovacionDiciembre;
+	}
+
+	public SituacionEscolarMergeada getSituacionEscolarDiciembre() {
+		return situacionEscolarDiciembre;
+	}
+	
+	public void setSituacionEscolarDiciembre(
+			SituacionEscolarMergeada situacionEscolarDiciembre) {
+		this.situacionEscolarDiciembre = situacionEscolarDiciembre;
+	}
+	
+
+	public String getEscolaridadCompromisoAnterior() {
+		return escolaridadCompromisoAnterior;
+	}
+
+	public void setEscolaridadCompromisoAnterior(
+			String escolaridadCompromisoAnterior) {
+		this.escolaridadCompromisoAnterior = escolaridadCompromisoAnterior;
+	}
+
+	public String getRealizadoVacaciones() {
+		return realizadoVacaciones;
+	}
+
+	public void setRealizadoVacaciones(String realizadoVacaciones) {
+		this.realizadoVacaciones = realizadoVacaciones;
+	}
+
+	public String getPropositoAnioComienza() {
+		return propositoAnioComienza;
+	}
+
+	public void setPropositoAnioComienza(String propositoAnioComienza) {
+		this.propositoAnioComienza = propositoAnioComienza;
+	}
+
+	public FichaFamiliar getFichaFamiliar() {
+		return fichaFamiliar;
+	}
+
+	public void setFichaFamiliar(FichaFamiliar fichaFamiliar) {
+		this.fichaFamiliar = fichaFamiliar;
+	}
+
+	public MotivoPendiente getMotivoPendiente() {
+		return motivoPendiente;
+	}
+
+	public void setMotivoPendiente(MotivoPendiente motivoPendiente) {
+		this.motivoPendiente = motivoPendiente;
+	}
+
+	public String getMotivoOtro() {
+		return motivoOtro;
+	}
+
+	public void setMotivoOtro(String motivoOtro) {
+		this.motivoOtro = motivoOtro;
+	}
+
+	public String getMensajePadrino() {
+		return mensajePadrino;
+	}
+
+	public void setMensajePadrino(String mensajePadrino) {
+		this.mensajePadrino = mensajePadrino;
+	}
+
+	public EvaluacionRenovacionFinal getEvaluacionRenovacionFinal() {
+		return evaluacionRenovacionFinal;
+	}
+
+	public void setEvaluacionRenovacionFinal(
+			EvaluacionRenovacionFinal evaluacionRenovacionFinal) {
+		this.evaluacionRenovacionFinal = evaluacionRenovacionFinal;
+	}
+
+//	public ResultadoAnioEscolar getResultadoAnioEscolar() {
+//		return resultadoAnioEscolar;
+//	}
+//
+//	public void setResultadoAnioEscolar(ResultadoAnioEscolar resultadoAnioEscolar) {
+//		this.resultadoAnioEscolar = resultadoAnioEscolar;
+//	}
+
+	/**
+	 * Retorna true si en una entrevista individual se cobra beca.
+	 * @return
+	 */
+	public boolean isCobraBeca(){
+		return super.isCobraBeca() && !this.getEvaluacionRenovacionMergeada().equals(EvaluacionRenovacionMergeada.NO_RENUEVA)
+				&& !this.getEvaluacionRenovacionMergeada().equals(EvaluacionRenovacionMergeada.PENDIENTE);
+	}
+	
+	public String getMotivoTipoContactoOtro() {
+		return motivoTipoContactoOtro;
+	}
+
+	public void setMotivoTipoContactoOtro(String motivoTipoContactoOtro) {
+		this.motivoTipoContactoOtro = motivoTipoContactoOtro;
+	}
+	
+	/**
+	 * @return the propositoAnioComienzaList
+	 */
+	public List<PropositoAnioComienza> getPropositoAnioComienzaList() {
+		return propositoAnioComienzaList;
+	}
+
+	/**
+	 * @param propositoAnioComienzaList the propositoAnioComienzaList to set
+	 */
+	public void setPropositoAnioComienzaList(
+			List<PropositoAnioComienza> propositoAnioComienzaList) {
+		this.propositoAnioComienzaList = propositoAnioComienzaList;
+	}
+
+	/**
+	 * @return the gustosTiempoLibre
+	 */
+	public List<GustosTiempoLibre> getGustosTiempoLibre() {
+		return gustosTiempoLibre;
+	}
+
+	/**
+	 * @param gustosTiempoLibre the gustosTiempoLibre to set
+	 */
+	public void setGustosTiempoLibre(List<GustosTiempoLibre> gustosTiempoLibre) {
+		this.gustosTiempoLibre = gustosTiempoLibre;
+	}
+
+	
+	
+	
+	
+	
+	
+}

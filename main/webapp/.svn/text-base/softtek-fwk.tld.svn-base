@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN" "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+
+<!-- a tag library descriptor -->
+
+<taglib>
+<tlib-version>1.2</tlib-version>
+<jsp-version>2.5</jsp-version>
+<short-name>sofftek-fwk</short-name>
+<description>Sofftek Tag library</description>
+<tag>
+	<name>jquery</name>
+	<tag-class>com.softtek.framework.web.JQueryTag</tag-class>
+	<body-content>EMPTY</body-content>
+	<description>Insertar las propiedasdes de jquery</description>
+	<attribute>
+		<name>nameTable</name>
+		<required>true</required>
+	</attribute>
+	<attribute>
+		<name>disableColumSort</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+		<description>Este atributo tiene que llevar el nombre de las columnas que no se pueden ordenar en un string separado por ";" EJ: "Alumno;Edad" </description>
+	</attribute>
+	<attribute>
+		<name>disableFilterColumn</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+		<description>Este atributo tiene que llevar el nombre de las columnas que no se pueden filtrar  en un string separado por ";" EJ: "Alumno;Edad" </description>
+	</attribute>
+	<attribute>
+		<name>urlAjax</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+		<description>Este atributo tiene que llevar la url para la carga de datos mediante ajax </description>
+	</attribute>
+</tag>
+<tag>
+<name>table</name>
+	<tag-class>com.softtek.framework.web.TableTag</tag-class>
+	<body-content>EMPTY</body-content>
+	<description>Inserts a Table.</description>
+<attribute>
+		<name>nameTable</name>
+		<required>true</required>
+</attribute>
+<attribute>
+	<name>nameColumns</name>
+	<required>true</required>
+	<rtexprvalue>true</rtexprvalue>
+	<description>Este atributo tiene que llevar los nombres de la columnas para armar 
+	la tabla html en un String separdo por ,
+	</description>
+	
+</attribute>
+<attribute>
+	<name>nameValueColumns</name>
+	<required>true</required>
+	<rtexprvalue>true</rtexprvalue>
+	<description>Este atributo tiene que llevar los valores para recuperar del objeto json, es un String separado por "," EJ: "nombre;persona.apellido" .Este tag se tiene que utilizar si la carga de la tabla no es por ajax.
+	Si se obtener el valor de un atributo que es un objeto se tiene que poner de esta forma "datosPersonales.nombre" </description>
+</attribute>
+
+<attribute>
+	<name>jsonObject</name>
+	<required>true </required>
+	<rtexprvalue>true</rtexprvalue>
+	<description>Este atributo tiene que llevar un objeto Json armado en el servidor ,Este tag se tiene que utilizar si la carga de la tabla no es por ajax</description>
+</attribute>
+<attribute>
+	<name>checkBox</name>
+	<required>false </required>
+	<rtexprvalue>true</rtexprvalue>
+	<description>Este atributo se tiene que setear a true si se quierer poner dentro de la tabla checkbox , en cada fila . Valor por defecto False </description>
+</attribute>
+</tag>
+
+
+</taglib>
+

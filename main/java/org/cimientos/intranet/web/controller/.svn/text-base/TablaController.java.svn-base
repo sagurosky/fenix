@@ -1,0 +1,53 @@
+package org.cimientos.intranet.web.controller;
+
+import java.util.List;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONException;
+import net.sf.json.JSONObject;
+
+import org.cimientos.intranet.dto.TablaDTO;
+import org.cimientos.intranet.servicio.TablaSrv;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+@Controller
+@RequestMapping("/tabla/*")
+public class TablaController {
+
+	@Autowired
+	TablaSrv tablaService;
+
+
+	@RequestMapping("/tabla/subtotalizarColumna.do")
+	@ResponseBody
+	public String subtotalizarColumna(
+			@RequestParam ("tabla") String tabla,
+			@RequestParam ("campo") String campo
+			) throws JSONException{
+    		
+				List<TablaDTO> lista = tablaService.subtotalizar(tabla, campo);
+				
+				JSONObject jsonObject = new JSONObject();
+				jsonObject.element("sEcho", 1);
+				jsonObject.element("iTotalRecords", lista.size());
+				jsonObject.element("iTotalDisplayRecords", lista.size());
+				jsonObject.element("aaData", new JSONArray());
+				
+				for (TablaDTO tablaDTO : lista) {
+					JSONArray jsonArray = new JSONArray();
+					jsonArray.add(tablaDTO.getNombre());
+					jsonArray.add(tablaDTO.getRepeticiones());
+					jsonObject.accumulate("aaData", jsonArray);
+				}
+				
+				System.out.println("JSONBOJECTY "+ jsonObject.toString() );
+			
+			return jsonObject.toString();
+			}
+	
+	
+}

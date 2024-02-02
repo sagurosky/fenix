@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/fenix/!svn/ver/310/src/main/webapp/WEB-INF/pages/pago
+END
+listaPagos.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/fenix/!svn/ver/334/src/main/webapp/WEB-INF/pages/pago/listaPagos.jsp
+END
+listaPagoEntrevistadores.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/pago/listaPagoEntrevistadores.jsp
+END
+listaPagoBecados.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/fenix/!svn/ver/299/src/main/webapp/WEB-INF/pages/pago/listaPagoBecados.jsp
+END
+verAprobadosNoAprob.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/fenix/!svn/ver/345/src/main/webapp/WEB-INF/pages/pago/verAprobadosNoAprob.jsp
+END
+detallePagoBecado.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/pago/detallePagoBecado.jsp
+END
+verEas.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/pago/verEas.jsp
+END
+verPagosRecordatorio.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/pago/verPagosRecordatorio.jsp
+END

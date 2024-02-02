@@ -1,0 +1,323 @@
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/fenix/!svn/ver/311/src/main/java/org/cimientos/intranet/dao
+END
+PanelControlSeleccionDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/PanelControlSeleccionDao.java
+END
+AlumnoDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/fenix/!svn/ver/311/src/main/java/org/cimientos/intranet/dao/AlumnoDao.java
+END
+ZonaCimientosDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/fenix/!svn/ver/274/src/main/java/org/cimientos/intranet/dao/ZonaCimientosDao.java
+END
+EmpresaDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/EmpresaDao.java
+END
+TablaDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/TablaDao.java
+END
+PerfilTSDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/PerfilTSDao.java
+END
+PerfilVoluntarioDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/PerfilVoluntarioDao.java
+END
+PerfilRRDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/PerfilRRDao.java
+END
+RecordatorioDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/RecordatorioDao.java
+END
+PeriodoDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/fenix/!svn/ver/318/src/main/java/org/cimientos/intranet/dao/PeriodoDao.java
+END
+EntrevistaSeleccionDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/fenix/!svn/ver/339/src/main/java/org/cimientos/intranet/dao/EntrevistaSeleccionDao.java
+END
+BoletinDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/fenix/!svn/ver/150/src/main/java/org/cimientos/intranet/dao/BoletinDao.java
+END
+TrimestreDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/TrimestreDao.java
+END
+NotaMateriaDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/NotaMateriaDao.java
+END
+AlumnoSeleccionDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/AlumnoSeleccionDao.java
+END
+PagoDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/fenix/!svn/ver/334/src/main/java/org/cimientos/intranet/dao/PagoDao.java
+END
+SucursalBancoDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/SucursalBancoDao.java
+END
+InformeDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/fenix/!svn/ver/298/src/main/java/org/cimientos/intranet/dao/InformeDao.java
+END
+ComunicadoNoRenovacionDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/ComunicadoNoRenovacionDao.java
+END
+PerfilPadrinoDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/fenix/!svn/ver/274/src/main/java/org/cimientos/intranet/dao/PerfilPadrinoDao.java
+END
+ComunicadoPendienteDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/ComunicadoPendienteDao.java
+END
+BecaDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/fenix/!svn/ver/343/src/main/java/org/cimientos/intranet/dao/BecaDao.java
+END
+ObjetivoSeleccionDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/ObjetivoSeleccionDao.java
+END
+TextoDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/fenix/!svn/ver/350/src/main/java/org/cimientos/intranet/dao/TextoDao.java
+END
+EscuelaSeleccionDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/EscuelaSeleccionDAO.java
+END
+ConvocadoDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/ConvocadoDao.java
+END
+MateriaDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/MateriaDao.java
+END
+InformeFPDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/fenix/!svn/ver/362/src/main/java/org/cimientos/intranet/dao/InformeFPDao.java
+END
+PerfilEADao.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/fenix/!svn/ver/274/src/main/java/org/cimientos/intranet/dao/PerfilEADao.java
+END
+LocalidadDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/LocalidadDao.java
+END
+InformeSADao.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/InformeSADao.java
+END
+InformeIS1Dao.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/InformeIS1Dao.java
+END
+InformeIS2Dao.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/InformeIS2Dao.java
+END
+PersonaDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/PersonaDao.java
+END
+InformeIS3Dao.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/InformeIS3Dao.java
+END
+ProvinciaDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/fenix/!svn/ver/259/src/main/java/org/cimientos/intranet/dao/ProvinciaDao.java
+END
+EventoGenericoDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/EventoGenericoDao.java
+END
+UsuarioDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/UsuarioDao.java
+END
+EntrevistaTSDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/EntrevistaTSDao.java
+END
+EntrevistaDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/fenix/!svn/ver/322/src/main/java/org/cimientos/intranet/dao/EntrevistaDao.java
+END
+ViaticoDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/ViaticoDao.java
+END
+EntrevistaSupervisionEscolarDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/EntrevistaSupervisionEscolarDao.java
+END
+InformeCesacionDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/InformeCesacionDao.java
+END
+PerfilStaffDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/PerfilStaffDao.java
+END
+ConvocatoriaDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/ConvocatoriaDao.java
+END
+ParametroDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/ParametroDao.java
+END
+EscuelaDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/EscuelaDao.java
+END
+SupervisorEscolarDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/SupervisorEscolarDao.java
+END
+BancoDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/BancoDao.java
+END
+AlumnoPanelEADao.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/AlumnoPanelEADao.java
+END
+CicloProgramaDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/fenix/!svn/ver/220/src/main/java/org/cimientos/intranet/dao/CicloProgramaDao.java
+END
+ResponsableDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/ResponsableDao.java
+END
+ReporteBecasDisponiblesDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/fenix/!svn/ver/345/src/main/java/org/cimientos/intranet/dao/ReporteBecasDisponiblesDAO.java
+END

@@ -1,0 +1,124 @@
+package org.cimientos.intranet.web.controller;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.cimientos.intranet.modelo.candidato.convocatoria.Convocatoria;
+import org.cimientos.intranet.servicio.ConvocatoriaSrv;
+import org.cimientos.intranet.utils.Formateador;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+
+/**
+ * The Class ConvocatoriaController.
+ */
+@Controller
+@RequestMapping("/convocatoria/*")
+public class ConvocatoriaController extends BaseController {
+	
+	@Autowired
+	private ConvocatoriaSrv convocatoriaSrv;
+	
+	private Map<String,Object> map;
+	
+	/**
+	 * Alta convocatoria view.
+	 *
+	 * @return the model and view
+	 * @since 19-nov-2010
+	 * @author cfigueroa
+	 */
+	@RequestMapping("/convocatoria/altaConvocatoriaView")
+	public ModelAndView altaConvocatoriaView(){
+		map = new HashMap<String,Object>();
+		map.put("convocatoria",new Convocatoria());
+		map.put("listZonaCimientos", convocatoriaSrv.obtenerZonaCimientos());
+		map.put("listEscuelas", convocatoriaSrv.obtenerEscuelas());
+		map.put("listVoluntarios", convocatoriaSrv.obtenerPerfilVoluntarios());
+		map.put("listCiclos", convocatoriaSrv.obtenerCiclosConvocatorias());
+		
+		return forward("/convocatoria/altaConvocatoria", map);
+	}
+	
+	/**
+	 * Alta convocatoria.
+	 *
+	 * @param convocatoria the convocatoria
+	 * @return the model and view
+	 * @since 19-nov-2010
+	 * @author cfigueroa
+	 */
+	@RequestMapping("/convocatoria/altaConvocatoria")
+	public ModelAndView altaConvocatoria(@ModelAttribute("convocatoria")Convocatoria convocatoria,
+			@RequestParam("fechaInicioText")String fechaInicio){
+		ModelAndView modelAndView = new ModelAndView("redirect:/convocatoria/listaConvocatoria.do");
+		convocatoria.setActivo(true);
+		convocatoria.setFechaInicio(Formateador.parsearFecha(fechaInicio));
+		convocatoriaSrv.guardarConvocatoria(convocatoria);
+		//Esto es para guardar la convocatoria para entrevista seleccion
+		convocatoriaSrv.guardarConvocatoriaSeleccion(convocatoria);
+		return modelAndView;
+	}
+	
+	/**
+	 * Lista convocatoria.
+	 *
+	 * @return the model and view
+	 * @since 19-nov-2010
+	 * @author cfigueroa
+	 */
+	@RequestMapping("/convocatoria/listaConvocatoria")
+	public ModelAndView listaConvocatoria(){
+		map = new HashMap<String, Object>();
+		
+		map.put("listaConvocatoria", convocatoriaSrv.obtenerConvocatorias());
+		
+		return forward("/convocatoria/listaConvocatoria", map);
+	}
+	
+	/**
+	 * Modificación convocatoria view.
+	 *
+	 * @return the model and view
+	 * @since 06-dic-2012
+	 * @author jbaracco
+	 */
+	@RequestMapping("/convocatoria/modificarConvocatoriaView.do")
+	public ModelAndView modificarConvocatoriaView(@RequestParam("idConvocatoria")Long idConvocatoria){
+		map = new HashMap<String,Object>();
+		map.put("convocatoria",convocatoriaSrv.obtenerConvocatoriaPorId(idConvocatoria));
+		map.put("listZonaCimientos", convocatoriaSrv.obtenerZonaCimientos());
+		map.put("listEscuelas", convocatoriaSrv.obtenerEscuelas());
+		map.put("listVoluntarios", convocatoriaSrv.obtenerPerfilVoluntarios());
+		map.put("listCiclos", convocatoriaSrv.obtenerCiclosConvocatorias());
+		
+		return forward("/convocatoria/modificarConvocatoria", map);
+	}
+	
+	
+	/**
+	 * Modificación de convocatoria.
+	 *
+	 * @param convocatoria the convocatoria
+	 * @return the model and view
+	 * @since 19-nov-2010
+	 * @author cfigueroa
+	 */
+	@RequestMapping("/convocatoria/modificarConvocatoria")
+	public ModelAndView modificarConvocatoria(@ModelAttribute("convocatoria")Convocatoria convocatoria,
+			@RequestParam("fechaInicioText")String fechaInicio){
+		ModelAndView modelAndView = new ModelAndView("redirect:/convocatoria/listaConvocatoria.do");
+		convocatoria.setFechaInicio(Formateador.parsearFecha(fechaInicio));
+		convocatoria.setActivo(true);
+		convocatoriaSrv.guardarConvocatoria(convocatoria);
+		//Esto es para guardar la convocatoria para entrevista seleccion
+		convocatoriaSrv.guardarConvocatoriaSeleccion(convocatoria);
+		return modelAndView;
+	}
+
+}

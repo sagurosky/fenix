@@ -1,0 +1,1598 @@
+package com.cimientos.intranet.dto;
+
+import java.sql.Date;
+
+
+public class ReporteEntrevistaSeleccionDTO2{
+
+	private String ciclo;
+	private String apellidoAlumno;
+	private String nombreAlumno;
+	private String tipoDNI;
+	private String nroDNI;
+	private Date fechaNac;
+	private String sexo;
+	private String nacionalidad;
+	private String zonaCimientos;
+	private String convocatoria;
+	private String escuela;
+	private String modalidad;
+	private String anioEscolar;
+	private String division;
+	private String turno;
+	private String recibeOtraBeca;
+	private String becaCual;
+	private String calle;
+	private String numero;
+	private String piso;
+	private String cp;
+	private String barrio;
+	private String localidad;
+	private String provincia;
+	private String contacto1;
+	private String contacto2;
+	private String contacto3;
+	private String repitencia;
+	private String repitenciaAnio;
+	private String motivoRepitencia;
+	private String abandono;
+	private String abandonoAnio;
+	private String motivoAbandono;
+	private String conducta;
+	private String informacionComplementaria;
+	private String percepcionesCandidato;
+	private String compromisoEscolaridad;
+	private String posibilidadCompromisoPBE;
+	private String cantidadInasitenciasAnioPasado;
+	private String cantidadInasitenciasAnioCurso;
+	private String egresosTotales;
+	private String ingresosTotales;
+	private String observacionIngresoEgreso;
+	private String observacionesGenerales;
+	private String entrevistador;
+	private Date fechaCargaEntrevista;
+	private String fechaAsignacion;
+	private String estadoAlumno;
+	private String motivRechazo;
+	private String otroMotivoRechazo;
+	private String observacionesTS;
+	private String motivoEnvioTS;
+	private Long idAlumno;
+	private Long idRA1;
+	private Long idRA2;
+	private Long idEntrevista;
+	private String apellidoRA1;
+	private String nombreRA1;
+	private String vinculoRA1;
+	private String tipoDNIRA1;
+	private String nroDNIRA1;
+	private Date fechaNacRA1;
+	private String sexoRA1;
+	private String nacionalidadRA1;
+	private String asisteEntrevistaRA1;
+	private String apellidoRA2;
+	private String nombreRA2;
+	private String vinculoRA2;
+	private String compomioEscolaridad;
+	private String aptoComoRA;
+	private String posibilidadCompromisoPBERA;
+	private String sucursal;
+	private String relacionVivienda;
+	private String mesAsignacion;
+	private String v1;
+	private String na1;
+	private String edad1;
+	private String conv1;
+	private String mne1;
+	private String ma1;
+	private String ocu1;
+	private String dl1;
+	private String rem1;
+	private String oi1;
+	private String v2;
+	private String na2;
+	private String edad2;
+	private String conv2;
+	private String mne2;
+	private String ma2;
+	private String ocu2;
+	private String dl2;
+	private String rem2;
+	private String oi2;
+	private String v3;
+	private String na3;
+	private String edad3;
+	private String conv3;
+	private String mne3;
+	private String ma3;
+	private String ocu3;
+	private String dl3;
+	private String rem3;
+	private String oi3;
+	private String v4;
+	private String na4;
+	private String edad4;
+	private String conv4;
+	private String mne4;
+	private String ma4;
+	private String ocu4;
+	private String dl4;
+	private String rem4;
+	private String oi4;
+	private String v5;
+	private String na5;
+	private String edad5;
+	private String conv5;
+	private String mne5;
+	private String ma5;
+	private String ocu5;
+	private String dl5;
+	private String rem5;
+	private String oi5;
+	private String v6;
+	private String na6;
+	private String edad6;
+	private String conv6;
+	private String mne6;
+	private String ma6;
+	private String ocu6;
+	private String dl6;
+	private String rem6;
+	private String oi6;
+	private String v7;
+	private String na7;
+	private String edad7;
+	private String conv7;
+	private String mne7;
+	private String ma7;
+	private String ocu7;
+	private String dl7;
+	private String rem7;
+	private String oi7;
+	private String v8;
+	private String na8;
+	private String edad8;
+	private String conv8;
+	private String mne8;
+	private String ma8;
+	private String ocu8;
+	private String dl8;
+	private String rem8;
+	private String oi8;
+	private String v9;
+	private String na9;
+	private String edad9;
+	private String conv9;
+	private String mne9;
+	private String ma9;
+	private String ocu9;
+	private String dl9;
+	private String rem9;
+	private String oi9;
+	private String v10;
+	private String na10;
+	private String edad10;
+	private String conv10;
+	private String mne10;
+	private String ma10;
+	private String ocu10;
+	private String dl10;
+	private String rem10;
+	private String oi10;
+	private String v11;
+	private String na11;
+	private String edad11;
+	private String conv11;
+	private String mne11;
+	private String ma11;
+	private String ocu11;
+	private String dl11;
+	private String rem11;
+	private String oi11;
+	private String v12;
+	private String na12;
+	private String edad12;
+	private String conv12;
+	private String mne12;
+	private String ma12;
+	private String ocu12;
+	private String dl12;
+	private String rem12;
+	private String oi12;
+	private String v13;
+	private String na13;
+	private String edad13;
+	private String conv13;
+	private String mne13;
+	private String ma13;
+	private String ocu13;
+	private String dl13;
+	private String rem13;
+	private String oi13;
+	private String v14;
+	private String na14;
+	private String edad14;
+	private String conv14;
+	private String mne14;
+	private String ma14;
+	private String ocu14;
+	private String dl14;
+	private String rem14;
+	private String oi14;
+	private String v15;
+	private String na15;
+	private String edad15;
+	private String conv15;
+	private String mne15;
+	private String ma15;
+	private String ocu15;
+	private String dl15;
+	private String rem15;
+	private String oi15;
+	
+	
+	
+	
+	public String getCiclo() {
+		return ciclo;
+	}
+	public void setCiclo(String ciclo) {
+		this.ciclo = ciclo;
+	}
+	public String getApellidoAlumno() {
+		return apellidoAlumno;
+	}
+	public void setApellidoAlumno(String apellidoAlumno) {
+		this.apellidoAlumno = apellidoAlumno;
+	}
+	public String getNombreAlumno() {
+		return nombreAlumno;
+	}
+	public void setNombreAlumno(String nombreAlumno) {
+		this.nombreAlumno = nombreAlumno;
+	}
+	public String getTipoDNI() {
+		return tipoDNI;
+	}
+	public void setTipoDNI(String tipoDNI) {
+		this.tipoDNI = tipoDNI;
+	}
+	public String getNroDNI() {
+		return nroDNI;
+	}
+	public void setNroDNI(String nroDNI) {
+		this.nroDNI = nroDNI;
+	}
+	public Date getFechaNac() {
+		return fechaNac;
+	}
+	public void setFechaNac(Date fechaNac) {
+		this.fechaNac = fechaNac;
+	}
+	public String getSexo() {
+		return sexo;
+	}
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
+	}
+	public String getNacionalidad() {
+		return nacionalidad;
+	}
+	public void setNacionalidad(String nacionalidad) {
+		this.nacionalidad = nacionalidad;
+	}
+	public String getZonaCimientos() {
+		return zonaCimientos;
+	}
+	public void setZonaCimientos(String zonaCimientos) {
+		this.zonaCimientos = zonaCimientos;
+	}
+	public String getConvocatoria() {
+		return convocatoria;
+	}
+	public void setConvocatoria(String convocatoria) {
+		this.convocatoria = convocatoria;
+	}
+	public String getEscuela() {
+		return escuela;
+	}
+	public void setEscuela(String escuela) {
+		this.escuela = escuela;
+	}
+	public String getModalidad() {
+		return modalidad;
+	}
+	public void setModalidad(String modalidad) {
+		this.modalidad = modalidad;
+	}
+	public String getAnioEscolar() {
+		return anioEscolar;
+	}
+	public void setAnioEscolar(String anioEscolar) {
+		this.anioEscolar = anioEscolar;
+	}
+	public String getDivision() {
+		return division;
+	}
+	public void setDivision(String division) {
+		this.division = division;
+	}
+	public String getTurno() {
+		return turno;
+	}
+	public void setTurno(String turno) {
+		this.turno = turno;
+	}
+	public String getRecibeOtraBeca() {
+		return recibeOtraBeca;
+	}
+	public void setRecibeOtraBeca(String recibeOtraBeca) {
+		this.recibeOtraBeca = recibeOtraBeca;
+	}
+	public String getBecaCual() {
+		return becaCual;
+	}
+	public void setBecaCual(String becaCual) {
+		this.becaCual = becaCual;
+	}
+	public String getCalle() {
+		return calle;
+	}
+	public void setCalle(String calle) {
+		this.calle = calle;
+	}
+	public String getNumero() {
+		return numero;
+	}
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
+	public String getPiso() {
+		return piso;
+	}
+	public void setPiso(String piso) {
+		this.piso = piso;
+	}
+	public String getCp() {
+		return cp;
+	}
+	public void setCp(String cp) {
+		this.cp = cp;
+	}
+	public String getBarrio() {
+		return barrio;
+	}
+	public void setBarrio(String barrio) {
+		this.barrio = barrio;
+	}
+	public String getLocalidad() {
+		return localidad;
+	}
+	public void setLocalidad(String localidad) {
+		this.localidad = localidad;
+	}
+	public String getProvincia() {
+		return provincia;
+	}
+	public void setProvincia(String provincia) {
+		this.provincia = provincia;
+	}
+	public String getContacto1() {
+		return contacto1;
+	}
+	public void setContacto1(String contacto1) {
+		this.contacto1 = contacto1;
+	}
+	public String getContacto2() {
+		return contacto2;
+	}
+	public void setContacto2(String contacto2) {
+		this.contacto2 = contacto2;
+	}
+	public String getContacto3() {
+		return contacto3;
+	}
+	public void setContacto3(String contacto3) {
+		this.contacto3 = contacto3;
+	}
+	public String getRepitencia() {
+		return repitencia;
+	}
+	public void setRepitencia(String repitencia) {
+		this.repitencia = repitencia;
+	}
+	public String getRepitenciaAnio() {
+		return repitenciaAnio;
+	}
+	public void setRepitenciaAnio(String repitenciaAnio) {
+		this.repitenciaAnio = repitenciaAnio;
+	}
+	public String getMotivoRepitencia() {
+		return motivoRepitencia;
+	}
+	public void setMotivoRepitencia(String motivoRepitencia) {
+		this.motivoRepitencia = motivoRepitencia;
+	}
+	public String getAbandono() {
+		return abandono;
+	}
+	public void setAbandono(String abandono) {
+		this.abandono = abandono;
+	}
+	public String getAbandonoAnio() {
+		return abandonoAnio;
+	}
+	public void setAbandonoAnio(String abandonoAnio) {
+		this.abandonoAnio = abandonoAnio;
+	}
+	public String getMotivoAbandono() {
+		return motivoAbandono;
+	}
+	public void setMotivoAbandono(String motivoAbandono) {
+		this.motivoAbandono = motivoAbandono;
+	}
+	public String getConducta() {
+		return conducta;
+	}
+	public void setConducta(String conducta) {
+		this.conducta = conducta;
+	}
+	public String getInformacionComplementaria() {
+		return informacionComplementaria;
+	}
+	public void setInformacionComplementaria(String informacionComplementaria) {
+		this.informacionComplementaria = informacionComplementaria;
+	}
+	public String getPercepcionesCandidato() {
+		return percepcionesCandidato;
+	}
+	public void setPercepcionesCandidato(String percepcionesCandidato) {
+		this.percepcionesCandidato = percepcionesCandidato;
+	}
+	public String getCompromisoEscolaridad() {
+		return compromisoEscolaridad;
+	}
+	public void setCompromisoEscolaridad(String compromisoEscolaridad) {
+		this.compromisoEscolaridad = compromisoEscolaridad;
+	}
+	public String getPosibilidadCompromisoPBE() {
+		return posibilidadCompromisoPBE;
+	}
+	public void setPosibilidadCompromisoPBE(String posibilidadCompromisoPBE) {
+		this.posibilidadCompromisoPBE = posibilidadCompromisoPBE;
+	}
+	public String getCantidadInasitenciasAnioPasado() {
+		return cantidadInasitenciasAnioPasado;
+	}
+	public void setCantidadInasitenciasAnioPasado(
+			String cantidadInasitenciasAnioPasado) {
+		this.cantidadInasitenciasAnioPasado = cantidadInasitenciasAnioPasado;
+	}
+	public String getCantidadInasitenciasAnioCurso() {
+		return cantidadInasitenciasAnioCurso;
+	}
+	public void setCantidadInasitenciasAnioCurso(
+			String cantidadInasitenciasAnioCurso) {
+		this.cantidadInasitenciasAnioCurso = cantidadInasitenciasAnioCurso;
+	}
+	public String getEgresosTotales() {
+		return egresosTotales;
+	}
+	public void setEgresosTotales(String egresosTotales) {
+		this.egresosTotales = egresosTotales;
+	}
+	public String getIngresosTotales() {
+		return ingresosTotales;
+	}
+	public void setIngresosTotales(String ingresosTotales) {
+		this.ingresosTotales = ingresosTotales;
+	}
+	public String getObservacionIngresoEgreso() {
+		return observacionIngresoEgreso;
+	}
+	public void setObservacionIngresoEgreso(String observacionIngresoEgreso) {
+		this.observacionIngresoEgreso = observacionIngresoEgreso;
+	}
+	public String getEntrevistador() {
+		return entrevistador;
+	}
+	public void setEntrevistador(String entrevistador) {
+		this.entrevistador = entrevistador;
+	}
+	public String getEstadoAlumno() {
+		return estadoAlumno;
+	}
+	public void setEstadoAlumno(String estadoAlumno) {
+		this.estadoAlumno = estadoAlumno;
+	}
+	public String getMotivRechazo() {
+		return motivRechazo;
+	}
+	public void setMotivRechazo(String motivRechazo) {
+		this.motivRechazo = motivRechazo;
+	}
+	public String getOtroMotivoRechazo() {
+		return otroMotivoRechazo;
+	}
+	public void setOtroMotivoRechazo(String otroMotivoRechazo) {
+		this.otroMotivoRechazo = otroMotivoRechazo;
+	}
+	public String getMotivoEnvioTS() {
+		return motivoEnvioTS;
+	}
+	public void setMotivoEnvioTS(String motivoEnvioTS) {
+		this.motivoEnvioTS = motivoEnvioTS;
+	}
+	public Long getIdAlumno() {
+		return idAlumno;
+	}
+	public void setIdAlumno(Long idAlumno) {
+		this.idAlumno = idAlumno;
+	}
+	public Long getIdRA1() {
+		return idRA1;
+	}
+	public void setIdRA1(Long idRA1) {
+		this.idRA1 = idRA1;
+	}
+	public Long getIdRA2() {
+		return idRA2;
+	}
+	public void setIdRA2(Long idRA2) {
+		this.idRA2 = idRA2;
+	}
+	public Long getIdEntrevista() {
+		return idEntrevista;
+	}
+	public void setIdEntrevista(Long idEntrevista) {
+		this.idEntrevista = idEntrevista;
+	}
+	public String getApellidoRA1() {
+		return apellidoRA1;
+	}
+	public void setApellidoRA1(String apellidoRA1) {
+		this.apellidoRA1 = apellidoRA1;
+	}
+	public String getNombreRA1() {
+		return nombreRA1;
+	}
+	public void setNombreRA1(String nombreRA1) {
+		this.nombreRA1 = nombreRA1;
+	}
+	public String getVinculoRA1() {
+		return vinculoRA1;
+	}
+	public void setVinculoRA1(String vinculoRA1) {
+		this.vinculoRA1 = vinculoRA1;
+	}
+	public String getTipoDNIRA1() {
+		return tipoDNIRA1;
+	}
+	public void setTipoDNIRA1(String tipoDNIRA1) {
+		this.tipoDNIRA1 = tipoDNIRA1;
+	}
+	public String getNroDNIRA1() {
+		return nroDNIRA1;
+	}
+	public void setNroDNIRA1(String nroDNIRA1) {
+		this.nroDNIRA1 = nroDNIRA1;
+	}
+	public Date getFechaNacRA1() {
+		return fechaNacRA1;
+	}
+	public void setFechaNacRA1(Date fechaNacRA1) {
+		this.fechaNacRA1 = fechaNacRA1;
+	}
+	public String getSexoRA1() {
+		return sexoRA1;
+	}
+	public void setSexoRA1(String sexoRA1) {
+		this.sexoRA1 = sexoRA1;
+	}
+	public String getNacionalidadRA1() {
+		return nacionalidadRA1;
+	}
+	public void setNacionalidadRA1(String nacionalidadRA1) {
+		this.nacionalidadRA1 = nacionalidadRA1;
+	}
+	public String getAsisteEntrevistaRA1() {
+		return asisteEntrevistaRA1;
+	}
+	public void setAsisteEntrevistaRA1(String asisteEntrevistaRA1) {
+		this.asisteEntrevistaRA1 = asisteEntrevistaRA1;
+	}
+	public String getApellidoRA2() {
+		return apellidoRA2;
+	}
+	public void setApellidoRA2(String apellidoRA2) {
+		this.apellidoRA2 = apellidoRA2;
+	}
+	public String getNombreRA2() {
+		return nombreRA2;
+	}
+	public void setNombreRA2(String nombreRA2) {
+		this.nombreRA2 = nombreRA2;
+	}
+	public String getVinculoRA2() {
+		return vinculoRA2;
+	}
+	public void setVinculoRA2(String vinculoRA2) {
+		this.vinculoRA2 = vinculoRA2;
+	}
+	public String getCompomioEscolaridad() {
+		return compomioEscolaridad;
+	}
+	public void setCompomioEscolaridad(String compomioEscolaridad) {
+		this.compomioEscolaridad = compomioEscolaridad;
+	}
+	public String getAptoComoRA() {
+		return aptoComoRA;
+	}
+	public void setAptoComoRA(String aptoComoRA) {
+		this.aptoComoRA = aptoComoRA;
+	}
+	public String getPosibilidadCompromisoPBERA() {
+		return posibilidadCompromisoPBERA;
+	}
+	public void setPosibilidadCompromisoPBERA(String posibilidadCompromisoPBERA) {
+		this.posibilidadCompromisoPBERA = posibilidadCompromisoPBERA;
+	}
+	public String getSucursal() {
+		return sucursal;
+	}
+	public void setSucursal(String sucursal) {
+		this.sucursal = sucursal;
+	}
+	public String getRelacionVivienda() {
+		return relacionVivienda;
+	}
+	public void setRelacionVivienda(String relacionVivienda) {
+		this.relacionVivienda = relacionVivienda;
+	}
+	public String getMesAsignacion() {
+		return mesAsignacion;
+	}
+	public void setMesAsignacion(String mesAsignacion) {
+		this.mesAsignacion = mesAsignacion;
+	}
+	
+	public String getObservacionesGenerales() {
+		return observacionesGenerales;
+	}
+	public void setObservacionesGenerales(String observacionesGenerales) {
+		this.observacionesGenerales = observacionesGenerales;
+	}
+	public String getObservacionesTS() {
+		return observacionesTS;
+	}
+	public void setObservacionesTS(String observacionesTS) {
+		this.observacionesTS = observacionesTS;
+	}
+	public String getV1() {
+		return v1;
+	}
+	public void setV1(String v1) {
+		this.v1 = v1;
+	}
+	public String getNa1() {
+		return na1;
+	}
+	public void setNa1(String na1) {
+		this.na1 = na1;
+	}
+	public String getEdad1() {
+		return edad1;
+	}
+	public void setEdad1(String edad1) {
+		this.edad1 = edad1;
+	}
+	public String getConv1() {
+		return conv1;
+	}
+	public void setConv1(String conv1) {
+		this.conv1 = conv1;
+	}
+	public String getMne1() {
+		return mne1;
+	}
+	public void setMne1(String mne1) {
+		this.mne1 = mne1;
+	}
+	public String getMa1() {
+		return ma1;
+	}
+	public void setMa1(String ma1) {
+		this.ma1 = ma1;
+	}
+	public String getOcu1() {
+		return ocu1;
+	}
+	public void setOcu1(String ocu1) {
+		this.ocu1 = ocu1;
+	}
+	public String getDl1() {
+		return dl1;
+	}
+	public void setDl1(String dl1) {
+		this.dl1 = dl1;
+	}
+	public String getRem1() {
+		return rem1;
+	}
+	public void setRem1(String rem1) {
+		this.rem1 = rem1;
+	}
+	public String getOi1() {
+		return oi1;
+	}
+	public void setOi1(String oi1) {
+		this.oi1 = oi1;
+	}
+	public String getV2() {
+		return v2;
+	}
+	public void setV2(String v2) {
+		this.v2 = v2;
+	}
+	public String getNa2() {
+		return na2;
+	}
+	public void setNa2(String na2) {
+		this.na2 = na2;
+	}
+	public String getEdad2() {
+		return edad2;
+	}
+	public void setEdad2(String edad2) {
+		this.edad2 = edad2;
+	}
+	public String getConv2() {
+		return conv2;
+	}
+	public void setConv2(String conv2) {
+		this.conv2 = conv2;
+	}
+	public String getMne2() {
+		return mne2;
+	}
+	public void setMne2(String mne2) {
+		this.mne2 = mne2;
+	}
+	public String getMa2() {
+		return ma2;
+	}
+	public void setMa2(String ma2) {
+		this.ma2 = ma2;
+	}
+	public String getOcu2() {
+		return ocu2;
+	}
+	public void setOcu2(String ocu2) {
+		this.ocu2 = ocu2;
+	}
+	public String getDl2() {
+		return dl2;
+	}
+	public void setDl2(String dl2) {
+		this.dl2 = dl2;
+	}
+	public String getRem2() {
+		return rem2;
+	}
+	public void setRem2(String rem2) {
+		this.rem2 = rem2;
+	}
+	public String getOi2() {
+		return oi2;
+	}
+	public void setOi2(String oi2) {
+		this.oi2 = oi2;
+	}
+	public String getV3() {
+		return v3;
+	}
+	public void setV3(String v3) {
+		this.v3 = v3;
+	}
+	public String getNa3() {
+		return na3;
+	}
+	public void setNa3(String na3) {
+		this.na3 = na3;
+	}
+	public String getEdad3() {
+		return edad3;
+	}
+	public void setEdad3(String edad3) {
+		this.edad3 = edad3;
+	}
+	public String getConv3() {
+		return conv3;
+	}
+	public void setConv3(String conv3) {
+		this.conv3 = conv3;
+	}
+	public String getMne3() {
+		return mne3;
+	}
+	public void setMne3(String mne3) {
+		this.mne3 = mne3;
+	}
+	public String getMa3() {
+		return ma3;
+	}
+	public void setMa3(String ma3) {
+		this.ma3 = ma3;
+	}
+	public String getOcu3() {
+		return ocu3;
+	}
+	public void setOcu3(String ocu3) {
+		this.ocu3 = ocu3;
+	}
+	public String getDl3() {
+		return dl3;
+	}
+	public void setDl3(String dl3) {
+		this.dl3 = dl3;
+	}
+	public String getRem3() {
+		return rem3;
+	}
+	public void setRem3(String rem3) {
+		this.rem3 = rem3;
+	}
+	public String getOi3() {
+		return oi3;
+	}
+	public void setOi3(String oi3) {
+		this.oi3 = oi3;
+	}
+	public String getV4() {
+		return v4;
+	}
+	public void setV4(String v4) {
+		this.v4 = v4;
+	}
+	public String getNa4() {
+		return na4;
+	}
+	public void setNa4(String na4) {
+		this.na4 = na4;
+	}
+	public String getEdad4() {
+		return edad4;
+	}
+	public void setEdad4(String edad4) {
+		this.edad4 = edad4;
+	}
+	public String getConv4() {
+		return conv4;
+	}
+	public void setConv4(String conv4) {
+		this.conv4 = conv4;
+	}
+	public String getMne4() {
+		return mne4;
+	}
+	public void setMne4(String mne4) {
+		this.mne4 = mne4;
+	}
+	public String getMa4() {
+		return ma4;
+	}
+	public void setMa4(String ma4) {
+		this.ma4 = ma4;
+	}
+	public String getOcu4() {
+		return ocu4;
+	}
+	public void setOcu4(String ocu4) {
+		this.ocu4 = ocu4;
+	}
+	public String getDl4() {
+		return dl4;
+	}
+	public void setDl4(String dl4) {
+		this.dl4 = dl4;
+	}
+	public String getRem4() {
+		return rem4;
+	}
+	public void setRem4(String rem4) {
+		this.rem4 = rem4;
+	}
+	public String getOi4() {
+		return oi4;
+	}
+	public void setOi4(String oi4) {
+		this.oi4 = oi4;
+	}
+	public String getV5() {
+		return v5;
+	}
+	public void setV5(String v5) {
+		this.v5 = v5;
+	}
+	public String getNa5() {
+		return na5;
+	}
+	public void setNa5(String na5) {
+		this.na5 = na5;
+	}
+	public String getEdad5() {
+		return edad5;
+	}
+	public void setEdad5(String edad5) {
+		this.edad5 = edad5;
+	}
+	public String getConv5() {
+		return conv5;
+	}
+	public void setConv5(String conv5) {
+		this.conv5 = conv5;
+	}
+	public String getMne5() {
+		return mne5;
+	}
+	public void setMne5(String mne5) {
+		this.mne5 = mne5;
+	}
+	public String getMa5() {
+		return ma5;
+	}
+	public void setMa5(String ma5) {
+		this.ma5 = ma5;
+	}
+	public String getOcu5() {
+		return ocu5;
+	}
+	public void setOcu5(String ocu5) {
+		this.ocu5 = ocu5;
+	}
+	public String getDl5() {
+		return dl5;
+	}
+	public void setDl5(String dl5) {
+		this.dl5 = dl5;
+	}
+	public String getRem5() {
+		return rem5;
+	}
+	public void setRem5(String rem5) {
+		this.rem5 = rem5;
+	}
+	public String getOi5() {
+		return oi5;
+	}
+	public void setOi5(String oi5) {
+		this.oi5 = oi5;
+	}
+	public String getV6() {
+		return v6;
+	}
+	public void setV6(String v6) {
+		this.v6 = v6;
+	}
+	public String getNa6() {
+		return na6;
+	}
+	public void setNa6(String na6) {
+		this.na6 = na6;
+	}
+	public String getEdad6() {
+		return edad6;
+	}
+	public void setEdad6(String edad6) {
+		this.edad6 = edad6;
+	}
+	public String getConv6() {
+		return conv6;
+	}
+	public void setConv6(String conv6) {
+		this.conv6 = conv6;
+	}
+	public String getMne6() {
+		return mne6;
+	}
+	public void setMne6(String mne6) {
+		this.mne6 = mne6;
+	}
+	public String getMa6() {
+		return ma6;
+	}
+	public void setMa6(String ma6) {
+		this.ma6 = ma6;
+	}
+	public String getOcu6() {
+		return ocu6;
+	}
+	public void setOcu6(String ocu6) {
+		this.ocu6 = ocu6;
+	}
+	public String getDl6() {
+		return dl6;
+	}
+	public void setDl6(String dl6) {
+		this.dl6 = dl6;
+	}
+	public String getRem6() {
+		return rem6;
+	}
+	public void setRem6(String rem6) {
+		this.rem6 = rem6;
+	}
+	public String getOi6() {
+		return oi6;
+	}
+	public void setOi6(String oi6) {
+		this.oi6 = oi6;
+	}
+	public String getV7() {
+		return v7;
+	}
+	public void setV7(String v7) {
+		this.v7 = v7;
+	}
+	public String getNa7() {
+		return na7;
+	}
+	public void setNa7(String na7) {
+		this.na7 = na7;
+	}
+	public String getEdad7() {
+		return edad7;
+	}
+	public void setEdad7(String edad7) {
+		this.edad7 = edad7;
+	}
+	public String getConv7() {
+		return conv7;
+	}
+	public void setConv7(String conv7) {
+		this.conv7 = conv7;
+	}
+	public String getMne7() {
+		return mne7;
+	}
+	public void setMne7(String mne7) {
+		this.mne7 = mne7;
+	}
+	public String getMa7() {
+		return ma7;
+	}
+	public void setMa7(String ma7) {
+		this.ma7 = ma7;
+	}
+	public String getOcu7() {
+		return ocu7;
+	}
+	public void setOcu7(String ocu7) {
+		this.ocu7 = ocu7;
+	}
+	public String getDl7() {
+		return dl7;
+	}
+	public void setDl7(String dl7) {
+		this.dl7 = dl7;
+	}
+	public String getRem7() {
+		return rem7;
+	}
+	public void setRem7(String rem7) {
+		this.rem7 = rem7;
+	}
+	public String getOi7() {
+		return oi7;
+	}
+	public void setOi7(String oi7) {
+		this.oi7 = oi7;
+	}
+	public String getV8() {
+		return v8;
+	}
+	public void setV8(String v8) {
+		this.v8 = v8;
+	}
+	public String getNa8() {
+		return na8;
+	}
+	public void setNa8(String na8) {
+		this.na8 = na8;
+	}
+	public String getEdad8() {
+		return edad8;
+	}
+	public void setEdad8(String edad8) {
+		this.edad8 = edad8;
+	}
+	public String getConv8() {
+		return conv8;
+	}
+	public void setConv8(String conv8) {
+		this.conv8 = conv8;
+	}
+	public String getMne8() {
+		return mne8;
+	}
+	public void setMne8(String mne8) {
+		this.mne8 = mne8;
+	}
+	public String getMa8() {
+		return ma8;
+	}
+	public void setMa8(String ma8) {
+		this.ma8 = ma8;
+	}
+	public String getOcu8() {
+		return ocu8;
+	}
+	public void setOcu8(String ocu8) {
+		this.ocu8 = ocu8;
+	}
+	public String getDl8() {
+		return dl8;
+	}
+	public void setDl8(String dl8) {
+		this.dl8 = dl8;
+	}
+	public String getRem8() {
+		return rem8;
+	}
+	public void setRem8(String rem8) {
+		this.rem8 = rem8;
+	}
+	public String getOi8() {
+		return oi8;
+	}
+	public void setOi8(String oi8) {
+		this.oi8 = oi8;
+	}
+	public String getV9() {
+		return v9;
+	}
+	public void setV9(String v9) {
+		this.v9 = v9;
+	}
+	public String getNa9() {
+		return na9;
+	}
+	public void setNa9(String na9) {
+		this.na9 = na9;
+	}
+	public String getEdad9() {
+		return edad9;
+	}
+	public void setEdad9(String edad9) {
+		this.edad9 = edad9;
+	}
+	public String getConv9() {
+		return conv9;
+	}
+	public void setConv9(String conv9) {
+		this.conv9 = conv9;
+	}
+	public String getMne9() {
+		return mne9;
+	}
+	public void setMne9(String mne9) {
+		this.mne9 = mne9;
+	}
+	public String getMa9() {
+		return ma9;
+	}
+	public void setMa9(String ma9) {
+		this.ma9 = ma9;
+	}
+	public String getOcu9() {
+		return ocu9;
+	}
+	public void setOcu9(String ocu9) {
+		this.ocu9 = ocu9;
+	}
+	public String getDl9() {
+		return dl9;
+	}
+	public void setDl9(String dl9) {
+		this.dl9 = dl9;
+	}
+	public String getRem9() {
+		return rem9;
+	}
+	public void setRem9(String rem9) {
+		this.rem9 = rem9;
+	}
+	public String getOi9() {
+		return oi9;
+	}
+	public void setOi9(String oi9) {
+		this.oi9 = oi9;
+	}
+	public String getV10() {
+		return v10;
+	}
+	public void setV10(String v10) {
+		this.v10 = v10;
+	}
+	public String getNa10() {
+		return na10;
+	}
+	public void setNa10(String na10) {
+		this.na10 = na10;
+	}
+	public String getEdad10() {
+		return edad10;
+	}
+	public void setEdad10(String edad10) {
+		this.edad10 = edad10;
+	}
+	public String getConv10() {
+		return conv10;
+	}
+	public void setConv10(String conv10) {
+		this.conv10 = conv10;
+	}
+	public String getMne10() {
+		return mne10;
+	}
+	public void setMne10(String mne10) {
+		this.mne10 = mne10;
+	}
+	public String getMa10() {
+		return ma10;
+	}
+	public void setMa10(String ma10) {
+		this.ma10 = ma10;
+	}
+	public String getOcu10() {
+		return ocu10;
+	}
+	public void setOcu10(String ocu10) {
+		this.ocu10 = ocu10;
+	}
+	public String getDl10() {
+		return dl10;
+	}
+	public void setDl10(String dl10) {
+		this.dl10 = dl10;
+	}
+	public String getRem10() {
+		return rem10;
+	}
+	public void setRem10(String rem10) {
+		this.rem10 = rem10;
+	}
+	public String getOi10() {
+		return oi10;
+	}
+	public void setOi10(String oi10) {
+		this.oi10 = oi10;
+	}
+	public String getV11() {
+		return v11;
+	}
+	public void setV11(String v11) {
+		this.v11 = v11;
+	}
+	public String getNa11() {
+		return na11;
+	}
+	public void setNa11(String na11) {
+		this.na11 = na11;
+	}
+	public String getEdad11() {
+		return edad11;
+	}
+	public void setEdad11(String edad11) {
+		this.edad11 = edad11;
+	}
+	public String getConv11() {
+		return conv11;
+	}
+	public void setConv11(String conv11) {
+		this.conv11 = conv11;
+	}
+	public String getMne11() {
+		return mne11;
+	}
+	public void setMne11(String mne11) {
+		this.mne11 = mne11;
+	}
+	public String getMa11() {
+		return ma11;
+	}
+	public void setMa11(String ma11) {
+		this.ma11 = ma11;
+	}
+	public String getOcu11() {
+		return ocu11;
+	}
+	public void setOcu11(String ocu11) {
+		this.ocu11 = ocu11;
+	}
+	public String getDl11() {
+		return dl11;
+	}
+	public void setDl11(String dl11) {
+		this.dl11 = dl11;
+	}
+	public String getRem11() {
+		return rem11;
+	}
+	public void setRem11(String rem11) {
+		this.rem11 = rem11;
+	}
+	public String getOi11() {
+		return oi11;
+	}
+	public void setOi11(String oi11) {
+		this.oi11 = oi11;
+	}
+	public String getV12() {
+		return v12;
+	}
+	public void setV12(String v12) {
+		this.v12 = v12;
+	}
+	public String getNa12() {
+		return na12;
+	}
+	public void setNa12(String na12) {
+		this.na12 = na12;
+	}
+	public String getEdad12() {
+		return edad12;
+	}
+	public void setEdad12(String edad12) {
+		this.edad12 = edad12;
+	}
+	public String getConv12() {
+		return conv12;
+	}
+	public void setConv12(String conv12) {
+		this.conv12 = conv12;
+	}
+	public String getMne12() {
+		return mne12;
+	}
+	public void setMne12(String mne12) {
+		this.mne12 = mne12;
+	}
+	public String getMa12() {
+		return ma12;
+	}
+	public void setMa12(String ma12) {
+		this.ma12 = ma12;
+	}
+	public String getOcu12() {
+		return ocu12;
+	}
+	public void setOcu12(String ocu12) {
+		this.ocu12 = ocu12;
+	}
+	public String getDl12() {
+		return dl12;
+	}
+	public void setDl12(String dl12) {
+		this.dl12 = dl12;
+	}
+	public String getRem12() {
+		return rem12;
+	}
+	public void setRem12(String rem12) {
+		this.rem12 = rem12;
+	}
+	public String getOi12() {
+		return oi12;
+	}
+	public void setOi12(String oi12) {
+		this.oi12 = oi12;
+	}
+	public String getV13() {
+		return v13;
+	}
+	public void setV13(String v13) {
+		this.v13 = v13;
+	}
+	public String getNa13() {
+		return na13;
+	}
+	public void setNa13(String na13) {
+		this.na13 = na13;
+	}
+	public String getEdad13() {
+		return edad13;
+	}
+	public void setEdad13(String edad13) {
+		this.edad13 = edad13;
+	}
+	public String getConv13() {
+		return conv13;
+	}
+	public void setConv13(String conv13) {
+		this.conv13 = conv13;
+	}
+	public String getMne13() {
+		return mne13;
+	}
+	public void setMne13(String mne13) {
+		this.mne13 = mne13;
+	}
+	public String getMa13() {
+		return ma13;
+	}
+	public void setMa13(String ma13) {
+		this.ma13 = ma13;
+	}
+	public String getOcu13() {
+		return ocu13;
+	}
+	public void setOcu13(String ocu13) {
+		this.ocu13 = ocu13;
+	}
+	public String getDl13() {
+		return dl13;
+	}
+	public void setDl13(String dl13) {
+		this.dl13 = dl13;
+	}
+	public String getRem13() {
+		return rem13;
+	}
+	public void setRem13(String rem13) {
+		this.rem13 = rem13;
+	}
+	public String getOi13() {
+		return oi13;
+	}
+	public void setOi13(String oi13) {
+		this.oi13 = oi13;
+	}
+	public String getV14() {
+		return v14;
+	}
+	public void setV14(String v14) {
+		this.v14 = v14;
+	}
+	public String getNa14() {
+		return na14;
+	}
+	public void setNa14(String na14) {
+		this.na14 = na14;
+	}
+	public String getEdad14() {
+		return edad14;
+	}
+	public void setEdad14(String edad14) {
+		this.edad14 = edad14;
+	}
+	public String getConv14() {
+		return conv14;
+	}
+	public void setConv14(String conv14) {
+		this.conv14 = conv14;
+	}
+	public String getMne14() {
+		return mne14;
+	}
+	public void setMne14(String mne14) {
+		this.mne14 = mne14;
+	}
+	public String getMa14() {
+		return ma14;
+	}
+	public void setMa14(String ma14) {
+		this.ma14 = ma14;
+	}
+	public String getOcu14() {
+		return ocu14;
+	}
+	public void setOcu14(String ocu14) {
+		this.ocu14 = ocu14;
+	}
+	public String getDl14() {
+		return dl14;
+	}
+	public void setDl14(String dl14) {
+		this.dl14 = dl14;
+	}
+	public String getRem14() {
+		return rem14;
+	}
+	public void setRem14(String rem14) {
+		this.rem14 = rem14;
+	}
+	public String getOi14() {
+		return oi14;
+	}
+	public void setOi14(String oi14) {
+		this.oi14 = oi14;
+	}
+	public String getV15() {
+		return v15;
+	}
+	public void setV15(String v15) {
+		this.v15 = v15;
+	}
+	public String getNa15() {
+		return na15;
+	}
+	public void setNa15(String na15) {
+		this.na15 = na15;
+	}
+	public String getEdad15() {
+		return edad15;
+	}
+	public void setEdad15(String edad15) {
+		this.edad15 = edad15;
+	}
+	public String getConv15() {
+		return conv15;
+	}
+	public void setConv15(String conv15) {
+		this.conv15 = conv15;
+	}
+	public String getMne15() {
+		return mne15;
+	}
+	public void setMne15(String mne15) {
+		this.mne15 = mne15;
+	}
+	public String getMa15() {
+		return ma15;
+	}
+	public void setMa15(String ma15) {
+		this.ma15 = ma15;
+	}
+	public String getOcu15() {
+		return ocu15;
+	}
+	public void setOcu15(String ocu15) {
+		this.ocu15 = ocu15;
+	}
+	public String getDl15() {
+		return dl15;
+	}
+	public void setDl15(String dl15) {
+		this.dl15 = dl15;
+	}
+	public String getRem15() {
+		return rem15;
+	}
+	public void setRem15(String rem15) {
+		this.rem15 = rem15;
+	}
+	public String getOi15() {
+		return oi15;
+	}
+	public void setOi15(String oi15) {
+		this.oi15 = oi15;
+	}
+	public Date getFechaCargaEntrevista() {
+		return fechaCargaEntrevista;
+	}
+	public void setFechaCargaEntrevista(Date fechaCargaEntrevista) {
+		this.fechaCargaEntrevista = fechaCargaEntrevista;
+	}
+	public String getFechaAsignacion() {
+		return fechaAsignacion;
+	}
+	public void setFechaAsignacion(String fechaAsignacion) {
+		this.fechaAsignacion = fechaAsignacion;
+	}
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}

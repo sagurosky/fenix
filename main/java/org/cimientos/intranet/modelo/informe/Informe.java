@@ -1,0 +1,250 @@
+/**
+ * 
+ */
+package org.cimientos.intranet.modelo.informe;
+
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import org.cimientos.intranet.modelo.Beca;
+import org.cimientos.intranet.modelo.CicloPrograma;
+import org.cimientos.intranet.modelo.perfil.PerfilAlumno;
+import org.cimientos.intranet.modelo.perfilEA.PerfilEA;
+import org.cimientos.intranet.modelo.perfilPadrino.PerfilPadrino;
+import org.cimientos.intranet.modelo.perfilRR.PerfilRR;
+
+
+/**
+ * @author plabaronnie
+ *
+ */
+@Entity
+@Table (name="informe")
+@Inheritance (strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn (name="tipo", discriminatorType=DiscriminatorType.STRING)
+@DiscriminatorValue("informe")
+public abstract class Informe {
+	/** The id informe. */
+	@Id
+	@GeneratedValue(strategy = GenerationType.TABLE)
+	private Long id;
+	
+	private Date fechaPBE;
+	
+	private Date fechaReincorporacionPBE;
+	
+	@OneToOne
+	private CicloPrograma cicloActual;
+	
+	@OneToOne
+	private PerfilAlumno becado;
+	
+	private Date fechaUltimaModificacion;
+	
+	private Date fechaEnvio;
+	
+	private Date fechaCambioUltimoEstado;
+	
+	@Column(length=10000)
+	private String correctora;
+	
+	@Column(length=10000)
+	private String nombre;
+	
+	@Enumerated(EnumType.ORDINAL)
+	private EstadoInforme estado;
+	
+	private Date fechaAlta;
+	
+	@Column(length=10000)
+	private String observaciones;
+
+	@OneToOne
+	private PerfilEA eaPerfil;
+	
+	@OneToOne
+	private PerfilRR rrPerfil;
+	
+	@OneToOne
+	private PerfilPadrino padrino;
+
+	@OneToOne
+	private Beca beca;
+	
+
+	
+	
+	
+	public CicloPrograma getCicloActual() {
+		return cicloActual;
+	}
+
+	public void setCicloActual(CicloPrograma cicloActual) {
+		this.cicloActual = cicloActual;
+	}
+
+	public Date getFechaPBE() {
+		return fechaPBE;
+	}
+
+	public void setFechaPBE(Date fechaPBE) {
+		this.fechaPBE = fechaPBE;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	/**
+	 * @return
+	 */
+	public EstadoInforme getEstado() {
+		return estado;
+	}
+
+	/**
+	 * @param estado
+	 */
+	public void setEstado(EstadoInforme estado) {
+		this.estado = estado;
+	}
+
+	/**
+	 * @return
+	 */
+	public Date getFechaAlta() {
+		return fechaAlta;
+	}
+
+	/**
+	 * @param fechaAlta
+	 */
+	public void setFechaAlta(Date fechaAlta) {
+		this.fechaAlta = fechaAlta;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+	public String getObservaciones() {
+		return observaciones;
+	}
+
+
+	public void setObservaciones(String observaciones) {
+		this.observaciones = observaciones;
+	}
+
+
+	public PerfilAlumno getBecado() {
+		return becado;
+	}
+
+
+	public void setBecado(PerfilAlumno becado) {
+		this.becado = becado;
+	}
+
+
+	public PerfilEA getEaPerfil() {
+		return eaPerfil;
+	}
+
+
+	public void setEaPerfil(PerfilEA eaPerfil) {
+		this.eaPerfil = eaPerfil;
+	}
+
+
+	public PerfilRR getRrPerfil() {
+		return rrPerfil;
+	}
+
+
+	public void setRrPerfil(PerfilRR rrPerfil) {
+		this.rrPerfil = rrPerfil;
+	}
+
+	public Date getFechaUltimaModificacion() {
+		return fechaUltimaModificacion;
+	}
+
+	public void setFechaUltimaModificacion(Date fechaUltimaModificacion) {
+		this.fechaUltimaModificacion = fechaUltimaModificacion;
+	}
+
+	
+	public PerfilPadrino getPadrino() {
+		return padrino;
+	}
+
+	public void setPadrino(PerfilPadrino padrino) {
+		this.padrino = padrino;
+	}
+
+	public Beca getBeca() {
+		return beca;
+	}
+
+	public void setBeca(Beca beca) {
+		this.beca = beca;
+	}
+
+	public abstract String dameUrlVer();
+
+	public Date getFechaEnvio() {
+		return fechaEnvio;
+	}
+
+	public void setFechaEnvio(Date fechaEnvio) {
+		this.fechaEnvio = fechaEnvio;
+	}
+
+	public Date getFechaCambioUltimoEstado() {
+		return fechaCambioUltimoEstado;
+	}
+
+	public void setFechaCambioUltimoEstado(Date fechaCambioUltimoEstado) {
+		this.fechaCambioUltimoEstado = fechaCambioUltimoEstado;
+	}
+
+	public String getCorrectora() {
+		return correctora;
+	}
+
+	public void setCorrectora(String correctora) {
+		this.correctora = correctora;
+	}
+
+	public Date getFechaReincorporacionPBE() {
+		return fechaReincorporacionPBE;
+	}
+
+	public void setFechaReincorporacionPBE(Date fechaReincorporacionPBE) {
+		this.fechaReincorporacionPBE = fechaReincorporacionPBE;
+	}	
+}

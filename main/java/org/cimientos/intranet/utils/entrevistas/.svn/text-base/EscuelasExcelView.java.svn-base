@@ -1,0 +1,825 @@
+package org.cimientos.intranet.utils.entrevistas;
+
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.cimientos.intranet.dto.EntrevistaSeleccionDTO;
+import org.cimientos.intranet.dto.EscuelaDTO;
+import org.cimientos.intranet.modelo.CicloPrograma;
+import org.cimientos.intranet.modelo.pbe.evento.entrevistas.EntrevistaFinal;
+import org.cimientos.intranet.modelo.pbe.evento.entrevistas.EntrevistaIndividual;
+import org.cimientos.intranet.modelo.pbe.evento.entrevistas.EntrevistaReIncorporacion;
+import org.cimientos.intranet.modelo.pbe.evento.entrevistas.EntrevistaRenovacion;
+import org.cimientos.intranet.servicio.CicloProgramaSrv;
+import org.cimientos.intranet.servicio.EntrevistaSrv;
+import org.cimientos.intranet.utils.ExportacionEspecialHelper;
+import org.cimientos.intranet.utils.Formateador;
+import org.springframework.web.servlet.view.document.AbstractExcelView;
+
+import com.cimientos.intranet.dto.ReporteEntrevistaSeleccionDTO2;
+import com.cimientos.intranet.enumerativos.entrevista.ContenidosAbordados;
+import com.cimientos.intranet.enumerativos.entrevista.DetalleGastos;
+import com.cimientos.intranet.enumerativos.entrevista.EstrategiaComplementaria;
+import com.cimientos.intranet.enumerativos.entrevista.EvaluacionCobroBeca;
+import com.cimientos.intranet.enumerativos.entrevista.EvaluacionIncorporacion;
+import com.cimientos.intranet.enumerativos.entrevista.EvaluacionRenovacionFinal;
+import com.cimientos.intranet.enumerativos.entrevista.EvaluacionRenovacionMergeada;
+import com.cimientos.intranet.enumerativos.entrevista.MotivoAusencia;
+import com.cimientos.intranet.enumerativos.entrevista.MotivoIncorporacionPendiente;
+import com.cimientos.intranet.enumerativos.entrevista.MotivoPendiente;
+import com.cimientos.intranet.enumerativos.entrevista.PropositoAnioComienza;
+import com.cimientos.intranet.enumerativos.entrevista.SituacionCrisis;
+import com.cimientos.intranet.enumerativos.entrevista.TipoContacto;
+import com.cimientos.intranet.enumerativos.entrevista.TipoEntrevista;
+import com.cimientos.intranet.enumerativos.entrevista.motivoNoIncorporacion;
+import com.sun.org.apache.xpath.internal.operations.Equals;
+
+import org.cimientos.intranet.web.controller.Conexion;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Types;
+
+public class EscuelasExcelView extends AbstractExcelView{
+	
+	private static int bachSize = 1000;
+	private static final String PATRON_FECHA = "dd/MM/yyyy";
+	private static final String NO_APLICA = "No aplica";
+	private static final String SI = "Si";
+	private static final String NO = "No";
+
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	protected void buildExcelDocument(Map<String,Object> model, HSSFWorkbook workbook,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		
+		//CicloProgramaSrv cicloSrv = (CicloProgramaSrv) model.get("cicloSrv");
+		//EntrevistaSrv entrevistaSrv = (EntrevistaSrv) model.get("entrevistaSrv");
+		
+		ExportacionEspecialHelper exportacionHelper = (ExportacionEspecialHelper) model.get("exportacionHelper");
+		
+		HSSFSheet sheet = workbook.getSheet("Escuelas");
+		
+		List<EscuelaDTO> escuelas = null;
+		int rowNum = 1;
+		int parcial = 0;
+		int inicial = 0;
+		int totalRows=1000;
+		HSSFRow row;
+		while (parcial < totalRows) {
+			parcial = parcial + bachSize;
+			escuelas = obtenerEscuelaDTO();
+				for (EscuelaDTO e : escuelas) {
+					//System.out.println(estado1);
+					//System.out.println(e.getEstadoAlumno());					
+					row = sheet.createRow(rowNum++);
+					crearFila(e, exportacionHelper, row);
+					
+				}					
+			inicial = parcial;
+			escuelas = null;
+		}	
+	}
+	
+	public static synchronized ArrayList<EscuelaDTO> obtenerEscuelaDTO() {
+        //El array que contendra todos nuestras Entrevistas de Seleccion
+        ArrayList<EscuelaDTO> lista = new ArrayList<EscuelaDTO>();
+        Connection cn = null;
+        CallableStatement cl = null;
+        ResultSet rs = null;
+        String call=null;
+        
+        try {
+		//Nombre del procedimiento almacenado
+		call = "{CALL SP_TraerEscuelas()}";
+		cn = Conexion.getConexion();
+        cl = cn.prepareCall(call);	
+        
+	        
+            //La sentencia lo almacenamos en un resulset
+            rs = cl.executeQuery();
+            //Consultamos si hay datos para recorrerlo
+            //e insertarlo en nuestro array
+            while (rs.next()) {            	            	            	            	
+            	EscuelaDTO resDTO = new EscuelaDTO();
+                //Obtenemos los valores de la consulta y creamos
+                //nuestro objeto                         	
+            	resDTO.setIdEscuela(rs.getString(1));
+            	resDTO.setNombre(rs.getString(2));
+            	
+            	if (rs.getString(3)!=null){
+            		resDTO.setCue(rs.getString(3));
+            	}else{
+            		resDTO.setCue("");
+            	}
+            	resDTO.setModalidad(rs.getString(4));
+            	resDTO.setOrientacion(rs.getString(5));
+            	resDTO.setNivel(rs.getString(6));
+            	resDTO.setAnios(rs.getString(7));
+            	resDTO.setDependencia(rs.getString(8));
+            	resDTO.setCp(rs.getString(9));
+            	resDTO.setCalle(rs.getString(10));
+            	if (rs.getString(11)!=null){
+            		resDTO.setNumero(rs.getString(11));
+            	}else{
+            		resDTO.setNumero("");
+            	}
+            	
+            	resDTO.setBarrio(rs.getString(12));
+            	resDTO.setLocalidad(rs.getString(13));
+            	resDTO.setProvincia(rs.getString(14));
+            	resDTO.setZona(rs.getString(15));            	
+            	if (rs.getString(16)!=null){
+            		resDTO.setTel1(rs.getString(16));
+            	}else{
+            		resDTO.setTel1("");
+            	}
+            	if (rs.getString(17)!=null){
+            		resDTO.setTel2(rs.getString(17));
+            	}else{
+            		resDTO.setTel2("");
+            	}
+            	resDTO.setMail(rs.getString(18));
+            	resDTO.setDirector(rs.getString(19));
+            	resDTO.setDirectorCel(rs.getString(20));
+            	resDTO.setDirectorMail(rs.getString(21));
+            	resDTO.setSecretario(rs.getString(22));
+            	resDTO.setSecretarioCel(rs.getString(23));
+            	resDTO.setSecretarioMail(rs.getString(24));
+            	resDTO.setResonsable(rs.getString(25));
+            	resDTO.setResponsableCel(rs.getString(26));
+            	resDTO.setResponsablMail(rs.getString(27));
+            	resDTO.setRural(rs.getString(28));
+            	resDTO.setSubsidio(rs.getString(29));
+            	resDTO.setObservacionesGrales(rs.getString(30));
+            	resDTO.setEstado(rs.getString(31));
+            	resDTO.setMotivoNoSeleccion(rs.getString(32));
+            	resDTO.setPrograma(rs.getString(33));
+            	resDTO.setModalidadTrabajoEscuela(rs.getString(34));
+            	resDTO.setAnioComienzoProyecto(rs.getString(35));
+            	resDTO.setAnioComienzoPBE(rs.getString(36));
+            	resDTO.setFase(rs.getString(37));
+            	resDTO.setObjetivoProyecto(rs.getString(38));
+            	resDTO.setObservaciones(rs.getString(39));
+            	if (rs.getString(40)!=null){
+            		resDTO.setMatricula(rs.getString(40));
+            	}else{
+            		resDTO.setMatricula("");
+            	}
+            	if (rs.getString(41)!=null){
+            		resDTO.setRepitencia(rs.getString(41));
+            	}else{
+            		resDTO.setRepitencia("");
+            	}
+            	if (rs.getString(42)!=null){
+            		resDTO.setAbandono(rs.getString(42));
+            	}else{
+            		resDTO.setAbandono("");
+            	}
+            	if (rs.getString(43)!=null){
+            		resDTO.setInasistencias(rs.getString(43));
+            	}else{
+            		resDTO.setInasistencias("");
+            	}
+            	Long idEscuela=Long.parseLong(resDTO.getIdEscuela());
+            	
+            	// Turnos
+            	Connection cn1 = null;
+            	CallableStatement cl1 = null;
+                ResultSet rs1 = null;
+                String call1=null;
+                call1 = "{CALL SP_TraerTurnosEscuela(?)}";
+        		cn1 = Conexion.getConexion();
+                cl1 = cn.prepareCall(call1);	
+                cl1.setLong(1, idEscuela);
+        	        
+                //La sentencia lo almacenamos en un resulset
+                rs1 = cl1.executeQuery();
+                //Consultamos si hay datos para recorrerlo
+                //e insertarlo en nuestro array
+                String turnos="";
+                while (rs1.next()) {         
+                	turnos=rs1.getString(1)+" ";
+        	
+                }	
+            	resDTO.setTurnos(turnos);
+            	
+            	// Espacio Apoyo Escuela
+            	Connection cn2 = null;
+            	CallableStatement cl2 = null;
+                ResultSet rs2 = null;
+                String call2=null;
+                call2 = "{CALL SP_TraerEspacioApoyoEscuela(?)}";
+        		cn2 = Conexion.getConexion();
+                cl2 = cn.prepareCall(call2);	
+                cl2.setLong(1, idEscuela);
+        	        
+                //La sentencia lo almacenamos en un resulset
+                rs2 = cl2.executeQuery();
+                //Consultamos si hay datos para recorrerlo
+                //e insertarlo en nuestro array
+                String espacio="";
+                while (rs2.next()) {         
+                	espacio=rs2.getString(1)+" ";
+        	
+                }	
+            	resDTO.setEspacios(espacio);
+            	//Lo adicionamos a nuestra lista
+                lista.add(resDTO);
+        	}       
+            Conexion.cerrarCall(cl);
+            Conexion.cerrarConexion(cn);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Conexion.cerrarCall(cl);
+            Conexion.cerrarConexion(cn);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Conexion.cerrarCall(cl);
+            Conexion.cerrarConexion(cn);
+        }
+
+        return lista;
+    }
+	
+	private void crearFila(EscuelaDTO e, ExportacionEspecialHelper exportacionHelper, HSSFRow row) {
+		row.createCell(0).setCellValue(e.getIdEscuela());
+		row.createCell(1).setCellValue(e.getNombre());
+		row.createCell(2).setCellValue(e.getCue());
+		row.createCell(3).setCellValue(e.getModalidad());
+		row.createCell(4).setCellValue(e.getOrientacion());
+		row.createCell(5).setCellValue(e.getNivel());
+		row.createCell(6).setCellValue(e.getAnios());
+		row.createCell(7).setCellValue(e.getDependencia());
+		row.createCell(8).setCellValue(e.getCalle() +" " + e.getNumero()+" CP: " +  e.getCp()+ " - "+e.getBarrio()+" - "+ e.getLocalidad()+" - "+e.getProvincia());		
+		row.createCell(9).setCellValue(e.getZona());
+		row.createCell(10).setCellValue("Tel1: "+e.getTel1()+" - Tel2: "+ e.getTel2());		
+		row.createCell(11).setCellValue(e.getMail());
+		row.createCell(12).setCellValue(e.getDirector());
+		row.createCell(13).setCellValue(e.getDirectorCel());
+		row.createCell(14).setCellValue(e.getDirectorMail());
+		row.createCell(15).setCellValue(e.getSecretario());
+		row.createCell(16).setCellValue(e.getSecretarioCel());
+		row.createCell(17).setCellValue(e.getSecretarioMail());
+		row.createCell(18).setCellValue(e.getResonsable());
+		row.createCell(19).setCellValue(e.getResponsableCel());
+		row.createCell(20).setCellValue(e.getResponsablMail());
+		row.createCell(21).setCellValue(e.getRural());
+		row.createCell(22).setCellValue(e.getSubsidio());
+		row.createCell(23).setCellValue(e.getObservacionesGrales());
+		row.createCell(24).setCellValue(e.getEstado());
+		row.createCell(25).setCellValue(e.getMotivoNoSeleccion());
+		row.createCell(26).setCellValue(e.getPrograma());
+		row.createCell(27).setCellValue(e.getModalidadTrabajoEscuela());
+		row.createCell(28).setCellValue(e.getAnioComienzoProyecto());
+		row.createCell(29).setCellValue(e.getAnioComienzoPBE());
+		row.createCell(30).setCellValue(e.getFase());
+		row.createCell(31).setCellValue(e.getObjetivoProyecto());
+		row.createCell(32).setCellValue(e.getObservaciones());		
+		row.createCell(33).setCellValue(e.getMatricula());
+		row.createCell(34).setCellValue(e.getRepitencia());
+		row.createCell(35).setCellValue(e.getAbandono());
+		row.createCell(36).setCellValue(e.getInasistencias());
+		row.createCell(37).setCellValue(e.getTurnos());
+		row.createCell(38).setCellValue(e.getEspacios());
+		
+	}
+		
+	private String getMotivoSuspensionCesacion(EntrevistaIndividual e, ExportacionEspecialHelper exportacionHelper) {
+		if(e.getEvaluacionCobroBeca() != null && e.getEvaluacionCobroBeca() == EvaluacionCobroBeca.SUSPENDIDO)
+			return exportacionHelper.getMotivoSuspension(e);
+		else
+			return exportacionHelper.getMotivoCesacion(e);
+	}
+
+	private String getMotivoAusenciaRAUnificado(EntrevistaIndividual e, ExportacionEspecialHelper exportacionHelper) {
+		String motivoAusencia = exportacionHelper.getMotivoAusenciaRA(e);
+		String otroMotivoAusencia = exportacionHelper.getOtroMotivoAusenciaRA(e);
+		if(motivoAusencia != "" && motivoAusencia != MotivoAusencia.OTROS.getValor())
+			return motivoAusencia;
+		else
+			if(motivoAusencia != "" && motivoAusencia == MotivoAusencia.OTROS.getValor())
+				return "Otro," + otroMotivoAusencia;
+			else
+				return NO_APLICA;
+	}
+
+	private String getMotivoAusenciaBecadoUnificado(EntrevistaIndividual e) {
+		if(e.getMotivoAusencia() != null && e.getMotivoAusencia() != MotivoAusencia.OTROS)
+			return e.getMotivoAusencia().getValor();
+		else
+			if(e.getMotivoAusencia() != null && e.getMotivoAusencia() == MotivoAusencia.OTROS)
+				return "Otro," + e.getOtroMotivoAusencia();
+			else
+				return NO_APLICA;
+	}
+
+	private String getTipoContactoUnificado(EntrevistaIndividual e, ExportacionEspecialHelper exportacionHelper) {
+		String contactoTipo = exportacionHelper.getTipoContacto(e);
+		if(contactoTipo != "" && contactoTipo != TipoContacto.OTRO.getValor())
+			return contactoTipo;
+		else{
+			String otroContacto = exportacionHelper.getOtroTipoContacto(e);
+			if(contactoTipo != "" && contactoTipo == TipoContacto.OTRO.getValor())
+				return "Otro," + otroContacto;
+			else
+				return "";
+		}
+	}
+
+	public String getMotivoRenovacionUnificado(EntrevistaIndividual e) {
+		String valor = "";
+		if(e.getTipoEntrevista().equals(TipoEntrevista.RENOVACION)){
+			EntrevistaRenovacion er = (EntrevistaRenovacion) e;
+			if(er.getEvaluacionRenovacionMergeada() != null){
+					if(er.getEvaluacionRenovacionMergeada() == EvaluacionRenovacionMergeada.PENDIENTE){
+						if(er.getMotivoPendiente() != null && er.getMotivoPendiente() != MotivoPendiente.OTRO)
+							valor = er.getMotivoPendiente().getValor();
+						else
+							if(er.getMotivoPendiente() != null && er.getMotivoPendiente() == MotivoPendiente.OTRO)
+								valor =  "Otro," + (er.getMotivoOtro()!=null?er.getMotivoOtro():"");				
+					}
+					else if(er.getEvaluacionRenovacionMergeada() == EvaluacionRenovacionMergeada.NO_RENUEVA){
+							if(er.getMotivoNoRenovacion() != null)
+								valor = er.getMotivoNoRenovacion().getValor();							
+						}
+						else
+							valor = NO_APLICA;
+			}
+		}
+		else if(e.getTipoEntrevista().equals(TipoEntrevista.FINAL)){			
+				EntrevistaFinal ef = (EntrevistaFinal) e;
+				if(ef.getEvaluacionRenovacionFinal() != null){
+					if(ef.getEvaluacionRenovacionFinal() == EvaluacionRenovacionFinal.NO_RENUEVA){
+						if(ef.getMotivoNoRenovacion() != null)
+							valor = ef.getMotivoNoRenovacion().getValor();			
+					}
+					else
+						valor = NO_APLICA;
+				}
+		}
+		else
+			valor = NO_APLICA;
+		
+		return valor;
+	}
+	
+	
+	public String getMotivoIncorporacion(EntrevistaIndividual e) {
+		if(e.getTipoEntrevista().equals(TipoEntrevista.INCORPORACION)){				
+			EntrevistaReIncorporacion ei = (EntrevistaReIncorporacion) e; 
+			if(ei.getIncorporacion() != null){
+				if(ei.getIncorporacion() == EvaluacionIncorporacion.INCORPORA)
+					return NO_APLICA;
+				else
+					if(ei.getIncorporacion() == EvaluacionIncorporacion.INCORPORAPENDIENTE)
+						if(ei.getMotivoPendiente() != null 	&& ei.getMotivoPendiente() != MotivoIncorporacionPendiente.OTROMOTIVO)
+							return ei.getMotivoPendiente().getValor();
+						else
+							return "Otro," + (ei.getMotivoOtroPendiente()!=null?ei.getMotivoOtroPendiente():"");
+					else
+						if(ei.getMotivoNoIncorporacion() != null && ei.getMotivoNoIncorporacion() != motivoNoIncorporacion.OTRO)
+							return ei.getMotivoNoIncorporacion().getValor();
+						else
+							return "Otro," + (ei.getMotivoOtroPendiente()!=null?ei.getMotivoOtroPendiente():"");
+			}
+			else
+				return "";
+		}
+		else
+			return NO_APLICA;
+	}
+	
+	public String getFechaEntrevista(EntrevistaIndividual entrevista) {
+		if(entrevista.getFechaEntrevista()!= null){
+			return Formateador.formatearFecha(entrevista.getFechaEntrevista(), PATRON_FECHA) ;
+		}
+		return "";
+	}
+	
+	public String getCantidadInasistencias(EntrevistaIndividual entrevista) {
+		String valor = NO_APLICA;
+		if(entrevista.getTipoEntrevista().equals(TipoEntrevista.MENSUAL) || entrevista.getTipoEntrevista().equals(TipoEntrevista.FINAL)){
+			valor = entrevista.getCantidadInasistencias()!= null ? Float.toString(entrevista.getCantidadInasistencias()) : "";
+		}
+		return valor;
+	}
+	
+	public String getLugarProximaEntrevista(EntrevistaIndividual entrevista) {
+		String valor = NO_APLICA;
+		if(!entrevista.getTipoEntrevista().equals(TipoEntrevista.FINAL) ){
+			valor = entrevista.getLugarProximaEntrevista() != null ? entrevista.getLugarProximaEntrevista().getNombre()
+					: "";
+		}
+		return valor;
+	}
+	
+	public String getHoraProximaEntrevista(EntrevistaIndividual entrevista) {
+		String valor = NO_APLICA;
+		if(!entrevista.getTipoEntrevista().equals(TipoEntrevista.FINAL) ){
+			valor = entrevista.getHoraProxEntrevista()!=null?entrevista.getHoraProxEntrevista():"";
+		}
+		return valor;
+	}
+	
+	public String getExpectativasRA(EntrevistaIndividual entrevista) {
+		String valor = NO_APLICA;
+		if(entrevista.getTipoEntrevista().equals(TipoEntrevista.RENOVACION)){
+			EntrevistaRenovacion er = (EntrevistaRenovacion)entrevista;
+			if(er.getEvaluacionRenovacionMergeada() != null)
+				if(er.getEvaluacionRenovacionMergeada().equals(EvaluacionRenovacionMergeada.RENUEVA)){
+					valor = er.getExpectativasRA();
+			}
+			else{
+				valor = "";
+			}
+		}else if(entrevista.getTipoEntrevista().equals(TipoEntrevista.INCORPORACION)){
+				EntrevistaReIncorporacion eri = (EntrevistaReIncorporacion)entrevista;
+				if(eri.getIncorporacion() != null)
+					if(eri.getIncorporacion().equals(EvaluacionIncorporacion.INCORPORA)){
+						valor = eri.getExpectativasRA();
+				}
+				else{
+					valor = "";
+				}			
+		}
+		return valor;
+	}
+	
+	public String getDestinoDineroBeca(EntrevistaIndividual entrevista) {
+		StringBuffer valor = new StringBuffer(NO_APLICA);
+		if(entrevista.getTipoEntrevista().equals(TipoEntrevista.RENOVACION)){
+			EntrevistaRenovacion er = (EntrevistaRenovacion)entrevista;
+			if(er.getEvaluacionRenovacionMergeada() != null){
+				if(er.getEvaluacionRenovacionMergeada().equals(EvaluacionRenovacionMergeada.RENUEVA)){
+					valor = new StringBuffer();
+					if(!entrevista.getDestinoDinero().isEmpty()){
+						for (DetalleGastos destino : entrevista.getDestinoDinero()) {
+							valor.append( destino.getValor() + ", ");
+						}
+						valor.deleteCharAt(valor.lastIndexOf(","));
+					}	
+				}
+			}
+			else{				valor =  new StringBuffer("");
+			}
+		}else if(entrevista.getTipoEntrevista().equals(TipoEntrevista.INCORPORACION)){ 
+				EntrevistaReIncorporacion eri = (EntrevistaReIncorporacion)entrevista;
+				if(eri.getIncorporacion() != null){
+					if(eri.getIncorporacion().equals(EvaluacionIncorporacion.INCORPORA)){
+						valor = new StringBuffer();
+						if(!entrevista.getDestinoDinero().isEmpty()){
+							for (DetalleGastos destino : entrevista.getDestinoDinero()) {
+								valor.append( destino.getValor() + ", ");
+							}
+							valor.deleteCharAt(valor.lastIndexOf(","));
+						}
+					}
+				}
+				else{
+					valor =  new StringBuffer("");
+				}
+			}
+		return valor.toString();
+	}
+	
+	public String getSituacionCrisis(EntrevistaIndividual entrevista) {
+		StringBuffer valor = new StringBuffer(NO_APLICA);
+		if(entrevista.getTipoEntrevista().equals(TipoEntrevista.MENSUAL)){
+			valor = new StringBuffer();
+			if(!entrevista.getSituacionCrisis().isEmpty()){
+				for (SituacionCrisis crisis : entrevista.getSituacionCrisis()) {
+					valor.append( crisis.getValor() + ", ");
+				}
+				valor.deleteCharAt(valor.lastIndexOf(","));
+			}
+		}
+		return valor.toString();
+	}
+	
+	public String getRecomendacionEstrategiaComplementaria(EntrevistaIndividual entrevista) {
+		StringBuffer valor = new StringBuffer(NO_APLICA);
+		if(entrevista.getTipoEntrevista().equals(TipoEntrevista.MENSUAL) ){
+			valor = new StringBuffer();
+			if(!entrevista.getEstrategiaComp().isEmpty()){
+				for (EstrategiaComplementaria estrategia : entrevista.getEstrategiaComp()) {
+					valor.append( estrategia.getValor() + ", ");
+				}
+				valor.deleteCharAt(valor.lastIndexOf(","));
+			}
+			
+		}
+		return valor.toString();
+	}
+	
+	public String getContenidosAbordados(EntrevistaIndividual entrevista) {
+		StringBuffer valor = new StringBuffer(NO_APLICA);
+		if(entrevista.getTipoEntrevista().equals(TipoEntrevista.MENSUAL)){
+			valor = new StringBuffer();
+			if(!entrevista.getContenidosAbordados().isEmpty()){
+				for (ContenidosAbordados contenido : entrevista.getContenidosAbordados()) {
+					valor.append( contenido.getValor() + ", ");
+				}
+				valor.deleteCharAt(valor.lastIndexOf(","));
+			}	
+		}
+		return valor.toString();
+	}
+	
+	public String getCompromisoRAEscolaridad(EntrevistaIndividual entrevista) {
+		String valor = NO_APLICA;
+		if(entrevista.getTipoEntrevista().equals(TipoEntrevista.MENSUAL)){
+			valor = entrevista.getCompromisoRA() != null ? entrevista.getCompromisoRA().getValor() : "";
+		}
+		return valor;
+	}
+	
+	public String getHoraEntrevistaFebreroMarzo(EntrevistaIndividual entrevista) {
+		String valor = NO_APLICA;
+		if(entrevista.getTipoEntrevista().equals(TipoEntrevista.FINAL)){
+			valor = ((EntrevistaFinal)entrevista).getHoraProxEntrevista();
+		}
+		return valor;
+	}
+
+	/**
+	 * @return the lugarEntrevistaFebreroMarzo
+	 */
+	public String getLugarEntrevistaFebreroMarzo(EntrevistaIndividual entrevista) {
+		String valor = NO_APLICA;
+		if(entrevista.getTipoEntrevista().equals(TipoEntrevista.FINAL)){
+			valor = ((EntrevistaFinal)entrevista).getLugarProximaEntrevista() != null ? ((EntrevistaFinal)entrevista).getLugarProximaEntrevista().getNombre()
+					: "";
+		}
+		return valor;
+	}
+	
+	public String getFechaEntrevistaFebreroMarzo(EntrevistaIndividual entrevista) {
+		String valor = NO_APLICA;
+		if(entrevista.getTipoEntrevista().equals(TipoEntrevista.FINAL)){
+			EntrevistaFinal entrevFinal = (EntrevistaFinal)entrevista;
+			valor = entrevFinal.getFechaEntrevFebMarzo() != null ?
+					Formateador.formatearFecha( ((EntrevistaFinal)entrevista).getFechaEntrevFebMarzo(), PATRON_FECHA)
+					: "";
+		}
+		return valor;
+	}
+	
+	public String getProyeccionAnioProximoFinalizacionPBE(EntrevistaIndividual entrevista) {
+		String valor = NO_APLICA;
+		if(entrevista.getTipoEntrevista().equals(TipoEntrevista.FINAL) 
+				&& ((EntrevistaFinal)entrevista).getProyAnioProximo() != null){
+			valor = ((EntrevistaFinal)entrevista).getProyAnioProximo().getValor();
+		}
+		return valor;
+	}
+	
+	public String getCambioEscuelaProximoAnio(EntrevistaIndividual entrevista) {
+		String valor = NO_APLICA;
+		if(entrevista.getTipoEntrevista().equals(TipoEntrevista.FINAL)){
+			valor = ((EntrevistaFinal)entrevista).getCambioEscuelaProxAnio();
+		}
+		return valor;
+	}
+	
+	public String getEvaluacionPropositoAnual(EntrevistaIndividual entrevista) {
+		String valor = NO_APLICA;
+		if(entrevista.getTipoEntrevista().equals(TipoEntrevista.FINAL)){
+			valor = ((EntrevistaFinal)entrevista).getEvaluacionProposito();
+		}
+		return valor;
+	}
+
+	/**
+	 * @return the resultadoAnioEscolar
+	 */
+	public String getResultadoAnioEscolar(EntrevistaIndividual entrevista) {
+		String valor = NO_APLICA;
+		if(entrevista.getTipoEntrevista().equals(TipoEntrevista.FINAL)){
+			valor = ((EntrevistaFinal)entrevista).getSituacionEscolarMergeada() != null ?((EntrevistaFinal)entrevista).getSituacionEscolarMergeada().getValor() : "";
+		}
+		return valor;
+	}
+	
+	public String getDetalleGastos(EntrevistaIndividual entrevista) {
+		StringBuffer valor = new StringBuffer(NO_APLICA);
+		if(entrevista.getTipoEntrevista().equals(TipoEntrevista.MENSUAL) || entrevista.getTipoEntrevista().equals(TipoEntrevista.FINAL)){ 
+			valor = new StringBuffer();
+			if(!entrevista.getDetalleGastos().isEmpty()){
+				for (DetalleGastos detalle : entrevista.getDetalleGastos()) {
+					valor.append( detalle.getValor() + ", ");
+				}
+				valor.deleteCharAt(valor.lastIndexOf(","));
+			}			
+		}		
+		return valor.toString();
+	}
+	
+	public String getRendicionGastos(EntrevistaIndividual entrevista) {
+		String valor = NO_APLICA;
+		if(entrevista.getTipoEntrevista().equals(TipoEntrevista.MENSUAL)){
+			valor = ((EntrevistaIndividual)entrevista).isRendicionGastos() ? SI : NO;
+		}else if(entrevista.getTipoEntrevista().equals(TipoEntrevista.FINAL)){
+			valor = ((EntrevistaFinal)entrevista).isRendicionGastos() ? SI : NO;
+		}
+		return valor;
+	}
+	
+	public String getMotivoInasistencias(EntrevistaIndividual entrevista) {
+		String valor = NO_APLICA;
+		if(entrevista.getTipoEntrevista().equals(TipoEntrevista.MENSUAL)){
+			valor = ((EntrevistaIndividual)entrevista).getMotivoInasistencia();
+		}else if(entrevista.getTipoEntrevista().equals(TipoEntrevista.FINAL)){
+			valor = ((EntrevistaFinal)entrevista).getMotivoInasistencia();
+		}
+		return valor;
+	}
+	
+	public String getMateriasFechasDiciembre(EntrevistaIndividual entrevista) {
+		String valor = NO_APLICA;
+		if(entrevista.getTipoEntrevista().equals(TipoEntrevista.FINAL)){
+			valor = ((EntrevistaFinal)entrevista).getMateriasRendirDiciembre();
+		}
+		return valor;
+	}
+	
+	public String getParticipoRA(EntrevistaIndividual entrevista) {
+		String valor = NO_APLICA;
+		if(entrevista.getEntrevistaGrupal() == null){
+			valor = entrevista.isParticipoRA()? SI : NO;
+		}
+		return valor;
+	}
+	
+	public String getEntrevistaReprogramada(EntrevistaIndividual entrevista) {
+		String valor = NO_APLICA;
+		if(entrevista.getTipoEntrevista().equals(TipoEntrevista.MENSUAL)){
+			valor = entrevista.getEntrevistaReprogramada() != null ? 
+					entrevista.getEntrevistaReprogramada().getValor() : "";
+		}
+		return valor;
+	}
+	
+	public String getFechaIncorporacionPBE(EntrevistaIndividual entrevista) {
+		return entrevista.getPerfilAlumno().getFechaPBE() != null ? 
+				Formateador.formatearFecha(entrevista.getPerfilAlumno().getFechaPBE(), PATRON_FECHA) :
+					"";
+	}
+	
+	public String getFechaReIncorporacionPBE(EntrevistaIndividual entrevista) {
+		return entrevista.getPerfilAlumno().getFechaReincorporacionPBE() != null ? 
+				Formateador.formatearFecha(entrevista.getPerfilAlumno().getFechaReincorporacionPBE(), PATRON_FECHA) :
+					NO_APLICA;
+	}
+	
+	public String getPropositoAnioComienzaList(EntrevistaIndividual entrevista) {
+		StringBuffer valor = new StringBuffer(NO_APLICA);
+		if(entrevista.getTipoEntrevista().equals(TipoEntrevista.RENOVACION)){ 
+			EntrevistaRenovacion er = (EntrevistaRenovacion)entrevista;
+			if(er.getEvaluacionRenovacionMergeada() != null){
+					if(er.getEvaluacionRenovacionMergeada().equals(EvaluacionRenovacionMergeada.RENUEVA)){
+					valor = new StringBuffer();
+					EntrevistaRenovacion entrevistaRenovacion = (EntrevistaRenovacion)entrevista;
+					if(!entrevistaRenovacion.getPropositoAnioComienzaList().isEmpty()){
+						for (PropositoAnioComienza proposito : entrevistaRenovacion.getPropositoAnioComienzaList()) {
+							valor.append( proposito.getValor() + ", ");
+						}
+						valor.deleteCharAt(valor.lastIndexOf(","));
+					}
+				}
+			}
+			else{
+				valor = new StringBuffer("");
+			}
+		}
+		return valor.toString();
+	}
+	
+	public String getIncorporacion(EntrevistaIndividual entrevista) {
+		String valor = NO_APLICA;
+		if(entrevista.getTipoEntrevista().equals(TipoEntrevista.INCORPORACION)){
+			valor = ((EntrevistaReIncorporacion)entrevista).getIncorporacion() != null ? 
+					((EntrevistaReIncorporacion)entrevista).getIncorporacion().getValor()
+					: "";
+		}
+		return valor;
+	}
+	
+	public String getSituacionEscolarDiciembre(EntrevistaIndividual entrevista) {
+		String valor = NO_APLICA;
+		if(entrevista.getTipoEntrevista().equals(TipoEntrevista.RENOVACION)){
+			valor = ((EntrevistaRenovacion)entrevista).getSituacionEscolarDiciembre() != null ?
+					((EntrevistaRenovacion)entrevista).getSituacionEscolarDiciembre().getValor()
+					: "";
+		}
+		return valor;
+	}
+	
+	
+	public String getSituacionRenovacionDiciembre(EntrevistaIndividual entrevista) {
+		String valor = NO_APLICA;
+		if(entrevista.getTipoEntrevista().equals(TipoEntrevista.RENOVACION)){
+			valor = ((EntrevistaRenovacion)entrevista).getEvaluacionRenovacionFinal() != null ?
+					((EntrevistaRenovacion)entrevista).getEvaluacionRenovacionFinal().getValor() :
+						"";
+		}
+		return valor;
+	}
+
+
+	public String getSituacionEscolar(EntrevistaIndividual entrevista) {
+		String valor = NO_APLICA;
+		if(entrevista.getTipoEntrevista().equals(TipoEntrevista.RENOVACION)){
+			valor = ((EntrevistaRenovacion)entrevista).getSituacionEscolarMergeada() != null ?
+							((EntrevistaRenovacion)entrevista).getSituacionEscolarMergeada().getValor():
+								"";
+		}
+		return valor;
+	}
+
+
+	public String getSituacionRenovacion(EntrevistaIndividual entrevista) {
+		String valor = NO_APLICA;
+		if(entrevista.getTipoEntrevista().equals(TipoEntrevista.RENOVACION)){
+			valor = ((EntrevistaRenovacion)entrevista).getEvaluacionRenovacionMergeada() != null ? 
+					((EntrevistaRenovacion)entrevista).getEvaluacionRenovacionMergeada().getValor() :
+						"";
+		}else if(entrevista.getTipoEntrevista().equals(TipoEntrevista.FINAL)){
+			valor = ((EntrevistaFinal)entrevista).getEvaluacionRenovacionFinal() != null ?
+					((EntrevistaFinal)entrevista).getEvaluacionRenovacionFinal().getValor() :
+						"";
+		}
+		return valor;
+	}
+	
+	public String getRealizoEntrevista(EntrevistaIndividual entrevista) {
+		String valor = NO_APLICA;
+		if(entrevista.getTipoEntrevista().equals(TipoEntrevista.RENOVACION)){
+			if(((EntrevistaRenovacion)entrevista).getEvaluacionRenovacionMergeada() != null && 
+					((EntrevistaRenovacion)entrevista).getEvaluacionRenovacionMergeada() != EvaluacionRenovacionMergeada.RENUEVA)
+			valor = (((EntrevistaRenovacion)entrevista).isRealizoEntrevista()? SI : NO);
+		}else if(entrevista.getTipoEntrevista().equals(TipoEntrevista.INCORPORACION)){
+			if(((EntrevistaReIncorporacion)entrevista).getIncorporacion() != null && 
+					((EntrevistaReIncorporacion)entrevista).getIncorporacion() != EvaluacionIncorporacion.INCORPORA)
+			valor = (((EntrevistaReIncorporacion)entrevista).isRealizoEntrevista()? SI : NO);
+		}
+		return valor;
+	}
+	
+	public String getObservacionesMateriasExamenes(EntrevistaIndividual entrevista) {
+		String valor = NO_APLICA;
+		if(entrevista.getTipoEntrevista().equals(TipoEntrevista.RENOVACION)){
+			valor = ((EntrevistaRenovacion)entrevista).getObservacionMateriasExamenes();
+		}
+		return valor;
+	}
+	
+	public String getEvolucionMesAnterior(EntrevistaIndividual entrevista) {
+		String valor = NO_APLICA;
+		if(entrevista.getTipoEntrevista().equals(TipoEntrevista.MENSUAL) 
+				&& ((EntrevistaIndividual)entrevista).getEvolucionMesAnterior() != null){
+			valor = ((EntrevistaIndividual)entrevista).getEvolucionMesAnterior();
+		}
+		return valor;
+	}
+	
+	public String getLogros(EntrevistaIndividual entrevista) {
+		String valor = NO_APLICA;
+		if(entrevista.getTipoEntrevista().equals(TipoEntrevista.MENSUAL) 
+				&& ((EntrevistaIndividual)entrevista).getLogros() != null){
+			valor = ((EntrevistaIndividual)entrevista).getLogros();
+		}
+		return valor;
+	}
+	
+	public String getDificultades(EntrevistaIndividual entrevista) {
+		String valor = NO_APLICA;
+		if(entrevista.getTipoEntrevista().equals(TipoEntrevista.MENSUAL) 
+				&& ((EntrevistaIndividual)entrevista).getDificultades() != null){
+			valor = ((EntrevistaIndividual)entrevista).getDificultades();
+		}
+		return valor;
+	}
+	
+	public String getProposito(EntrevistaIndividual entrevista) {
+		String valor = NO_APLICA;
+		if(entrevista.getTipoEntrevista().equals(TipoEntrevista.MENSUAL) 
+				&& ((EntrevistaIndividual)entrevista).getProposito() != null){
+			valor = ((EntrevistaIndividual)entrevista).getProposito();
+		}
+		return valor;
+	}
+}

@@ -1,0 +1,257 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>:: Informe de Seguimiento Nº 1 ::</title>
+
+</head>
+<script type="text/javascript" src="<c:url  value="/static/js/jquery.blockUI.js"/>"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+
+	$("#informeForm").validate({
+   		invalidHandler: function(form, validator) {
+		var errors = validator.numberOfInvalids();
+		if (errors) {
+			$.unblockUI();
+		}
+	}
+});
+ 
+});
+
+function enviarForm(action){
+	if(action == 'finalizar'){
+		document.forms['informeForm'].action = "../informeIS1/actualizarInformeRevision.do?accion=" + action;
+		$.blockUI();
+		$('#informeForm').submit();
+	}
+	
+}
+</script>
+<script type="text/javascript">
+	function chequearLongitud(obj){
+		if (obj.value.length > 10000) {
+		obj.value = obj.value.substring(0, 10000);
+		}
+	}
+</script>
+<body>
+<div id="main-content">
+<form:form id="informeForm" commandName="informe" cssClass="cmxform"  modelAttribute="informe" action="" method="post">
+<h1 id="titulo-informe">:: Informe de Seguimiento Nº 1 ::</h1>
+    <table border="0" align="left" cellpadding="0" cellspacing="0" id="table-informe">
+    	<c:if test="${informe.estado.valor == estadoInformeRevision}">
+	    	<tr>
+				<td>
+					<label>
+						Este Informe no puede ser modificado. Solo DI puede cambiar el estado del mismo.
+					</label>
+				</td>
+			</tr>
+			<tr>
+	      	    <td>&nbsp;</td>
+	       	    <td>&nbsp;</td>
+	      	</tr>
+		</c:if>
+    	<tr>
+			<td>${informe.estado.valor}</td>
+		</tr>
+   		<tr>
+			<td colspan="2"><h1 id="subtitulo-informe">Datos del Becado</h1></td>
+		</tr>
+		<tr>
+			<td>
+				<table width="200" border="0" align="left" cellpadding="0" cellspacing="0" id="table-forms">
+					<tr>	
+						<td><label>Padrino:</label></td>
+						<td><label>
+							${informe.padrino.empresa.denominacion}			
+							${informe.padrino.datosPersonales.nombre}&nbsp;${informe.padrino.datosPersonales.apellido}</label>
+						</td>
+					</tr> 
+					<tr>
+						<td width="250"><label>Ciclo lectivo:</label></td>
+						<td width="600"><label>${informe.cicloActual.nombre}</label></td>
+					</tr>   	
+					<tr>
+						<td><label>Alumno:</label></td>
+						<td><label>${informe.becado.datosPersonales.nombre}&nbsp;${informe.becado.datosPersonales.apellido}</label></td>
+					</tr>
+					<tr>
+						<td><label>Fecha de Nacimiento:</label></td>
+						<td><label><fmt:formatDate value="${informe.becado.datosPersonales.fechaNacimiento}" pattern="dd/MM/yyyy"/></label></td>
+					</tr>
+					<tr>
+						<td><label>Edad:</label></td>
+						<td><label>${informe.edad}</label></td>
+					</tr>
+					<tr>	
+						<td><label>Localidad donde vive:</label></td>
+						<td><label>${informe.becado.datosPersonales.localidad.nombre}</label></td>
+					</tr>
+					<tr>	
+						<td><label>A&ntilde;o que cursa:</label></td>
+						<td><label>${informe.becado.anioEscolar.valor}</label></td>						
+					</tr>
+					<tr>		
+						<td><label>Año adicional:</label></td>
+						<td>
+							<input type="checkbox" name="anioAdicional"
+								<c:if test="${informe.becado.anioAdicional}"> checked="checked" </c:if> 
+							id="anioAdicional"  disabled="true">
+						</td>
+					</tr>	
+					<tr>	
+						<td><label>Institución educativa:</label></td>
+						<td><label>${informe.becado.escuela.nombre}</label>
+						</td>
+					</tr>	
+					<tr>	
+						<td><label>Localidad:</label></td>
+						<td><label>${informe.becado.escuela.localidad.nombre}</label>
+						</td>
+					</tr>				
+					<c:if test="${!empty informe.becado.responsable2}">
+						<tr>
+							<td><label>Responsable Adulto:</label></td>						
+							<td><label>${informe.becado.responsable2.nombre },&nbsp;${informe.becado.responsable2.apellido}</label>					
+						</tr>
+						<c:if test="${!empty informe.becado.responsable2.idVinculo}">
+							<tr>
+								<td><label>V&iacute;nculo:</label></td>
+								<td><label>${informe.becado.responsable2.idVinculo.valor}</label></td>
+							</tr>
+						</c:if>
+					</c:if>
+					<c:if test="${empty informe.becado.responsable2}">
+						<tr>
+							<td><label>Responsable Adulto:</label></td>						
+							<td><label>${informe.becado.responsable1.nombre },&nbsp;${informe.becado.responsable1.apellido}</label>					
+						</tr>
+						<c:if test="${!empty informe.becado.responsable1.idVinculo}">
+							<tr>
+								<td><label>V&iacute;nculo:</label></td>
+								<td><label>${informe.becado.responsable1.idVinculo.valor}</label></td>
+							</tr>
+						</c:if>
+					</c:if>
+					<c:if test="${!empty informe.becado.estadoRenovacion}">
+						<tr>
+							<td><label>Estado de renovación para ciclo actual:</label></td>
+							<td><label>${informe.er.evaluacionRenovacionMergeada.valor}</label></td>
+						</tr>
+					</c:if>
+					<c:if test="${!empty informe.situacion}">
+						<tr>
+							<td><label>Situación escolar:</label></td>
+							<td><label>${informe.situacion.valor}</label></td>
+						</tr>
+					</c:if>		
+				</table>
+			</td>
+		</tr>   	
+    			
+		<c:if test="${!empty informe.boletinAnioAnterior}">
+			<tr>
+				<td colspan="2"><h1 id="subtitulo-informe">Bolet&iacute;n de calificaciones a&ntilde;o anterior</h1></td>
+			</tr>
+			<tr>			
+			<td colspan="2">
+				<table>	
+					<tr>
+						<td>
+							<label>
+								Recuerda que las materias y/o asistencias, días hábiles que contengan en todos los trimestres los valores "No aplica" y/o "No existe" y/o "Sin dato", no serán agregados al PDF para el padrino.
+							</label>
+						</td>
+					</tr>
+				</table>
+				<jsp:include page="/WEB-INF/pages/informes/boletinView.jsp"></jsp:include>
+			</td>
+			</tr>			
+		</c:if>
+		
+		<c:if test="${!empty informe.boletinAnioAnterior.materiasPrevias}">			
+			<tr>			
+				<td colspan="2">
+					<jsp:include page="/WEB-INF/pages/informes/previasView.jsp"></jsp:include>
+				</td>
+			</tr>			
+		</c:if>		
+
+      	<c:if test="${!empty informe.propositoAnioComienzaList}">      				
+			<tr>
+				<td><h1 id="subtitulo-informe">Prop&oacute;sito para el a&ntilde;o que comienza</h1></td>
+			</tr>
+			<tr>
+				<td>					
+					${informe.propositoAnioComienzaListString}
+				</td>
+			</tr>
+		</c:if>		
+
+		
+		<c:if test="${!empty informe.gustosTiempoLibre}">
+			<tr>
+				<td ><h1 id="subtitulo-informe">En el tiempo libre le gusta</h1></td>
+			</tr>
+			<tr>
+				<td >					
+					${informe.gustosTiempoLibreString}
+				</td>
+			</tr>
+		</c:if>
+									
+		<tr>
+      	    <td>&nbsp;</td>
+       	    <td>&nbsp;</td>
+      	</tr>
+
+      	<tr>
+			<td colspan="2">
+				<table width="900" border="0" align="right" cellpadding="0" cellspacing="0" id="table-botons-small">
+					<tr>
+<%-- 						<c:if test="${informe.fp.estado.valor == estadoInformeEnviado}"> --%>
+							<td width="50" align="center" valign="middle">
+								<input class="ui-state-default ui-corner-all " type="button" onclick="enviarForm('finalizar')" value="Finalizar" />
+							</td>		  
+							<td width="50" align="center" valign="middle">
+								<input type="button" value="Volver" class="ui-state-default ui-corner-all" onclick="history.back();" />
+							</td>
+							<td width="292" height="30" align="center" valign="middle">&nbsp;</td>
+<%-- 						</c:if>
+						<c:if test="${informe.fp.estado.valor != estadoInformeEnviado}">
+							<td width="50" align="center" valign="middle">
+							  	<center>
+									<input type="button" value="Volver" class="ui-state-default ui-corner-all"	onclick="history.back();" />
+								</center>
+					       </td>
+						</c:if> --%>
+				 	</tr>
+		       </table> 
+			</td>
+		</tr>
+	</table>
+	<input type="hidden" name="id" value="${informe.id}"></input>
+	<input type="hidden" name="er.id" value="${informe.er.id}"></input>
+	<input type="hidden" name="eaPerfil.idPerfilEA" value="${informe.eaPerfil.idPerfilEA}"></input>
+	<input type="hidden" name="estado" value="${informe.estado}"></input>
+	<input type="hidden" name="padrino.id" value="${informe.padrino.id}"></input>
+	<input type="hidden" name="becado.id" value="${informe.becado.id}"></input>	
+	<input type="hidden" name="urlInforme" value="${urlInforme}"></input>
+	<input type="hidden" name="edad" value="${informe.edad}"></input>
+	<input type="hidden" name="nombre" value="${informe.nombre}"></input>
+	<c:if test="${informe.boletinAnioAnterior != null}">
+		<input type="hidden" name="boletinAnioAnterior.id" value="${informe.boletinAnioAnterior.id}"></input>
+	</c:if>
+</form:form>
+</div>
+</body>
+</html>

@@ -1,0 +1,445 @@
+package org.cimientos.intranet.web.controller;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.cimientos.intranet.dto.ConvocadoDTO;
+import org.cimientos.intranet.modelo.CicloPrograma;
+import org.cimientos.intranet.modelo.candidato.convocatoria.Convocatoria;
+import org.cimientos.intranet.modelo.entrevistaTS.EntrevistaTS;
+import org.cimientos.intranet.modelo.escuela.Escuela;
+import org.cimientos.intranet.modelo.perfil.EstadoAlumno;
+import org.cimientos.intranet.modelo.perfil.PerfilAlumno;
+import org.cimientos.intranet.modelo.perfilTS.PerfilTS;
+import org.cimientos.intranet.modelo.ubicacion.ZonaCimientos;
+import org.cimientos.intranet.servicio.AlumnoSrv;
+import org.cimientos.intranet.servicio.CicloProgramaSrv;
+import org.cimientos.intranet.servicio.ConvocadoSrv;
+import org.cimientos.intranet.servicio.ConvocatoriaSrv;
+import org.cimientos.intranet.servicio.EntrevistaTSSrv;
+import org.cimientos.intranet.servicio.EscuelaSrv;
+import org.cimientos.intranet.servicio.PerfilTSSrv;
+import org.cimientos.intranet.servicio.ZonaCimientosSrv;
+import org.cimientos.intranet.utils.paginacion.ExtendedPaginatedList;
+import org.cimientos.intranet.utils.paginacion.PaginateListFactory;
+import org.displaytag.tags.TableTagParameters;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.cimientos.intranet.enumerativos.AnioEscolar;
+import com.cimientos.intranet.enumerativos.RecomendacionesTS;
+import com.cimientos.intranet.enumerativos.entrevista.MotivoEnvioTS;
+import com.cimientos.intranet.enumerativos.entrevista.MotivoRechazo;
+/**
+ * @author nlopez
+ *
+ */
+
+@Controller
+@RequestMapping("/convocado/*")
+public class ConvocadoController extends BaseController{
+
+	@Autowired
+	private AlumnoSrv alumnoSrv;
+	@Autowired
+	private ConvocadoSrv convocadoSrv;
+	@Autowired
+	private PerfilTSSrv perfilTSSrv;
+
+	@Autowired
+	private EntrevistaTSSrv entrevistaTSSrv;
+	@Autowired
+	private PaginateListFactory paginateListFactory;
+	@Autowired
+	private ZonaCimientosSrv zonaCimientosSrv;
+	@Autowired
+	private ConvocatoriaSrv convocatoriaSrv;
+	@Autowired
+	private CicloProgramaSrv cicloSrv;
+	@Autowired
+	private EscuelaSrv escuelaSrv;
+	
+	
+	@RequestMapping("/convocado/modificarConvocado.do")
+	public ModelAndView modificarConvocado( @RequestParam("idConvocado") Long id,											
+											@RequestParam("idValor") Long valor,
+											@RequestParam("idMotivoRechazo") Integer idMotivoRechazo,
+											@RequestParam(value="idCiclo" ,required=false) Long idCiclo,
+											@RequestParam(value="idZonaCimientos",required=false) Long idZonaCimientos,
+											@RequestParam(value="idEscuela" ,required=false) Long idEscuela,
+											@RequestParam(value="idConvocatoria",required=false) Long idConvocatoria,
+											@RequestParam(value="nombreAlumno",required=false) String nombreAlumno,
+											@RequestParam(value="idEstadoAlumno",required=false) Integer idEstadoAlumno,
+											@RequestParam(value="idTS", required=false)Long idTS,
+											@RequestParam(value="idMotivoVisita",required=false) Integer idMotivoVisita,
+											@RequestParam(value="idRecomendacionTS" ,required=false) Integer idRecomendacionTS,
+											HttpServletRequest request
+											){
+				
+		Map<String, Object> resul = new HashMap<String, Object>();
+		PerfilAlumno perfilAlumnoModificarEstado = new PerfilAlumno();
+		EstadoAlumno estadoAnterior; 
+		EstadoAlumno estadoNuevo;
+		
+		perfilAlumnoModificarEstado = alumnoSrv.obtenerAlumno(id);
+		estadoAnterior = perfilAlumnoModificarEstado.getEstadoAlumno();
+		EstadoAlumno estadoAlumno = EstadoAlumno.getEstados(valor.intValue());
+				
+		if(estadoAlumno.equals(EstadoAlumno.LISTA_ESPERA)){
+			perfilAlumnoModificarEstado.setEstadoAlumno(EstadoAlumno.LISTA_ESPERA);
+		}
+			
+		if(estadoAlumno.equals(EstadoAlumno.LISTA_ESPERA_MATERIAS)){
+			perfilAlumnoModificarEstado.setEstadoAlumno(EstadoAlumno.LISTA_ESPERA_MATERIAS);
+		}
+			
+		if(estadoAlumno.equals(EstadoAlumno.RECHAZADO)){
+			perfilAlumnoModificarEstado.setEstadoAlumno(EstadoAlumno.RECHAZADO);
+		}
+			
+		if(estadoAlumno.equals(EstadoAlumno.PRESELECCIONADO)){
+			perfilAlumnoModificarEstado.setEstadoAlumno(EstadoAlumno.PRESELECCIONADO);
+		}
+			
+		if(estadoAlumno.equals(EstadoAlumno.APROBADO)){
+			perfilAlumnoModificarEstado.setEstadoAlumno(EstadoAlumno.APROBADO);
+		}
+		alumnoSrv.agregarAlumno(perfilAlumnoModificarEstado);
+		estadoNuevo = perfilAlumnoModificarEstado.getEstadoAlumno();
+		resul.put("mensaje", "Se modifico el estado del candidato: " + 
+				perfilAlumnoModificarEstado.getDatosPersonales().getApellido() 
+				+ " " + perfilAlumnoModificarEstado.getDatosPersonales().getNombre() 
+				+ " de " + estadoAnterior.getValor() + " a " + estadoNuevo.getValor());
+				
+		if(idMotivoRechazo != null ){
+			EntrevistaTS ts = entrevistaTSSrv.obtenerEntrevistaTSPorAlumno(id);
+			ts.setMotivoRechazo(MotivoRechazo.getMotivoRechazo(idMotivoRechazo));
+			entrevistaTSSrv.guardarEntrevista(ts);
+		}
+		
+		resul.put("idCiclo",idCiclo);	
+		resul.put("idZonaCimientos", idZonaCimientos);	
+		resul.put("idEscuela", idEscuela);	
+		resul.put("idConvocatoria", idConvocatoria);	
+		resul.put("nombreAlumno", nombreAlumno);	
+		resul.put("idEstadoAlumno", idEstadoAlumno);	
+		resul.put("idTS", idTS);	
+		resul.put("idMotivoVisita", idMotivoVisita);	
+		resul.put("idRecomendacionTS", idRecomendacionTS);	
+		return new ModelAndView("redirect:/convocado/listadoDeConvocados.do",resul);
+
+	}
+
+	
+	@RequestMapping("/convocado/listadoDeConvocados.do")
+	public ModelAndView listadoDeConvocados(HttpServletRequest request,
+											@RequestParam(value="idCiclo" ,required=false) Long idCiclo,
+											@RequestParam(value="idZonaCimientos",required=false) Long idZonaCimientos,
+											@RequestParam(value="idEscuela" ,required=false) Long idEscuela,
+											@RequestParam(value="idConvocatoria",required=false) Long idConvocatoria,
+											@RequestParam(value="nombreAlumno",required=false) String nombreAlumno,
+											@RequestParam(value="eae",required=false) String eae,
+											@RequestParam(value="idEstadoAlumno",required=false) Integer idEstadoAlumno,
+											@RequestParam(value="idTS", required=false)Long idTS,
+											@RequestParam(value="idMotivoVisita",required=false) Integer idMotivoVisita,
+											@RequestParam(value="idRecomendacionTS" ,required=false) Integer idRecomendacionTS,
+											@RequestParam(value="mensaje" ,required=false) String mensaje,
+											@RequestParam(required=false,value="idAnioEscolar")Integer idAnioEscolar){
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		EstadoAlumno estadoAlumno=null;
+		ZonaCimientos zona = null;
+		Convocatoria convocatoria = null;
+		CicloPrograma cicloPrograma = null;
+		Escuela escuela = null;
+		PerfilTS ts = null;
+		MotivoEnvioTS motivoEnvioTS = null;
+		RecomendacionesTS recomendacionesTS = null;
+		AnioEscolar anio = null;
+		Long cicloId = idCiclo != null && idCiclo.equals(0) ? null : idCiclo;
+		Integer estadoAlumnoId = idEstadoAlumno != null && idEstadoAlumno.equals(0) ? null : idEstadoAlumno;
+		Integer motivoVisitaId = idMotivoVisita != null && idMotivoVisita.equals(0) ? null : idMotivoVisita;
+		Integer recomendacionTSId = idRecomendacionTS != null && idRecomendacionTS.equals(0) ? null : idRecomendacionTS;
+		Integer idAnio = idAnioEscolar != null && idAnioEscolar.equals(0) ? null : idAnioEscolar;
+		
+		if(estadoAlumnoId != null){
+			 estadoAlumno= EstadoAlumno.getEstados(estadoAlumnoId);
+			 result.put("estado", estadoAlumno);
+		}
+		if(idZonaCimientos != null){
+			 zona = zonaCimientosSrv.obtenerZonaCimientos(idZonaCimientos);
+			 result.put("zonaCimientos", zona);
+		}
+		if(idConvocatoria != null ){
+			 convocatoria = convocatoriaSrv.obtenerConvocatoriaPorId(idConvocatoria);
+			 result.put("convocatoria", convocatoria);
+		}
+		if(cicloId != null){
+			cicloPrograma = cicloSrv.obtenerCiclo(cicloId);
+			result.put("ciclo", cicloPrograma);
+		}
+		if(idEscuela != null){
+			escuela = escuelaSrv.obtenerEscuelaPorId(idEscuela);
+			result.put("escuela", escuela);
+		}
+		if(idTS != null ){
+			ts = perfilTSSrv.obtenerPerfilTS(idTS);
+			result.put("perfilTS", ts);
+		}
+		if(motivoVisitaId != null ){
+			motivoEnvioTS = MotivoEnvioTS.getMotivoEnvioTS(motivoVisitaId);
+			result.put("motivoVisita", motivoEnvioTS);
+		}
+		if(recomendacionTSId != null ){
+			recomendacionesTS = RecomendacionesTS.getRecomendacionesTS(recomendacionTSId);
+			result.put("recomendacionTS",recomendacionesTS);
+		}
+		if(idAnio != null){
+			anio= AnioEscolar.getAnioEscolar(idAnio);
+			result.put("anio", anio);
+		}
+		
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		result.put("eae", eae);
+		result.put("mensaje", mensaje);
+		result.put("convocados", paginadoConvocado(request,cicloPrograma,zona,escuela,convocatoria,nombreAlumno,estadoAlumno,ts,motivoEnvioTS,recomendacionesTS,anio,eae));
+		result.put("listPerfilTS" , perfilTSSrv.obtenerTodos());
+		result.put("listaMotivoRechazo",MotivoRechazo.getListaMotivosRechazo());
+		result.put("listaCiclos",cicloSrv.obtenerTodos());
+		result.put("listEstadoAlumnos",getEstadosAlumnos());
+		result.put("listMotivoVisita",MotivoEnvioTS.getListMotivoEnvioTS());
+		result.put("listMotivoVisita",MotivoEnvioTS.getListMotivoEnvioTS());
+		result.put("listRecomendacionTS",RecomendacionesTS.getListaRecomendacionesTS());
+		result.put("nombreAlumno", nombreAlumno);
+		result.put("listAniosEscolares", AnioEscolar.getAnioEscolares());
+		
+		return forward("convocado/listadoDeConvocados", result);
+		
+	}
+	
+	
+	/**
+	 * Paginado convocado.
+	 *
+	 * @param request the request
+	 * @return the extended paginated list
+	 * @since 28-abr-2011
+	 * @author cfigueroa
+	 * @param recomendacionesTS 
+	 * @param motivoEnvioTS 
+	 * @param ts 
+	 * @param estadoAlumno 
+	 * @param nombreAlumno 
+	 * @param convocatoria 
+	 * @param escuela 
+	 * @param zona 
+	 * @param cicloPrograma 
+	 * @param anio 
+	 */
+	private ExtendedPaginatedList paginadoConvocado(HttpServletRequest request, 
+													CicloPrograma cicloPrograma, ZonaCimientos zona, 
+													Escuela escuela, Convocatoria convocatoria, 
+													String nombreAlumno, EstadoAlumno estadoAlumno, 
+													PerfilTS ts, MotivoEnvioTS motivoEnvioTS, 
+													RecomendacionesTS recomendacionesTS, AnioEscolar anio, String eae) {
+		
+		boolean export = request.getParameter(TableTagParameters.PARAMETER_EXPORTING) != null;
+		
+		List<ConvocadoDTO> dtos = null;
+		
+		ExtendedPaginatedList listaPaginada = paginateListFactory.getPaginatedListFromRequest(request);
+		//Esto le falta los parametros de los filtros
+		int totalRows = convocadoSrv.cantidadConvocado(getEstadosAlumnos(),cicloPrograma,zona,
+													   escuela,convocatoria,
+													   nombreAlumno,estadoAlumno,
+													   ts,motivoEnvioTS,recomendacionesTS,anio,eae);
+		
+		//Si es un export debo cargar toda la lista entera, si no lo es entonces se carga la lista de a una pagina por vez
+		if(export){
+			dtos = convocadoSrv.listaConvocados(0, totalRows,listaPaginada.getSortDirection(), listaPaginada.getSortCriterion(),
+												getEstadosAlumnos(),cicloPrograma,zona,
+												escuela,convocatoria,
+												nombreAlumno,estadoAlumno,
+												ts,motivoEnvioTS,recomendacionesTS,anio,eae);
+		}else{
+			dtos = convocadoSrv.listaConvocados(listaPaginada.getFirstRecordIndex(), 
+												listaPaginada.getPageSize(),listaPaginada.getSortDirection(), 
+												listaPaginada.getSortCriterion(),
+												getEstadosAlumnos(),cicloPrograma,zona,
+												escuela,convocatoria,
+												nombreAlumno,estadoAlumno,
+												ts,motivoEnvioTS,recomendacionesTS,anio,eae);
+		}
+		listaPaginada.setList(dtos);
+		listaPaginada.setTotalNumberOfRows(totalRows);
+
+		return listaPaginada;
+	
+	}
+	
+	/**
+	 * Guardar perfil ts para alumno.
+	 *
+	 * @param idAlumno the id alumno
+	 * @param idPerfilTS the id perfil ts
+	 * @return the model and view
+	 * @since 06-abr-2011
+	 * @author cfigueroa
+	 */
+	@RequestMapping("/convocado/guardarPerfilTSAlumno.do")
+	public ModelAndView guardarPerfilTSParaAlumno(@RequestParam("idConvocado") Long idAlumno,
+    									@RequestParam("idPerfilTS") Long idPerfilTS,
+    									HttpServletRequest request
+    									){
+		Map<String, Object> result = new HashMap<String, Object>();
+		PerfilAlumno alumno = alumnoSrv.obtenerAlumno(idAlumno);
+    	PerfilTS ts = perfilTSSrv.obtenerPerfilTS(idPerfilTS);
+    	alumno.setPerfilTS(ts);
+    	alumno.setEntrevistaTS(new Boolean(false));
+    	alumnoSrv.agregarAlumno(alumno);
+    	String mens = "Se asigno al alumno: "+ alumno.getDatosPersonales().getApellido() + 
+		   "," + alumno.getDatosPersonales().getNombre()+ ", el siguiente Trabajador Social : " + ts.getDatosPersonales().getApellido() + 
+		   	","+ts.getDatosPersonales().getNombre();
+    	result.put("mensaje", mens);
+
+    	return new ModelAndView("redirect:/convocado/listadoDeConvocados.do",result);
+	
+	}
+	
+	/**
+	 * Gets the estados alumnos.
+	 *
+	 * @return the estados alumnos
+	 * @since 03-may-2011
+	 * @author cfigueroa
+	 */
+	private List<EstadoAlumno> getEstadosAlumnos(){
+		List<EstadoAlumno> lisEstadosAlumnos = new ArrayList<EstadoAlumno>();
+		lisEstadosAlumnos.add(EstadoAlumno.APROBADO);
+		lisEstadosAlumnos.add(EstadoAlumno.RECHAZADO);
+		lisEstadosAlumnos.add(EstadoAlumno.LISTA_ESPERA);
+		lisEstadosAlumnos.add(EstadoAlumno.LISTA_ESPERA_MATERIAS);
+		lisEstadosAlumnos.add(EstadoAlumno.PRESELECCIONADO);
+		return lisEstadosAlumnos;
+	}
+			
+
+	@RequestMapping("/convocado/listadoDeConvocadosNuevo.do")
+	public ModelAndView listadoDeConvocadosNuevo(HttpServletRequest request,
+											@RequestParam(value="idCiclo" ,required=false) Long idCiclo,
+											@RequestParam(value="idZonaCimientos",required=false) Long idZonaCimientos,
+											@RequestParam(value="idEscuela" ,required=false) Long idEscuela,
+											@RequestParam(value="idConvocatoria",required=false) Long idConvocatoria,
+											@RequestParam(value="nombreAlumno",required=false) String nombreAlumno,
+											@RequestParam(value="eae",required=false) String eae,
+											@RequestParam(value="idEstadoAlumno",required=false) Integer idEstadoAlumno,
+											@RequestParam(value="idTS", required=false)Long idTS,
+											@RequestParam(value="idMotivoVisita",required=false) Integer idMotivoVisita,
+											@RequestParam(value="idRecomendacionTS" ,required=false) Integer idRecomendacionTS,
+											@RequestParam(value="mensaje" ,required=false) String mensaje,
+											@RequestParam(required=false,value="idAnioEscolar")Integer idAnioEscolar){
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		EstadoAlumno estadoAlumno=null;
+		ZonaCimientos zona = null;
+		Convocatoria convocatoria = null;
+		CicloPrograma cicloPrograma = null;
+		Escuela escuela = null;
+		PerfilTS ts = null;
+		MotivoEnvioTS motivoEnvioTS = null;
+		RecomendacionesTS recomendacionesTS = null;
+		AnioEscolar anio = null;
+		Long cicloId = idCiclo != null && idCiclo.equals(0) ? null : idCiclo;
+		Integer estadoAlumnoId = idEstadoAlumno != null && idEstadoAlumno.equals(0) ? null : idEstadoAlumno;
+		Integer motivoVisitaId = idMotivoVisita != null && idMotivoVisita.equals(0) ? null : idMotivoVisita;
+		Integer recomendacionTSId = idRecomendacionTS != null && idRecomendacionTS.equals(0) ? null : idRecomendacionTS;
+		Integer idAnio = idAnioEscolar != null && idAnioEscolar.equals(0) ? null : idAnioEscolar;
+		
+		if(estadoAlumnoId != null){
+			 estadoAlumno= EstadoAlumno.getEstados(estadoAlumnoId);
+			 result.put("estado", estadoAlumno);
+		}
+		if(idZonaCimientos != null){
+			 zona = zonaCimientosSrv.obtenerZonaCimientos(idZonaCimientos);
+			 result.put("zonaCimientos", zona);
+		}
+		if(idConvocatoria != null ){
+			 convocatoria = convocatoriaSrv.obtenerConvocatoriaPorId(idConvocatoria);
+			 result.put("convocatoria", convocatoria);
+		}
+		if(cicloId != null){
+			cicloPrograma = cicloSrv.obtenerCiclo(cicloId);
+			result.put("ciclo", cicloPrograma);
+		}
+		if(idEscuela != null){
+			escuela = escuelaSrv.obtenerEscuelaPorId(idEscuela);
+			result.put("escuela", escuela);
+		}
+		if(idTS != null ){
+			ts = perfilTSSrv.obtenerPerfilTS(idTS);
+			result.put("perfilTS", ts);
+		}
+		if(motivoVisitaId != null ){
+			motivoEnvioTS = MotivoEnvioTS.getMotivoEnvioTS(motivoVisitaId);
+			result.put("motivoVisita", motivoEnvioTS);
+		}
+		if(recomendacionTSId != null ){
+			recomendacionesTS = RecomendacionesTS.getRecomendacionesTS(recomendacionTSId);
+			result.put("recomendacionTS",recomendacionesTS);
+		}
+		if(idAnio != null){
+			anio= AnioEscolar.getAnioEscolar(idAnio);
+			result.put("anio", anio);
+		}
+		
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		result.put("eae", eae);
+		result.put("mensaje", mensaje);
+		//result.put("convocados", paginadoConvocado(request,cicloPrograma,zona,escuela,convocatoria,nombreAlumno,estadoAlumno,ts,motivoEnvioTS,recomendacionesTS,anio,eae));
+		result.put("listPerfilTS" , perfilTSSrv.obtenerTodos());
+		result.put("listaMotivoRechazo",MotivoRechazo.getListaMotivosRechazo());
+		result.put("listaCiclos",cicloSrv.obtenerTodos());
+		result.put("listEstadoAlumnos",getEstadosAlumnos());
+		result.put("listMotivoVisita",MotivoEnvioTS.getListMotivoEnvioTS());
+		result.put("listMotivoVisita",MotivoEnvioTS.getListMotivoEnvioTS());
+		result.put("listRecomendacionTS",RecomendacionesTS.getListaRecomendacionesTS());
+		result.put("nombreAlumno", nombreAlumno);
+		result.put("listAniosEscolares", AnioEscolar.getAnioEscolares());
+		
+		return forward("convocado/listadoDeConvocadosNuevo", result);
+		
+	}
+	
+	
+}

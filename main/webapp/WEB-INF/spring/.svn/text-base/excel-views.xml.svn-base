@@ -1,0 +1,82 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+ 
+	<bean id="pagoBecaGaliciaExcelView"
+	   	class="org.cimientos.intranet.utils.pagos.PagoExcelView">
+	   	<property name="url" value="/WEB-INF/excelTemplates/pagoBecaGalicia"/>
+	</bean>
+ 	<bean id="pagoBecaMacroExcelView"
+	   	class="org.cimientos.intranet.utils.pagos.PagoExcelView">
+	   	<property name="url" value="/WEB-INF/excelTemplates/pagoBecaMacro"/>
+	</bean>
+ 	<bean id="pagoBecaIndustrialExcelView"
+	   	class="org.cimientos.intranet.utils.pagos.PagoExcelView">
+	   	<property name="url" value="/WEB-INF/excelTemplates/pagoBecaIndustrial"/>
+	</bean>	
+ 	<bean id="altaCuentaMacroExcelView"
+	   	class="org.cimientos.intranet.utils.cuentas.CuentaExcelView">
+	   	<property name="url" value="/WEB-INF/excelTemplates/aperturaCuentaMacro"/>
+	</bean>
+	<bean id="altaCuentaGaliciaExcelView"
+	   	class="org.cimientos.intranet.utils.cuentas.CuentaExcelView">
+	   	<property name="url" value="/WEB-INF/excelTemplates/aperturaCuentaGalicia"/>
+	</bean>
+	<bean id="exportarEntrevistasView"
+	   	class="org.cimientos.intranet.utils.entrevistas.EntrevistaExcelView">
+	   	<property name="url" value="/WEB-INF/excelTemplates/exportarEntrevistas"/>
+	</bean>
+	<bean id="exportarFPView"
+	   	class="org.cimientos.intranet.utils.informe.FPExcelView">
+	   	<property name="url" value="/WEB-INF/excelTemplates/exportarFP"/>
+	</bean>
+	<bean id="exportarIS1View"
+	   	class="org.cimientos.intranet.utils.informe.IS1ExcelView">
+	   	<property name="url" value="/WEB-INF/excelTemplates/exportarIS1"/>
+	</bean>
+	<bean id="exportarIS2View"
+	   	class="org.cimientos.intranet.utils.informe.IS2ExcelView">
+	   	<property name="url" value="/WEB-INF/excelTemplates/exportarIS2"/>
+	</bean>
+	<bean id="exportarIS3View"
+	   	class="org.cimientos.intranet.utils.informe.IS3ExcelView">
+	   	<property name="url" value="/WEB-INF/excelTemplates/exportarIS3"/>
+	</bean>
+	<bean id="exportarICView"
+	   	class="org.cimientos.intranet.utils.informe.ICExcelView">
+	   	<property name="url" value="/WEB-INF/excelTemplates/exportarIC"/>
+	</bean>
+		<bean id="exportarBoletinView"
+	   	class="org.cimientos.intranet.utils.entrevistas.BoletinExcelView">
+	   	<property name="url" value="/WEB-INF/excelTemplates/exportarBoletin"/>
+	</bean>	
+		<bean id="exportarEntrevistaSeleccionView"
+	   	class="org.cimientos.intranet.utils.entrevistas.EntrevistaSeleccionExcelView">
+	   	<property name="url" value="/WEB-INF/excelTemplates/exportarEntrevistaSeleccion"/>
+	</bean>			
+	<bean id="exportarEventoGenericoView"
+	   	class="org.cimientos.intranet.utils.entrevistas.EventoGenericoExcelView">
+	   	<property name="url" value="/WEB-INF/excelTemplates/exportarEventoGenerico"/>
+	</bean>
+	<bean id="exportarEventoGenericoViewRR"
+	   	class="org.cimientos.intranet.utils.entrevistas.EventoGenericoExcelViewRR">
+	   	<property name="url" value="/WEB-INF/excelTemplates/exportarEventoGenerico"/>
+	</bean>
+	<bean id="exportarEntrevistasGrupalesView"
+	   	class="org.cimientos.intranet.utils.entrevistas.EntrevistasGrupalesExcelView">
+	   	<property name="url" value="/WEB-INF/excelTemplates/exportarEntrevistasGrupales"/>
+	</bean>		
+	<bean id="exportarEntrevistasGrupalesViewRR"
+	   	class="org.cimientos.intranet.utils.entrevistas.EntrevistasGrupalesExcelViewRR">
+	   	<property name="url" value="/WEB-INF/excelTemplates/exportarEntrevistasGrupales"/>
+	</bean>		
+	<bean id="exportarEscuelasView"
+	   	class="org.cimientos.intranet.utils.entrevistas.EscuelasExcelView">
+	   	<property name="url" value="/WEB-INF/excelTemplates/exportarEscuelas"/>
+	</bean>
+	<bean id="exportarBecasView"
+	   	class="org.cimientos.intranet.utils.entrevistas.BecasExcelView">
+	   	<property name="url" value="/WEB-INF/excelTemplates/exportarBecas"/>
+	</bean>			
+</beans>

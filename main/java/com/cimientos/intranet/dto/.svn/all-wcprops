@@ -1,0 +1,83 @@
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/fenix/!svn/ver/298/src/main/java/com/cimientos/intranet/dto
+END
+ReporteEntrevistaSeleccionDTO2.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/fenix/!svn/ver/373/src/main/java/com/cimientos/intranet/dto/ReporteEntrevistaSeleccionDTO2.java
+END
+MateriaDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/fenix/!svn/ver/81/src/main/java/com/cimientos/intranet/dto/MateriaDTO.java
+END
+ZonaCimientosDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/fenix/!svn/ver/128/src/main/java/com/cimientos/intranet/dto/ZonaCimientosDTO.java
+END
+ReporteInformeFPDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/fenix/!svn/ver/380/src/main/java/com/cimientos/intranet/dto/ReporteInformeFPDTO.java
+END
+ReporteInformeICDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/fenix/!svn/ver/380/src/main/java/com/cimientos/intranet/dto/ReporteInformeICDTO.java
+END
+EmpresaDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/dto/EmpresaDTO.java
+END
+PadrinoDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/fenix/!svn/ver/359/src/main/java/com/cimientos/intranet/dto/PadrinoDTO.java
+END
+ReporteInformeDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/fenix/!svn/ver/393/src/main/java/com/cimientos/intranet/dto/ReporteInformeDTO.java
+END
+ReporteInformeIS1DTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/fenix/!svn/ver/380/src/main/java/com/cimientos/intranet/dto/ReporteInformeIS1DTO.java
+END
+ReporteInformeIS2DTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/fenix/!svn/ver/380/src/main/java/com/cimientos/intranet/dto/ReporteInformeIS2DTO.java
+END
+ExportarBecasDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/fenix/!svn/ver/393/src/main/java/com/cimientos/intranet/dto/ExportarBecasDTO.java
+END
+FichaFamiliarDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/dto/FichaFamiliarDTO.java
+END
+ReporteInformeIS3DTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/fenix/!svn/ver/380/src/main/java/com/cimientos/intranet/dto/ReporteInformeIS3DTO.java
+END

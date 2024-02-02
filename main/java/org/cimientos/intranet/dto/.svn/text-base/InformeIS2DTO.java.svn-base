@@ -1,0 +1,390 @@
+package org.cimientos.intranet.dto;
+
+/**
+ * @author msagarduy
+ *
+ */
+public class InformeIS2DTO {
+	
+	private String anioActual;
+	
+	private String cicloLectivo;
+	
+	/** The date. */
+	private String fechaNacimiento;
+	
+	private String alumno;
+	
+	private String edad;
+	
+	private String fechaAlta;
+	
+	private String localidad;
+	
+	private String responsable;
+
+	private String anio;
+	
+	private String ea;
+
+	private String escuelaLocalidad;
+	
+	private String padrino;
+	
+	private String actividadAcompanamiento;
+		
+	private String fechaPBE;	
+	
+	private String pathImg;
+	
+	private String relacion;
+	
+	private String imagenCiclo;
+	
+	private String foto;
+	
+	private String titulo;
+	
+	private String nombreEscuela;
+	
+	private String implementacionPrograma;
+	
+	private String matriculaTotal;
+	
+	private String porcentajeInasistencia;
+	
+	private String textoEscuela;
+	
+	private String modalidadTrabajoEscuela;
+	
+	private String cantidadBecados;
+	
+	private String pathImgEscuela;
+	
+	private String mensajePadrino;
+	
+	private String materiasDesaprobadas;
+	
+	private String inasistencias;
+
+	private String primerMateriaInteres;
+	
+	private String segundaMateriaInteres;
+	
+	private String tercerMateriaInteres;
+	
+	private String primerMateriaCuesta;
+		
+	private String segundaMateriaCuesta; 
+	
+	private String tercerMateriaCuesta;
+	
+	private String  fechaReincorporacionPBE;
+	
+
+	public String getAnioActual() {
+		return anioActual;
+	}
+
+	public void setAnioActual(String anioActual) {
+		this.anioActual = anioActual;
+	}
+
+	public String getFechaPBE() {
+		return fechaPBE;
+	}
+
+	public void setFechaPBE(String fechaPBE) {
+		this.fechaPBE = fechaPBE;
+	}
+
+	public String getNombre() {
+		return alumno;
+	}
+
+	public void setNombre(String nombre) {
+		this.alumno = nombre;
+	}
+
+	public String getFechaNacimiento() {
+		return fechaNacimiento;
+	}
+
+	public void setFechaNacimiento(String fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
+	}
+
+	public String getEdad() {
+		return edad;
+	}
+
+	public void setEdad(String edad) {
+		this.edad = edad;
+	}
+
+	public String getFechaAlta() {
+		return fechaAlta;
+	}
+
+	public void setFechaAlta(String fechaAlta) {
+		this.fechaAlta = fechaAlta;
+	}
+
+	public String getLocalidad() {
+		return localidad;
+	}
+
+	public void setLocalidad(String localidad) {
+		this.localidad = localidad;
+	}
+
+
+	public String getAlumno() {
+		return alumno;
+	}
+
+	public void setAlumno(String alumno) {
+		this.alumno = alumno;
+	}
+
+	public String getResponsable() {
+		return responsable;
+	}
+
+	public void setResponsable(String responsable) {
+		this.responsable = responsable;
+	}
+
+	public String getAnio() {
+		return anio;
+	}
+
+	public void setAnio(String anio) {
+		this.anio = anio;
+	}
+
+	public String getEscuelaLocalidad() {
+		return escuelaLocalidad;
+	}
+
+	public void setEscuelaLocalidad(String escuelaLocalidad) {
+		this.escuelaLocalidad = escuelaLocalidad;
+	}
+
+	public String getPadrino() {
+		return padrino;
+	}
+
+	public void setPadrino(String padrino) {
+		this.padrino = padrino;
+	}	
+
+	public String getActividadAcompanamiento() {
+		return actividadAcompanamiento;
+	}
+
+	public void setActividadAcompanamiento(String actividadAcompanamiento) {
+		this.actividadAcompanamiento = actividadAcompanamiento;
+	}
+	
+	public String getEa() {
+		return ea;
+	}
+
+	public void setEa(String ea) {
+		this.ea = ea;
+	}
+	
+	public String getPathImg() {
+		return pathImg;
+	}
+
+	public void setPathImg(String pathImg) {
+		this.pathImg = pathImg;
+	}	
+
+	public String getCicloLectivo() {
+		return cicloLectivo;
+	}
+
+	public void setCicloLectivo(String cicloLectivo) {
+		this.cicloLectivo = cicloLectivo;
+	}	
+
+	public String getRelacion() {
+		return relacion;
+	}
+
+	public void setRelacion(String relacion) {
+		this.relacion = relacion;
+	}
+
+	public String getImagenCiclo() {
+		return imagenCiclo;
+	}
+
+	public void setImagenCiclo(String imagenCiclo) {
+		this.imagenCiclo = imagenCiclo;
+	}
+
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}	
+
+	public String getNombreEscuela() {
+		return nombreEscuela;
+	}
+
+	public void setNombreEscuela(String nombreEscuela) {
+		this.nombreEscuela = nombreEscuela;
+	}
+
+	public String getCantidadBecados() {
+		return cantidadBecados;
+	}
+
+	public void setCantidadBecados(String cantidadBecados) {
+		this.cantidadBecados = cantidadBecados;
+	}
+
+		public String getImplementacionPrograma() {
+		return implementacionPrograma;
+	}
+
+	public void setImplementacionPrograma(String implementacionPrograma) {
+		this.implementacionPrograma = implementacionPrograma;
+	}
+
+	public String getMatriculaTotal() {
+		return matriculaTotal;
+	}
+
+	public void setMatriculaTotal(String matriculaTotal) {
+		this.matriculaTotal = matriculaTotal;
+	}
+
+	public String getPorcentajeInasistencia() {
+		return porcentajeInasistencia;
+	}
+
+	public void setPorcentajeInasistencia(String porcentajeInasistencia) {
+		this.porcentajeInasistencia = porcentajeInasistencia;
+	}
+
+	public String getTextoEscuela() {
+		return textoEscuela;
+	}
+
+	public void setTextoEscuela(String textoEscuela) {
+		this.textoEscuela = textoEscuela;
+	}
+	
+	public String getModalidadTrabajoEscuela() {
+		return modalidadTrabajoEscuela;
+	}
+
+	public void setModalidadTrabajoEscuela(String modalidadTrabajoEscuela) {
+		this.modalidadTrabajoEscuela = modalidadTrabajoEscuela;
+	}
+
+	public String getPathImgEscuela() {
+		return pathImgEscuela;
+	}
+
+	public void setPathImgEscuela(String pathImgEscuela) {
+		this.pathImgEscuela = pathImgEscuela;
+	}
+	
+	public String getMensajePadrino() {
+		return mensajePadrino;
+	}
+	
+	public void setMensajePadrino(String mensajePadrino) {
+		this.mensajePadrino = mensajePadrino;
+	}
+
+		public String getMateriasDesaprobadas() {
+		return materiasDesaprobadas;
+	}
+
+	public void setMateriasDesaprobadas(String materiasAprobadas) {
+		this.materiasDesaprobadas = materiasAprobadas;
+	}
+	
+	public String getInasistencias() {
+		return inasistencias;
+	}
+	
+	public void setInasistencias(String inasistencias) {
+		this.inasistencias = inasistencias;
+	}
+
+	public String getPrimerMateriaInteres() {
+		return primerMateriaInteres;
+	}
+	
+	public void setPrimerMateriaInteres(String primerMateriaInteres) {
+		this.primerMateriaInteres = primerMateriaInteres;
+	}
+
+	public String getSegundaMateriaInteres() {
+		return segundaMateriaInteres;
+	}
+
+	public void setSegundaMateriaInteres(String segundaMateriaInteres) {
+		this.segundaMateriaInteres = segundaMateriaInteres;
+	}
+	
+	public String getTercerMateriaInteres() {
+		return tercerMateriaInteres;
+	}
+
+	
+	public void setTercerMateriaInteres(String tercerMateriaInteres) {
+		this.tercerMateriaInteres = tercerMateriaInteres;
+	}
+	
+	public String getPrimerMateriaCuesta() {
+		return primerMateriaCuesta;
+	}
+	
+	public void setPrimerMateriaCuesta(String primerMateriaCuesta) {
+		this.primerMateriaCuesta = primerMateriaCuesta;
+	}
+	
+	public String getSegundaMateriaCuesta() {
+		return segundaMateriaCuesta;
+	}
+
+	public void setSegundaMateriaCuesta(String segundaMateriaCuesta) {
+		this.segundaMateriaCuesta = segundaMateriaCuesta;
+	}
+	
+	public String getTercerMateriaCuesta() {
+		return tercerMateriaCuesta;
+	}
+	
+	public void setTercerMateriaCuesta(String terceraMateriaCuesta) {
+		this.tercerMateriaCuesta = terceraMateriaCuesta;
+	}
+
+	public String getFechaReincorporacionPBE() {
+		return fechaReincorporacionPBE;
+	}
+
+	public void setFechaReincorporacionPBE(String fechaReincorporacionPBE) {
+		this.fechaReincorporacionPBE = fechaReincorporacionPBE;
+	}	
+}

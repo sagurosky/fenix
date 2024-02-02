@@ -1,0 +1,870 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="informeCesacion" pageWidth="612" pageHeight="792" columnWidth="542" leftMargin="35" rightMargin="35" topMargin="60" bottomMargin="35">
+	<property name="ireport.zoom" value="1.650000000000029"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="416"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{SUBREPORT_DIR}]]></defaultValueExpression>
+	</parameter>
+	<field name="fechaNacimiento" class="java.lang.String"/>
+	<field name="edad" class="java.lang.String"/>
+	<field name="fechaPBE" class="java.lang.String"/>
+	<field name="localidad" class="java.lang.String"/>
+	<field name="anio" class="java.lang.String"/>
+	<field name="escuela" class="java.lang.String"/>
+	<field name="escuelaLocalidad" class="java.lang.String"/>
+	<field name="padrino" class="java.lang.String"/>
+	<field name="compromisoRa" class="java.lang.String"/>
+	<field name="compromisoAlumno" class="java.lang.String"/>
+	<field name="esfuerzo" class="java.lang.String"/>
+	<field name="conducta" class="java.lang.String"/>
+	<field name="asistenciaBecadoAEntrevista" class="java.lang.String"/>
+	<field name="presentacionMaterial" class="java.lang.String"/>
+	<field name="asistenciaRAEntrevista" class="java.lang.String"/>
+	<field name="actividadAcompanamiento" class="java.lang.String"/>
+	<field name="detalle" class="java.lang.String"/>
+	<field name="mesCesacion" class="java.lang.String"/>
+	<field name="motivoCesacion" class="java.lang.String"/>
+	<field name="ea" class="java.lang.String"/>
+	<field name="alumno" class="java.lang.String"/>
+	<field name="responsable" class="java.lang.String"/>
+	<field name="anioActual" class="java.lang.String"/>
+	<field name="pathImg" class="java.lang.String"/>
+	<field name="suspensiones" class="java.lang.String"/>
+	<field name="observaciones" class="java.lang.String"/>
+	<field name="comentariosCesacion" class="java.lang.String"/>
+	<field name="boletin" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<field name="inasistenciasPrimerTrimestre" class="java.lang.String"/>
+	<field name="inasistenciasSegundoTrimestre" class="java.lang.String"/>
+	<field name="inasistenciasTercerTrimestre" class="java.lang.String"/>
+	<field name="inasistenciasFinal" class="java.lang.String"/>
+	<field name="totalDiasPrimero" class="java.lang.String"/>
+	<field name="totalDiasSeg" class="java.lang.String"/>
+	<field name="totalDiasTerc" class="java.lang.String"/>
+	<field name="totalDiasFinal" class="java.lang.String"/>
+	<field name="datosEstimadosBoletin" class="java.lang.String"/>
+	<field name="relacion" class="java.lang.String"/>
+	<field name="previas" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<field name="fechaReincorporacionPBE" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="85" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="46" width="541" height="17" forecolor="#90E3B0" backcolor="#9CA298"/>
+			</frame>
+			<image hAlign="Right">
+				<reportElement x="366" y="-16" width="174" height="17" isPrintInFirstWholeBand="true"/>
+				<imageExpression class="java.lang.String"><![CDATA[$F{pathImg}]]></imageExpression>
+			</image>
+			<rectangle>
+				<reportElement x="0" y="1" width="541" height="22" forecolor="#850053" backcolor="#850053"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="1" width="541" height="22" forecolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Lucida Bright" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:: Informe de Cesación ::]]></text>
+			</staticText>
+			<break>
+				<reportElement x="0" y="-20" width="100" height="1">
+					<printWhenExpression><![CDATA[Boolean.valueOf(!$V{PAGE_NUMBER}.equals(1))]]></printWhenExpression>
+				</reportElement>
+			</break>
+			<staticText>
+				<reportElement x="5" y="46" width="491" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Lucida Bright" size="13" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Datos del becado]]></text>
+			</staticText>
+		</band>
+		<band height="17">
+			<printWhenExpression><![CDATA[Boolean.valueOf($F{anioActual}!= null)]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="527" height="17" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{anioActual}!= null)]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Lucida Bright" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Ciclo lectivo: " + $F{anioActual}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="17">
+			<printWhenExpression><![CDATA[Boolean.valueOf($F{alumno}!= null)]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="527" height="17" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{alumno}!= null)]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Lucida Bright" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Alumno: " + $F{alumno}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="17">
+			<printWhenExpression><![CDATA[Boolean.valueOf($F{fechaNacimiento}!= null)]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="527" height="17" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{fechaNacimiento}!= null)]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Lucida Bright" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Fecha de nacimiento: " + $F{fechaNacimiento}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="17">
+			<printWhenExpression><![CDATA[Boolean.valueOf($F{edad}!= null)]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="527" height="17" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{edad}!=null)]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Lucida Bright" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Edad: "+ $F{edad}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="17">
+			<printWhenExpression><![CDATA[Boolean.valueOf($F{localidad}!= null)]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="527" height="17" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{localidad}!= null)]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Lucida Bright" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Localidad donde vive: "+$F{localidad}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="17">
+			<printWhenExpression><![CDATA[Boolean.valueOf($F{anio} != null)]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="527" height="17" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{anio}!=null)]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Lucida Bright" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Año que cursa: " +$F{anio}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="17">
+			<printWhenExpression><![CDATA[Boolean.valueOf($F{escuela} != null)]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="527" height="17" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{escuela}!= null)]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Lucida Bright" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Institución educativa: "+ $F{escuela}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="17">
+			<printWhenExpression><![CDATA[Boolean.valueOf($F{escuelaLocalidad}!= null)]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="527" height="17" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{escuelaLocalidad}!= null)]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Lucida Bright" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Localidad: " +$F{escuelaLocalidad}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="17">
+			<printWhenExpression><![CDATA[Boolean.valueOf($F{responsable}!= null)]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="527" height="17" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{responsable}!=null)]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Lucida Bright" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Responsable Adulto: " +$F{responsable}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="17">
+			<printWhenExpression><![CDATA[Boolean.valueOf($F{relacion}!= null)]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="527" height="17" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{relacion}!= null)]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Lucida Bright" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Vínculo con el becado: " + $F{relacion}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="17">
+			<printWhenExpression><![CDATA[Boolean.valueOf($F{fechaPBE}!=null)]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="527" height="17" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{fechaPBE}!=null)]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Lucida Bright" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Fecha de incorporación al PBE: "+$F{fechaPBE}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="17">
+			<printWhenExpression><![CDATA[Boolean.valueOf($F{padrino}!= null)]]></printWhenExpression>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="527" height="17" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{fechaReincorporacionPBE}== null
+    && $F{padrino}!=null)]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Lucida Bright" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Padrino: " +$F{padrino}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="527" height="17" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{fechaReincorporacionPBE}!= null)]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Lucida Bright" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Fecha de reincorporación al PBE: " +$F{fechaReincorporacionPBE}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="33" splitType="Stretch">
+			<subreport>
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="15" width="200" height="5" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
+				<dataSourceExpression><![CDATA[$F{boletin}]]></dataSourceExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "//informeIC_boletin.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="33" splitType="Stretch">
+			<subreport>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="15" width="200" height="5" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
+				<dataSourceExpression><![CDATA[$F{previas}]]></dataSourceExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "//informeIC_previas.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="72" splitType="Stretch">
+			<printWhenExpression><![CDATA[Boolean.valueOf($F{inasistenciasPrimerTrimestre}!= null
+    || $F{inasistenciasSegundoTrimestre}!= null
+    || $F{inasistenciasTercerTrimestre}!= null
+    || $F{inasistenciasFinal} != null
+    || $F{totalDiasPrimero} != null
+    || $F{totalDiasSeg} != null
+    || $F{totalDiasTerc} != null
+    || $F{totalDiasFinal} != null)]]></printWhenExpression>
+			<rectangle>
+				<reportElement x="10" y="52" width="477" height="20">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{inasistenciasPrimerTrimestre}!= null ||
+    $F{inasistenciasSegundoTrimestre}!= null ||
+    $F{inasistenciasTercerTrimestre}!= null ||
+    $F{inasistenciasFinal} != null ||
+    $F{totalDiasPrimero} != null ||
+    $F{totalDiasSeg} != null ||
+    $F{totalDiasTerc} != null ||
+    $F{totalDiasFinal} != null)]]></printWhenExpression>
+				</reportElement>
+			</rectangle>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="15" width="541" height="17" forecolor="#90E3B0" backcolor="#9CA298">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{inasistenciasPrimerTrimestre}!= null ||
+    $F{inasistenciasSegundoTrimestre}!= null ||
+    $F{inasistenciasTercerTrimestre}!= null ||
+    $F{inasistenciasFinal} != null ||
+    $F{totalDiasPrimero} != null ||
+    $F{totalDiasSeg} != null ||
+    $F{totalDiasTerc} != null ||
+
+    $F{totalDiasFinal} != null)]]></printWhenExpression>
+				</reportElement>
+			</frame>
+			<staticText>
+				<reportElement x="381" y="52" width="106" height="20">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{inasistenciasPrimerTrimestre}!= null ||
+    $F{inasistenciasSegundoTrimestre}!= null ||
+    $F{inasistenciasTercerTrimestre}!= null ||
+    $F{inasistenciasFinal} != null ||
+    $F{totalDiasPrimero} != null ||
+    $F{totalDiasSeg} != null ||
+    $F{totalDiasTerc} != null ||
+    $F{totalDiasFinal} != null)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Lucida Bright" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Final]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="101" y="52" width="87" height="20" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{inasistenciasPrimerTrimestre}!= null ||
+    $F{inasistenciasSegundoTrimestre}!= null ||
+    $F{inasistenciasTercerTrimestre}!= null ||
+    $F{inasistenciasFinal} != null ||
+    $F{totalDiasPrimero} != null ||
+    $F{totalDiasSeg} != null ||
+    $F{totalDiasTerc} != null ||
+
+    $F{totalDiasFinal} != null)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Lucida Bright" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[1º Trim.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="289" y="52" width="91" height="20" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{inasistenciasPrimerTrimestre}!= null ||
+    $F{inasistenciasSegundoTrimestre}!= null ||
+    $F{inasistenciasTercerTrimestre}!= null ||
+    $F{inasistenciasFinal} != null  ||
+    $F{totalDiasPrimero} != null ||
+    $F{totalDiasSeg} != null ||
+    $F{totalDiasTerc} != null ||
+
+    $F{totalDiasFinal} != null)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Lucida Bright" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[3º Trim.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="288" y="51" width="1" height="21">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{inasistenciasPrimerTrimestre}!= null ||
+    $F{inasistenciasSegundoTrimestre}!= null ||
+    $F{inasistenciasTercerTrimestre}!= null ||
+    $F{inasistenciasFinal} != null ||
+    $F{totalDiasPrimero} != null ||
+    $F{totalDiasSeg} != null ||
+    $F{totalDiasTerc} != null ||
+    $F{totalDiasFinal} != null)]]></printWhenExpression>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="188" y="51" width="1" height="21">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{inasistenciasPrimerTrimestre}!= null ||
+    $F{inasistenciasSegundoTrimestre}!= null ||
+    $F{inasistenciasTercerTrimestre}!= null ||
+    $F{inasistenciasFinal} != null ||
+    $F{totalDiasPrimero} != null ||
+    $F{totalDiasSeg} != null ||
+    $F{totalDiasTerc} != null ||
+    $F{totalDiasFinal} != null)]]></printWhenExpression>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="101" y="51" width="1" height="21">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{inasistenciasPrimerTrimestre}!= null ||
+    $F{inasistenciasSegundoTrimestre}!= null ||
+    $F{inasistenciasTercerTrimestre}!= null ||
+    $F{inasistenciasFinal} != null ||
+    $F{totalDiasPrimero} != null ||
+    $F{totalDiasSeg} != null ||
+    $F{totalDiasTerc} != null ||
+    $F{totalDiasFinal} != null)]]></printWhenExpression>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="189" y="52" width="101" height="20" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{inasistenciasPrimerTrimestre}!= null ||
+    $F{inasistenciasSegundoTrimestre}!= null ||
+    $F{inasistenciasTercerTrimestre}!= null ||
+    $F{inasistenciasFinal} != null ||
+    $F{totalDiasPrimero} != null ||
+    $F{totalDiasSeg} != null ||
+    $F{totalDiasTerc} != null ||
+    $F{totalDiasFinal} != null)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Lucida Bright" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[2º Trim.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="380" y="51" width="1" height="21">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{inasistenciasPrimerTrimestre}!= null ||
+    $F{inasistenciasSegundoTrimestre}!= null ||
+    $F{inasistenciasTercerTrimestre}!= null ||
+    $F{inasistenciasFinal} != null ||
+    $F{totalDiasPrimero} != null ||
+    $F{totalDiasSeg} != null ||
+    $F{totalDiasTerc} != null ||
+    $F{totalDiasFinal} != null)]]></printWhenExpression>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="5" y="15" width="491" height="17">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{inasistenciasPrimerTrimestre}!= null ||
+    $F{inasistenciasSegundoTrimestre}!= null ||
+    $F{inasistenciasTercerTrimestre}!= null ||
+    $F{inasistenciasFinal} != null ||
+    $F{totalDiasPrimero} != null ||
+    $F{totalDiasSeg} != null ||
+    $F{totalDiasTerc} != null ||
+
+    $F{totalDiasFinal} != null)]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Lucida Bright" size="13" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Inasistencias]]></text>
+			</staticText>
+		</band>
+		<band height="20" splitType="Stretch">
+			<printWhenExpression><![CDATA[Boolean.valueOf($F{inasistenciasPrimerTrimestre}!= null
+    || $F{inasistenciasSegundoTrimestre}!= null
+    || $F{inasistenciasTercerTrimestre}!= null
+    || $F{inasistenciasFinal} != null)]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="289" y="1" width="91" height="19" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Lucida Bright" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{inasistenciasTercerTrimestre}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="102" y="1" width="87" height="19" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Lucida Bright" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{inasistenciasPrimerTrimestre}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="380" y="0" width="1" height="19" isRemoveLineWhenBlank="true"/>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="188" y="0" width="1" height="19" isRemoveLineWhenBlank="true"/>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="101" y="0" width="1" height="19" isRemoveLineWhenBlank="true"/>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="288" y="1" width="1" height="19" isRemoveLineWhenBlank="true"/>
+			</line>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="10" y="1" width="92" height="19" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{inasistenciasPrimerTrimestre}!= null ||
+    $F{inasistenciasSegundoTrimestre}!= null ||
+    $F{inasistenciasTercerTrimestre}!= null ||
+    $F{inasistenciasFinal} != null ||
+    $F{totalDiasPrimero} != null ||
+    $F{totalDiasSeg} != null ||
+    $F{totalDiasTerc} != null ||
+    $F{totalDiasFinal} != null)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Lucida Bright" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Inasistencias]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="381" y="0" width="106" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Lucida Bright" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{inasistenciasFinal}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="189" y="1" width="100" height="19" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Lucida Bright" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{inasistenciasSegundoTrimestre}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="10" y="0" width="477" height="20" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{inasistenciasPrimerTrimestre}!= null ||
+    $F{inasistenciasSegundoTrimestre}!= null ||
+    $F{inasistenciasTercerTrimestre}!= null ||
+    $F{inasistenciasFinal} != null ||
+    $F{totalDiasPrimero} != null ||
+    $F{totalDiasSeg} != null ||
+    $F{totalDiasTerc} != null ||
+    $F{totalDiasFinal} != null)]]></printWhenExpression>
+				</reportElement>
+			</rectangle>
+		</band>
+		<band height="20" splitType="Stretch">
+			<printWhenExpression><![CDATA[Boolean.valueOf($F{totalDiasPrimero} != null
+    || $F{totalDiasSeg} != null
+    || $F{totalDiasTerc} != null
+    || $F{totalDiasFinal} != null)]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="102" y="0" width="86" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Lucida Bright" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{totalDiasPrimero}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="189" y="0" width="100" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Lucida Bright" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{totalDiasSeg}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="288" y="1" width="1" height="19" isRemoveLineWhenBlank="true"/>
+			</line>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="289" y="0" width="91" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Lucida Bright" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{totalDiasTerc}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="10" y="0" width="91" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Lucida Bright" size="11" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Total Días Hábiles]]></text>
+			</staticText>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="380" y="0" width="1" height="19" isRemoveLineWhenBlank="true"/>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToTallestObject" x="188" y="0" width="1" height="19" isRemoveLineWhenBlank="true"/>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="101" y="0" width="1" height="19" isRemoveLineWhenBlank="true"/>
+			</line>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="381" y="0" width="106" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Lucida Bright" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{totalDiasFinal}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="10" y="0" width="477" height="20">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{inasistenciasPrimerTrimestre}!= null ||
+    $F{inasistenciasSegundoTrimestre}!= null ||
+    $F{inasistenciasTercerTrimestre}!= null ||
+    $F{inasistenciasFinal} != null ||
+    $F{totalDiasPrimero} != null ||
+    $F{totalDiasSeg} != null ||
+    $F{totalDiasTerc} != null ||
+    $F{totalDiasFinal} != null)]]></printWhenExpression>
+				</reportElement>
+			</rectangle>
+		</band>
+		<band height="68" splitType="Stretch">
+			<printWhenExpression><![CDATA[Boolean.valueOf($F{datosEstimadosBoletin} != null)]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="48" width="530" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Lucida Bright" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{datosEstimadosBoletin}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="15" width="541" height="17" forecolor="#9CA298" backcolor="#9CA298">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{datosEstimadosBoletin} != null)]]></printWhenExpression>
+				</reportElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="5" y="15" width="491" height="17">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{datosEstimadosBoletin} != null)]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Lucida Bright" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Datos estimados de boletín]]></text>
+			</staticText>
+		</band>
+		<band height="123">
+			<printWhenExpression><![CDATA[Boolean.valueOf($F{compromisoAlumno}!= null && $F{compromisoRa}!= null && $F{esfuerzo}!= null && $F{conducta}!= null)]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="70" width="533" height="15" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{esfuerzo} != null)]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Lucida Bright" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Esfuerzo: "+$F{esfuerzo}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="15" width="541" height="17" forecolor="#9CA298" backcolor="#9CA298">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{compromisoAlumno}!= null && $F{compromisoRa}!= null && $F{esfuerzo}!= null && $F{conducta}!= null)]]></printWhenExpression>
+				</reportElement>
+			</rectangle>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="109" width="533" height="14" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{compromisoRa} != null)]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Lucida Bright" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Compromiso del responsable adulto: "+$F{compromisoRa}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="50" width="533" height="15" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{compromisoAlumno} != null)]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Lucida Bright" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Compromiso del alumno: "+$F{compromisoAlumno}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="15" width="491" height="17">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{compromisoAlumno}!= null && $F{compromisoRa}!= null && $F{esfuerzo}!= null && $F{conducta}!= null)]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Lucida Bright" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Escolaridad]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="90" width="533" height="14" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{conducta} != null)]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Lucida Bright" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Conducta: "+$F{conducta}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="144">
+			<printWhenExpression><![CDATA[Boolean.valueOf($F{asistenciaBecadoAEntrevista}!= null && $F{presentacionMaterial}!= null && $F{compromisoAlumno}!= null && $F{asistenciaRAEntrevista}!= null && $F{compromisoRa}!= null)]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="111" width="533" height="13" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{asistenciaRAEntrevista} != null)]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Lucida Bright" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Asistencia del responsable adulto a entrevista: "+$F{asistenciaRAEntrevista}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="51" width="533" height="15" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{asistenciaBecadoAEntrevista} != null)]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Lucida Bright" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Asistencia becado a entrevista: " + $F{asistenciaBecadoAEntrevista}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="15" width="541" height="17" forecolor="#9CA298" backcolor="#9CA298">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{asistenciaBecadoAEntrevista}!= null && $F{presentacionMaterial}!= null && $F{compromisoAlumno}!= null && $F{asistenciaRAEntrevista}!= null && $F{compromisoRa}!= null)]]></printWhenExpression>
+				</reportElement>
+			</rectangle>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="90" width="533" height="16" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{compromisoAlumno} != null)]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Lucida Bright" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Compromiso del alumno: "+$F{compromisoAlumno}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="71" width="533" height="14" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{presentacionMaterial} != null)]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Lucida Bright" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Presentación material: "+$F{presentacionMaterial}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="15" width="491" height="17">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{asistenciaBecadoAEntrevista}!= null && $F{presentacionMaterial}!= null && $F{compromisoAlumno}!= null && $F{asistenciaRAEntrevista}!= null && $F{compromisoRa}!= null)]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Lucida Bright" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Participación en el Programa Futuros Egresados]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="129" width="533" height="15" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{compromisoRa} != null)]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Lucida Bright" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Compromiso del responsable adulto: "+$F{compromisoRa}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="68" splitType="Stretch">
+			<printWhenExpression><![CDATA[Boolean.valueOf($F{actividadAcompanamiento}!= "")]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="48" width="530" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Lucida Bright" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{actividadAcompanamiento}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="15" width="541" height="17" forecolor="#9CA298" backcolor="#9CA298">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{actividadAcompanamiento}!= "")]]></printWhenExpression>
+				</reportElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="5" y="15" width="491" height="17">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{actividadAcompanamiento} != "")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Lucida Bright" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Actividad de acompañamiento]]></text>
+			</staticText>
+		</band>
+		<band height="68">
+			<printWhenExpression><![CDATA[Boolean.valueOf($F{suspensiones} != null)]]></printWhenExpression>
+			<rectangle>
+				<reportElement x="0" y="15" width="541" height="17" forecolor="#9CA298" backcolor="#9CA298">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{suspensiones} != null)]]></printWhenExpression>
+				</reportElement>
+			</rectangle>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="48" width="530" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Lucida Bright" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{suspensiones}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="15" width="491" height="17">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{suspensiones} != null)]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Lucida Bright" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Suspensiones de la beca]]></text>
+			</staticText>
+		</band>
+		<band height="85">
+			<printWhenExpression><![CDATA[Boolean.valueOf($F{mesCesacion}!= "" || $F{motivoCesacion}!="" || $F{comentariosCesacion}!= "")]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="51" width="536" height="15" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{mesCesacion} != "")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Lucida Bright" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Mes de cesación: "+$F{mesCesacion}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="15" width="541" height="17" forecolor="#9CA298" backcolor="#9CA298">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{mesCesacion}!= "" || $F{motivoCesacion} != "" || $F{comentariosCesacion} != "")]]></printWhenExpression>
+				</reportElement>
+			</rectangle>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="71" width="536" height="14" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{motivoCesacion} != "")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Justified">
+					<font fontName="Lucida Bright" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Motivo cesación: "+$F{motivoCesacion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="15" width="491" height="17">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{mesCesacion}!= "" || $F{motivoCesacion} != "" || $F{comentariosCesacion} != "")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Lucida Bright" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cesación de la beca]]></text>
+			</staticText>
+		</band>
+		<band height="20" splitType="Stretch">
+			<printWhenExpression><![CDATA[Boolean.valueOf($F{mesCesacion}!= "" || $F{motivoCesacion}!="" || $F{comentariosCesacion}!= "")]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="5" width="537" height="15" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{comentariosCesacion} != "")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Justified">
+					<font fontName="Lucida Bright" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{comentariosCesacion}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="68">
+			<printWhenExpression><![CDATA[Boolean.valueOf($F{detalle}!= null)]]></printWhenExpression>
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="15" width="541" height="17" forecolor="#9CA298" backcolor="#9CA298">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{detalle}!= null)]]></printWhenExpression>
+				</reportElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="5" y="15" width="491" height="17">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{detalle}!= null)]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Lucida Bright" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Utilización de la beca]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="48" width="530" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Lucida Bright" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{detalle}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="68" splitType="Stretch">
+			<printWhenExpression><![CDATA[Boolean.valueOf($F{observaciones}!= "")]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="48" width="530" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Lucida Bright" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{observaciones}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="15" width="541" height="17" forecolor="#9CA298" backcolor="#9CA298">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{observaciones}!= "")]]></printWhenExpression>
+				</reportElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="5" y="15" width="491" height="17">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{observaciones}!= "")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Lucida Bright" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Observaciones generales]]></text>
+			</staticText>
+		</band>
+		<band height="104">
+			<staticText>
+				<reportElement x="323" y="59" width="219" height="40"/>
+				<textElement>
+					<font fontName="Lucida Bright" size="11" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[
+Encargado de acompañamiento
+Programa Futuros Egresados Cimientos]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="323" y="59" width="219" height="40"/>
+				<textElement>
+					<font fontName="Lucida Bright" size="11" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ea}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

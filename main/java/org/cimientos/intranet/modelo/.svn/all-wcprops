@@ -1,0 +1,113 @@
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/fenix/!svn/ver/312/src/main/java/org/cimientos/intranet/modelo
+END
+Periodo.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/modelo/Periodo.java
+END
+EstadoCuenta.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/fenix/!svn/ver/270/src/main/java/org/cimientos/intranet/modelo/EstadoCuenta.java
+END
+EventoConvocatoria.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/modelo/EventoConvocatoria.java
+END
+ResponsableAdultoSeleccion.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/fenix/!svn/ver/373/src/main/java/org/cimientos/intranet/modelo/ResponsableAdultoSeleccion.java
+END
+EstadoBeca.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/modelo/EstadoBeca.java
+END
+Materia.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/modelo/Materia.java
+END
+Texto.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/fenix/!svn/ver/350/src/main/java/org/cimientos/intranet/modelo/Texto.java
+END
+Beca.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/fenix/!svn/ver/95/src/main/java/org/cimientos/intranet/modelo/Beca.java
+END
+DesempenioEscolar.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/modelo/DesempenioEscolar.java
+END
+FichaFamiliar.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/modelo/FichaFamiliar.java
+END
+CicloPrograma.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/modelo/CicloPrograma.java
+END
+EstadoCiclo.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/modelo/EstadoCiclo.java
+END
+Pago.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/modelo/Pago.java
+END
+Parametro.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/modelo/Parametro.java
+END
+NotaMateria.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/modelo/NotaMateria.java
+END
+Trimestre.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/modelo/Trimestre.java
+END
+ResponsableAdulto.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/fenix/!svn/ver/373/src/main/java/org/cimientos/intranet/modelo/ResponsableAdulto.java
+END
+Boletin.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/modelo/Boletin.java
+END

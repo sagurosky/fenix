@@ -1,0 +1,158 @@
+package org.cimientos.intranet.modelo.ubicacion;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+
+import org.cimientos.intranet.modelo.escuela.Escuela;
+import org.hibernate.annotations.CollectionOfElements;
+
+import com.cimientos.intranet.enumerativos.Categoria;
+
+/**
+ * ZonaCimientos	
+ * Clase utilizada para la administracion de zonas del sistema. 
+ * Manejo de localidades asociadas y categorias	
+ * @author msagarduy
+ *
+ */
+@Entity
+public class ZonaCimientos implements Serializable{
+
+	@Id
+	@GeneratedValue
+	private Long id;
+		
+	/**
+	 * Estado de la zona. Puede ser activo - inactivo
+	 */
+	private boolean activo;
+
+	/**
+	 * Asociacion con la entidad Categoria para categorias sur, local e interior.
+	 *
+	 */
+	@JoinTable(name="Zona_Categoria")
+	@Enumerated(EnumType.ORDINAL)
+	private Categoria categoria;
+	
+	@OneToMany()
+	@JoinColumn(name= " zona_id ")
+	private List<Localidad> localidades;
+
+	private String nombre;	
+	@CollectionOfElements
+	@JoinColumn(name="zonaCimientos_id")
+	private List<Escuela> escuelas;
+	
+	private String eae;
+	
+	
+	public String getEae() {
+		return eae;
+	}
+
+	public void setEae(String eae) {
+		this.eae = eae;
+	}
+
+	/** 
+	 * @return
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return
+	 */
+	public boolean isActivo() {
+		return activo;
+	}
+
+	/**
+	 * @param activo
+	 */
+	public void setActivo(boolean activo) {
+		this.activo = activo;
+	}
+
+	/**
+	 * @return
+	 */
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	/**
+	 * @param categorias
+	 */
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
+
+	/**
+	 * @return List<Localidad>
+	 */
+	public List<Localidad> getLocalidades() {
+		return localidades;
+	}
+
+	/**
+	 * @param localidades
+	 */
+	public void setLocalidades(List<Localidad> localidades) {
+		this.localidades = localidades;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getNombre() {
+		return nombre;
+	}
+
+	/**
+	 * @param nombre
+	 */
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public List<Escuela> getEscuelas() {
+		return escuelas;
+	}
+
+	public void setEscuelas(List<Escuela> escuelas) {
+		this.escuelas = escuelas;
+	}
+
+	public void agregarLocalidad(Localidad localidad) {
+		if(localidades == null){
+			localidades = new ArrayList<Localidad>();
+		}
+		localidades.add(localidad);
+	}
+	public void agregarEscuela(Escuela escuela) {
+		if(escuelas == null){
+			escuelas = new ArrayList<Escuela>();
+		}
+		escuelas.add(escuela);
+	}
+}

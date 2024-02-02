@@ -1,0 +1,141 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+
+<table id="table-informe">
+	<!-- ocultado el 11-02-2016
+	<tr>
+		
+		<td width="300"><label>Rendicion Gastos  *</label></td>
+		 
+		<td width="500">
+			
+			<form:checkbox path="rendicionGastos" id="rendicionGastos"/>
+			
+		</td>
+	</tr>
+	-->
+	<tr>		
+		<td><label>Uso de la beca  *</label></td>
+		<td>
+			<input type="hidden" name="rendicionGastos" id="rendicionGastos">
+			<form:select path="detalleGastos" id="detalleGastos" disabled="true">
+				<form:options items="${detalleGastos}" itemLabel="valor" itemValue="id"/>				
+			</form:select>
+		</td>
+	</tr>
+	<tr>		
+		<td nowrap="nowrap"><label>Autoevaluación del becado  *</label></td>
+		<td>
+			<form:checkbox path="autoEvaluacionBecado" id="autoEvaluacionBecado" disabled="true"/>
+		</td>			
+	</tr>
+	<tr>
+		<td nowrap="nowrap"><label>Evaluación anual del acompañamiento</label></td>
+		<td>
+			<form:textarea path="evaluacionProposito" rows="4" cols="30" disabled="true"/>
+		</td>
+	</tr>
+	<tr>
+		<td nowrap="nowrap"><label>Resultado Año Escolar *</label></td>
+		<td>
+			<form:select path="situacionEscolarMergeada" id="resultadoAnioEscolar" disabled="true">
+				<form:option value="">Seleccione una opción...</form:option>
+				<form:options items="${resultadoAnioEscolar}" itemLabel="valor" itemValue="id"/>				
+			</form:select><font size="1">Atención. Este campo aparece en Informe al padrino.</font><img src="../static/images/atencion.gif" width=10>
+		</td>
+	</tr>
+	<tr>		
+		<td nowrap="nowrap"><label>Evaluacion de renovación *</label></td>
+		<td>
+			<form:select path="evaluacionRenovacionFinal" id="evaluacionRenovacionFinal" disabled="true">
+				<form:option value="">Seleccione una opción...</form:option>
+				<form:options items="${evaluacionRenovacionFinal}" itemLabel="valor" itemValue="id"/>				
+			</form:select><font size="1">Atención. Este campo aparece en Informe al padrino.</font><img src="../static/images/atencion.gif" width=10>
+		</td>
+	</tr>
+	<tr>
+		<td nowrap="nowrap"><label>Motivo de no renovación</label></td>
+		<td>
+			<form:select path="motivoNoRenovacion" id="motivoNoRenovacion" disabled="true">
+				<form:option value="">Seleccione una opción...</form:option>
+				<form:options items="${motivoNoRenovacion}" itemLabel="valor" itemValue="id"/>				
+			</form:select>
+		</td>
+	</tr>
+	<tr>
+		<td nowrap="nowrap"><label>Proyección año próximo para quienes finalizan PFE  *</label></td>
+		<td>
+			<form:select path="proyAnioProximo" id="proyAnioProximo" disabled="true">
+				<form:option value="">Seleccione una opción...</form:option>
+				<form:options items="${proyeccionAnioProximo}" itemLabel="valor" itemValue="id"/>				
+			</form:select>
+			<font size="1">Este campo aparece en Informe al padrino.</font><img src="../static/images/atencion.gif" width=10>
+		</td>
+	</tr>
+	<tr>
+		<td nowrap="nowrap"><label>Cambio de Escuela para el próximo año</label></td>
+		<td>
+			<form:textarea path="cambioEscuelaProxAnio" id="cambioEscuelaProxAnio" rows="4" cols="30" disabled="true"/>
+		</td>
+	</tr>
+	<tr>
+		<td nowrap="nowrap"><label>Modalidad a cursar en el próximo año</label></td>
+		<td>
+			<form:textarea path="modCursaProxAnio" id="modCursaProxAnio" rows="4" cols="30" disabled="true"/>
+		</td>
+	</tr>
+	<tr>
+		<td nowrap="nowrap" class="datepicker" ><label>Fecha Entrevista febrero/marzo</label></td>
+		<td width="300px"><input name="FechaEntrevFebMarzo" id="datepicker1" disabled="true" value="<fmt:formatDate value="${entrevista.fechaEntrevFebMarzo}" pattern="dd/MM/yyyy"/>"  ></td>
+	</tr>
+	<tr>		
+		<td nowrap="nowrap"><label>Hora Entrevista febrero/marzo </label></td>
+		<td>
+			<form:input  path="horaProxEntrevista" id="horaProxEntrevista" size="4" disabled="true"/>Hs.
+		</td>
+	</tr>
+	<tr>		
+		<td nowrap="nowrap"><label>Lugar Entrevistas Febrero/Marzo</label></td>
+		<td>
+			<form:select path="lugarProximaEntrevista" disabled="true">
+				<form:option value="">Seleccione una opción...</form:option>
+				<form:options items="${lugarEntrevistas}" itemLabel="nombre" itemValue="id"/>				
+			</form:select>
+			<input id="idProxima" type="hidden" value="${entrevista.lugarProximaEntrevista.id}"/>
+		</td>
+	</tr>
+	<tr>
+		<td><label>Observaciones</label></td>
+		<td>
+			<form:textarea path="observacionesGenerales" rows="4" cols="30" disabled="true"/>
+		</td>
+	</tr>
+	<tr>
+	<td nowrap="nowrap"><label>Evaluacion Cobro Beca  *</label></td>
+		<td>
+		<form:select path="evaluacionCobroBeca" id="evaluacionCobroBeca" disabled="true">
+			<form:option value="">Seleccione una opción...</form:option>
+			<form:options items="${evaluacionCobroBeca}" itemLabel="valor" itemValue="id"/>				
+		</form:select>
+		</td>
+	</tr>			
+	<tr>
+		<td nowrap="nowrap"><label>Motivo de Suspension</label></td>
+		<td>
+			<form:select path="motivoSuspension" id="motivoSuspension" disabled="true">
+				<form:option value="">Seleccione una opción...</form:option>
+				<form:options items="${motivoSuspension}" itemLabel="valor" itemValue="id"/>				
+			</form:select>
+		</td>
+	</tr>
+	<tr>
+		<td nowrap="nowrap"><label>Comentarios de revisión, intercambio RR - EA</label></td>
+		<td>
+			<form:textarea path="comentariosRevision" rows="4" cols="30" disabled="true"/>
+		</td>
+	</tr>
+</table>

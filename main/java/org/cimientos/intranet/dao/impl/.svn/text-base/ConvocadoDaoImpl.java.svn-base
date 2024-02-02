@@ -1,0 +1,356 @@
+package org.cimientos.intranet.dao.impl;
+
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
+import org.cimientos.intranet.dao.ConvocadoDao;
+import org.cimientos.intranet.dao.base.SpringHibernateDao;
+import org.cimientos.intranet.dto.ConvocadoDTO;
+import org.cimientos.intranet.modelo.CicloPrograma;
+import org.cimientos.intranet.modelo.candidato.convocatoria.Convocatoria;
+import org.cimientos.intranet.modelo.candidato.convocatoria.ConvocatoriaSeleccion;
+import org.cimientos.intranet.modelo.entrevistaTS.EntrevistaTS;
+import org.cimientos.intranet.modelo.escuela.Escuela;
+import org.cimientos.intranet.modelo.perfil.EstadoAlumno;
+import org.cimientos.intranet.modelo.perfil.PerfilAlumno;
+import org.cimientos.intranet.modelo.perfilTS.PerfilTS;
+import org.cimientos.intranet.modelo.seleccion.EntrevistaSeleccion;
+import org.cimientos.intranet.modelo.ubicacion.ZonaCimientos;
+import org.displaytag.properties.SortOrderEnum;
+import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
+import org.hibernate.SQLQuery;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.type.Type;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.cimientos.intranet.enumerativos.AnioEscolar;
+import com.cimientos.intranet.enumerativos.RecomendacionesTS;
+import com.cimientos.intranet.enumerativos.entrevista.MotivoEnvioTS;
+import com.googlecode.ehcache.annotations.Cacheable;
+
+
+/**
+ * The Class ConvocadoDaoImpl.
+ */
+@Repository
+public class ConvocadoDaoImpl extends SpringHibernateDao<ConvocadoDTO> implements
+		ConvocadoDao {
+	
+	/**
+	 * Instantiates a new convocado dao impl.
+	 *
+	 * @param sessionFactory the session factory
+	 * @since 15-mar-2011
+	 * @author cfigueroa
+	 */
+	@Autowired
+	public ConvocadoDaoImpl(SessionFactory sessionFactory) {
+		super(sessionFactory);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.cimientos.intranet.dao.base.SpringHibernateDao#getObjetoManejado()
+	 */
+	@Override
+	@Cacheable(cacheName = "org.cimientos.intranet.dto.ConvocadoDTO")
+	protected Class<ConvocadoDTO> getObjetoManejado() {
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.cimientos.intranet.dao.ConvocadoDao#listaConvocados()
+	 */
+	@Override
+	@Cacheable(cacheName = "org.cimientos.intranet.dto.ConvocadoDTO")
+	public List<ConvocadoDTO> listaConvocados(int firstResult, int maxResults,
+									          SortOrderEnum sortDirection, String sortCriterion,
+									          List<EstadoAlumno> estadoAlumnos, CicloPrograma cicloPrograma, 
+										      ZonaCimientos zona, Escuela escuela, 
+										      Convocatoria convocatoria, String nombreAlumno, 
+										      EstadoAlumno estadoAlumno, PerfilTS ts, 
+										      MotivoEnvioTS motivoEnvioTS, RecomendacionesTS recomendacionesTS, AnioEscolar anio) {
+		Criteria criteria = getSession().createCriteria(PerfilAlumno.class);
+		criteria.createAlias("escuela", "escuela");
+		criteria.createAlias("datosPersonales", "persona");
+		boolean tieneFiltro = createCriteriaFiltros(estadoAlumnos, cicloPrograma, 
+							 zona, escuela, convocatoria, 
+							 nombreAlumno, estadoAlumno, 
+							 ts, motivoEnvioTS, recomendacionesTS, anio, criteria);
+		
+		criteria.setFirstResult(firstResult);
+		criteria.setMaxResults(maxResults);
+		List<PerfilAlumno> list = criteria.list();
+		Map<Long,EntrevistaSeleccion> mapEntrevistaSeleccion = null;
+		Map<Long,EntrevistaTS> mapRecomendacionesTS = null;
+		if(!list.isEmpty()){
+			mapEntrevistaSeleccion = entrevistaSeleccionPorAlumno(list,tieneFiltro);
+			mapRecomendacionesTS = obtenerRecomendacionTS(list,tieneFiltro);
+		}
+
+		
+		List<ConvocadoDTO> convocadoDTOs = new ArrayList<ConvocadoDTO>();
+		ConvocadoDTO convocadoDTO = null;
+		
+		for (PerfilAlumno alumno  : list) {
+			Long idAlumno = alumno.getId();
+			EntrevistaSeleccion  sel = mapEntrevistaSeleccion.get(idAlumno);
+			EntrevistaTS entrevistaTS = mapRecomendacionesTS.get(idAlumno);
+			
+			if(sel != null){				
+				convocadoDTO = new ConvocadoDTO();
+				convocadoDTO.setIdAlumno(idAlumno);
+				convocadoDTO.setAnioEscolar(alumno.getAnioEscolar());
+				convocadoDTO.setEstadoAlumno(alumno.getEstadoAlumno());
+				convocadoDTO.setNombreAlumno(alumno.getDatosPersonales().getApellidoNombre());
+				convocadoDTO.setDni(alumno.getDatosPersonales().getDni());
+				convocadoDTO.setEstadoAlumnoEntrevista(sel.getEstadoEntrevistaAlumno());
+				convocadoDTO.setNombreConvocatoria(sel.getConvocatoria().getNombre());
+				convocadoDTO.setNombreEscuela(alumno.getEscuela().getNombre());
+				convocadoDTO.setNombreZona(alumno.getEscuela().getZonaCimientos().getNombre());
+				convocadoDTO.setNombreCiclo(sel.getNombreCiclo());
+//				convocadoDTO.setMotivoEnvioTS(sel.getMotivoEnvioTS()== null ? null : sel.getMotivoEnvioTS());
+				convocadoDTO.setMotivoEnvioTS(alumno.getMotivoEnvioTS()== null ? null : alumno.getMotivoEnvioTS());
+				convocadoDTO.setRecomendacionesTS(entrevistaTS  == null ? null :entrevistaTS.getRecomendacionesTS());
+				convocadoDTO.setApellidoNombreTS(alumno.getPerfilTS() == null ? null : alumno.getPerfilTS().getDatosPersonales().getApellidoNombre());
+				convocadoDTO.setAnioAdicional(alumno.getAnioAdicional());
+				convocadoDTOs.add(convocadoDTO);
+			}
+
+		}
+	
+		
+		return convocadoDTOs;
+	}
+
+	/**
+	 * Entrevista seleccion por alumno.
+	 *
+	 * @param list the list
+	 * @param tieneFiltro the tiene filtro
+	 * @return the map
+	 * @since 04-may-2011
+	 * @author cfigueroa
+	 */
+	private Map<Long,EntrevistaSeleccion> entrevistaSeleccionPorAlumno(List list,boolean tieneFiltro){
+		Map<Long,EntrevistaSeleccion> map = new HashMap<Long, EntrevistaSeleccion>();
+		if(tieneFiltro){
+			String sql = " select distinct ent.id_perfil_alumno, ent.estado_entrevista_alumno ," +
+			 			 " ent.nombre_ciclo, con.nombre, ent.motivo_enviots " + 
+						 " from entrevista_seleccion ent ,alumno_seleccion alum,convocatoria_seleccion con "+ 
+						 " where ent.id_perfil_alumno in(:idAlumno) and ent.fecha_carga_entrevista = alum.fecha_entrevista and ent.convocatoria = con.id_convocatoria ";
+			
+			SQLQuery sqlQuery = getSession().createSQLQuery(sql);
+			sqlQuery.setParameterList("idAlumno", list);
+			EntrevistaSeleccion sel = null;
+			List<Object[]> list1 = sqlQuery.list();
+			for (Object[] objects : list1) {
+				sel = new EntrevistaSeleccion();
+				Integer estadoAlumno = (Integer) objects[1];
+				if (objects[4]!=null) {
+					Integer motivoTs = (Integer) objects[4];
+					sel.setMotivoEnvioTS(MotivoEnvioTS.getMotivoEnvioTS(motivoTs+1));
+				}				
+				sel.setEstadoEntrevistaAlumno(EstadoAlumno.getEstados(estadoAlumno+1));
+				sel.setNombreCiclo((String) objects[2]);
+				sel.setConvocatoria(new ConvocatoriaSeleccion());
+				sel.getConvocatoria().setNombre((String)objects[3]);
+				map.put(((BigInteger)objects[0]).longValue(), sel);
+			}
+		}else{
+			String sql = " select distinct ent.id_perfil_alumno, ent.estado_entrevista_alumno ," +
+						 " ent.nombre_ciclo, con.nombre, ent.motivo_enviots " + 
+						 " from entrevista_seleccion ent ,alumno_seleccion alum,convocatoria_seleccion con "+ 
+						 " where ent.fecha_carga_entrevista = alum.fecha_entrevista  and ent.convocatoria = con.id_convocatoria";
+			SQLQuery sqlQuery = getSession().createSQLQuery(sql);
+			List<Object[]> list1 = sqlQuery.list();
+			EntrevistaSeleccion sel = null;
+			for (Object[] objects : list1) {
+				if (objects[0]!=null) {
+					sel = new EntrevistaSeleccion();
+					Integer estadoAlumno = (Integer) objects[1];
+					if (objects[4]!=null) {
+						Integer motivoTs = (Integer) objects[4];
+						sel.setMotivoEnvioTS(MotivoEnvioTS.getMotivoEnvioTS(motivoTs+1));
+					}
+					sel.setEstadoEntrevistaAlumno(EstadoAlumno.getEstados(estadoAlumno+1));
+					sel.setNombreCiclo((String) objects[2]);
+					sel.setConvocatoria(new ConvocatoriaSeleccion());
+					sel.getConvocatoria().setNombre((String)objects[3]);
+					map.put(((BigInteger)objects[0]).longValue(), sel);
+				}
+			}
+		}
+		return map;
+	}
+	
+	/**
+	 * Obtener recomendacion ts.
+	 *
+	 * @return the map
+	 * @since 04-abr-2011
+	 * @author cfigueroa
+	 */
+	private Map<Long,EntrevistaTS> obtenerRecomendacionTS(List list, boolean tieneFiltro){
+		Map<Long,EntrevistaTS> map = new HashMap<Long, EntrevistaTS>();
+		SQLQuery query = null;
+		String sql=null;
+		if(tieneFiltro){
+			sql ="select distinct {ts.*} from entrevistats  ts where ts.perfil_alumno in(:idAlumno) " ;
+			query = getSession().createSQLQuery(sql);
+			query.setParameterList("idAlumno", list);
+		}else{
+			sql ="select distinct   alum.id as id_perfil_alumno ,{ts.*} from entrevistats  ts ,perfil_alumno alum where ts.perfil_alumno = alum.id " ;
+			query = getSession().createSQLQuery(sql);
+		}
+		query.addEntity("ts" ,EntrevistaTS.class);
+		List<EntrevistaTS> list1 = query.list();
+		for (EntrevistaTS objects : list1) {
+			map.put(objects.getPerfilAlumno().getId(),objects);
+		}
+					
+		return map;
+	}
+	
+
+	/* (non-Javadoc)
+	 * @see org.cimientos.intranet.dao.ConvocadoDao#cantidadCandidatos()
+	 */
+	@Override
+	public Integer cantidadConvocados(List<EstadoAlumno> estadoAlumnos,CicloPrograma cicloPrograma, ZonaCimientos zona, 
+			  Escuela escuela, Convocatoria convocatoria, 
+			  String nombreAlumno, EstadoAlumno estadoAlumno, 
+			  PerfilTS ts, MotivoEnvioTS motivoEnvioTS, 
+			  RecomendacionesTS recomendacionesTS, AnioEscolar anio) {
+		Criteria criteria = getSession().createCriteria(PerfilAlumno.class);
+		criteria.createAlias("escuela", "escuela");
+		criteria.createAlias("datosPersonales", "persona");
+		
+		
+		createCriteriaFiltros(estadoAlumnos, cicloPrograma, zona, escuela,
+				convocatoria, nombreAlumno, estadoAlumno, ts, motivoEnvioTS,
+				recomendacionesTS, anio, criteria);
+		criteria.setProjection(Projections.rowCount());
+		List list = criteria.list();
+		return (Integer)list.get(0);
+	}
+
+	/**
+	 * Este metodo arma los distintos filtros para la busqueda.
+	 *
+	 * @param estadoAlumnos the estado alumnos
+	 * @param cicloPrograma the ciclo programa
+	 * @param zona the zona
+	 * @param escuela the escuela
+	 * @param convocatoria the convocatoria
+	 * @param nombreAlumno the nombre alumno
+	 * @param estadoAlumno the estado alumno
+	 * @param ts the ts
+	 * @param motivoEnvioTS the motivo envio ts
+	 * @param recomendacionesTS the recomendaciones ts
+	 * @param criteria the criteria
+	 * @return Boolean si es true es porque tiene filtros 
+	 * @since 03-may-2011
+	 * @author cfigueroa
+	 * @param anio 
+	 */
+	private boolean  createCriteriaFiltros(List<EstadoAlumno> estadoAlumnos,
+			CicloPrograma cicloPrograma, ZonaCimientos zona, Escuela escuela,
+			Convocatoria convocatoria, String nombreAlumno,
+			EstadoAlumno estadoAlumno, PerfilTS ts,
+			MotivoEnvioTS motivoEnvioTS, RecomendacionesTS recomendacionesTS,
+			AnioEscolar anio, Criteria criteria) {
+		boolean filtro = false;
+		
+		if(cicloPrograma != null  && convocatoria != null ){
+			filtro = true;
+			Object [] objects = new Object[2];
+			objects[0] = cicloPrograma.getNombre();
+			objects[1] = convocatoria.getIdConvocatoria();
+			
+			Type[]  objectTypes = new Type[2];
+			objectTypes[0] = Hibernate.STRING;
+			objectTypes[1] = Hibernate.LONG;
+			
+			String sql  = "{alias}.id in (select sel.id_perfil_alumno  from entrevista_seleccion sel where sel.nombre_ciclo = ? and sel.convocatoria = ? )";
+			criteria.add(Restrictions.sqlRestriction(sql,objects,objectTypes));
+		}else{
+			if(cicloPrograma != null ){
+				filtro = true;
+				String sql  = "{alias}.id in (select sel.id_perfil_alumno  from entrevista_seleccion sel where sel.nombre_ciclo = ? )";
+				criteria.add(Restrictions.sqlRestriction(sql,cicloPrograma.getNombre(),Hibernate.STRING));
+			}
+			if(convocatoria != null ){
+				filtro = true;
+				String sql  = "{alias}.id in (select sel.id_perfil_alumno  from entrevista_seleccion sel where sel.convocatoria = ? )";
+				criteria.add(Restrictions.sqlRestriction(sql,convocatoria.getIdConvocatoria(),Hibernate.LONG));
+			}
+			
+		}
+		if(zona != null ){
+			filtro = true;
+			criteria.add(Restrictions.eq("escuela.zonaCimientos", zona));
+		}
+		if(escuela != null ){
+			filtro = true;
+			criteria.add(Restrictions.eq("escuela", escuela));
+		}
+		if(StringUtils.isNotBlank(nombreAlumno)){
+			filtro = true;
+			for ( String split : nombreAlumno.split(" "))
+				criteria.add(Restrictions.or(Restrictions.like("persona.nombre", "%"+split+"%"), Restrictions.like("persona.apellido", "%"+split+"%")));
+
+		}
+		if(estadoAlumno != null ){
+			filtro = true;
+			criteria.add(Restrictions.eq("estadoAlumno", estadoAlumno));
+		}else{
+			criteria.add(Restrictions.in("estadoAlumno", estadoAlumnos));
+		}
+		if(motivoEnvioTS != null && recomendacionesTS != null ){
+			filtro = true;
+			Object [] objects = new Object[3];
+			objects[0] = ts.getIdPerfilTS();
+			objects[1] = motivoEnvioTS.getId() - 1;
+			objects[2] = recomendacionesTS.getId() - 1;
+			Type[]  objectTypes = new Type[3];
+			objectTypes[0] = Hibernate.LONG;
+			objectTypes[1] = Hibernate.INTEGER;
+			objectTypes[2] = Hibernate.INTEGER;
+			String sql  = "{alias}.id in (select ts.perfil_alumno  from entrevistats ts where ts.motivo_visita = ? and recomendacionests = ?)";
+			criteria.add(Restrictions.sqlRestriction(sql,objects,objectTypes));
+		}else{
+			 if(ts != null ){
+				 filtro = true;
+				 criteria.add(Restrictions.eq("perfilTS", ts));
+			 }
+			 if(motivoEnvioTS != null ){
+				 filtro = true;
+				 String sql  = "{alias}.id in (select ts.perfil_alumno  from entrevistats ts where ts.motivo_visita = ?)";
+				 criteria.add(Restrictions.sqlRestriction(sql,motivoEnvioTS.getId() - 1 ,Hibernate.INTEGER));
+			 }
+			 if(recomendacionesTS != null ){
+				 filtro = true;
+				 String sql  = "{alias}.id in (select ts.perfil_alumno  from entrevistats ts where recomendacionests = ?)";
+				 criteria.add(Restrictions.sqlRestriction(sql,recomendacionesTS.getId()-1,Hibernate.INTEGER));
+			 }
+		}
+		
+		if(anio != null)
+			criteria.add(Restrictions.eq("anioEscolar", anio));
+		else
+			criteria.add(Restrictions.ne("anioEscolar", AnioEscolar.RECIBIDO));
+		
+		return filtro;
+	}
+	
+
+
+}

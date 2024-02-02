@@ -1,0 +1,139 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+
+<title>Alumnos</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>JSP Page</title>
+
+<script type="text/javascript">
+
+function enviarForm1(action, idalumno){
+	confirma = true;
+	if(action=='modificar'){
+		document.forms['alumnoForm'].action = "../alumno/modificarAlumno.do";
+	}else{ 
+		 	if(action=='mostrar'){
+			 document.forms['alumnoForm'].action = "../alumno/mostrarAlumno.do";
+			}else{	
+			document.forms['alumnoForm'].action = "../alumno/eliminarAlumno.do";}
+		}
+		if(confirma){
+			document.forms['alumnoForm'].idalumno.value = idalumno;
+			document.forms['alumnoForm'].submit();
+		}
+}
+
+</script>
+
+<script type="text/javascript">
+$(function() {
+	$('#example').dataTable( {
+		"oLanguage": {
+		"sLengthMenu": 'Mostrar <select>'+
+		'<option value="25">25</option>' +
+		'<option value="50">50</option>'+
+		'<option value="75">75</option>'+
+		'<option value="100">100</option>'+
+		'<option value="-1">Todos</option>'+
+		'</select> registros por hoja',
+		"sZeroRecords": "No se encontraron registros",
+		"sInfo": "Mostrando del _START_ al _END_ de _TOTAL_ registros",
+		"sInfoEmtpy": "Mostrando 0 registros",
+		"sInfoFiltered": "(filtrado de _MAX_ registros totales)",
+		"sSearch": "Buscar",
+		"oPaginate": {
+			"sFirst":    "Primera",
+			"sPrevious": "Anterior",
+			"sNext":     "Siguiente",
+			"sLast":     "Ultima"
+		}
+		
+		},
+		"bJQueryUI": true,
+		"sPaginationType": "full_numbers",
+		"iDisplayLength": 25
+	});
+	});
+</script>
+
+</head>
+<body>
+<div id="main-content">
+<label>Lista de alumnos</label>
+<br />
+<table align="center" >
+<tr>
+<td>
+
+	<table cellpadding="0"  Acellspacing="0" border="0"  id="example"> 
+
+	<thead>
+		<tr>
+			<th>Apellido</th>
+			<th>Nombre</th>
+			<th>Tel&eacute;fono 1</th>
+			<th>Contacto tel&eacute;fono 1</th>
+			<th>Turno</th>
+			<th>Fecha Alta</th>
+			<th>Fecha Baja</th>
+			<th>Desempe&ntilde;o escolar</th>
+			<th></th>
+			<th></th>
+		</tr>
+	</thead>
+	
+	<tbody align="center">
+		<c:forEach items="${alumnos}" var="alumno">
+			<tr>
+				
+				<td align="center" valign="top" style="font-size: 14px">&nbsp;${alumno.datosPersonales.apellido}&nbsp;</td>
+				<td align="center" valign="top" style="font-size: 14px">&nbsp;${alumno.datosPersonales.nombre}&nbsp;</td>
+				<td align="center" valign="top" style="font-size: 14px">&nbsp;${alumno.telefono1}&nbsp;</td>				
+				<td align="center" valign="top" style="font-size: 14px">&nbsp;${alumno.contactoTelefono1}&nbsp;</td>
+				<td align="center" valign="top" style="font-size: 14px">&nbsp;${alumno.turno}&nbsp;</td>
+				<td align="center" valign="top" style="font-size: 14px">&nbsp;<fmt:formatDate value="${alumno.fechaAlta}" pattern="yyyy/MM/dd"/>&nbsp;</td>
+				<td align="center" valign="top" style="font-size: 14px">&nbsp;<fmt:formatDate value="${alumno.fechaBaja}" pattern="yyyy/MM/dd"/>&nbsp;</td>
+				<td align="center" valign="top" style="font-size: 14px">&nbsp;${alumno.desempenioEscolar}&nbsp;</td>
+				<td>
+				<input type="submit" value="Mas Datos"
+					   class="ui-state-default ui-corner-all"
+					   onclick="enviarForm1('mostrar','${alumno.id}')">
+				</td>
+				<td>
+				<input type="submit" value="Eliminar"
+					   class="ui-state-default ui-corner-all"
+					   onclick="enviarForm1('eliminar','${alumno.id}')">
+				</td>
+			</tr>
+		</c:forEach>
+	</tbody>
+</table>
+
+<br />
+<table align="center">
+	<tr>
+		<td><input type="submit" value="Alta"
+			class="ui-state-default ui-corner-all"
+			onclick="window.location.href='../alumno/altaAlumno.do?nombre= '" />
+		<input type="button" value="Volver"
+			class="ui-state-default ui-corner-all"
+			onclick="location.href='../index.jsp'; return false;" /></td>
+	</tr>
+</table>
+<br/>
+<br/>
+<form:form name="alumnoForm" method="post" commandName="alumno">
+	<input type="hidden" name="idalumno" />
+</form:form>
+</td>
+</tr>
+</table>
+</div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/fenix/!svn/ver/307/src/main/resources
+END
+base.properties
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/fenix/!svn/ver/307/src/main/resources/base.properties
+END
+spy.properties
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/fenix/!svn/ver/1/src/main/resources/spy.properties
+END
+log4j.properties
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/fenix/!svn/ver/1/src/main/resources/log4j.properties
+END
+ehcache.xml
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/fenix/!svn/ver/1/src/main/resources/ehcache.xml
+END
+mensajes_es.properties
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/fenix/!svn/ver/1/src/main/resources/mensajes_es.properties
+END
+displaytag.properties
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/fenix/!svn/ver/401/src/main/resources/displaytag.properties
+END
+mail.properties
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/fenix/!svn/ver/1/src/main/resources/mail.properties
+END
+mensajes_en.properties
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/fenix/!svn/ver/1/src/main/resources/mensajes_en.properties
+END

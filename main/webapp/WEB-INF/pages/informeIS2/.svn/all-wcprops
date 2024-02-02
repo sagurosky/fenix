@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/fenix/!svn/ver/306/src/main/webapp/WEB-INF/pages/informeIS2
+END
+correccionIS2.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/fenix/!svn/ver/407/src/main/webapp/WEB-INF/pages/informeIS2/correccionIS2.jsp
+END
+listaInformesIS2Revision.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/informeIS2/listaInformesIS2Revision.jsp
+END
+registrarInformeIS2.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/fenix/!svn/ver/348/src/main/webapp/WEB-INF/pages/informeIS2/registrarInformeIS2.jsp
+END
+actualizarInformeIS2.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/fenix/!svn/ver/348/src/main/webapp/WEB-INF/pages/informeIS2/actualizarInformeIS2.jsp
+END
+listaInformesIS2Correccion.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/informeIS2/listaInformesIS2Correccion.jsp
+END
+listaInformesIS2.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/informeIS2/listaInformesIS2.jsp
+END
+listaInformesIS2Finalizados.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/informeIS2/listaInformesIS2Finalizados.jsp
+END
+supervisarInformeIS2.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/fenix/!svn/ver/407/src/main/webapp/WEB-INF/pages/informeIS2/supervisarInformeIS2.jsp
+END
+listaInformesIS2Supervision.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/informeIS2/listaInformesIS2Supervision.jsp
+END
+verIS2.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/fenix/!svn/ver/348/src/main/webapp/WEB-INF/pages/informeIS2/verIS2.jsp
+END
+modificarInformeIS2.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/fenix/!svn/ver/348/src/main/webapp/WEB-INF/pages/informeIS2/modificarInformeIS2.jsp
+END

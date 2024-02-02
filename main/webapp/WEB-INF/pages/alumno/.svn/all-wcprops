@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/fenix/!svn/ver/149/src/main/webapp/WEB-INF/pages/alumno
+END
+listaAlumnos.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/alumno/listaAlumnos.jsp
+END
+altaAlumno.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/alumno/altaAlumno.jsp
+END
+listaBecadosCesados.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/fenix/!svn/ver/149/src/main/webapp/WEB-INF/pages/alumno/listaBecadosCesados.jsp
+END
+mostrarAlumno.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/alumno/mostrarAlumno.jsp
+END

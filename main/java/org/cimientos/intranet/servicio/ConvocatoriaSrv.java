@@ -1,0 +1,182 @@
+package org.cimientos.intranet.servicio;
+
+import java.util.List;
+
+import org.cimientos.intranet.dao.CicloProgramaDao;
+import org.cimientos.intranet.dao.ConvocatoriaDao;
+import org.cimientos.intranet.dao.EscuelaDao;
+import org.cimientos.intranet.dao.PerfilVoluntarioDao;
+import org.cimientos.intranet.dao.ZonaCimientosDao;
+import org.cimientos.intranet.modelo.CicloPrograma;
+import org.cimientos.intranet.modelo.candidato.convocatoria.Convocatoria;
+import org.cimientos.intranet.modelo.candidato.convocatoria.ConvocatoriaSeleccion;
+import org.cimientos.intranet.modelo.escuela.Escuela;
+import org.cimientos.intranet.modelo.perfilvoluntario.PerfilVoluntario;
+import org.cimientos.intranet.modelo.ubicacion.ZonaCimientos;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@Transactional
+public class ConvocatoriaSrv {
+	
+	@Autowired	
+	private ConvocatoriaDao convocatoriaDao;
+	
+	@Autowired
+	private ZonaCimientosDao zonaCimientosDao;
+	
+	@Autowired
+	private EscuelaDao escuelaDao;
+	
+	@Autowired
+	private PerfilVoluntarioDao perfilVoluntarioDao;
+	
+	@Autowired
+	private CicloProgramaDao cicloProgramaDao;
+	
+	/**
+	 * Obtener convocatorias.
+	 *
+	 * @return the list
+	 * @since 19-nov-2010
+	 * @author cfigueroa
+	 */
+	public List<Convocatoria> obtenerConvocatorias(){
+		return convocatoriaDao.obtenerTodos();
+	}
+	
+	/**
+	 * Obtener zona cimientos.
+	 *
+	 * @return the list
+	 * @since 19-nov-2010
+	 * @author cfigueroa
+	 */
+	public List<ZonaCimientos> obtenerZonaCimientos(){
+		return zonaCimientosDao.obtenerTodos();
+	}
+	
+	/**
+	 * Obtener escuelas.
+	 *
+	 * @return the list
+	 * @since 19-nov-2010
+	 * @author cfigueroa
+	 */
+	public List<Escuela> obtenerEscuelas(){
+		return escuelaDao.obtenerTodos();
+	}
+	
+	/**
+	 * Obtener perfil voluntarios.
+	 *
+	 * @return the list
+	 * @since 19-nov-2010
+	 * @author cfigueroa
+	 */
+	public List<PerfilVoluntario> obtenerPerfilVoluntarios(){
+		return perfilVoluntarioDao.obtenerTodos();
+	}
+	
+	/**
+	 * Obtner ciclo programas.
+	 *
+	 * @return the list
+	 * @since 19-nov-2010
+	 * @author cfigueroa
+	 */
+	public List<CicloPrograma> obtenerCicloProgramas(){
+		return cicloProgramaDao.obtenerTodos();
+	}
+	/**
+	 * Guardar convocatoria.
+	 *
+	 * @param convocatoria the convocatoria
+	 * @since 19-nov-2010
+	 * @author cfigueroa
+	 */
+	public void guardarConvocatoria(Convocatoria convocatoria){
+		convocatoriaDao.guardar(convocatoria);
+	}
+	
+	/**
+	 * Obtener convocatoria por id.
+	 *
+	 * @param id the id
+	 * @return the convocatoria
+	 * @since 06-dic-2010
+	 * @author cfigueroa
+	 */
+	public Convocatoria obtenerConvocatoriaPorId(Long id ){
+		return convocatoriaDao.obtener(id);
+	}
+	
+	/**
+	 * Eliminar convocatoria.
+	 *
+	 * @param convocatoria the convocatoria
+	 * @since 06-dic-2010
+	 * @author cfigueroa
+	 */
+	public void eliminarConvocatoria(Convocatoria convocatoria){
+		convocatoriaDao.eliminar(convocatoria);
+	}
+
+	public List<Convocatoria> obtenerPorCiclo(CicloPrograma cicloActual) {
+		return convocatoriaDao.obtenerPorCiclo(cicloActual);
+	}
+	
+	/**
+	 * Guardar convocatoria seleccion.
+	 *
+	 * @param convocatoria the convocatoria
+	 * @since 17-feb-2011
+	 * @author cfigueroa
+	 */
+	public void guardarConvocatoriaSeleccion(Convocatoria convocatoria){
+		convocatoriaDao.guardarConvocatoriaSeleccion(convocatoria);
+	}
+	
+	public ConvocatoriaSeleccion obtenerConvocatoriaSeleccion(Long id){
+		return convocatoriaDao.obtenerConvocatoriaSeleccion(id);
+	}
+	
+	/**
+	 * Obtener convocatorias por zona y nombre.
+	 *
+	 * @param zona the zona
+	 * @param texto the texto
+	 * @param cantidadMax the cantidad max
+	 * @return the list
+	 * @since 27-abr-2011
+	 * @author cfigueroa
+	 */
+	public List<Convocatoria> obtenerConvocatoriasPorZonaYNombre(ZonaCimientos zona, String texto, int cantidadMax){
+		return convocatoriaDao.obtenerConvocatoriasPorZonaYNombre(zona,texto,cantidadMax);
+	}
+	
+	public List<Convocatoria> obtenerConvocatoriasPorNombre(String texto, int cantidadMax){
+		return convocatoriaDao.obtenerConvocatoriasPorNombre(texto,cantidadMax);
+	}
+	
+	public List<Convocatoria> obtenerConvocatoriaDisponibles(){
+		return convocatoriaDao.obtenerConvocatoriasDisponibles();
+	}
+
+	public List<Convocatoria> obtenerConvocatoriaPorAjax(String texto){
+		return convocatoriaDao.obtenerConvocatoriasDisponiblesPorNombre(texto);
+	}
+	
+	/**
+	 * Obtner ciclo programas.
+	 *
+	 * @return the list
+	 * @since 02-dic-2011
+	 * @author jbaracco
+	 */
+	public List<CicloPrograma> obtenerCiclosConvocatorias(){
+		return cicloProgramaDao.obtenerCiclosClonarBecas();
+	}
+}

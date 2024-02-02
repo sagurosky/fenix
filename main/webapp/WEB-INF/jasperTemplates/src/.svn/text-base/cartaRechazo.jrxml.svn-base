@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cartaRechazo" pageWidth="612" pageHeight="1008" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="621"/>
+	<field name="date" class="java.util.Date"/>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="pathImg" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="146" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="156" y="122" width="405" height="24"/>
+				<textElement>
+					<font fontName="Lucida Bright" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{date}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="156" y="26" width="208" height="50"/>
+				<imageExpression class="java.lang.String"><![CDATA[$F{pathImg}]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="722" splitType="Stretch">
+			<staticText>
+				<reportElement x="24" y="109" width="544" height="69"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Lucida Bright" size="12"/>
+				</textElement>
+				<text><![CDATA[no ha sido seleccionado/a para participar del Programa Futuros Egresados, ya que no reúne los requisitos necesarios. De todos modos, agradecemos su interés y participación.
+Cordialmente,
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="12" width="149" height="51"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Lucida Bright" size="12"/>
+				</textElement>
+				<text><![CDATA[Estimada Familia:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="17" y="225" width="225" height="90"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Lucida Bright" size="12"/>
+				</textElement>
+				<text><![CDATA[Programa Futuros Egresados
+Cimientos
+Fundación para la Igualdad
+de Oportunidades Educativas
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="25" y="76" width="428" height="33"/>
+				<textElement textAlignment="Justified" verticalAlignment="Bottom">
+					<font fontName="Lucida Bright" size="12"/>
+				</textElement>
+				<text><![CDATA[Por medio de la presente queremos informarle que su hijo/a]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="441" y="76" width="127" height="33"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Lucida Bright" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="17" y="404" width="110" height="51"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Lucida Bright" size="12"/>
+				</textElement>
+				<text><![CDATA[Estimada Familia:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="89" y="466" width="337" height="33"/>
+				<textElement textAlignment="Justified" verticalAlignment="Bottom">
+					<font fontName="Lucida Bright" size="12"/>
+				</textElement>
+				<text><![CDATA[Por medio de la presente queremos informarle que su hijo/a]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="426" y="466" width="142" height="33"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Lucida Bright" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="17" y="499" width="551" height="122"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Lucida Bright" size="12"/>
+				</textElement>
+				<text><![CDATA[ha quedado en lista de espera, ya que adeuda materias.
+Si llegara a aprobar las materias que adeuda y aún existieran vacantes, entonces tendría posibilidades de ingresar al Programa Futuros Egresados. Por eso les solicitamos que notifiquen a Cimientos sobre la situación académica de los candidatos, llamando de 9 a 18 hs al (011) 4829-8600, de modo que puedan seguir siendo tenidos en cuenta.
+
+Cordialmente,
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="17" y="632" width="292" height="51"/>
+				<textElement textAlignment="Left">
+					<font fontName="Lucida Bright" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Programa Futuros Egresados
+Cimientos | construyamos desde la educación
+(011) 4829-8600
+]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="74" splitType="Stretch"/>
+	</detail>
+	<pageFooter>
+		<band height="26" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="30" splitType="Stretch"/>
+	</summary>
+</jasperReport>

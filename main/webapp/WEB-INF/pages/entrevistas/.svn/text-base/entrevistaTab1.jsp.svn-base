@@ -1,0 +1,130 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<table >
+	<tr>
+		<td>
+			<table id="table-informe">
+				<c:if test="${periodo.nombre=='Septiembre'}">						
+					<c:if test="${alumno.situacionEscolar=='PROMOVIDO_CON_PREVIAS'}">
+						<tr>
+							<td colspan="2"><b><img src="../static/images/atencion.gif" width=10><font color="red"  size="2">¡Atención! Recordá actualizar el registro de materias previas para este alumno en su boletín del ciclo actual</font></b> </td>
+						</tr>						
+						<tr>
+							<td colspan="2"><b><font color="red"  size="2">(si aún no lo generaste, deberás hacerlo desde tu panel).</font></b></td>
+						</tr>	
+					</c:if>		 
+				</c:if>
+				
+				<c:if test="${periodo != null && entrevista.periodoDePago == null}">
+					<tr>		
+						<td><label>Periodo Entrevista</label></td>
+						
+						<td><label><b>${periodo.nombre}</b></label></td>
+					</tr>
+				</c:if>
+				<c:if test="${entrevista.periodoDePago != null}">
+					<tr>		
+						<td><label>Periodo Entrevista</label></td>
+						<td><label><b>${entrevista.periodoDePago.nombre}</b></label></td>
+					</tr>
+				</c:if>
+				<tr>
+					<td nowrap="nowrap" class="datepicker" ><label>Fecha De Incorporacion al PFE</label></td>
+					<td><label><b><fmt:formatDate value="${alumno.fechaPBE}" pattern="dd/MM/yyyy"/></b></label></td>
+				</tr>	
+				<tr>
+					<td class="datepicker"><label>Fecha Entrevista  *</label></td>
+					<td><input name="fechaEntrevista" id="datepicker" class="required" value="<fmt:formatDate value="${entrevista.fechaEntrevista}" pattern="dd/MM/yyyy"/>"  ></td>
+				</tr>
+				<tr>		
+					<td nowrap="nowrap"><label>Entrevista Reprogramada  *</label></td>
+					<td>
+						<form:select path="entrevistaReprogramada" cssClass="required">
+							<form:options items="${entrevistas}" itemLabel="valor" itemValue="id"/>				
+						</form:select>
+					</td>
+				</tr>
+				<tr>
+					<td><label>Lugar Entrevista</label></td>
+					<td>
+						<input type="text" id="escuela" name="lugarEntrevista" size="39" value="${escuelaZona}" class="required"/>
+						<input type="hidden" class="required" id="lugarEntrevistaId" name="lugarEntrevista.id" value="${entrevista.lugarEntrevista.id}"></input>
+					</td>
+				</tr>
+
+				<tr>	
+					<td><label>Participo Becado  *</label></td>
+					<td>
+						<form:checkbox path="participoBecado" id="participoBecado" onclick="habilitarCamposBecado(this)"/>
+					</td>
+				</tr>
+				<tr>
+					<td><label>Motivo Ausencia  *</label></td>
+					<td>
+						<form:select path="motivoAusencia" id="motivoAusencia" cssClass="required" onchange="habilitarOtrosMotivos(this)">
+							<form:option value="">Seleccione una opción...</form:option>
+							<form:options items="${motivoAusencias}" itemLabel="valor" itemValue="id"/>				
+						</form:select>
+					</td>
+				</tr>
+				<tr>
+					<td width="180"><label>Otro Motivo</label></td>
+					<td width="620">
+						<form:textarea path="otroMotivoAusencia" id="otroMotivoAusencia" disabled="true" rows="4" cols="30" onblur="chequearLongitud(this);" onkeypress="chequearLongitud(this);"/>
+					</td>
+				</tr>
+				<c:if test="${entrevista.entrevistaGrupal == null}">
+				
+				<tr>
+					<td><label>Participo RA  *</label></td>
+					<td>
+						<form:checkbox path="participoRA" id="participoRA" onclick="habilitarCamposRA(this)"/>
+					</td>
+				</tr>
+				<tr>
+					<td><label>Motivo Ausencia RA  *</label></td>
+					<td>
+						<form:select path="motivoAusenciaRA" id="motivoAusenciaRA" cssClass="required" onchange="habilitarOtrosMotivosRA(this, false)">
+							<form:option value="">Seleccione una opción...</form:option>
+							<form:options items="${motivoAusenciaRA}" itemLabel="valor" itemValue="id"/>				
+						</form:select>
+					</td>
+				</tr>
+				<tr>
+					<td><label>Otro Motivo</label></td>
+					<td>
+						<form:textarea path="otroMotivoAusenciaRA" id="otroMotivoAusenciaRA" disabled="true" rows="4" cols="30" onblur="chequearLongitud(this);" onkeypress="chequearLongitud(this);" />
+					</td>
+				</tr>
+				</c:if>	
+				<c:if test="${entrevista.entrevistaGrupal != null}">
+				<tr>
+					<td><label>Participo RA  *</label></td>
+					<td>
+						<form:checkbox path="participoRA" id="participoRA" disabled="true"/> <font size="1">NO APLICA</font>
+					</td>
+				</tr>
+				<tr>
+					<td><label>Motivo Ausencia RA  *</label></td>
+					<td>
+						<form:select path="motivoAusenciaRA" id="motivoAusenciaRA" disabled="true" onchange="habilitarOtrosMotivosRA(this, true)">
+							<form:option value="">Seleccione una opción...</form:option>
+							<form:options items="${motivoAusenciaRA}" itemLabel="valor" itemValue="id"/>				
+						</form:select> <font size="1">NO APLICA</font>
+					</td>
+				</tr>
+				<tr>
+					<td><label>Otro Motivo</label></td>
+					<td>
+						<form:textarea path="otroMotivoAusenciaRA" id="otroMotivoAusenciaRA" disabled="true" rows="4" cols="30"/> <font size="1">NO APLICA</font>
+					</td>
+				</tr>
+				</c:if>	
+			</table>
+		</td>
+	</tr>
+</table>

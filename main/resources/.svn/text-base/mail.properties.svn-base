@@ -1,0 +1,10 @@
+# Sample Gmail settings
+mail.smtp.host= smtp.gmail.com
+mail.smtp.port= 587
+mail.smtp.mailFrom=informes@cimientos.org
+mail.smtp.starttls.enable=true
+mail.smtp.password=informesapadrinos
+mail.smtp.from=Cimientos - Informes
+
+# New Properties
+mail.smtp.auth=false

@@ -1,0 +1,149 @@
+package org.cimientos.intranet.servicio;
+
+import java.util.List;
+
+import org.cimientos.intranet.dao.EntrevistaSeleccionDao;
+import org.cimientos.intranet.modelo.CicloPrograma;
+import org.cimientos.intranet.modelo.candidato.convocatoria.Convocatoria;
+import org.cimientos.intranet.modelo.escuela.EscuelaSeleccion;
+import org.cimientos.intranet.modelo.perfil.EstadoAlumno;
+import org.cimientos.intranet.modelo.perfil.PerfilAlumno;
+import org.cimientos.intranet.modelo.seleccion.EntrevistaSeleccion;
+import org.cimientos.intranet.modelo.ubicacion.ZonaCimientos;
+import org.displaytag.properties.SortOrderEnum;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.cimientos.intranet.enumerativos.AnioEscolar;
+
+
+/**
+ * @author nlopez
+ */
+
+@Service
+@Transactional
+public class EntrevistaSeleccionSrv {
+	
+	@Autowired
+	private EntrevistaSeleccionDao entrevistaSeleccionDao;
+	
+	
+	/**
+	 * Persiste una Entrevista Seleccion en la base de datos.
+	 *
+	 * @param entrevistaSeleccion the entrevista seleccion
+	 * @since 04-nov-2010
+	 * @author nlopez
+	 */
+	public void guardarEntrevista(EntrevistaSeleccion entrevistaSeleccion ) {		
+		entrevistaSeleccionDao.guardar(entrevistaSeleccion);
+		entrevistaSeleccionDao.flush();
+	}
+	
+	/**
+	 * List entrevista seleccion.
+	 *
+	 * @return the list
+	 * @since 25-nov-2010
+	 * @author cfigueroa
+	 */
+	public List<EntrevistaSeleccion> listEntrevistaSeleccion(){
+		return entrevistaSeleccionDao.obtenerEntrevistasConstruccion();
+	}
+	
+	
+	/**
+	 * Obtener entrevista seleccion.
+	 *
+	 * @param id the id
+	 * @return the entrevista seleccion
+	 * @since 13-dic-2010
+	 * @author cfigueroa
+	 */
+	public EntrevistaSeleccion obtenerEntrevistaSeleccion(Long id ){
+		return entrevistaSeleccionDao.obtener(id);
+	}
+	
+	/**
+	 * Eliminar entrevista seleccion.
+	 *
+	 * @param entrevistaSeleccion the entrevista seleccion
+	 * @since 13-dic-2010
+	 * @author cfigueroa
+	 */
+	public void eliminarEntrevistaSeleccion(EntrevistaSeleccion entrevistaSeleccion){
+		entrevistaSeleccionDao.eliminar(entrevistaSeleccion);
+	}
+
+	/**
+	 * Obtener entrevistas finalizadas.
+	 *
+	 * @return the list
+	 * @since 18-ene-2011
+	 * @author cfigueroa
+	 */
+	public List<EntrevistaSeleccion> obtenerEntrevistasFinalizadas(EstadoAlumno estadoAlumno, ZonaCimientos zona, 
+																			Convocatoria convocatoria, CicloPrograma cicloPrograma, 
+																			EscuelaSeleccion escuela, AnioEscolar anioEscolar,String nombreAlumno,
+																			int firstResult, int maxResults,SortOrderEnum sortDirection, 
+																			String sortCriterion) {
+		return entrevistaSeleccionDao.obtenerEntrevistasFinalizadas(estadoAlumno,zona,convocatoria,cicloPrograma,escuela,anioEscolar,nombreAlumno,
+																	firstResult,maxResults,sortDirection,sortCriterion);
+	}
+	
+	/**
+	 * Este metodo se tiene que utilizar solo para el alta de la entrevista seleccion
+	 * ya que mapea los datos de perfilAlumno en alumno seleccion. 
+	 * Si se necesita obtener la entrevistaSeleccion se tiene que usar el metodo obtenerEntrevistaSeleccionPorAlumno
+	 * @param idAlumno the id Alumno
+	 * @return the {@link EntrevistaSeleccion}
+	 * @since 18-ene-2011
+	 * @author cfigueroa
+	 */
+	public EntrevistaSeleccion obtenerEntrevistaPorDniAlumno(Integer idAlumno){
+		return entrevistaSeleccionDao.obtenerEntrevistaPorDniAlumno(idAlumno);
+	}
+	
+	public EntrevistaSeleccion obtenerEntrevistaSeleccionPorAlumno(PerfilAlumno perfilAlumno){
+		return entrevistaSeleccionDao.obtenerEntrevistaSeleccionPorAlumno(perfilAlumno);
+	}
+	public List<PerfilAlumno> obtenerAlumnosSinBecaSeleccion(){
+		return entrevistaSeleccionDao.obtenerAlumnosSinBecaSeleccion();
+	}
+	/**
+	 * Obtener entrevistas finalizadas.
+	 *
+	 * @return the list
+	 * @since 18-ene-2011
+	 * @author cfigueroa
+	 */
+	public Integer obtenterCantidadEntrevistas(EstadoAlumno estadoAlumno, ZonaCimientos zona, 
+																			Convocatoria convocatoria, CicloPrograma cicloPrograma, 
+																			EscuelaSeleccion escuela, AnioEscolar anioEscolar,String nombreAlumno,
+																			int firstResult, int maxResults,SortOrderEnum sortDirection, 
+																			String sortCriterion) {
+		return entrevistaSeleccionDao.obtenterCantidadEntrevistas(estadoAlumno,zona,convocatoria,cicloPrograma,escuela,anioEscolar,nombreAlumno,
+																	firstResult,maxResults,sortDirection,sortCriterion);
+	}
+	
+	
+	
+	public EntrevistaSeleccion obtenerEntrevistaSeleccionPorAlumnoAprobado(PerfilAlumno perfilAlumno){
+		return entrevistaSeleccionDao.obtenerEntrevistaSeleccionPorAlumnoAprobado(perfilAlumno);
+	}
+	
+	public List<EntrevistaSeleccion> obtenerEntrevistasSeleccionPorAlumno(PerfilAlumno perfilAlumno){
+		return entrevistaSeleccionDao.obtenerEntrevistasSeleccionPorAlumno(perfilAlumno);
+	}
+	
+	public void eliminarEntrevista(EntrevistaSeleccion entrevistaSeleccion){
+		entrevistaSeleccionDao.eliminar(entrevistaSeleccion);
+		entrevistaSeleccionDao.flush();
+	}
+	
+	public List<EntrevistaSeleccion> obtenerEntrevistasSeleccionPorIdAlumno(Long idAlumno){
+		return entrevistaSeleccionDao.obtenerEntrevistasSeleccionPorIdAlumno(idAlumno);
+	}
+}

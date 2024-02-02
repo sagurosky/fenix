@@ -1,0 +1,372 @@
+package org.cimientos.intranet.web.controller;
+
+import java.beans.PropertyEditorSupport;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang.StringUtils;
+import org.cimientos.intranet.modelo.escuela.Escuela;
+import org.cimientos.intranet.modelo.perfil.Turno;
+import org.cimientos.intranet.servicio.CicloProgramaSrv;
+import org.cimientos.intranet.servicio.EscuelaSrv;
+import org.cimientos.intranet.servicio.LocalidadSrv;
+import org.cimientos.intranet.servicio.ProvinciaSrv;
+import org.cimientos.intranet.servicio.RegistrarEscuelasBecasSrv;
+import org.cimientos.intranet.servicio.ZonaCimientosSrv;
+import org.cimientos.intranet.utils.ConstantesInformes;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.cimientos.intranet.enumerativos.AniosEscuela;
+import com.cimientos.intranet.enumerativos.Dependencia;
+import com.cimientos.intranet.enumerativos.EspacioApoyo;
+import com.cimientos.intranet.enumerativos.EstadoEscuela;
+import com.cimientos.intranet.enumerativos.FaseProyecto;
+import com.cimientos.intranet.enumerativos.Modalidad;
+import com.cimientos.intranet.enumerativos.ModalidadTrabajoEscuela;
+import com.cimientos.intranet.enumerativos.NivelEscuela;
+import com.cimientos.intranet.enumerativos.Programa;
+
+@Controller
+@RequestMapping("/escuela/*")
+public class EscuelasController extends BaseController {
+	
+	@Autowired
+	private RegistrarEscuelasBecasSrv registrarEscuelasBecasSrv;
+	
+	@Autowired
+	EscuelaSrv escuelaService;
+	
+	@Autowired
+	LocalidadSrv localidadService;
+	
+	@Autowired
+	ZonaCimientosSrv zonaService;
+	
+	@Autowired
+	ProvinciaSrv provinciaService;
+	
+	@Autowired
+	CicloProgramaSrv cicloSrv;
+
+	private Map<String,Object> map;
+	
+	//Constante para identificar desde cuando se necesitan los ciclos
+	private static String ciclo2009 = "2009";
+	private static String ciclo2000 = "2000";
+	
+	/**
+	 * View registrar escuela.
+	 *
+	 * @return the model and view
+	 * @since 18-nov-2010
+	 * @author cfigueroa
+	 */
+	@RequestMapping("/escuela/viewAltaEscuela")
+	public ModelAndView viewAltaEscuela(){
+		map = new HashMap<String, Object>();
+		map.put("escuela", new Escuela());
+		map.put("listLocalidades", registrarEscuelasBecasSrv.obtenerLocalidades());
+		map.put("listProvincias", registrarEscuelasBecasSrv.obtenerProvincias());
+		List<EstadoEscuela> estados = new ArrayList<EstadoEscuela>();
+		estados.add(EstadoEscuela.NO_SELECCIONADA);
+		estados.add(EstadoEscuela.PARTICIPANDO_PROGRAMA);
+		estados.add(EstadoEscuela.INACTIVA);
+		map.put("estadosEscuela", estados);
+		map.put("programas", Programa.getListaPrograma());
+		map.put("modalidadesEscuela", Modalidad.getListaModalidad());
+		map.put("modalidadesTrabajoEscuela", ModalidadTrabajoEscuela.getListaModalidades());
+		map.put("nivelesEscuela", NivelEscuela.getListaNivelesEscuela());
+		map.put("aniosEscuela", AniosEscuela.getListaAniosEscuela());
+		map.put("dependencias", Dependencia.getListaDependencias());
+		map.put("ciclos", cicloSrv.obtenerCiclosConvocatoriaDesde(ciclo2009));
+		map.put("ciclos2", cicloSrv.obtenerCiclosConvocatoriaDesde(ciclo2000));
+		map.put("fasesTrabajo", FaseProyecto.getFaseProyecto());
+		map.put("turnos", Turno.getListaTurnos());
+		map.put("espaciosApoyo", EspacioApoyo.getEspacioApoyo());
+		
+		return forward("/escuela/altaEscuelaView", map);
+	}
+	
+	@RequestMapping("/escuela/exportarEscuela")
+	public ModelAndView exportarEscuela(){
+		map = new HashMap<String, Object>();
+		map.put("escuela", new Escuela());
+		map.put("listLocalidades", registrarEscuelasBecasSrv.obtenerLocalidades());
+		map.put("listProvincias", registrarEscuelasBecasSrv.obtenerProvincias());
+		List<EstadoEscuela> estados = new ArrayList<EstadoEscuela>();
+		estados.add(EstadoEscuela.NO_SELECCIONADA);
+		estados.add(EstadoEscuela.PARTICIPANDO_PROGRAMA);
+		estados.add(EstadoEscuela.INACTIVA);
+		map.put("estadosEscuela", estados);
+		map.put("programas", Programa.getListaPrograma());
+		map.put("modalidadesEscuela", Modalidad.getListaModalidad());
+		map.put("modalidadesTrabajoEscuela", ModalidadTrabajoEscuela.getListaModalidades());
+		map.put("nivelesEscuela", NivelEscuela.getListaNivelesEscuela());
+		map.put("aniosEscuela", AniosEscuela.getListaAniosEscuela());
+		map.put("dependencias", Dependencia.getListaDependencias());
+		map.put("ciclos", cicloSrv.obtenerCiclosConvocatoriaDesde(ciclo2009));
+		map.put("ciclos2", cicloSrv.obtenerCiclosConvocatoriaDesde(ciclo2000));
+		map.put("fasesTrabajo", FaseProyecto.getFaseProyecto());
+		map.put("turnos", Turno.getListaTurnos());
+		map.put("espaciosApoyo", EspacioApoyo.getEspacioApoyo());
+		
+		String excelView = null;
+		excelView = "exportarEscuelasView";
+		
+		//return forward(excelView, map);
+		return new ModelAndView(excelView,map);
+		
+		//return forward("/escuela/altaEscuelaView", map);
+	}
+	
+	
+	@RequestMapping("/escuela/modificarEscuela.do")
+	public ModelAndView modificarView(
+		@RequestParam("idEscuela") Long idEscuela,
+		@RequestParam(required=false,value="urlRegreso") String urlRegreso){
+		map = new HashMap<String, Object>();
+
+		map.put("escuela", escuelaService.obtenerEscuelaPorId(idEscuela));
+		map.put("listLocalidades", registrarEscuelasBecasSrv.obtenerLocalidades());
+		map.put("listProvincias", registrarEscuelasBecasSrv.obtenerProvincias());
+		List<EstadoEscuela> estados = new ArrayList<EstadoEscuela>();
+		estados.add(EstadoEscuela.NO_SELECCIONADA);
+		estados.add(EstadoEscuela.PARTICIPANDO_PROGRAMA);
+		estados.add(EstadoEscuela.INACTIVA);
+		map.put("estadosEscuela", estados);
+		map.put("programas", Programa.getListaPrograma());
+		map.put("modalidadesEscuela", Modalidad.getListaModalidad());
+		map.put("modalidadesTrabajoEscuela", ModalidadTrabajoEscuela.getListaModalidades());
+		map.put("nivelesEscuela", NivelEscuela.getListaNivelesEscuela());
+		map.put("aniosEscuela", AniosEscuela.getListaAniosEscuela());
+		map.put("dependencias", Dependencia.getListaDependencias());
+		map.put("ciclos", cicloSrv.obtenerCiclosConvocatoriaDesde(ciclo2009));
+		map.put("ciclos2", cicloSrv.obtenerCiclosConvocatoriaDesde(ciclo2000));
+		map.put("fasesTrabajo", FaseProyecto.getFaseProyecto());
+		map.put("turnos", Turno.getListaTurnos());
+		map.put("espaciosApoyo", EspacioApoyo.getEspacioApoyo());
+		map.put("urlRegreso", urlRegreso);
+		
+		return forward("/escuela/altaEscuelaView", map);
+	}
+	
+	/**
+	 * Registrar escuela.
+	 *
+	 * @param escuela the escuela
+	 * @return the model and view
+	 * @since 18-nov-2010
+	 * @author cfigueroa
+	 */
+	@RequestMapping("/escuela/altaEscuela")
+	public ModelAndView altaEscuela(
+			@ModelAttribute("escuela") Escuela escuela,
+			@RequestParam("idEstadoEscuela") Integer idEstadoEscuela,
+			@RequestParam("idPrograma") Integer idPrograma,
+			@RequestParam("idModalidad") Integer idModalidad,
+			@RequestParam(required=false,value="idModalidadTrabajoEscuela") Integer idModalidadTrabajoEscuela,
+			@RequestParam("idNivelAtiendeEscuela") Integer idNivelAtiendeEscuela,
+			@RequestParam("idCantidadDeAnios") Integer idCantidadDeAnios,
+			@RequestParam("idDependencia") Integer idDependencia,
+			@RequestParam(required=false,value="idComProy") Integer idComproy,
+			@RequestParam(required=false,value="idComPBE") Integer idComPBE,
+			@RequestParam(required=false,value="idFase") Integer idFase,
+			@RequestParam(required=false,value="urlRegreso") String urlRegreso
+		){
+		map = new HashMap<String, Object>();
+		escuela.setActivo(true);
+		escuela.setEstadoEscuela(EstadoEscuela.getEstados(idEstadoEscuela));
+		escuela.setPrograma(Programa.getPrograma(idPrograma));
+		escuela.setModalidad(Modalidad.getModalidad(idModalidad));
+		if(idModalidadTrabajoEscuela != null)
+			escuela.setModalidadTrabajoEscuela(ModalidadTrabajoEscuela.getModalidadEscuela(idModalidadTrabajoEscuela));
+		escuela.setNivelAtiendeEscuela(NivelEscuela.getNivelEscuela(idNivelAtiendeEscuela));
+		escuela.setCantidadDeAnios(AniosEscuela.getAniosEscuela(idCantidadDeAnios));
+		escuela.setDependencia(Dependencia.getDependencia(idDependencia));
+		escuela.setLocalidad(localidadService.obtenerLocalidad(escuela.getLocalidad().getId()));
+		escuela.setZonaCimientos(zonaService.obtenerZonaCimientos(escuela.getZonaCimientos().getId()));
+		escuela.setProvincia(provinciaService.obtenerPorId(escuela.getProvincia().getId()));
+		if(idFase != null)
+			escuela.setFaseProyecto(FaseProyecto.getFaseProyecto(idFase));
+		if(idComproy != null)
+			escuela.setComienzoProyecto(cicloSrv.obtenerCiclo(idComproy));
+		if(idComPBE != null)
+			escuela.setComienzoPBE(cicloSrv.obtenerCiclo(idComPBE));
+		if(escuela.getId() != null)
+			map.put("mensaje", "Se modificaron los datos de la escuela:  " + escuela.getNombre());
+		else
+			map.put("mensaje", "Se dio de alta la escuela:  " + escuela.getNombre());
+		registrarEscuelasBecasSrv.guardarEscuela(escuela);
+		//Esto es para tener un registro 
+		registrarEscuelasBecasSrv.guardarEscuelaSeleccion(escuela);
+		
+		map.put("listaEscuelas", registrarEscuelasBecasSrv.obtenerTodasEscuelas());
+		
+		if(urlRegreso != null && StringUtils.isNotBlank(urlRegreso))
+			return new ModelAndView("redirect:" + urlRegreso);	
+		else			
+			return forward("/escuela/listaEscuelas", map);
+	}
+	
+	/**
+	 * Listas escuelas candidatas.
+	 *
+	 * @return the model and view
+	 * @since 18-nov-2010
+	 * @author cfigueroa
+	 */
+	
+	@RequestMapping("/escuela/listaEscuelas")
+	public ModelAndView listasEscuelasCandidatas(){ 
+		map = new HashMap<String, Object>(); 
+		
+		List<Escuela> list = registrarEscuelasBecasSrv.obtenerTodasEscuelas();
+		map.put("listaEscuelas", list);
+
+		return forward("/escuela/listaEscuelas", map);
+	}
+	
+	/**
+	 * View seleccion escuelas.
+	 *
+	 * @return the model and view
+	 * @since 18-nov-2010
+	 * @author cfigueroa
+	 */
+	@RequestMapping("/escuela/viewSeleccionEscuelasBecas")
+	public ModelAndView viewSeleccionEscuelas(){ 
+		map = new HashMap<String, Object>(); 
+			
+		List<Escuela> list = registrarEscuelasBecasSrv.obtenerTodasEscuelas();
+		map.put("listaEscuelas", list);
+		map.put("listaEstadoEscuela", EstadoEscuela.getListaEstadoEscuelas());
+		return forward("/escuela/asignacionEscuelasBecas", map);
+	}
+	
+	/**
+	 * Guardar seleccion escuelas.
+	 *
+	 * @param idsEscuelas the ids escuelas
+	 * @return the model and view
+	 * @since 18-nov-2010
+	 * @author cfigueroa
+	 */
+	@RequestMapping("/escuela/guardarSeleccionEscuelas")
+	public ModelAndView guardarSeleccionEscuelas(@RequestParam("ids") String idsEscuelas ){
+		map = new HashMap<String, Object>();
+
+		String[] arrayIds = StringUtils.split(idsEscuelas, ";");
+		StringBuffer buffer = new StringBuffer();
+		for (int i = 0; i < arrayIds.length; i++) {
+		  String[] valuesArray = StringUtils.split(arrayIds[i],"-");
+		  EstadoEscuela estadoEscuela = EstadoEscuela.getEstados(Integer.parseInt(valuesArray[0]));  
+		  Escuela escuela = registrarEscuelasBecasSrv.obtenerEscuelaPorId(Long.parseLong(valuesArray[1]));
+		  escuela.setEstadoEscuela(estadoEscuela);
+		  registrarEscuelasBecasSrv.guardarEscuela(escuela);
+		  buffer.append(" ");
+		  buffer.append(escuela.getNombre());
+		}
+		map.put("mensaje", "Se guardaron los cambios ");
+		map.put("listaEscuelas", registrarEscuelasBecasSrv.obtenerTodasEscuelas());
+
+		map.put("listaEstadoEscuela", EstadoEscuela.getListaEstadoEscuelas());
+		return  forward("/escuela/asignacionEscuelasBecas", map); 
+	}
+	
+	
+	/**
+	 * Modificar escuela.
+	 *
+	 * @param req the req
+	 * @param user the user
+	 * @param idEscuela the id escuela
+	 * @return the model and view
+	 * @since 06-dic-2010
+	 * @author cfigueroa
+	 */
+	@RequestMapping("/escuela/modificarEscuela")
+	public ModelAndView modificarEscuela(@RequestParam("idEscuela")Long idEscuela){
+		map = new HashMap<String, Object>();
+
+		map.put("escuela", registrarEscuelasBecasSrv.obtenerEscuelaPorId(idEscuela));
+		map.put("listLocalidades", registrarEscuelasBecasSrv.obtenerLocalidades());
+		map.put("listProvincias", registrarEscuelasBecasSrv.obtenerProvincias());
+
+		return forward("/escuela/registrarEscuela", map);
+	}
+	
+	@RequestMapping("/escuela/mostrarImagen.do")
+	public void mostrarFirma(HttpServletResponse response) {		
+		response.setContentType("image/jpeg");
+		OutputStream output = null;
+		FileInputStream input = null;
+		File file = new File(getProps().getProperty(ConstantesInformes.pathImagen) + ConstantesInformes.imagenEscuela  + ConstantesInformes.extensionImagen);		
+		try {
+			output = response.getOutputStream();
+			input = new FileInputStream(file);
+			byte[] buffer = new byte[(int) file.length()];
+			input.read(buffer);
+			response.setContentLength(buffer.length);
+			output.write(buffer);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				input.close();
+				output.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	@InitBinder
+	public void initBinder(HttpServletRequest request,WebDataBinder binder) {
+		
+		// Fase Proyecto binding
+	    binder.registerCustomEditor(FaseProyecto.class, new PropertyEditorSupport() {
+	        @Override
+	        public void setAsText(String text) {
+	            int id = Integer.parseInt(text);
+	            FaseProyecto valor = FaseProyecto.getFaseProyecto(id);
+	            setValue(valor);
+	        }
+	    });
+	    
+	    // Espacio apoyo binding
+	    binder.registerCustomEditor(EspacioApoyo.class, new PropertyEditorSupport() {
+	        @Override
+	        public void setAsText(String text) {
+	            int id = Integer.parseInt(text);
+	            EspacioApoyo valor = EspacioApoyo.getEspacioApoyo(id);
+	            setValue(valor);
+	        }
+	    });
+	    
+	    // Turnos binding
+	    binder.registerCustomEditor(Turno.class, new PropertyEditorSupport() {
+	        @Override
+	        public void setAsText(String text) {
+	            int id = Integer.parseInt(text);
+	            Turno valor = Turno.getTurnos(id);
+	            setValue(valor);
+	        }
+	    });
+	}
+}

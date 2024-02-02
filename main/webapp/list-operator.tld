@@ -1,0 +1,44 @@
+<!-- DMS 1/10/22 comente este encabezado y agregue los parametros a taglib y desaparecio el error. Lo saque de aca:
+https://stackoverflow.com/questions/6134139/jsp-custom-tags-missing-dtd-xml-schema
+
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN" 
+"http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+-->
+<!-- a tag library descriptor -->
+
+
+ 
+<taglib  xsi:schemaLocation="
+            http://java.sun.com/xml/ns/javaee 
+            http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_1_2.xsd"
+        xmlns="http://java.sun.com/xml/ns/javaee" 
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        version="1.2">
+        
+        
+    <tlib-version>1.2</tlib-version>
+    <jsp-version>2.2</jsp-version>
+    <short-name>list-operator</short-name>
+    <description>List operators Tag library</description>
+    
+    <function>
+        <name>contiene</name>
+        <function-class>com.softtek.framework.web.ListOperatorTag</function-class>
+        <function-signature>boolean contiene(java.util.List, java.lang.Object)</function-signature>
+    </function>
+
+    <function>
+        <name>contieneInt</name>
+        <function-class>com.softtek.framework.web.ListOperatorTag</function-class>
+        <function-signature>boolean contieneInt(java.util.List, java.lang.Integer)</function-signature>
+    </function>
+
+    <function>
+        <name>contieneLong</name>
+        <function-class>com.softtek.framework.web.ListOperatorTag</function-class>
+        <function-signature>boolean contieneLong(java.util.List, java.lang.Long)</function-signature>
+    </function>
+
+</taglib>
+

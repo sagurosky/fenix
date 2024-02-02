@@ -1,0 +1,236 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" href="<c:url value="/static/css/demos.css"/>" media="all" />
+<title>..:: Modificar Padrino ::..</title>
+<script type="text/javascript"
+	src="<c:url  value="/static/js/jquery.validate.js"/>"></script>
+<script type="text/javascript"
+	src="<c:url  value="/static/js/validador.js"/>"></script>
+	<style type="text/css">
+	label { width: 10em; float: left; }
+	label.error { float: none; color: red; padding-left: .5em; vertical-align: top; }
+	p { clear: both; }
+	.submit { margin-left: 12em; }
+	em { font-weight: bold; padding-right: 1em; vertical-align: top; }
+	</style>
+  <script>
+  $(document).ready(function(){
+    
+	$("#form1").validate();
+    
+	$("#fechaAlta").datepicker({
+  		changeMonth: true,
+  		changeYear: true
+  	});
+    
+	$("#fechaAlta2").datepicker({
+    	changeMonth: true,
+    	changeYear: true
+    });
+  
+  });
+  </script>
+ <script>
+$(function() {
+	  $("#cuit_cuil").blur(function(evt) {
+	    evt.preventDefault()   // make sure the hyperlink doesn't work per se
+	    if($("#tipoP").val() == 1){ //es una empresa
+		    $.ajax( {
+		      type: "GET",
+		      url: "../ajax/validarCuitEmpresa.do",
+		      data: { cuit_cuil: $("#cuit_cuil").val() },
+		      dataType: "json",
+		      success: function(data) {
+		        if(!(data.existeEmpresa)){
+		        	url = "../empresa/altaEmpresaView.do?popup=true&cuit="+document.getElementById("cuit_cuil").value;
+		    		window.showModalDialog(url, '_blank','width=600, height=400 ,scrollbars=YES');
+		        	return false;
+		        }
+		      }
+		    } )
+	    }else if($("#tipoP").val() == 2){ // es una persona
+		    $.ajax( {
+			      type: "GET",
+			      url: "../ajax/validarCuilPersona.do",
+			      data: { cuit_cuil: $("#cuit_cuil").val() },
+			      dataType: "json",
+			      success: function(data) {
+			        if(!(data.existePersona)){
+			        	url = "../persona/registrarPersonaView.do?popup=true&cuil="+document.getElementById("cuit_cuil").value;
+			    		window.showModalDialog(url, '_blank','width=600, height=400 ,scrollbars=YES, modal=YES');
+			        	return false;
+			        }
+			      }
+			    } )
+	    }   
+	  })
+	})
+
+</script>  
+<script type="text/javascript">
+function verificarCuil(){
+	if($("#SexoM").attr("checked")){
+		generarCuil("false");
+	}
+	if($("#SexoF").attr("checked")){
+		generarCuil("true");
+	}
+}
+
+var digito;
+
+function generarCuil(valueRadio){
+	var cuil;//Esto se tieenq que cargar con el cuil generado
+	var xy;
+	value = $('#dni').val();
+	
+	if(valueRadio == "false"){ //Masculino			
+		cuil = value;
+		xy = 20;
+		cuil = calcular( xy, cuil);
+	}else{
+		if(valueRadio == "true"){							//fememino
+			cuil = value;
+			xy = 27;
+			cuil = calcular( xy, cuil );
+		}
+	}
+	
+	if(isNaN( digito ) ){
+		$('#cuit_cuil').val(" ");
+	}
+	else{
+		$('#cuit_cuil').val(cuil);
+	}
+				
+}
+
+
+function formatear(xy, cuil, digito) {
+	return (xy + "-" + cuil + "-" + digito);		
+}
+	
+</script>
+</head>
+<body>
+<div id="main-content">
+
+<form:form modelAttribute="padrino" commandName="padrino" class="cmxform" id="form1" action="modificarCorp.do" method="post">
+<form:hidden path="id"/>
+<div id="right-content">
+    <h1>Modificar Padrino</h1>
+	<br></br>
+	<fieldset>
+		<legend>Datos de Padrino</legend>
+		    <table width="90" border="0" align="left" cellpadding="0" cellspacing="0" id="table-forms">
+			    <tr>
+				    <td width="150">Tipo</td>
+			        <td width="600">
+			        	<input type="text" class="text-input" name="tipoPadrino" value="${padrino.tipo.valor}" readonly="readonly"/></td>
+			        	<!--  
+			        	<label id="tipo"><b>${padrino.tipo.valor}</b></label>
+			        	<select name="tipoId" id="tipoP"  class="text-input required">
+			         		<option value="">Seleccione un tipo</option>
+							<c:forEach var="tipo" items="${tipos}">
+							<c:if test="${tipo.id == padrino.tipo.id}">
+								<option selected="selected" value="${padrino.tipo.id}">${padrino.tipo.valor}</option>
+							</c:if>
+							<c:if test="${tipo.id != padrino.tipo.id}">
+								<option value="${tipo.id}">${tipo.valor}</option>
+							</c:if>
+							</c:forEach>
+						</select> -->
+			        </td>
+		      	</tr>
+				<tr>
+			        <td>CUIT/CUIL</td>
+			        <td><input type="text" id="cuit_cuil" class="text-input" name="empresa.CUIT" maxlength="11" class="digits required" value="${CUIT}"/></td>
+			    </tr>
+				<tr>
+			        <td>Fecha de modificaci&oacute;n</td>
+			        <td><input name="fechaAltaStr" id="fechaAlta" class="text-input" value="<fmt:formatDate value="${padrino.fechaAlta}" pattern="dd/MM/yyyy"/>" /> dd/mm/aaaa</td>
+			    </tr>
+				<tr>
+					<td>Nº Ctes Plataforma Contable</td>
+					<td><input type="text" value="${padrino.nroCtesPlataformaContable}" class="digits text-input" name="nroCtesPlataformaContable"/></td>
+				</tr>
+				<tr>
+					<td>Recibe informes masivos</td>
+					<td><form:checkbox path="recibeInformesMasivos"/></td>
+				</tr>
+			</table>
+	</fieldset>
+	
+	<fieldset>
+		<legend>Datos Empresa</legend>
+			<input type="hidden" name="empresa.id" value="${padrino.empresa.id}">
+			
+	<table width="90" border="0" align="left" cellpadding="0" cellspacing="0" id="table-forms">
+    	<tr>
+    	<td width="120">Denominaci&oacute;n (*)</td>
+	     <td width="669"><input type="text" name="empresa.denominacion" id="denominacion" class="text-input required" value="${padrino.empresa.denominacion}" /></td>
+	    </tr>
+	    <tr>
+        <td>Contacto (*)</td>
+        <td><input type="text" name="empresa.contacto1" id="contacto1" class="text-input required" value="${padrino.empresa.contacto1}"/></td>
+	    </tr>
+	   	<tr>
+			<td colspan="2">
+				<label style="width:980px;font-size:10px;"><b>Recuerda que como destinatario del mail saldrá todo lo que esté antes de la primera coma (,)</b></label>
+				
+			</td>
+		</tr>
+	   	<tr>
+			<td colspan="2">
+				
+				<label style="width:980px;font-size:10px;"><b>NO incluir punto y coma en el campo Contacto, ya que el destinatario llegará vacío</b></label>
+			</td>
+		</tr>
+   		<tr>
+        <td>Mail de contacto (*)</td>
+        <td><input name="empresa.mailContacto1" id="mailContacto1" class="text-input required" value="${padrino.empresa.mailContacto1}" /></td>
+	    </tr>
+	    <tr>
+			<td colspan="2">
+				<label style="width:980px;font-size:10px;"><b>Recuerda que las direcciones de mail deben separarse con punto y coma (;)</b></label>
+			</td>
+		</tr>
+		<tr>
+        <td>Fecha de alta</td>
+        <td><input id="fechaAlta2" name="fechaAlta2" class="text-input date required" value="<fmt:formatDate value="${padrino.empresa.fechaAlta}" pattern="dd/MM/yyyy"/>" /> dd/mm/aaaa</td>
+	    </tr>		
+	</table>
+	</fieldset>
+
+			<table>
+		      	<tr>
+		        	<td>&nbsp;</td>
+		     		<td>&nbsp;</td>
+		      	</tr>
+		      	<tr>
+		        	<td colspan="2">
+			        	<table width="800" border="0" align="right" cellpadding="0" cellspacing="0" id="table-botons-small">
+				          	<tr>
+				            	<td width="50" height="0" align="center" valign="middle">
+									<input type="hidden" value="${padrino.id}" name="idPadrino"/>
+									<input class="ui-state-default ui-corner-all "  type="submit" value="Modificar" />
+								<td width="50" align="center" valign="middle"><input type="button" value="Volver" class="ui-state-default ui-corner-all"	onclick="location.href='../perfilPadrino/listaPadrinosView.do'; return false;" /></td>
+				            	<td width="292" height="30" align="center" valign="middle">&nbsp;</td>
+			        		</tr>
+					 	</table>   
+					</td>		 	
+				</tr>	
+			</table>			 	   	
+</div>
+</form:form>
+</div>
+</body>
+</html>

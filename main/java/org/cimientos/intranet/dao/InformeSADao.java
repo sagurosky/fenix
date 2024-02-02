@@ -1,0 +1,8 @@
+package org.cimientos.intranet.dao;
+
+import org.cimientos.intranet.dao.base.Dao;
+import org.cimientos.intranet.modelo.pbe.evento.entrevistas.InformeSA;
+
+public interface InformeSADao extends Dao<InformeSA> {
+
+}

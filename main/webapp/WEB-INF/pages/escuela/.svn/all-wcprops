@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/fenix/!svn/ver/298/src/main/webapp/WEB-INF/pages/escuela
+END
+altaEscuelaView.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/fenix/!svn/ver/331/src/main/webapp/WEB-INF/pages/escuela/altaEscuelaView.jsp
+END
+listaEscuelas.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/fenix/!svn/ver/390/src/main/webapp/WEB-INF/pages/escuela/listaEscuelas.jsp
+END
+registrarEscuela.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/escuela/registrarEscuela.jsp
+END
+asignacionEscuelasBecas.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/escuela/asignacionEscuelasBecas.jsp
+END
+datosFormalesEscuelaContacto.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/escuela/datosFormalesEscuelaContacto.jsp
+END
+altaEscuela.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/escuela/altaEscuela.jsp
+END
+datosGeneralesIntervencion.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/escuela/datosGeneralesIntervencion.jsp
+END
+contenedorAltaEscuela.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/escuela/contenedorAltaEscuela.jsp
+END

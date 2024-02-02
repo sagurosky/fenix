@@ -1,0 +1,203 @@
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/fenix/!svn/ver/224/src/main/java/com/cimientos/intranet/enumerativos/entrevista
+END
+CompromisoPBE.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/entrevista/CompromisoPBE.java
+END
+MotivoSuspension.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/fenix/!svn/ver/314/src/main/java/com/cimientos/intranet/enumerativos/entrevista/MotivoSuspension.java
+END
+FormaEntrevista.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/entrevista/FormaEntrevista.java
+END
+GustosTiempoLibre.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/fenix/!svn/ver/123/src/main/java/com/cimientos/intranet/enumerativos/entrevista/GustosTiempoLibre.java
+END
+EstrategiaComplementaria.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/entrevista/EstrategiaComplementaria.java
+END
+PropositoAnioComienza.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/fenix/!svn/ver/409/src/main/java/com/cimientos/intranet/enumerativos/entrevista/PropositoAnioComienza.java
+END
+EvaluacionIncorporacion.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/fenix/!svn/ver/171/src/main/java/com/cimientos/intranet/enumerativos/entrevista/EvaluacionIncorporacion.java
+END
+EvaluacionCobroBeca.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/fenix/!svn/ver/171/src/main/java/com/cimientos/intranet/enumerativos/entrevista/EvaluacionCobroBeca.java
+END
+SiNoReveer.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/entrevista/SiNoReveer.java
+END
+EvaluacionRenovacionFinal.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/fenix/!svn/ver/409/src/main/java/com/cimientos/intranet/enumerativos/entrevista/EvaluacionRenovacionFinal.java
+END
+TipoEntrevista.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/fenix/!svn/ver/171/src/main/java/com/cimientos/intranet/enumerativos/entrevista/TipoEntrevista.java
+END
+MotivoAusencia.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/entrevista/MotivoAusencia.java
+END
+MotivoEnvioTS.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/entrevista/MotivoEnvioTS.java
+END
+EntrevistaGrupalDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/fenix/!svn/ver/381/src/main/java/com/cimientos/intranet/enumerativos/entrevista/EntrevistaGrupalDTO.java
+END
+EntrevistaReprogramada.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/fenix/!svn/ver/154/src/main/java/com/cimientos/intranet/enumerativos/entrevista/EntrevistaReprogramada.java
+END
+EvaluacionRenovacionMergeada.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/fenix/!svn/ver/409/src/main/java/com/cimientos/intranet/enumerativos/entrevista/EvaluacionRenovacionMergeada.java
+END
+EstadoEntrevista.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/fenix/!svn/ver/171/src/main/java/com/cimientos/intranet/enumerativos/entrevista/EstadoEntrevista.java
+END
+MotivoNoRenovacion.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/fenix/!svn/ver/409/src/main/java/com/cimientos/intranet/enumerativos/entrevista/MotivoNoRenovacion.java
+END
+MotivoIncorporacionPendiente.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/fenix/!svn/ver/171/src/main/java/com/cimientos/intranet/enumerativos/entrevista/MotivoIncorporacionPendiente.java
+END
+Opciones.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/entrevista/Opciones.java
+END
+SituacionCrisis.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/entrevista/SituacionCrisis.java
+END
+MateriaBoletinSeleccion.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/fenix/!svn/ver/88/src/main/java/com/cimientos/intranet/enumerativos/entrevista/MateriaBoletinSeleccion.java
+END
+MotivoRechazo.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/entrevista/MotivoRechazo.java
+END
+ContenidosAbordados.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/fenix/!svn/ver/409/src/main/java/com/cimientos/intranet/enumerativos/entrevista/ContenidosAbordados.java
+END
+MotivoPendiente.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/fenix/!svn/ver/171/src/main/java/com/cimientos/intranet/enumerativos/entrevista/MotivoPendiente.java
+END
+MotivoCesacion.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/fenix/!svn/ver/409/src/main/java/com/cimientos/intranet/enumerativos/entrevista/MotivoCesacion.java
+END
+Compromiso.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/entrevista/Compromiso.java
+END
+motivoNoIncorporacion.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/fenix/!svn/ver/409/src/main/java/com/cimientos/intranet/enumerativos/entrevista/motivoNoIncorporacion.java
+END
+TipoContacto.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/entrevista/TipoContacto.java
+END
+RelacionVivienda.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/entrevista/RelacionVivienda.java
+END
+Entrevistador.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/entrevista/Entrevistador.java
+END
+DetalleGastos.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/fenix/!svn/ver/314/src/main/java/com/cimientos/intranet/enumerativos/entrevista/DetalleGastos.java
+END
+EventoGenericoDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/fenix/!svn/ver/381/src/main/java/com/cimientos/intranet/enumerativos/entrevista/EventoGenericoDTO.java
+END

@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/fenix/!svn/ver/36/src/main/webapp/WEB-INF/pages/ciclo
+END
+cierreCiclos.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/ciclo/cierreCiclos.jsp
+END
+modificarView.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/fenix/!svn/ver/36/src/main/webapp/WEB-INF/pages/ciclo/modificarView.jsp
+END
+registrarView.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/ciclo/registrarView.jsp
+END
+listaCiclos.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/fenix/!svn/ver/345/src/main/webapp/WEB-INF/pages/ciclo/listaCiclos.jsp
+END

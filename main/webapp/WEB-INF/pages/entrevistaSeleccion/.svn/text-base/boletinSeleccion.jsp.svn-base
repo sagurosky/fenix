@@ -1,0 +1,73 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    	 pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
+<script>
+function chequearDigitos(obj){
+	if (obj.value != '1' && obj.value != '2' && obj.value != '3' && obj.value != '4' && obj.value != '5' && obj.value != '6'
+		&& obj.value != '7' && obj.value != '8' && obj.value != '9' && obj.value != '10') {
+		obj.value = '';
+	}
+}
+</script>
+
+<table>
+			<thead>
+				<tr>
+					<th>Materias</th>
+					<th>1º Trim</th>
+					<th>2º Trim</th>
+					<th>3º Trim</th>
+					<th>Final</th>
+					<th>Diciembre</th>
+					<th>Marzo</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:choose>
+					<c:when test="${empty entrevistaSeleccionDTO.entrevistaSeleccion.boletinSeleccions }">
+						<c:forEach items="${listMaterias}" var="materia">
+							<tr>
+								<!-- cambiar a materia.nombre -->
+								<td><input type="hidden" name="idMateria" value="${materia.id}">${materia.nombre} </td>
+								<td><input type="text" name="notaPrimTrim" class="digits" size="10" maxlength="2" onchange="chequearDigitos(this);"></td>
+								<td><input type="text" name="notaSegTrim" class="digits" size="10" maxlength="2" onchange="chequearDigitos(this);"></td>
+								<td><input type="text" name="notaTerTrim" class="digits" size="10" maxlength="2" onchange="chequearDigitos(this);"></td>
+								<td><input type="text" name="notaFinal" class="digits"  size="10" maxlength="2" onchange="chequearDigitos(this);"></td>
+								<td><input type="text" name="notaDiciembre" class="digits" size="10" maxlength="2" onchange="chequearDigitos(this);"></td>
+								<td><input type="text" name="notaMarzo" class="digits" size="10" maxlength="2" onchange="chequearDigitos(this);"></td>
+							</tr>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<c:forEach items="${entrevistaSeleccionDTO.entrevistaSeleccion.boletinSeleccions }" var="boletin">
+							<tr>
+								<td>
+									<input type="hidden" name="idMateria" value="${boletin.materia.id}">${boletin.materia.nombre}
+									<input type="hidden" name="idBoletinSeleccions" value="${boletin.id}"> 
+								</td>
+								<td><input type="text" name="notaPrimTrim" class="digits" value="${boletin.notaPrimTrim}" size="10" maxlength="2" onchange="chequearDigitos(this);"></td>
+								<td><input type="text" name="notaSegTrim" class="digits" value="${boletin.notaSegTrim}" size="10" maxlength="2" onchange="chequearDigitos(this);"></td>
+								<td><input type="text" name="notaTerTrim" class="digits" value="${boletin.notaTerTrim}" size="10" maxlength="2" onchange="chequearDigitos(this);"></td>
+								<td><input type="text" name="notaFinal" class="digits" value="${boletin.notaFinal}" size="10" maxlength="2" onchange="chequearDigitos(this);"></td>
+								<td><input type="text" name="notaDiciembre" class="digits" value="${boletin.notaDiciembre}" size="10" maxlength="2" onchange="chequearDigitos(this);"></td>
+								<td><input type="text" name="notaMarzo" class="digits" value="${boletin.notaMarzo}" size="10" maxlength="2" onchange="chequearDigitos(this);"></td>
+							</tr>
+						</c:forEach>	
+					</c:otherwise>
+				</c:choose>
+		   </tbody>
+</table>
+<br></br>
+<table>
+	<tr>
+		<td valign="top">
+			<p><label>Observaciones materias</label>
+				<form:textarea path="entrevistaSeleccion.observacionesMaterias" rows="3" cols="40" id="observacionesMaterias" onblur="chequearLongitud(this);" onkeypress="chequearLongitud(this);"/>
+			</p>
+		</td>
+	</tr>	
+</table>

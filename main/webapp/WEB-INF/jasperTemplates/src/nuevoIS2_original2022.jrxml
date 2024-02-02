@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="nuevoIS2" pageWidth="700" pageHeight="1300" columnWidth="660" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="42"/>
+	<property name="ireport.y" value="512"/>
+	<style name="table" isDefault="false">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" isDefault="false" mode="Opaque" backcolor="#C3D9D1">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" isDefault="false" mode="Opaque" backcolor="#E6FFF6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" isDefault="false" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1"/>
+	<subDataset name="dataset1"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{SUBREPORT_DIR}]]></defaultValueExpression>
+	</parameter>
+	<field name="imagenCiclo" class="java.lang.String"/>
+	<field name="foto" class="java.lang.String"/>
+	<field name="cicloLectivo" class="java.lang.String"/>
+	<field name="alumno" class="java.lang.String"/>
+	<field name="edad" class="java.lang.String"/>
+	<field name="fechaNacimiento" class="java.lang.String"/>
+	<field name="anio" class="java.lang.String"/>
+	<field name="localidad" class="java.lang.String"/>
+	<field name="responsable" class="java.lang.String"/>
+	<field name="relacion" class="java.lang.String"/>
+	<field name="pathImg" class="java.lang.String"/>
+	<field name="titulo" class="java.lang.String"/>
+	<field name="nombreEscuela" class="java.lang.String"/>
+	<field name="cantidadBecados" class="java.lang.String"/>
+	<field name="fechaPBE" class="java.lang.String"/>
+	<field name="implementacionPrograma" class="java.lang.String"/>
+	<field name="matriculaTotal" class="java.lang.String"/>
+	<field name="porcentajeInasistencia" class="java.lang.String"/>
+	<field name="textoEscuela" class="java.lang.String"/>
+	<field name="modalidadTrabajoEscuela" class="java.lang.String"/>
+	<field name="pathImgEscuela" class="java.lang.String"/>
+	<field name="materiasDesaprobadas" class="java.lang.String"/>
+	<field name="inasistencias" class="java.lang.String"/>
+	<field name="actividadAcompanamiento" class="java.lang.String"/>
+	<field name="mensajePadrino" class="java.lang.String"/>
+	<field name="primerMateriaInteres" class="java.lang.String"/>
+	<field name="segundaMateriaInteres" class="java.lang.String"/>
+	<field name="tercerMateriaInteres" class="java.lang.String"/>
+	<field name="primerMateriaCuesta" class="java.lang.String"/>
+	<field name="segundaMateriaCuesta" class="java.lang.String"/>
+	<field name="tercerMateriaCuesta" class="java.lang.String"/>
+	<field name="fechaReincorporacionPBE" class="java.lang.String"/>
+	<field name="anioEgreso" class="java.lang.String"/>
+	<field name="eae" class="java.lang.String"/>
+	<field name="hsTrabajarAño" class="java.lang.String"/>
+	<field name="sarpepe" class="java.lang.String"/>
+	<field name="qtam" class="java.lang.String"/>
+	<field name="osme" class="java.lang.String"/>
+	<field name="materias" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<field name="previas" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<field name="inasistenciasPrimerTrimestre" class="java.lang.String"/>
+	<field name="incluirBoletin" class="java.lang.String"/>
+	<field name="tarang" class="java.lang.String"/>
+	<field name="paa" class="java.lang.String"/>
+	<field name="vtepa" class="java.lang.String"/>
+	<field name="vtepb" class="java.lang.String"/>
+	<field name="vtepc" class="java.lang.String"/>
+	<field name="vtepd" class="java.lang.String"/>
+	<field name="vtepe" class="java.lang.String"/>
+	<field name="vtepf" class="java.lang.String"/>
+	<field name="vtepg" class="java.lang.String"/>
+	<field name="vteph" class="java.lang.String"/>
+	<field name="vtepi" class="java.lang.String"/>
+	<field name="ige" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="1260" splitType="Stretch">
+			<image scaleImage="RetainShape">
+				<reportElement x="0" y="1" width="645" height="960"/>
+				<imageExpression class="java.lang.String"><![CDATA[$F{titulo}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement style="table" x="0" y="122" width="643" height="18" forecolor="#9B1759"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Berlin Sans FB" size="16" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{alumno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="145" width="218" height="18"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Berlin Sans FB" size="9" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Fecha de Nacimiento: " + $F{fechaNacimiento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="163" width="218" height="18"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Berlin Sans FB" size="9" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Edad: " + $F{edad} + " años"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="181" width="218" height="18"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Berlin Sans FB" size="9" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Localidad: " + $F{localidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="199" width="218" height="18"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Berlin Sans FB" size="9" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Año escolar: " + $F{anio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="217" width="218" height="18"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Berlin Sans FB" size="9" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Responsable Adulto: " + $F{responsable}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="235" width="218" height="18">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{relacion}!= null)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Berlin Sans FB" size="9" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Vínculo: " + $F{relacion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="291" width="250" height="20" forecolor="#9B1759"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Berlin Sans FB" size="14" isBold="true" isItalic="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[INFORMACIÓN ESCOLAR]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="1" y="253" width="218" height="18">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{fechaPBE}!= null)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Berlin Sans FB" size="9" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Fecha de incorporación al Programa: " + $F{fechaPBE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="311" width="641" height="20">
+					<printWhenExpression><![CDATA[Boolean.valueOf($F{nombreEscuela}!= null)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Berlin Sans FB" size="9" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Nombre: " + $F{nombreEscuela}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="331" width="641" height="20">
+					<printWhenExpression><![CDATA[Boolean.valueOf(!$F{modalidadTrabajoEscuela}.equals("Contacto Telefónico") && $F{implementacionPrograma}!= null)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Berlin Sans FB" size="9" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["El Programa se implementa desde: " + $F{implementacionPrograma}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="352" width="642" height="20">
+					<printWhenExpression><![CDATA[Boolean.valueOf(!$F{modalidadTrabajoEscuela}.equals("Contacto Telefónico") && $F{cantidadBecados}!= null)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Berlin Sans FB" size="9" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Becados por Cimientos: " + $F{cantidadBecados}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="271" width="218" height="18"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Berlin Sans FB" size="9" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Año estimado de egreso " + $F{anioEgreso}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="FillFrame">
+				<reportElement x="498" y="143" width="144" height="144"/>
+				<graphicElement>
+					<pen lineWidth="5.0" lineStyle="Solid" lineColor="#DDDDDD"/>
+				</graphicElement>
+				<imageExpression class="java.lang.String"><![CDATA[$F{foto}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="1" y="362" width="641" height="20" forecolor="#9B1759"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Berlin Sans FB" size="14" isBold="true" isItalic="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[TRABAJO DE ACOMPAÑAMIENTO REALIZADO A NIVEL GRUPAL]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="1" y="384" width="641" height="14" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Berlin Sans FB" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tarang}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="589" width="641" height="20" forecolor="#9B1759"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Berlin Sans FB" size="14" isBold="true" isItalic="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[PROPÓSITO ANUAL DE ACOMPAÑAMIETO]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="2" y="611" width="641" height="29" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Berlin Sans FB" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{paa}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="405" width="641" height="20" forecolor="#9B1759"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Berlin Sans FB" size="14" isBold="true" isItalic="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[VALORACION DE LA TRAYECTORIA ESCOLAR Y EN EL PROGRAMA DE EL/LA ESTUDIANTE]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="1" y="425" width="641" height="16" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Berlin Sans FB" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Asistencia a la modalidad de cursada definida por la escuela (virtual y/o presencial): " + $F{vtepa}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="1" y="442" width="641" height="16" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Berlin Sans FB" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Cumplimiento con las tareas asignadas por la escuela: " + $F{vtepb}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="1" y="459" width="641" height="16" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Berlin Sans FB" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Pone en juego estrategias para resolver dificultades escolares: " + $F{vtepc}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="1" y="477" width="641" height="16" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Berlin Sans FB" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Compromiso activo para rendir materias pendientes: " + $F{vtepd}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="1" y="494" width="641" height="16" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Berlin Sans FB" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Rendimiento escolar en esta etapa del año: " + $F{vtepe}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="1" y="511" width="641" height="16" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Berlin Sans FB" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Asistencia y participacion en las actividades propuestas en los encuentros de acompañamiento de Cimientos: " + $F{vtepf}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="1" y="527" width="641" height="16" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Berlin Sans FB" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Aprobación de las habilidadeds socioemocionales trabajadas en el acompañamieto: " + $F{vtepg}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="1" y="546" width="641" height="16" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Berlin Sans FB" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Compromiso para el cumplimiento de los propósitos establecidos en el acompañamiento: " + $F{vteph}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="1" y="565" width="641" height="16" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Berlin Sans FB" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Asistencias y participación del Responsable Adulto en los espacioes de acompañamiento: " + $F{vtepi}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="646" width="641" height="20" forecolor="#9B1759"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Berlin Sans FB" size="14" isBold="true" isItalic="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[INFORMACIÓN GENERAL DE LA ESCUELA]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="1" y="667" width="641" height="29" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Berlin Sans FB" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ige}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="18"/>
+	</detail>
+</jasperReport>

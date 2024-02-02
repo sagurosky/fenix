@@ -1,0 +1,120 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<table id="table-informe">
+
+	<tr>		
+		<td nowrap="nowrap" ><label>Situacion Escolar Diciembre</label></td>
+		<td>
+			${entrevista.situacionEscolarDiciembre.valor}				
+		</td>
+	</tr>
+	<tr>		
+		<td nowrap="nowrap"><label>Situacion Renovación  Diciembre</label></td>
+		<td>
+			${entrevista.evaluacionRenovacionFinal.valor}		
+		</td>
+	</tr>
+	<tr>
+	   <td nowrap="nowrap" ><label>Situacion Escolar *</label></td>
+        <td>
+         <form:select path="situacionEscolarMergeada" id="situacionEscolar" cssClass="required">
+				<form:option value="">Seleccione una opción...</form:option>
+				<form:options items="${situacionEscolar}" itemLabel="valor" itemValue="id"/>	
+			</form:select><font size="1">Atención. Este campo aparece en Informe al padrino.</font>
+       	</td>
+    </tr>
+    <tr>
+	   <td nowrap="nowrap"><label>Situacion Renovación  * </label></td>
+       <td>
+         <form:select path="evaluacionRenovacionMergeada" id="evaluacionRenovacion" cssClass="required" onchange="habilitarCamposRenovacion(this)">
+				<form:option value=""> Seleccione una opción...</form:option>
+				<form:options items="${evaluacionRenovacion}" itemLabel="valor" itemValue="id"/>	
+		</form:select><font size="1">Atención. Este campo aparece en Informe al padrino.</font>
+       </td>
+    </tr>
+	<tr>
+		<td width="28%"><label>Motivo Pendiente *</label></td>
+		<td>
+			<form:select path="motivoPendiente" id="motivoPendiente" disabled="true"  cssClass="required" onchange="habilitarMotivoPendiente(this)">
+				<form:option value="">Seleccione una opción...</form:option>
+				<form:options items="${motivoPendiente}" itemLabel="valor" itemValue="id"/>				
+			</form:select>
+		</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>
+			<font size="1"><b>Queremos informarle que la renovación de la beca de ${alumno.datosPersonales.nombre} ${alumno.datosPersonales.apellido} 
+								de la zona de ${alumno.escuela.localidad.zona.nombre} aún está pendiente debido a que ...</b>
+			</font>
+		</td>
+	</tr>
+	<tr>
+		<td><label>Otro Motivo * </label></td>
+		<td>
+			<form:textarea path="motivoOtro" id="motivoOtro" rows="4" cols="60" disabled="true"  cssStyle="width:98%"
+				 cssClass="required" onkeypress="chequearLongitud(this);"/>
+		</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>
+			<table>
+				<tr>
+					<td>
+						<font size="1">
+							<b>Quedo a disposición ante cualquier consulta.</b>
+						</font>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<font size="1">
+							<b>Saludos,</b>
+						</font>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<font size="1">Atención. Este campo aparece en Informe al padrino.</font>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td nowrap="nowrap"><label>Motivo no renovacion  *</label></td>
+		<td>
+			<form:select path="motivoNoRenovacion" id="motivoNoRenovacion" class="required" disabled="true">
+				<form:option value="">Seleccione una opción...</form:option>
+				<form:options items="${motivoNoRenovacion}" itemLabel="valor" itemValue="id"/>				
+			</form:select><font size="1">Atención. Este campo aparece en Informe al padrino.</font>
+		</td>
+	</tr>
+	
+	<tr>	
+		<td><label>Realizo Entrevista</label></td>
+		<td>
+			<form:checkbox path="realizoEntrevista" id="realizoEntrevista" disabled="true" onclick="habilitarTipocontacto(this)"/>
+		</td>
+	</tr>
+	<tr>
+		<td><label>Tipo Contacto</label></td>
+		<td>
+			<form:select path="tipoContacto" id="tipoContacto" disabled="true"  cssClass="required" onchange="habilitarMotivoTipoContacto(this)">
+				<form:option value="">Seleccione una opción...</form:option>
+				<form:options items="${tipoContacto}" itemLabel="valor" itemValue="id"/>				
+			</form:select>
+		</td>
+	</tr>
+	<tr>
+		<td nowrap="nowrap"><label>Otro Tipo Contacto</label></td>
+		<td>
+			<form:textarea path="motivoTipoContactoOtro" id="motivoTipoContactoOtro" rows="4" cols="60" disabled="true" cssStyle="width:98%" 
+			 	cssClass="required" onblur="chequearLongitud(this);" onkeypress="chequearLongitud(this);"/>
+		</td>
+	</tr>
+	
+</table>

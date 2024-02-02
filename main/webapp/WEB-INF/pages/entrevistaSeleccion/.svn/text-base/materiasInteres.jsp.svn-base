@@ -1,0 +1,85 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>     
+<table >
+		<thead>
+			<tr>
+				<th align="left"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td >
+					<p><label >Lengua</label> 
+					</p>
+				</td>
+				<td>
+					<input type="checkbox" 	name="entrevistaSeleccion.materiaLengua" id="perfilAlumno.materiaLengua"
+						<c:if test="${entrevistaSeleccionDTO.entrevistaSeleccion.materiaLengua}"> checked="checked"</c:if>>
+				</td>
+			</tr>
+			<tr>
+				<td >
+					<p><label >Matemática</label> 
+					</p>
+				</td>
+				<td>
+					<input type="checkbox" 	name="entrevistaSeleccion.materiaMatem" id="perfilAlumno.materiaMatem"
+						 <c:if test="${entrevistaSeleccionDTO.entrevistaSeleccion.materiaMatem}"> checked="checked"</c:if>>
+				</td>
+			</tr>
+			<tr>
+				<td >
+					<p><label >Ciencias Sociales</label> 
+					</p>
+				</td>
+				<td>
+					<input type="checkbox" 	name="entrevistaSeleccion.materiaCiencSociales" id="perfilAlumno.materiaCiencSociales"
+					<c:if test="${entrevistaSeleccionDTO.entrevistaSeleccion.materiaCiencSociales}"> checked="checked"</c:if>>
+				</td>
+			</tr>
+			<tr>
+				<td >
+					<p><label >Inglés / Lengua Extranjera</label> 
+					</p>
+				</td>
+				<td>
+					<input type="checkbox" 	name="entrevistaSeleccion.materiaInglesLengExt" id="perfilAlumno.materiaInglesLengExt"
+					<c:if test="${entrevistaSeleccionDTO.entrevistaSeleccion.materiaInglesLengExt}"> checked="checked"</c:if>>
+				</td>
+			</tr>
+					<tr>
+				<td >
+					<p><label >Educación Física</label> 
+					</p>
+				</td>
+				<td>
+					<input type="checkbox" 	name="entrevistaSeleccion.materiaEduFisica" id="perfilAlumno.materiaEduFisica"
+					<c:if test="${entrevistaSeleccionDTO.entrevistaSeleccion.materiaEduFisica}"> checked="checked"</c:if>>
+				</td>
+			</tr>
+			<tr>
+				<td >
+					<p><label >Educación Artística</label> 
+					</p>
+				</td>
+				<td>
+					<input type="checkbox" 	name="entrevistaSeleccion.materiaEduArt" id="perfilAlumno.materiaEduArt"
+					<c:if test="${entrevistaSeleccionDTO.entrevistaSeleccion.materiaEduArt}"> checked="checked"</c:if>>
+				</td>
+			</tr>
+			<tr>
+				<td >
+					<p><label >Ciencias Naturales</label> 
+					</p>
+				</td>
+				<td>
+					<input type="checkbox" 	name="entrevistaSeleccion.materiaCienciasNaturales" id="perfilAlumno.materiaCienciasNaturales"
+					<c:if test="${entrevistaSeleccionDTO.entrevistaSeleccion.materiaCienciasNaturales}"> checked="checked"</c:if>>
+				</td>
+			</tr>
+				
+		</tbody>
+	</table>

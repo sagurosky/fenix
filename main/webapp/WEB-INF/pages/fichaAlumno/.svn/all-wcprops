@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/fenix/!svn/ver/308/src/main/webapp/WEB-INF/pages/fichaAlumno
+END
+datosBeca.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/fenix/!svn/ver/343/src/main/webapp/WEB-INF/pages/fichaAlumno/datosBeca.jsp
+END
+datosAlumno.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/fenix/!svn/ver/338/src/main/webapp/WEB-INF/pages/fichaAlumno/datosAlumno.jsp
+END
+fichaAlumnoView.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/fenix/!svn/ver/407/src/main/webapp/WEB-INF/pages/fichaAlumno/fichaAlumnoView.jsp
+END
+historialAlumno.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/fichaAlumno/historialAlumno.jsp
+END
+situacionPostPBE.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/fenix/!svn/ver/407/src/main/webapp/WEB-INF/pages/fichaAlumno/situacionPostPBE.jsp
+END
+resumenAlumno.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/fichaAlumno/resumenAlumno.jsp
+END

@@ -1,0 +1,15 @@
+base.path.temp = /usr/share/temp/
+base.path.cesacion = /usr/share/temp/INFORME DE CESACION.pdf
+base.path.is1 = /usr/share/temp/INFORME DE SEGUIMIENTO Nro 1.pdf
+base.path.is2 = /usr/share/temp/INFORME DE SEGUIMIENTO Nro 2.pdf
+base.path.is3 = /usr/share/temp/INFORME DE SEGUIMIENTO Nro 3.pdf
+base.path.fp = /usr/share/temp/INFORME FICHA PRESENTACION.pdf
+imagen.path = /usr/share/imagenes/
+
+#base.path.temp = C:/temp/
+#base.path.cesacion = C:/temp/INFORME DE CESACION.pdf
+#base.path.is1 = C:/temp/INFORME DE SEGUIMIENTO Nro 1.pdf
+#base.path.is2 = C:/temp/INFORME DE SEGUIMIENTO Nro 2.pdf
+#base.path.is3 = C:/temp/INFORME DE SEGUIMIENTO Nro 3.pdf
+#base.path.fp = C:/temp/INFORME FICHA PRESENTACION.pdf
+#imagen.path = C:/imagenes/

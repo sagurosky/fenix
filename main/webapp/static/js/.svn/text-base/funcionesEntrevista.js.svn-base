@@ -1,0 +1,249 @@
+function chequearLongitud(obj){
+	if (obj.value.length > 10000) {
+	obj.value = obj.value.substring(0, 10000);
+	}
+}
+
+function habilitarMaterialCompletoInformeProfesores(obj){
+	
+	if(	((document.getElementById("certificadoAsistencia").value == 1) || (document.getElementById("certificadoAsistencia").value == 3))&&
+		((obj.value == 1) || (obj.value == 3))&&
+		((document.getElementById("cuadernoComunicados").value == 1) || (document.getElementById("cuadernoComunicados").value == 3))&&
+		((document.getElementById("carpeta").value == 1) || (document.getElementById("carpeta").value == 3))&&
+		((document.getElementById("boletin").value == 1) || (document.getElementById("boletin").value == 3)))
+		
+	{
+		document.getElementById("materialCompleto").checked = 1
+	}else{
+		document.getElementById("materialCompleto").checked = 0
+
+	}
+	habilitarMateriasBoletin(obj);
+}
+
+function habilitarMaterialCompletoBoletin(obj){
+
+	if(	((document.getElementById("certificadoAsistencia").value == 1) || (document.getElementById("certificadoAsistencia").value == 3))&&
+		((obj.value == 1) || (obj.value == 3))&&
+		((document.getElementById("informeProfesores").value == 1) || (document.getElementById("informeProfesores").value == 3))&&
+		((document.getElementById("carpeta").value == 1) || (document.getElementById("carpeta").value == 3))&&
+		((document.getElementById("cuadernoComunicados").value == 1) || (document.getElementById("cuadernoComunicados").value == 3)))
+		
+	{
+		document.getElementById("materialCompleto").checked = 1
+	}else{
+		document.getElementById("materialCompleto").checked = 0
+
+	}
+}
+
+function habilitarMaterialCompletocuadernoComunicados(obj){
+	
+	if(	((document.getElementById("certificadoAsistencia").value == 1) || (document.getElementById("certificadoAsistencia").value == 3))&&
+		((obj.value == 1) || (obj.value == 3))&&
+		((document.getElementById("informeProfesores").value == 1) || (document.getElementById("informeProfesores").value == 3))&&
+		((document.getElementById("carpeta").value == 1) || (document.getElementById("carpeta").value == 3))&&
+		((document.getElementById("boletin").value == 1) || (document.getElementById("boletin").value == 3)))
+		
+	{
+		document.getElementById("materialCompleto").checked = 1
+	}else{
+		document.getElementById("materialCompleto").checked = 0
+
+	}
+}
+
+function habilitarMaterialCompletoCarpeta(obj){
+	
+	if(	((document.getElementById("certificadoAsistencia").value == 1) || (document.getElementById("certificadoAsistencia").value == 3))&&
+		((obj.value == 1) || (obj.value == 3))&&
+		((document.getElementById("informeProfesores").value == 1) || (document.getElementById("informeProfesores").value == 3))&&
+		((document.getElementById("cuadernoComunicados").value == 1) || (document.getElementById("cuadernoComunicados").value == 3))&&
+		((document.getElementById("boletin").value == 1) || (document.getElementById("boletin").value == 3)))
+		
+	{
+		document.getElementById("materialCompleto").checked = 1
+	}else{
+		document.getElementById("materialCompleto").checked = 0
+
+	}
+}
+
+function habilitarCantInasistencias(obj){
+	
+	if(obj.value == 1){
+		document.getElementById("cantidadInasistencias").disabled = false;
+				
+	}else{
+		document.getElementById("cantidadInasistencias").disabled = true;
+		document.getElementById("motivoInasistencia").disabled = true;
+		document.getElementById("cantidadInasistencias").value = "";
+		document.getElementById("motivoInasistencia").value = "";
+
+	}
+	if(	((document.getElementById("cuadernoComunicados").value == 1) || (document.getElementById("cuadernoComunicados").value == 3))&&
+			((obj.value == 1) || (obj.value == 3))&&
+			((document.getElementById("informeProfesores").value == 1) || (document.getElementById("informeProfesores").value == 3))&&
+			((document.getElementById("carpeta").value == 1) || (document.getElementById("carpeta").value == 3))&&
+			((document.getElementById("boletin").value == 1) || (document.getElementById("boletin").value == 3)))
+			
+		{
+			document.getElementById("materialCompleto").checked = 1
+		}else{
+			document.getElementById("materialCompleto").checked = 0
+
+		}
+}
+
+function habilitarMotivoInasistencias(obj){
+	
+	if((obj.value == 0.0)||( obj.value == 0)){
+		document.getElementById("motivoInasistencia").disabled = true;
+		document.getElementById("motivoInasistencia").value = "";
+	}else{
+		document.getElementById("motivoInasistencia").disabled = false;
+
+	}
+}
+
+function habilitarCamposBecado(obj){
+	if(obj.checked){
+		document.getElementById("motivoAusencia").disabled = true;
+		document.getElementById("otroMotivoAusencia").disabled = true;
+		document.getElementById("motivoAusencia").value = "";
+		document.getElementById("otroMotivoAusencia").value= "";
+
+		
+	}
+	else{
+		document.getElementById("motivoAusencia").disabled = false;
+	
+
+		
+	}
+//	habilitarChecks(!(document.getElementById("participoRA").checked || obj.checked));	
+}
+
+function habilitarCamposRA(obj)
+{
+	if(obj.checked)
+	{
+		document.getElementById("motivoAusenciaRA").disabled = true;
+		document.getElementById("otroMotivoAusenciaRA").disabled = true;
+		document.getElementById("motivoAusenciaRA").value ="";
+		document.getElementById("otroMotivoAusenciaRA").value= "";
+	}
+	else{
+		document.getElementById("motivoAusenciaRA").disabled = false;	
+	}
+}
+
+
+//
+//function habilitarChecks(valor){
+//
+//	document.getElementById("materialCompleto").disabled = valor;
+//	document.getElementById("certificadoAsistencia").disabled = valor;
+//	document.getElementById("informeProfesores").disabled = valor;
+//	document.getElementById("cuadernoComunicados").disabled = valor;
+//	document.getElementById("carpeta").disabled = valor;
+//	document.getElementById("rendicionGastos").disabled = valor;
+//	document.getElementById("cantidadInasistencias").disabled=valor;
+//	document.getElementById("motivoInasistencia").disabled = valor;
+//}
+
+
+function habilitarMotivos(obj){
+	if(obj.value == 2){
+		document.getElementById("motivoSuspension").disabled = false;
+		document.getElementById("motivoCesacion").disabled = true;
+		document.getElementById("motivoCesacion").value = "";
+		document.getElementById("proximaEntrevista").disabled = false;
+		document.getElementById("horaProxEntrevista").disabled = false;
+	}
+	else{
+		if(obj.value == 4){
+			document.getElementById("motivoSuspension").disabled = true;
+			document.getElementById("motivoCesacion").disabled = false;
+			document.getElementById("motivoSuspension").value = "";
+			document.getElementById("proximaEntrevista").disabled = true;
+			document.getElementById("proximaEntrevista").value = "";
+			document.getElementById("horaProxEntrevista").disabled = true;
+			document.getElementById("horaProxEntrevista").value = "";
+
+		}
+		else{
+			document.getElementById("horaProxEntrevista").disabled = false;
+			document.getElementById("proximaEntrevista").disabled = false;
+			document.getElementById("motivoSuspension").disabled = true;
+			document.getElementById("motivoCesacion").disabled = true;
+			document.getElementById("motivoSuspension").value = "";
+			document.getElementById("motivoCesacion").value = "";
+	
+		}
+	}
+}
+
+function habilitarOtrosMotivos(obj){
+	if(obj.value == 4){
+		document.getElementById("otroMotivoAusencia").disabled = false;
+	}
+	else{
+		document.getElementById("otroMotivoAusencia").disabled = true;
+		document.getElementById("otroMotivoAusencia").value= "";
+	}
+	
+}
+
+function habilitarOtrosMotivosRA(obj, isGrupal){
+	if(isGrupal == false)
+	{
+		if(obj.value == 4){
+			document.getElementById("otroMotivoAusenciaRA").disabled = false;
+		}
+		else{
+			document.getElementById("otroMotivoAusenciaRA").disabled = true;
+			document.getElementById("otroMotivoAusenciaRA").value= "";
+		}
+	}
+}
+
+
+function habilitarDetalleGastos(obj){
+	if(obj.checked){
+		document.getElementById("detalleGastos").disabled = false;
+	}else{
+		document.getElementById("detalleGastos").disabled = true;
+		document.getElementById("detalleGastos").value = "";
+	}
+}
+
+function habilitarMateriasBoletin(obj){
+	if((obj.value == 1)){
+		document.getElementById("materiaBoletin").disabled = false;
+	}else{
+		document.getElementById("materiaBoletin").disabled = true;
+		document.getElementById("materiaBoletin").value = "";
+	}
+}
+
+function cargarDatos(){
+	habilitarCamposBecado(document.getElementById("participoBecado"));
+	habilitarMotivos(document.getElementById("evaluacionCobroBeca"));
+	habilitarOtrosMotivos(document.getElementById("motivoAusencia"));
+	var isGrupal = document.getElementById("isGrupal").value;
+	if(isGrupal == 'false')
+	{
+		habilitarCamposRA(document.getElementById("participoRA"));
+		habilitarOtrosMotivosRA(document.getElementById("motivoAusenciaRA"), isGrupal);
+	}
+	if(isGrupal == 'true')
+	{
+		document.getElementById("motivoAusenciaRA").disabled = true;
+	}
+	habilitarCantInasistencias(document.getElementById("certificadoAsistencia"));
+	habilitarDetalleGastos(document.getElementById("rendicionGastos"));
+	habilitarMateriasBoletin(document.getElementById("informeProfesores"));
+	habilitarMotivoInasistencias(document.getElementById("cantidadInasistencias"));
+	
+}

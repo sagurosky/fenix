@@ -1,0 +1,730 @@
+package org.cimientos.intranet.modelo.perfil;
+
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+import org.cimientos.intranet.modelo.FichaFamiliar;
+import org.cimientos.intranet.modelo.ResponsableAdultoSeleccion;
+import org.cimientos.intranet.modelo.escuela.EscuelaSeleccion;
+import org.cimientos.intranet.modelo.persona.PersonaSeleccion;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
+import com.cimientos.intranet.enumerativos.AnioEscolar;
+import com.cimientos.intranet.enumerativos.entrevista.Compromiso;
+import com.cimientos.intranet.enumerativos.entrevista.CompromisoPBE;
+
+/**
+ * Este entity solo se utiliza para la entrevista seleccion
+ * es una copia de los datos del alumno, se creo esto para poder mantener un registro separado del alumno al ingreso del sistema.
+ */
+@Entity
+public class AlumnoSeleccion  {
+	
+	/** The id. */
+	@Id
+	@GeneratedValue
+	private Long id;
+	
+
+	/** The datos personales. */
+	@OneToOne(cascade = CascadeType.ALL)
+	private PersonaSeleccion datosPersonales;
+
+	/** The telefono1. */
+	private String telefono1;
+
+	/** The contacto telefono1. */
+	private String contactoTelefono1;
+
+	/** The telefono2. */
+	private String telefono2;
+
+	/** The contacto telefono2. */
+	private String contactoTelefono2;
+
+	/** The telefono3. */
+	private String telefono3;
+
+	/** The contacto telefono3. */
+	private String contactoTelefono3;
+
+	/** The escuelaSeleccion. */
+	@OneToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+	private EscuelaSeleccion escuelaSeleccion;
+
+	/** The turno. */
+	private Turno turno;
+
+	/** The responsable1. */
+	@OneToOne(cascade = CascadeType.ALL)
+	private ResponsableAdultoSeleccion responsable1;
+
+	/** The responsable2. */
+	@OneToOne(cascade = CascadeType.ALL)
+	private ResponsableAdultoSeleccion responsable2;
+
+	// Fecha real de carga
+	/** The fecha alta. */
+	private Date fechaAlta;
+
+	/** The fecha baja. */
+	private Date fechaBaja;
+
+	
+	/** The motivo cesacion. */
+	private String motivoCesacion;
+	
+	/** The fecha entrevista. */
+	private Date fechaEntrevista;
+	// Crear enum
+	/** The evaluacion. */
+	private String evaluacion;
+	
+	/** The estado alumno. */
+	@Enumerated(EnumType.ORDINAL)
+	private EstadoAlumno estadoAlumno;
+
+	/** The ficha familiar. */
+	@OneToMany(cascade = CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<FichaFamiliar> fichaFamiliar;
+
+	/** The anio. */
+	private AnioEscolar anioEscolar;
+
+	/** The division. */
+	private String division;
+
+	/** The activo. */
+	private Boolean activo;
+
+	/** The compromiso escolaridad. */
+	@Enumerated(EnumType.ORDINAL)
+	private Compromiso compromisoEscolaridad;
+
+	/** The compromiso pbe. */
+	@Enumerated(EnumType.ORDINAL)
+	private CompromisoPBE compromisoPbe;
+	
+	
+	
+	public AlumnoSeleccion(){};
+
+	public AlumnoSeleccion(PerfilAlumno p) {
+		this.id = p.getId();
+		this.datosPersonales = new PersonaSeleccion(p.getDatosPersonales());
+		this.telefono1 = p.getTelefono1();
+		this.contactoTelefono1 = p.getContactoTelefono1();
+		this.telefono2 = p.getTelefono2();
+		this.contactoTelefono2 = p.getContactoTelefono2();
+		this.telefono3 = p.getTelefono3();
+		this.contactoTelefono3 = p.getContactoTelefono3();
+		this.escuelaSeleccion = new EscuelaSeleccion(p.getEscuela());
+		this.turno = p.getTurno();
+		this.responsable1 = new ResponsableAdultoSeleccion(p.getResponsable1());
+		this.responsable2 =  new ResponsableAdultoSeleccion(p.getResponsable2());
+		this.fechaAlta = p.getFechaAlta();
+		this.fechaBaja = p.getFechaBaja();
+		this.fechaEntrevista = p.getFechaEntrevista();
+		this.evaluacion = p.getEvaluacion();
+		this.estadoAlumno = p.getEstadoAlumno();
+		this.fichaFamiliar = p.getFichaFamiliar();
+		this.anioEscolar = p.getAnioEscolar();
+		this.division = p.getDivision();
+		this.activo = p.getActivo();
+		this.compromisoEscolaridad = p.getCompromisoEscolaridad();
+		this.compromisoPbe = p.getCompromisoPbe();
+	}
+
+	
+	/**
+	 * Gets the motivo cesacion.
+	 * 
+	 * @return the motivo cesacion
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public String getMotivoCesacion() {
+		return motivoCesacion;
+	}
+
+	
+
+	/**
+	 * Sets the motivo cesacion.
+	 * 
+	 * @param motivoCesacion
+	 *            the new motivo cesacion
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setMotivoCesacion(String motivoCesacion) {
+		this.motivoCesacion = motivoCesacion;
+	}
+
+	/**
+	 * Gets the id.
+	 * 
+	 * @return the id
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * Sets the id.
+	 * 
+	 * @param id
+	 *            the id to set
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	/**
+	 * Gets the datos personales.
+	 * 
+	 * @return the datosPersonales
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public PersonaSeleccion getDatosPersonales() {
+		return datosPersonales;
+	}
+
+	/**
+	 * Sets the datos personales.
+	 * 
+	 * @param datosPersonales
+	 *            the datosPersonales to set
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setDatosPersonales(PersonaSeleccion datosPersonales) {
+		this.datosPersonales = datosPersonales;
+	}
+
+	/**
+	 * Gets the telefono1.
+	 * 
+	 * @return the telefono1
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public String getTelefono1() {
+		return telefono1;
+	}
+
+	/**
+	 * Sets the telefono1.
+	 * 
+	 * @param telefono1
+	 *            the telefono1 to set
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setTelefono1(String telefono1) {
+		this.telefono1 = telefono1;
+	}
+
+	/**
+	 * Gets the contacto telefono1.
+	 * 
+	 * @return the contacto_telefono1
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public String getContactoTelefono1() {
+		return contactoTelefono1;
+	}
+
+	/**
+	 * Sets the contacto telefono1.
+	 * 
+	 * @param contactoTelefono1
+	 *            the contacto_telefono1 to set
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setContactoTelefono1(String contactoTelefono1) {
+		this.contactoTelefono1 = contactoTelefono1;
+	}
+
+	/**
+	 * Gets the telefono2.
+	 * 
+	 * @return the telefono2
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public String getTelefono2() {
+		return telefono2;
+	}
+
+	/**
+	 * Sets the telefono2.
+	 * 
+	 * @param telefono2
+	 *            the telefono2 to set
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setTelefono2(String telefono2) {
+		this.telefono2 = telefono2;
+	}
+
+	/**
+	 * Gets the contacto telefono2.
+	 * 
+	 * @return the contacto_telefono2
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public String getContactoTelefono2() {
+		return contactoTelefono2;
+	}
+
+	/**
+	 * Sets the contacto telefono2.
+	 * 
+	 * @param contactoTelefono2
+	 *            the contacto_telefono2 to set
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setContactoTelefono2(String contactoTelefono2) {
+		this.contactoTelefono2 = contactoTelefono2;
+	}
+
+	/**
+	 * Gets the telefono3.
+	 * 
+	 * @return the telefono3
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public String getTelefono3() {
+		return telefono3;
+	}
+
+	/**
+	 * Sets the telefono3.
+	 * 
+	 * @param telefono3
+	 *            the telefono3 to set
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setTelefono3(String telefono3) {
+		this.telefono3 = telefono3;
+	}
+
+	/**
+	 * Gets the contacto telefono3.
+	 * 
+	 * @return the contacto_telefono3
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public String getContactoTelefono3() {
+		return contactoTelefono3;
+	}
+
+	/**
+	 * Sets the contacto telefono3.
+	 * 
+	 * @param contactoTelefono3
+	 *            the contacto_telefono3 to set
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setContactoTelefono3(String contactoTelefono3) {
+		this.contactoTelefono3 = contactoTelefono3;
+	}
+
+	
+	/**
+	 * Gets the turno.
+	 * 
+	 * @return the turno
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public Turno getTurno() {
+		return turno;
+	}
+
+	/**
+	 * Sets the turno.
+	 * 
+	 * @param turno
+	 *            the turno to set
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setTurno(Turno turno) {
+		this.turno = turno;
+	}
+
+
+
+	/**
+	 * Gets the fecha alta.
+	 * 
+	 * @return the fechaAlta
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public Date getFechaAlta() {
+		return fechaAlta;
+	}
+
+	/**
+	 * Sets the fecha alta.
+	 * 
+	 * @param fechaAlta
+	 *            the fechaAlta to set
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setFechaAlta(Date fechaAlta) {
+		this.fechaAlta = fechaAlta;
+	}
+
+	/**
+	 * Gets the fecha baja.
+	 * 
+	 * @return the fechaBaja
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public Date getFechaBaja() {
+		return fechaBaja;
+	}
+
+	/**
+	 * Sets the fecha baja.
+	 * 
+	 * @param fechaBaja
+	 *            the fechaBaja to set
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setFechaBaja(Date fechaBaja) {
+		this.fechaBaja = fechaBaja;
+	}
+
+
+	
+	/**
+	 * Gets the escuelaSeleccion.
+	 * 
+	 * @return the escuelaSeleccion
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public EscuelaSeleccion getEscuelaSeleccion() {
+		return escuelaSeleccion;
+	}
+
+	/**
+	 * Sets the escuelaSeleccion.
+	 *
+	 * @param escuela the new escuela seleccion
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setEscuelaSeleccion(EscuelaSeleccion escuela) {
+		this.escuelaSeleccion = escuela;
+	}
+
+	/**
+	 * Gets the responsable1.
+	 * 
+	 * @return the responsable1
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public ResponsableAdultoSeleccion getResponsable1() {
+		return responsable1;
+	}
+
+	/**
+	 * Sets the responsable1.
+	 * 
+	 * @param responsable1
+	 *            the responsable1 to set
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setResponsable1(ResponsableAdultoSeleccion responsable1) {
+		this.responsable1 = responsable1;
+	}
+
+	/**
+	 * Gets the responsable2.
+	 * 
+	 * @return the responsable2
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public ResponsableAdultoSeleccion getResponsable2() {
+		return responsable2;
+	}
+
+	/**
+	 * Sets the responsable2.
+	 * 
+	 * @param responsable2
+	 *            the responsable2 to set
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setResponsable2(ResponsableAdultoSeleccion responsable2) {
+		this.responsable2 = responsable2;
+	}
+
+	
+
+
+
+	/**
+	 * Gets the ficha familiar.
+	 * 
+	 * @return the fichaFamiliar
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public List<FichaFamiliar> getFichaFamiliar() {
+		return fichaFamiliar;
+	}
+
+	/**
+	 * Sets the ficha familiar.
+	 * 
+	 * @param fichaFamiliar
+	 *            the fichaFamiliar to set
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setFichaFamiliar(List<FichaFamiliar> fichaFamiliar) {
+		this.fichaFamiliar = fichaFamiliar;
+	}
+
+
+	/**
+	 * Gets the fecha entrevista.
+	 * 
+	 * @return the fechaEntrevista
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public Date getFechaEntrevista() {
+		return fechaEntrevista;
+	}
+
+	/**
+	 * Sets the fecha entrevista.
+	 * 
+	 * @param fechaEntrevista
+	 *            the fechaEntrevista to set
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setFechaEntrevista(Date fechaEntrevista) {
+		this.fechaEntrevista = fechaEntrevista;
+	}
+
+	/**
+	 * Gets the evaluacion.
+	 * 
+	 * @return the evaluacion
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public String getEvaluacion() {
+		return evaluacion;
+	}
+
+	/**
+	 * Sets the evaluacion.
+	 * 
+	 * @param evaluacion
+	 *            the evaluacion to set
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setEvaluacion(String evaluacion) {
+		this.evaluacion = evaluacion;
+	}
+
+	
+
+	
+
+	/**
+	 * Gets the estado alumno.
+	 * 
+	 * @return the estadoAlumno
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public EstadoAlumno getEstadoAlumno() {
+		return estadoAlumno;
+	}
+
+	/**
+	 * Sets the estado alumno.
+	 * 
+	 * @param estadoAlumno
+	 *            the estadoAlumno to set
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setEstadoAlumno(EstadoAlumno estadoAlumno) {
+		this.estadoAlumno = estadoAlumno;
+	}
+
+	
+
+	/**
+	 * Gets the anio.
+	 * 
+	 * @return the anio
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public AnioEscolar getAnioEscolar() {
+		return anioEscolar;
+	}
+
+	/**
+	 * Sets the anio.
+	 *
+	 * @param anioEscolar the new anio escolar
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setAnioEscolar(Integer anioEscolar) {
+		this.anioEscolar = AnioEscolar.getAnioEscolar(anioEscolar);
+	}
+
+	/**
+	 * Gets the division.
+	 * 
+	 * @return the division
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public String getDivision() {
+		return division;
+	}
+
+	/**
+	 * Sets the division.
+	 * 
+	 * @param division
+	 *            the division to set
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setDivision(String division) {
+		this.division = division;
+	}
+
+	/**
+	 * Gets the activo.
+	 * 
+	 * @return the activo
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public Boolean getActivo() {
+		return activo;
+	}
+
+	/**
+	 * Sets the activo.
+	 * 
+	 * @param activo
+	 *            the activo to set
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setActivo(Boolean activo) {
+		this.activo = activo;
+	}
+
+	/**
+	 * Gets the compromiso escolaridad.
+	 * 
+	 * @return the compromiso escolaridad
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public Compromiso getCompromisoEscolaridad() {
+		return compromisoEscolaridad;
+	}
+
+	/**
+	 * Sets the compromiso escolaridad.
+	 * 
+	 * @param compromisoEscolaridad
+	 *            the new compromiso escolaridad
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setCompromisoEscolaridad(Compromiso compromisoEscolaridad) {
+		this.compromisoEscolaridad = compromisoEscolaridad;
+	}
+
+	/**
+	 * Gets the compromiso pbe.
+	 * 
+	 * @return the compromiso pbe
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public CompromisoPBE getCompromisoPbe() {
+		return compromisoPbe;
+	}
+
+	/**
+	 * Sets the compromiso pbe.
+	 * 
+	 * @param compromisoPbe
+	 *            the new compromiso pbe
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setCompromisoPbe(CompromisoPBE compromisoPbe) {
+		this.compromisoPbe = compromisoPbe;
+	}
+
+	
+	/**
+	 * Sets the anio escolar.
+	 *
+	 * @param anioEscolar the anioEscolar to set
+	 * @since 17-mar-2011
+	 * @author cfigueroa
+	 */
+	public void setAnioEscolar(AnioEscolar anioEscolar) {
+		this.anioEscolar = anioEscolar;
+	}
+
+}

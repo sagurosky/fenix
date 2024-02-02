@@ -1,0 +1,388 @@
+package org.cimientos.intranet.web.controller;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import org.apache.commons.lang.StringUtils;
+import org.cimientos.intranet.modelo.CicloPrograma;
+import org.cimientos.intranet.modelo.Texto;
+import org.cimientos.intranet.modelo.persona.Persona;
+import org.cimientos.intranet.servicio.CicloProgramaSrv;
+import org.cimientos.intranet.servicio.TextoSrv;
+import org.cimientos.intranet.utils.ConstantesInformes;
+import org.cimientos.intranet.utils.ConstantesMenu;
+import org.cimientos.intranet.utils.Formateador;
+import org.cimientos.intranet.utils.FormateadorMail;
+import org.cimientos.intranet.utils.InformeUtils;
+import org.cimientos.intranet.utils.paginacion.ExtendedPaginatedList;
+import org.cimientos.intranet.utils.paginacion.PaginateListFactory;
+import org.displaytag.tags.TableTagParameters;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.cimientos.intranet.enumerativos.entrevista.MotivoNoRenovacion;
+import com.cimientos.intranet.enumerativos.entrevista.MotivoPendiente;
+
+@Controller
+@RequestMapping("/textos/*")
+public class TextoController  extends BaseController{
+
+	@Autowired
+	private TextoSrv srvTexto;
+	
+	@Autowired
+	private CicloProgramaSrv srvCiclo;
+	
+	@Autowired
+	private PaginateListFactory paginateListFactory;
+	
+	@RequestMapping("/textos/verTextosMailView.do")
+	public ModelAndView verTextosMailView(HttpServletRequest request, HttpSession session,
+			@RequestParam(required= false, value="cicloId") List<Long> cicloId,
+			@RequestParam(required= false, value="tipoInformeId") List<String> tipoInformeId, 
+			@RequestParam(required= false, value="tipoMailId") List<String> tipoMailId, 
+			@RequestParam(required= false, value="fechaDesde") String fechaDesde,
+			@RequestParam(required= false, value="fechaHasta") String fechaHasta,
+			@RequestParam(required= false, value="usuario") String nombreUsuario,
+			@RequestParam(required =false, value="idsMotivoNoRenovacion") List <Integer> idsMotivoNoRenovacion,
+			@RequestParam(required =false, value="idsMotivoPendiente") List <Integer> idsMotivoPendiente,
+			@RequestParam(required=false, value="mensaje") String mensaje,
+			@RequestParam(required=false, value="error") String error){ 
+
+		List<String> listLocalTiposInforme = null;
+		List<String> listLocalTiposMail = null;
+		List<Integer> idsLocalMotivoNoRenovacion = null;
+		List<Integer> idsLocalMotivoPendiente = null;
+		Date dFechaDesde = null;
+		Date dFechaHasta = null;
+		CicloPrograma cicloActual = srvCiclo.obtenerCicloActual();
+		CicloPrograma cicloAnterior = srvCiclo.obtenerCicloPorOrden(cicloActual.getOrden()-1);
+		
+		Map<String, Object> resul = new HashMap<String, Object>();
+
+		if (tipoInformeId!=null && !tipoInformeId.contains("0")){
+			listLocalTiposInforme = new ArrayList<String>();
+			listLocalTiposInforme.addAll(tipoInformeId);
+		}
+		
+		if (tipoMailId!=null && !tipoMailId.contains("0")){
+			listLocalTiposMail = new ArrayList<String>();
+			listLocalTiposMail.addAll(tipoMailId);
+		}
+		
+		if (cicloId==null || (cicloId!=null && cicloId.size()==0)){
+			cicloId = new ArrayList<Long>();
+			cicloId.add(cicloActual.getId());
+		}
+
+		if (StringUtils.isNotBlank(fechaDesde))
+			dFechaDesde = Formateador.parsearFecha(fechaDesde);
+
+		if (StringUtils.isNotBlank(fechaHasta))
+			dFechaHasta = Formateador.parsearFecha(fechaHasta);
+		
+		if (idsMotivoNoRenovacion!=null){
+			idsLocalMotivoNoRenovacion = new ArrayList<Integer>();
+			idsLocalMotivoNoRenovacion.addAll(idsMotivoNoRenovacion);
+			if (idsLocalMotivoNoRenovacion.contains(0)){
+				idsLocalMotivoNoRenovacion.remove(new Integer(0));
+			}
+		}
+
+		if (idsMotivoPendiente!=null){
+			idsLocalMotivoPendiente = new ArrayList<Integer>();
+			idsLocalMotivoPendiente.addAll(idsMotivoPendiente);
+			if (idsLocalMotivoPendiente.contains(0)){
+				idsLocalMotivoPendiente.remove(new Integer(0));
+			}
+		}
+		
+		boolean export = request.getParameter(TableTagParameters.PARAMETER_EXPORTING) != null;
+		
+		ExtendedPaginatedList listaPaginada = paginarInformes(cicloId, export, request, listLocalTiposInforme, listLocalTiposMail,
+				idsLocalMotivoNoRenovacion, idsLocalMotivoPendiente, nombreUsuario, dFechaDesde, dFechaHasta);
+
+        resul.put("listaTextos", listaPaginada);
+        resul.put("size", listaPaginada.getFullListSize());
+        resul.put("ciclos", srvCiclo.obtenerCiclosClonarBecas());
+        resul.put("cicloId", cicloId); 
+        resul.put("tiposInforme", InformeUtils.getTipoInformes());
+        resul.put("tipoInformeId", tipoInformeId);
+        resul.put("tiposMail", FormateadorMail.getTipoMails());
+        resul.put("tipoMailId", tipoMailId);
+		resul.put("usuario", nombreUsuario);
+		resul.put("fechaDesde", dFechaDesde);
+		resul.put("fechaHasta", dFechaHasta);
+        resul.put("motivosNoRenovacion", MotivoNoRenovacion.getmotivoNoRenovacion());
+        resul.put("idsMotivoNoRenovacion", idsMotivoNoRenovacion);        
+        resul.put("motivosPendiente", MotivoPendiente.getMotivoPendiente());
+        resul.put("idsMotivoPendiente", idsMotivoPendiente);
+        resul.put("comunicadoNoRenovacion", ConstantesInformes.nombreComunicadoNoRenovacion);
+        resul.put("comunicadoRenovacionPendiente", ConstantesInformes.nombreComunicadoPendiente);
+        
+		resul.put("urlRegreso", "/texto/verTextosMailView.do");
+	
+		resul.put("nombreCicloActual", cicloActual.getNombre());
+		resul.put("nombreCicloAnterior", cicloAnterior.getNombre());			
+		
+		if(listLocalTiposInforme != null && listLocalTiposInforme.size() == 1)
+			resul.put("tipoInformeExportar", listLocalTiposInforme.get(0));
+		else
+			resul.put("tipoInformeExportar", null);
+		
+		if(StringUtils.isNotBlank(mensaje))
+			resul.put("mensaje", mensaje);
+		if(StringUtils.isNotBlank(error))
+			resul.put("error", error);
+		
+		Persona personaLogueada = obtenerPersona(request);
+		if(personaLogueada.getPerfilSuperUsuario())
+			resul.put("tipoPerfil", "superUsuario");
+		else
+			resul.put("tipoPerfil", "");
+		
+		session.setAttribute("menu", ConstantesMenu.menuGestionPrograma);
+		
+		return forward("/textos/verTextosMailView", resul);		
+	}
+	
+	private ExtendedPaginatedList paginarInformes(List<Long> idCiclo, Boolean export, HttpServletRequest request,
+			List<String> tipoInforme, List<String> tipoMail, List<Integer> idsMotivoNoRenovacion, List<Integer> idsMotivoPendiente,
+			String nombreUsuario, Date fechaDesde, Date fechaHasta){
+		
+		List<Texto> textos = null;
+		
+		ExtendedPaginatedList listaPaginada = paginateListFactory.getPaginatedListFromRequest(request);
+		
+
+		int totalRows = srvTexto.obtenerCantidadTextosMailAReportar(idCiclo, tipoInforme, tipoMail, idsMotivoNoRenovacion, idsMotivoPendiente, 
+				nombreUsuario, fechaDesde, fechaHasta);
+				
+		if(export){
+			textos = srvTexto.obtenerTextosMailAReportar(idCiclo, tipoInforme, tipoMail, idsMotivoNoRenovacion,	idsMotivoPendiente, nombreUsuario, 
+					fechaDesde, fechaHasta, 0, totalRows, listaPaginada.getSortDirection(), listaPaginada.getSortCriterion());
+		}
+		else
+			textos = srvTexto.obtenerTextosMailAReportar(idCiclo, tipoInforme, tipoMail, idsMotivoNoRenovacion,	idsMotivoPendiente, nombreUsuario, 
+					fechaDesde, fechaHasta, listaPaginada.getFirstRecordIndex(),listaPaginada.getPageSize(), listaPaginada.getSortDirection(), 
+					listaPaginada.getSortCriterion());
+		
+		
+		listaPaginada.setList(textos);
+		
+		listaPaginada.setTotalNumberOfRows(totalRows);
+
+		return listaPaginada;
+	}
+
+	@RequestMapping("/textos/altaTextoView.do")
+	public ModelAndView altaTextoView(HttpServletRequest request){
+		Map<String, Object> model = new HashMap<String, Object>();
+		model.put("ciclos", srvCiclo.obtenerCiclosParaCreacionBeca());
+		model.put("cicloId", null); 
+		model.put("tiposInforme", InformeUtils.getTipoInformes());
+		model.put("tipoInformeId", null);
+		model.put("tiposMail", FormateadorMail.getTipoMails());
+		model.put("tipoMailId", null);
+		model.put("accion", "Alta");
+		model.put("motivosNoRenovacion", MotivoNoRenovacion.getmotivoNoRenovacion());
+		model.put("idMotivoNoRenovacion", null);        
+		model.put("motivosPendiente", MotivoPendiente.getMotivoPendiente());
+		model.put("idMotivoPendiente", null);
+		model.put("comunicadoNoRenovacion", ConstantesInformes.nombreComunicadoNoRenovacion);
+		model.put("comunicadoRenovacionPendiente", ConstantesInformes.nombreComunicadoPendiente);
+		model.put("urlRegreso", "../texto/verTextosMailView.do");
+	
+		return forward("/textos/altaTextoMail", model);
+	}
+	
+	@RequestMapping("/textos/altaTextoMail.do")
+	public ModelAndView altaTextoMail(HttpServletRequest request,
+			HttpSession session,
+			@RequestParam("cicloId") Long cicloId,
+			@RequestParam("tipoInformeId") String tipoInformeId,
+			@RequestParam(required= false, value="tipoMailId") String  tipoMailId,
+			@RequestParam(required= false, value="idMotivoNoRenovacion") Integer idMotivoNoRenovacion,
+			@RequestParam(required= false, value="idMotivoPendiente") Integer idMotivoPendiente,
+			@RequestParam("titu") String titulo,
+			@RequestParam("desti") String destinatario,
+			@RequestParam("cuer") String cuerpo,
+			@RequestParam("fir") String firma){
+		
+		Persona usuario = obtenerPersona(request);
+		String mensaje = "";
+		String error = "";
+		Integer motivoNoRenovacion = idMotivoNoRenovacion != null && idMotivoNoRenovacion.equals(0) ? null : idMotivoNoRenovacion;
+		Integer motivoRenovacionPendiente = idMotivoPendiente != null && idMotivoPendiente.equals(0) ? null : idMotivoPendiente;
+		MotivoPendiente motivoPendiente = null;
+		MotivoNoRenovacion motivoNoRenov = null;
+		String tipoMail = StringUtils.isNotBlank(tipoMailId)? tipoMailId : FormateadorMail.getTipoMailIndividual();
+		
+		Texto textoNuevo = new Texto();
+		CicloPrograma ciclo = srvCiclo.obtenerCiclo(cicloId);
+		textoNuevo.setCicloPrograma(ciclo);
+		textoNuevo.setTipoInforme(tipoInformeId);
+		textoNuevo.setTipoMail(tipoMail);
+		textoNuevo.setTitulo(titulo.replace("&#8207;",""));
+		textoNuevo.setDestinatario(destinatario.replace("\r\n","<br>"));
+		textoNuevo.setCuerpo(cuerpo.replace("\r\n","<br>"));
+		textoNuevo.setFirma(firma.replace("\r\n","<br>"));
+		if(motivoNoRenovacion != null){
+			motivoNoRenov = MotivoNoRenovacion.getmotivoNoIncorporacion(motivoNoRenovacion);
+			textoNuevo.setMotivoNoRenovacion(motivoNoRenov);
+		}
+		else
+			textoNuevo.setMotivoNoRenovacion(null);
+		if(motivoRenovacionPendiente != null){
+			motivoPendiente = MotivoPendiente.getMotivoPendiente(motivoRenovacionPendiente);
+			textoNuevo.setMotivoPendiente(motivoPendiente);
+		}
+		else
+			textoNuevo.setMotivoPendiente(null);
+		textoNuevo.setFechaCreacion(new Date());
+		textoNuevo.setUsuario(usuario);
+		
+		Texto textoBase = srvTexto.obtenerTextoPorCicloTipoInfTipoMailYMotivo(ciclo, tipoInformeId, tipoMail, motivoPendiente, motivoNoRenov);
+		if(textoBase == null){
+			try {
+				srvTexto.guardarTexto(textoNuevo);
+				mensaje= "El texto de mail ha sido guardado satisfactoriamente";
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+				System.out.println(e.getCause());
+				error="Se produjo un error";
+			}
+		}
+		else{
+			error = "Ya existe un texto de mail para el ciclo, el tipo de informe y el tipo de mail seleccionado";
+		}
+		
+		return verTextosMailView(request, session, null, null, null, null, null, null, null, null, mensaje, error);
+	}
+
+	@RequestMapping("/textos/editarTextoView.do")
+	public ModelAndView editarTextoView(HttpServletRequest request,
+			@RequestParam("idTexto") Long idTexto,
+			@RequestParam("accion") String accion){
+		Map<String, Object> model = new HashMap<String, Object>();
+		Texto texto = srvTexto.obtenerTextoPorId(idTexto);
+		model.put("ciclos", srvCiclo.obtenerCiclosParaCreacionBeca());
+		model.put("cicloId", texto.getCicloPrograma().getId()); 
+		model.put("tiposInforme", InformeUtils.getTipoInformes());
+		model.put("tipoInformeId", texto.getTipoInforme());
+		model.put("tiposMail", FormateadorMail.getTipoMails());
+		model.put("tipoMailId", texto.getTipoMail());
+		model.put("motivosNoRenovacion", MotivoNoRenovacion.getmotivoNoRenovacion());
+		if(texto.getMotivoNoRenovacion() != null)
+			model.put("idMotivoNoRenovacion", texto.getMotivoNoRenovacion().getId());  
+		else
+			model.put("idMotivoNoRenovacion", null);   
+		model.put("motivosPendiente", MotivoPendiente.getMotivoPendiente());
+		if(texto.getMotivoPendiente() != null)
+			model.put("idMotivoPendiente", texto.getMotivoPendiente().getId());
+		else
+			model.put("idMotivoPendiente", null);		
+		model.put("titulo", texto.getTitulo());
+		String destinatario = "";
+		if((texto.getDestinatario().length() > 4 )&&(texto.getDestinatario().substring(0, 4).equals("<br>")))
+			destinatario = "\r\n" + texto.getDestinatario().replace("<br>","\r\n");
+		else
+			destinatario = texto.getDestinatario().replace("<br>","\r\n");
+		model.put("destinatario", destinatario);
+		
+		String cuerpo = "";
+		if((texto.getCuerpo().length() > 4)&&(texto.getCuerpo().substring(0, 4).equals("<br>")))
+			cuerpo = "\r\n" + texto.getCuerpo().replace("<br>","\r\n");
+		else
+			cuerpo = texto.getCuerpo().replace("<br>","\r\n");
+		model.put("cuerpo", cuerpo);
+
+		String firma = "";
+		if((texto.getFirma().length() > 4)&&(texto.getFirma().substring(0, 4).equals("<br>")))
+			firma = "\r\n" + texto.getFirma().replace("<br>","\r\n");
+		else
+			firma = texto.getFirma().replace("<br>","\r\n");
+		model.put("firma", firma);
+		
+		model.put("fechaCreacion", texto.getFechaCreacion());
+		model.put("fechaModificacion", texto.getFechaModicacion());		
+		model.put("accion", accion);
+		model.put("idTexto", idTexto);
+		model.put("urlRegreso", "/texto/verTextosMailView.do");
+		
+		return forward("/textos/altaTextoMail", model);
+	}
+	
+	@RequestMapping("/textos/modificarTextoMail.do")
+	public ModelAndView modificarTextoMail(HttpServletRequest request,
+			HttpSession session,
+			@RequestParam("idTexto") Long  idTexto,
+			@RequestParam("cicloId") Long cicloId,
+			@RequestParam("tipoInformeId") String tipoInformeId,
+			@RequestParam(required= false, value="tipoMailId") String  tipoMailId,
+			@RequestParam(required= false, value="idMotivoNoRenovacion") Integer idMotivoNoRenovacion,
+			@RequestParam(required= false, value="idMotivoPendiente") Integer idMotivoPendiente,
+			@RequestParam("titu") String titulo,
+			@RequestParam("desti") String destinatario,
+			@RequestParam("cuer") String cuerpo,
+			@RequestParam("fir") String firma){
+		
+		Persona usuario = obtenerPersona(request);
+		String mensaje = "";
+		String error = "";
+		Integer motivoNoRenovacion = idMotivoNoRenovacion != null && idMotivoNoRenovacion.equals(0) ? null : idMotivoNoRenovacion;
+		Integer motivoRenovacionPendiente = idMotivoPendiente != null && idMotivoPendiente.equals(0) ? null : idMotivoPendiente;
+		MotivoPendiente motivoPendiente = null;
+		MotivoNoRenovacion motivoNoRenov = null;
+		CicloPrograma ciclo = srvCiclo.obtenerCiclo(cicloId);
+		String tipoMail = StringUtils.isNotBlank(tipoMailId)? tipoMailId : FormateadorMail.getTipoMailIndividual();
+				
+		Texto texto = srvTexto.obtenerTextoPorId(idTexto);
+		if(texto != null){			
+			texto.setCicloPrograma(ciclo);
+			texto.setTipoInforme(tipoInformeId);
+			texto.setTipoMail(tipoMail);
+			if(motivoNoRenovacion != null){
+				motivoNoRenov = MotivoNoRenovacion.getmotivoNoIncorporacion(motivoNoRenovacion);
+				texto.setMotivoNoRenovacion(motivoNoRenov);
+			}
+			else
+				texto.setMotivoNoRenovacion(null);
+			if(motivoRenovacionPendiente != null){
+				motivoPendiente = MotivoPendiente.getMotivoPendiente(motivoRenovacionPendiente);
+				texto.setMotivoPendiente(motivoPendiente);
+			}
+			else
+				texto.setMotivoPendiente(null);
+			texto.setTitulo(titulo.replace("&#8207;",""));
+			texto.setDestinatario(destinatario.replace("\r\n","<br>"));
+			texto.setCuerpo(cuerpo.replace("\r\n","<br>"));
+			texto.setFirma(firma.replace("\r\n","<br>"));
+			texto.setFechaModicacion(new Date());
+			texto.setUsuario(usuario);
+	
+			try {
+				srvTexto.guardarTexto(texto);
+				mensaje= "El texto de mail ha sido modificado satisfactoriamente";
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+				System.out.println(e.getCause());
+				error="Se produjo un error";
+			}
+		}
+		else{
+			error = "No existe un texto de mail para el ciclo, el tipo de informe y el tipo de mail seleccionado";
+		}
+		
+		return verTextosMailView(request, session, null, null, null, null, null, null, null, null, mensaje, error);
+	}
+	
+}

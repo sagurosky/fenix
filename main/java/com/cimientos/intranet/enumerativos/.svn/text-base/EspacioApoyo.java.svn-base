@@ -1,0 +1,49 @@
+package com.cimientos.intranet.enumerativos;
+
+import java.security.InvalidParameterException;
+import java.util.Arrays;
+import java.util.List;
+
+public enum EspacioApoyo {
+
+	APOYO(1, "Apoyo escolar"), 
+	ESPACIOS(2, "Espacios de tutoría");
+	
+	private Integer id;
+	private String valor;
+	
+	
+	private EspacioApoyo(Integer id, String valor) {
+		this.id = id;
+		this.valor = valor;
+	}
+	
+	public static EspacioApoyo getEspacioApoyo(Integer id){
+		switch (id) {
+		case 1:
+			return APOYO;
+		case 2:
+			return ESPACIOS;
+
+		default:
+			throw new InvalidParameterException("Espacio de apoyo desconocido: " + id);
+		}
+	}	
+	
+	public static List<EspacioApoyo> getEspacioApoyo(){
+		return Arrays.asList(values());
+	}
+	
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public String getValor() {
+		return valor;
+	}
+	public void setValor(String valor) {
+		this.valor = valor;
+	}	
+}

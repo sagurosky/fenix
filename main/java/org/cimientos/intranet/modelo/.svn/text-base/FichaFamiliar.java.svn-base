@@ -1,0 +1,363 @@
+package org.cimientos.intranet.modelo;
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+import com.cimientos.intranet.enumerativos.Convive;
+import com.cimientos.intranet.enumerativos.NivelEducativo;
+import com.cimientos.intranet.enumerativos.Vinculo;
+
+
+/**
+ * The Class FichaFamiliar.
+ *
+ * @author nlopez
+ */
+
+@Entity
+public class FichaFamiliar implements Serializable{
+
+	/** The id. */
+	@Id
+	@GeneratedValue
+	private Long id;
+	
+	/** The ficha familiar. */
+	private String fichaFamiliar;
+	
+	/** The nombre. */
+	private String nombre;
+	
+	/** The apellido. */
+	private String apellido;
+	
+	/** The edad. */
+	private Integer edad;
+	
+	/** The convive. */
+	@Enumerated(EnumType.ORDINAL)
+	private Convive convive;
+	
+	/** The nivel educativo. */
+	@Enumerated(EnumType.ORDINAL)
+	private NivelEducativo nivelEducativo;
+	
+	/** The abandono repitencia. */
+	private String abandonoRepitencia;
+	
+	/** The ocupacion laboral. */
+	private String ocupacionLaboral;
+	
+	/** The estabilidad laboral. */
+	private String estabilidadLaboral;
+	
+	/** The renumeracion. */
+	private Integer renumeracion;
+	
+	/** The otros ingresos. */
+	private String otrosIngresos;
+	
+	/** The vinculo. */
+	@Enumerated(EnumType.ORDINAL)
+	private Vinculo vinculo;
+	@Column(length=450)
+	private String observacionesTS;
+	
+	/**
+	 * Gets the id.
+	 *
+	 * @return the id
+	 * @since 01-dic-2010
+	 * @author cfigueroa
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * Sets the id.
+	 *
+	 * @param idFichaFamiliar the new id
+	 * @since 01-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setId(Long idFichaFamiliar) {
+		this.id = idFichaFamiliar;
+	}
+
+	/**
+	 * Gets the ficha familiar.
+	 *
+	 * @return the fichaFamiliar
+	 * @since 01-dic-2010
+	 * @author cfigueroa
+	 */
+	public String getFichaFamiliar() {
+		return fichaFamiliar;
+	}
+
+	/**
+	 * Sets the ficha familiar.
+	 *
+	 * @param fichaFamiliar the fichaFamiliar to set
+	 * @since 01-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setFichaFamiliar(String fichaFamiliar) {
+		this.fichaFamiliar = fichaFamiliar;
+	}
+
+	/**
+	 * Gets the nombre.
+	 *
+	 * @return the nombre
+	 * @since 01-dic-2010
+	 * @author cfigueroa
+	 */
+	public String getNombre() {
+		return nombre;
+	}
+
+	/**
+	 * Sets the nombre.
+	 *
+	 * @param nombre the nombre to set
+	 * @since 01-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	/**
+	 * Gets the apellido.
+	 *
+	 * @return the apellido
+	 * @since 01-dic-2010
+	 * @author cfigueroa
+	 */
+	public String getApellido() {
+		return apellido;
+	}
+
+	/**
+	 * Sets the apellido.
+	 *
+	 * @param apellido the apellido to set
+	 * @since 01-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
+
+	/**
+	 * Gets the edad.
+	 *
+	 * @return the edad
+	 * @since 01-dic-2010
+	 * @author cfigueroa
+	 */
+	public Integer getEdad() {
+		return edad;
+	}
+
+	/**
+	 * Sets the edad.
+	 *
+	 * @param edad the edad to set
+	 * @since 01-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setEdad(Integer edad) {
+		this.edad = edad;
+	}
+
+	/**
+	 * Checks if is convive.
+	 *
+	 * @return the convive
+	 * @since 01-dic-2010
+	 * @author cfigueroa
+	 */
+	public Convive getConvive() {
+		return convive;
+	}
+
+	/**
+	 * Sets the convive.
+	 *
+	 * @param convive the convive to set
+	 * @since 01-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setConvive(Convive convive) {
+		this.convive = convive;
+	}
+
+	/**
+	 * Gets the nivel educativo.
+	 *
+	 * @return the nivelEducativo
+	 * @since 01-dic-2010
+	 * @author cfigueroa
+	 */
+	public NivelEducativo getNivelEducativo() {
+		return nivelEducativo;
+	}
+
+	/**
+	 * Sets the nivel educativo.
+	 *
+	 * @param nivelEducativo the nivelEducativo to set
+	 * @since 01-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setNivelEducativo(NivelEducativo nivelEducativo) {
+		this.nivelEducativo = nivelEducativo;
+	}
+
+	/**
+	 * Gets the abandono repitencia.
+	 *
+	 * @return the abandonoRepitencia
+	 * @since 01-dic-2010
+	 * @author cfigueroa
+	 */
+	public String getAbandonoRepitencia() {
+		return abandonoRepitencia;
+	}
+
+	/**
+	 * Sets the abandono repitencia.
+	 *
+	 * @param abandonoRepitencia the abandonoRepitencia to set
+	 * @since 01-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setAbandonoRepitencia(String abandonoRepitencia) {
+		this.abandonoRepitencia = abandonoRepitencia;
+	}
+
+	/**
+	 * Gets the ocupacion laboral.
+	 *
+	 * @return the ocupacionLaboral
+	 * @since 01-dic-2010
+	 * @author cfigueroa
+	 */
+	public String getOcupacionLaboral() {
+		return ocupacionLaboral;
+	}
+
+	/**
+	 * Sets the ocupacion laboral.
+	 *
+	 * @param ocupacionLaboral the ocupacionLaboral to set
+	 * @since 01-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setOcupacionLaboral(String ocupacionLaboral) {
+		this.ocupacionLaboral = ocupacionLaboral;
+	}
+
+	/**
+	 * Checks if is estabilidad laboral.
+	 *
+	 * @return the estabilidadLaboral
+	 * @since 01-dic-2010
+	 * @author cfigueroa
+	 */
+	public String getEstabilidadLaboral() {
+		return estabilidadLaboral;
+	}
+
+	/**
+	 * Sets the estabilidad laboral.
+	 *
+	 * @param estabilidadLaboral the estabilidadLaboral to set
+	 * @since 01-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setEstabilidadLaboral(String estabilidadLaboral) {
+		this.estabilidadLaboral = estabilidadLaboral;
+	}
+
+	/**
+	 * Gets the renumeracion.
+	 *
+	 * @return the renumeracion
+	 * @since 01-dic-2010
+	 * @author cfigueroa
+	 */
+	public Integer getRenumeracion() {
+		return renumeracion;
+	}
+
+	/**
+	 * Sets the renumeracion.
+	 *
+	 * @param renumeracion the renumeracion to set
+	 * @since 01-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setRenumeracion(Integer renumeracion) {
+		this.renumeracion = renumeracion;
+	}
+
+	/**
+	 * Gets the otros ingresos.
+	 *
+	 * @return the otrosIngresos
+	 * @since 01-dic-2010
+	 * @author cfigueroa
+	 */
+	public String getOtrosIngresos() {
+		return otrosIngresos;
+	}
+
+	/**
+	 * Sets the otros ingresos.
+	 *
+	 * @param otrosIngresos the otrosIngresos to set
+	 * @since 01-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setOtrosIngresos(String otrosIngresos) {
+		this.otrosIngresos = otrosIngresos;
+	}
+
+	/**
+	 * Gets the vinculo.
+	 *
+	 * @return the vinculo
+	 */
+	public Vinculo getVinculo() {
+		return vinculo;
+	}
+
+	/**
+	 * Sets the vinculo.
+	 *
+	 * @param vinculo the new vinculo
+	 */
+	public void setVinculo(Vinculo vinculo) {
+		this.vinculo = vinculo;
+	}
+
+	public String getObservacionesTS() {
+		return observacionesTS;
+	}
+
+	public void setObservacionesTS(String observacionesTS) {
+		this.observacionesTS = observacionesTS;
+	}
+	
+	
+}

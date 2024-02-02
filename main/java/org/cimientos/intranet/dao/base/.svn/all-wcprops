@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/base
+END
+SpringHibernateDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/base/SpringHibernateDao.java
+END
+Dao.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/base/Dao.java
+END
+HQLHelper.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dao/base/HQLHelper.java
+END

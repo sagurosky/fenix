@@ -1,0 +1,131 @@
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/fenix/!svn/ver/298/src/main/java/org/cimientos/intranet/dto
+END
+InformeCesacionDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/fenix/!svn/ver/348/src/main/java/org/cimientos/intranet/dto/InformeCesacionDTO.java
+END
+BoletinDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/fenix/!svn/ver/363/src/main/java/org/cimientos/intranet/dto/BoletinDTO.java
+END
+AlumnoActivoDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/fenix/!svn/ver/298/src/main/java/org/cimientos/intranet/dto/AlumnoActivoDTO.java
+END
+CreacionCuentaDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dto/CreacionCuentaDTO.java
+END
+EscuelaDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/fenix/!svn/ver/383/src/main/java/org/cimientos/intranet/dto/EscuelaDTO.java
+END
+EaDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dto/EaDto.java
+END
+ReporteEntrevistaSeleccionDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dto/ReporteEntrevistaSeleccionDTO.java
+END
+CartaDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dto/CartaDTO.java
+END
+BecaDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/fenix/!svn/ver/35/src/main/java/org/cimientos/intranet/dto/BecaDTO.java
+END
+ExportacionEntrevistaDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/fenix/!svn/ver/359/src/main/java/org/cimientos/intranet/dto/ExportacionEntrevistaDTO.java
+END
+ObjetivoSeleccionDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dto/ObjetivoSeleccionDTO.java
+END
+ConvocadoDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dto/ConvocadoDTO.java
+END
+PanelControlSeleccionDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dto/PanelControlSeleccionDTO.java
+END
+CierreDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dto/CierreDTO.java
+END
+InformeFPDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/fenix/!svn/ver/348/src/main/java/org/cimientos/intranet/dto/InformeFPDTO.java
+END
+ExportarAlumnosDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dto/ExportarAlumnosDTO.java
+END
+TablaDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dto/TablaDTO.java
+END
+InformeIS2DTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/fenix/!svn/ver/348/src/main/java/org/cimientos/intranet/dto/InformeIS2DTO.java
+END
+InformeIS3DTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/fenix/!svn/ver/348/src/main/java/org/cimientos/intranet/dto/InformeIS3DTO.java
+END
+EntrevistaTSDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/dto/EntrevistaTSDTO.java
+END
+EntrevistaSeleccionDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/fenix/!svn/ver/409/src/main/java/org/cimientos/intranet/dto/EntrevistaSeleccionDTO.java
+END

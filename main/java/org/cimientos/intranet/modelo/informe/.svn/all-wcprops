@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/fenix/!svn/ver/298/src/main/java/org/cimientos/intranet/modelo/informe
+END
+ComunicadoPendiente.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/modelo/informe/ComunicadoPendiente.java
+END
+ComunicadoNoRenovacion.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/modelo/informe/ComunicadoNoRenovacion.java
+END
+InformeIS3.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/fenix/!svn/ver/314/src/main/java/org/cimientos/intranet/modelo/informe/InformeIS3.java
+END
+Informe.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/fenix/!svn/ver/348/src/main/java/org/cimientos/intranet/modelo/informe/Informe.java
+END
+InformeIS2.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/fenix/!svn/ver/298/src/main/java/org/cimientos/intranet/modelo/informe/InformeIS2.java
+END
+InformeIS1.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/fenix/!svn/ver/362/src/main/java/org/cimientos/intranet/modelo/informe/InformeIS1.java
+END
+EstadoInforme.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/fenix/!svn/ver/362/src/main/java/org/cimientos/intranet/modelo/informe/EstadoInforme.java
+END
+FichaPresentacion.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/fenix/!svn/ver/362/src/main/java/org/cimientos/intranet/modelo/informe/FichaPresentacion.java
+END
+InformeCesacion.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/fenix/!svn/ver/342/src/main/java/org/cimientos/intranet/modelo/informe/InformeCesacion.java
+END

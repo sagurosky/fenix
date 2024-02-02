@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/fenix/!svn/ver/269/src/main/java/org/cimientos/intranet/utils/cuentas
+END
+TXTFileReader.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/utils/cuentas/TXTFileReader.java
+END
+DummyDatosFaltantes.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/fenix/!svn/ver/399/src/main/java/org/cimientos/intranet/utils/cuentas/DummyDatosFaltantes.java
+END
+TipoCuenta.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/utils/cuentas/TipoCuenta.java
+END
+ArchivoSolicitudCuentaMacro.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/fenix/!svn/ver/269/src/main/java/org/cimientos/intranet/utils/cuentas/ArchivoSolicitudCuentaMacro.java
+END
+TXTFileHelper.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/fenix/!svn/ver/248/src/main/java/org/cimientos/intranet/utils/cuentas/TXTFileHelper.java
+END
+ArchivoSolicitudCuentaGalicia.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/fenix/!svn/ver/269/src/main/java/org/cimientos/intranet/utils/cuentas/ArchivoSolicitudCuentaGalicia.java
+END
+ArchivoCuenta.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/utils/cuentas/ArchivoCuenta.java
+END
+CuentaExcelView.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/fenix/!svn/ver/264/src/main/java/org/cimientos/intranet/utils/cuentas/CuentaExcelView.java
+END

@@ -1,0 +1,12 @@
+@CHARSET "ISO-8859-1";
+
+a:link   
+{   
+ text-decoration:none;   
+}   
+
+a:hover {
+  background: #cfc2d1;
+  
+  text-decoration:none;   
+}

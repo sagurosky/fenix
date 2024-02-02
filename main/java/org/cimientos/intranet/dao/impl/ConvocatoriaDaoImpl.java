@@ -1,0 +1,137 @@
+package org.cimientos.intranet.dao.impl;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.cimientos.intranet.dao.ConvocatoriaDao;
+import org.cimientos.intranet.dao.base.SpringHibernateDao;
+import org.cimientos.intranet.modelo.CicloPrograma;
+import org.cimientos.intranet.modelo.EstadoCiclo;
+import org.cimientos.intranet.modelo.candidato.convocatoria.Convocatoria;
+import org.cimientos.intranet.modelo.candidato.convocatoria.ConvocatoriaSeleccion;
+import org.cimientos.intranet.modelo.ubicacion.ZonaCimientos;
+import org.hibernate.Criteria;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+/**
+ * @author nlopez
+ *
+ */
+
+@Repository
+public class ConvocatoriaDaoImpl extends SpringHibernateDao<Convocatoria> 
+	implements ConvocatoriaDao{
+	
+		
+	@Autowired
+	public ConvocatoriaDaoImpl( SessionFactory sessionFactory ){
+		super( sessionFactory );
+	}
+
+	@Override
+	protected Class<Convocatoria> getObjetoManejado() {
+		return Convocatoria.class;		
+	}
+
+	@Override
+	public List<Convocatoria> obtenerPorCiclo(CicloPrograma cicloActual) {
+		Criteria criteria = getSession().createCriteria(getObjetoManejado());
+		criteria.add(Restrictions.eq("cicloPrograma", cicloActual));
+		List<Convocatoria> result = criteria.list();
+		if(result.isEmpty()){
+			return null;
+		}else{
+			return result;	
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see org.cimientos.intranet.dao.ConvocatoriaDao#guardarConvocatoriaSeleccion(org.cimientos.intranet.modelo.candidato.convocatoria.Convocatoria)
+	 */
+	@Override
+	public void guardarConvocatoriaSeleccion(Convocatoria convocatoria) {
+		Criteria criteria = getSession().createCriteria(ConvocatoriaSeleccion.class);
+		criteria.add(Restrictions.eq("idConvocatoria", convocatoria.getIdConvocatoria()));
+		List<ConvocatoriaSeleccion> list = criteria.list();
+		if(list.isEmpty()){
+			ConvocatoriaSeleccion convocatoriaSeleccion = new ConvocatoriaSeleccion(convocatoria);
+			this.getHibernateTemplate().save(convocatoriaSeleccion);
+		}
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.cimientos.intranet.dao.ConvocatoriaDao#obtenerConvocatoriaSeleccion(java.lang.Long)
+	 */
+	@Override
+	public ConvocatoriaSeleccion obtenerConvocatoriaSeleccion(Long id) {
+		Criteria criteria = getSession().createCriteria(ConvocatoriaSeleccion.class);
+		criteria.add(Restrictions.eq("idConvocatoria", id));
+		List<ConvocatoriaSeleccion> list = criteria.list();
+		if(list.isEmpty()){
+			return null;
+		}
+		return (ConvocatoriaSeleccion)list.get(0);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.cimientos.intranet.dao.ConvocatoriaDao#obtenerConvocatoriasPorZona(org.cimientos.intranet.modelo.ubicacion.ZonaCimientos)
+	 */
+	@Override
+	public List<Convocatoria> obtenerConvocatoriasPorZonaYNombre(ZonaCimientos zona, String texto, int cantidadMax) {
+		Criteria criteria = getSession().createCriteria(getObjetoManejado());
+		criteria.add(Restrictions.eq("zonaCimientos", zona));
+		criteria.add(Restrictions.like("nombre", "%"+texto+"%"));
+		criteria.setMaxResults(cantidadMax);
+		return criteria.list();
+	}
+	
+	@Override
+	public List<Convocatoria> obtenerConvocatoriasPorNombre(String texto, int cantidadMax) {
+		Criteria criteria = getSession().createCriteria(getObjetoManejado());
+		criteria.add(Restrictions.like("nombre", "%"+texto+"%"));
+		criteria.setMaxResults(cantidadMax);
+		return criteria.list();
+	}
+	
+	@Override
+	public List<Convocatoria> obtenerConvocatoriasDisponibles() {
+		Criteria criteria = getSession().createCriteria(getObjetoManejado());
+		criteria.createAlias("cicloPrograma", "cicloPrograma");
+		List<EstadoCiclo> estadosCiclo = new ArrayList<EstadoCiclo>();
+		estadosCiclo.add(EstadoCiclo.ACTUAL);
+		estadosCiclo.add(EstadoCiclo.DISPONIBLE);
+		criteria.add(Restrictions.in("cicloPrograma.estado", estadosCiclo));
+		criteria.addOrder(Order.asc("nombre"));
+		List<Convocatoria> result = criteria.list();
+		if(result.isEmpty()){
+			return null;
+		}else{
+			return result;	
+		}
+	}
+	
+	@Override
+	public List<Convocatoria> obtenerConvocatoriasDisponiblesPorNombre(String texto) {
+		Criteria criteria = getSession().createCriteria(getObjetoManejado());
+		criteria.createAlias("cicloPrograma", "cicloPrograma");
+		List<EstadoCiclo> estadosCiclo = new ArrayList<EstadoCiclo>();
+		//estadosCiclo.add(EstadoCiclo.ACTUAL);
+		//estadosCiclo.add(EstadoCiclo.DISPONIBLE);
+		//criteria.add(Restrictions.in("cicloPrograma.estado", estadosCiclo));
+		criteria.add(Restrictions.like("nombre", "%"+texto+"%"));
+		criteria.addOrder(Order.asc("nombre"));
+		List<Convocatoria> result = criteria.list();
+		if(result.isEmpty()){
+			return null;
+		}else{
+			return result;	
+		}
+	}
+	
+	
+}

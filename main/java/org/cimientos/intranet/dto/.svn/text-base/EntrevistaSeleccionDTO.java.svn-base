@@ -1,0 +1,1147 @@
+package org.cimientos.intranet.dto;
+
+import java.util.List;
+
+import org.cimientos.intranet.modelo.FichaFamiliar;
+import org.cimientos.intranet.modelo.perfil.AlumnoSeleccion;
+import org.cimientos.intranet.modelo.seleccion.EntrevistaSeleccion;
+
+import com.googlecode.ehcache.annotations.Cacheable;
+
+import org.cimientos.intranet.utils.Formateador;
+
+
+
+/**
+ * The Class EntrevistaSeleccionDTO.
+ */
+public class EntrevistaSeleccionDTO {
+	
+	/** The fichas familiares. */
+	private List<FichaFamiliar> fichasFamiliares;
+
+	/** The perfil alumno. */
+	private AlumnoSeleccion perfilAlumno;
+	
+	/** The entrevista seleccion. */
+	private EntrevistaSeleccion entrevistaSeleccion;
+	
+	/** The estados. */
+	private String estados;
+	
+	/** The dni. */
+	private Integer dni;
+	
+	/** The dni. */
+	private Integer tipo;
+	
+	/** The estado civil. */
+	private Integer estadoCivil;
+	
+	/** The tipo afyp. */
+	private Integer tipoAfyp;
+	
+	/** The vinculoRA. */
+	private Integer vinculoRA;
+	
+	/** The vinculoRA 2. */
+	private Integer vinculoRA2;
+	
+	/** The fecha nacimiento candidato. */
+	private String fechaNacimientoCandidato;
+	
+	/** The nombre fichas. */
+	private List<String> nombreFichas;
+	
+	/** The apellido fichas. */
+	private List<String> apellidoFichas;
+	
+	/** The edad fichas. */
+	private List<String> edadFichas;
+
+	/** The convive fichas. */
+	private List<Integer> conviveFichas;
+	
+	/** The nivel educativo fichas. */
+	private List<Integer> nivelEducativoFichas;
+	
+	/** The abandono repitencia fichas. */
+	private List<String> abandonoRepitenciaFichas;
+	
+	/** The estabilidad laboral fichas. */
+	private List<String> estabilidadLaboralFichas;
+	
+	/** The renumeracion fichas. */
+	private List<String> renumeracionFichas;
+	
+	/** The otros ingresos fichas. */
+	private List<String> otrosIngresosFichas;
+	
+	/** The ocupacion laboral fichas. */
+	private List<String> ocupacionLaboralFichas;
+	
+	/** The id estado entrevista. */
+	private Integer estadoEntrevista;
+	
+	/** The turno. */
+	private Integer turno;
+	
+	/** The relacion vivienda. */
+	private Integer relacionVivienda;
+	
+	/** The compromiso escolaridad. */
+	private Integer compromisoEscolaridad;
+	
+	/** The posibilidad compromiso pbe. */
+	private Integer posibilidadCompromisoPBE;
+	
+	/** The apto como ra. */
+	private Integer aptoComoRA;
+	
+	/** The entrevistador. */
+	//private Integer entrevistador;
+	
+	/** The entrevistador. */
+	private String entrevistador;
+	
+	/** The id compromiso pbe. */
+	private Integer idCompromisoPBE;
+	
+	/** The id compromiso. */
+	private Integer idCompromiso;
+	
+	/** The id anio abandono. */
+	private List<Integer> idAnioAbandono;
+	
+	/** The id anio repitio. */
+	private List<Integer> idAnioRepitio;
+	
+	private Integer idConducta;
+	
+	/** The anio escuela. */
+	private Integer anioEscuela;
+	
+	/** vinculo de la ficha familiar. */
+	private List<Integer> vinculoFFs;
+	
+	/** The id escuela. */
+	private Long idEscuela;
+	
+	/** The nota prim trim. */
+	private List<Integer> notaPrimTrim;
+	
+	/** The nota seg trim. */
+	private List<Integer> notaSegTrim;
+	
+	/** The nota ter trim. */
+	private List<Integer> notaTerTrim;
+	
+	/** The nota final. */
+	private List<Integer> notaFinal;
+	
+	/** The nota marz. */
+	private List<Integer> notaMarzo;
+	
+	/** The nota abril. */
+	private List<Integer> notaDiciembre;
+	
+	/** The id m ateria. */
+	private List<Integer> idMateria;
+	
+	
+	/** The id boletin seleccions. */
+	private List<Long> idBoletinSeleccions;
+	
+	private Long idConvocatoria;
+	
+	private Integer idPerfilALumno;
+	
+	private Integer idMotivoTS;
+	private Integer idMotivoRechazo;
+	private String nombrePeriodo;
+
+	private int edad;
+	
+	
+	/**
+	 * Gets the perfil alumno.
+	 *
+	 * @return the perfil alumno
+	 * @since 14-dic-2010
+	 * @author cfigueroa
+	 */
+	@Cacheable(cacheName = "org.cimientos.intranet.modelo.perfil.PerfilAlumno")
+	public AlumnoSeleccion getPerfilAlumno() {
+		return perfilAlumno;
+	}
+	
+	/**
+	 * Sets the perfil alumno.
+	 *
+	 * @param perfilAlumno the new perfil alumno
+	 * @since 14-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setPerfilAlumno(AlumnoSeleccion perfilAlumno) {
+		this.perfilAlumno = perfilAlumno;
+	}
+	
+	/**
+	 * Gets the estados.
+	 *
+	 * @return the estados
+	 * @since 14-dic-2010
+	 * @author cfigueroa
+	 */
+	public String getEstados() {
+		return estados;
+	}
+	
+	/**
+	 * Sets the estados.
+	 *
+	 * @param estados the new estados
+	 * @since 14-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setEstados(String estados) {
+		this.estados = estados;
+	}
+	
+	/**
+	 * Gets the dni.
+	 *
+	 * @return the dni
+	 * @since 14-dic-2010
+	 * @author cfigueroa
+	 */
+	public Integer getDni() {
+		return dni;
+	}
+	
+	/**
+	 * Sets the dni.
+	 *
+	 * @param dni the new dni
+	 * @since 14-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setDni(Integer dni) {
+		this.dni = dni;
+	}
+	
+	public Integer getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(Integer tipo) {
+		this.tipo = tipo;
+	}
+
+	/**
+	 * Gets the estado civil.
+	 *
+	 * @return the estado civil
+	 * @since 14-dic-2010
+	 * @author cfigueroa
+	 */
+	public Integer getEstadoCivil() {
+		return estadoCivil;
+	}
+	
+	/**
+	 * Sets the estado civil.
+	 *
+	 * @param estadoCivil the new estado civil
+	 * @since 14-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setEstadoCivil(Integer estadoCivil) {
+		this.estadoCivil = estadoCivil;
+	}
+	
+	/**
+	 * Gets the tipo afyp.
+	 *
+	 * @return the tipo afyp
+	 * @since 14-dic-2010
+	 * @author cfigueroa
+	 */
+	public Integer getTipoAfyp() {
+		return tipoAfyp;
+	}
+	
+	/**
+	 * Sets the tipo afyp.
+	 *
+	 * @param tipoAfyp the new tipo afyp
+	 * @since 14-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setTipoAfyp(Integer tipoAfyp) {
+		this.tipoAfyp = tipoAfyp;
+	}
+	
+	/**
+	 * Gets the vinculoRA.
+	 *
+	 * @return the vinculoRA
+	 * @since 14-dic-2010
+	 * @author cfigueroa
+	 */
+	public Integer getVinculoRA() {
+		return vinculoRA;
+	}
+	
+	/**
+	 * Sets the vinculoRA.
+	 *
+	 * @param vinculo the new vinculo ra
+	 * @since 14-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setVinculoRA(Integer vinculo) {
+		this.vinculoRA = vinculo;
+	}
+	
+	/**
+	 * Gets the fecha nacimiento candidato.
+	 *
+	 * @return the fecha nacimiento candidato
+	 * @since 14-dic-2010
+	 * @author cfigueroa
+	 */
+	public String getFechaNacimientoCandidato() {
+		return fechaNacimientoCandidato;
+	}
+	
+	/**
+	 * Sets the fecha nacimiento candidato.
+	 *
+	 * @param fechaNacimientoCandidato the new fecha nacimiento candidato
+	 * @since 14-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setFechaNacimientoCandidato(String fechaNacimientoCandidato) {
+		this.fechaNacimientoCandidato = fechaNacimientoCandidato;
+	}
+	
+	/**
+	 * Gets the nombre fichas.
+	 *
+	 * @return the nombre fichas
+	 * @since 14-dic-2010
+	 * @author cfigueroa
+	 */
+	public List<String> getNombreFichas() {
+		return nombreFichas;
+	}
+	
+	/**
+	 * Sets the nombre fichas.
+	 *
+	 * @param nombreFichas the new nombre fichas
+	 * @since 14-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setNombreFichas(List<String> nombreFichas) {
+		this.nombreFichas = nombreFichas;
+	}
+	
+	/**
+	 * Gets the apellido fichas.
+	 *
+	 * @return the apellido fichas
+	 * @since 14-dic-2010
+	 * @author cfigueroa
+	 */
+	public List<String> getApellidoFichas() {
+		return apellidoFichas;
+	}
+	
+	/**
+	 * Sets the apellido fichas.
+	 *
+	 * @param apellidoFichas the new apellido fichas
+	 * @since 14-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setApellidoFichas(List<String> apellidoFichas) {
+		this.apellidoFichas = apellidoFichas;
+	}
+	
+	/**
+	 * Gets the edad fichas.
+	 *
+	 * @return the edad fichas
+	 * @since 14-dic-2010
+	 * @author cfigueroa
+	 */
+	public List<String> getEdadFichas() {
+		return edadFichas;
+	}
+	
+	/**
+	 * Sets the edad fichas.
+	 *
+	 * @param edadFichas the new edad fichas
+	 * @since 14-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setEdadFichas(List<String> edadFichas) {
+		this.edadFichas = edadFichas;
+	}
+	
+	/**
+	 * Gets the convive fichas.
+	 *
+	 * @return the convive fichas
+	 * @since 14-dic-2010
+	 * @author cfigueroa
+	 */
+	public List<Integer> getConviveFichas() {
+		return conviveFichas;
+	}
+	
+	/**
+	 * Sets the convive fichas.
+	 *
+	 * @param conviveFichas the new convive fichas
+	 * @since 14-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setConviveFichas(List<Integer> conviveFichas) {
+		this.conviveFichas = conviveFichas;
+	}
+	
+	/**
+	 * Gets the nivel educativo fichas.
+	 *
+	 * @return the nivel educativo fichas
+	 * @since 14-dic-2010
+	 * @author cfigueroa
+	 */
+	public List<Integer> getNivelEducativoFichas() {
+		return nivelEducativoFichas;
+	}
+	
+	/**
+	 * Sets the nivel educativo fichas.
+	 *
+	 * @param nivelEducativoFichas the new nivel educativo fichas
+	 * @since 14-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setNivelEducativoFichas(List<Integer> nivelEducativoFichas) {
+		this.nivelEducativoFichas = nivelEducativoFichas;
+	}
+	
+	/**
+	 * Gets the abandono repitencia fichas.
+	 *
+	 * @return the abandono repitencia fichas
+	 * @since 14-dic-2010
+	 * @author cfigueroa
+	 */
+	public List<String> getAbandonoRepitenciaFichas() {
+		return abandonoRepitenciaFichas;
+	}
+	
+	/**
+	 * Sets the abandono repitencia fichas.
+	 *
+	 * @param abandonoRepitenciaFichas the new abandono repitencia fichas
+	 * @since 14-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setAbandonoRepitenciaFichas(List<String> abandonoRepitenciaFichas) {
+		this.abandonoRepitenciaFichas = abandonoRepitenciaFichas;
+	}
+	
+	/**
+	 * Gets the estabilidad laboral fichas.
+	 *
+	 * @return the estabilidad laboral fichas
+	 * @since 14-dic-2010
+	 * @author cfigueroa
+	 */
+	public List<String> getEstabilidadLaboralFichas() {
+		return estabilidadLaboralFichas;
+	}
+	
+	/**
+	 * Sets the estabilidad laboral fichas.
+	 *
+	 * @param estabilidadLaboralFichas the new estabilidad laboral fichas
+	 * @since 14-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setEstabilidadLaboralFichas(List<String> estabilidadLaboralFichas) {
+		this.estabilidadLaboralFichas = estabilidadLaboralFichas;
+	}
+	
+	/**
+	 * Gets the renumeracion fichas.
+	 *
+	 * @return the renumeracion fichas
+	 * @since 14-dic-2010
+	 * @author cfigueroa
+	 */
+	public List<String> getRenumeracionFichas() {
+		return renumeracionFichas;
+	}
+	
+	/**
+	 * Sets the renumeracion fichas.
+	 *
+	 * @param renumeracionFichas the new renumeracion fichas
+	 * @since 14-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setRenumeracionFichas(List<String> renumeracionFichas) {
+		this.renumeracionFichas = renumeracionFichas;
+	}
+	
+	/**
+	 * Gets the otros ingresos fichas.
+	 *
+	 * @return the otros ingresos fichas
+	 * @since 14-dic-2010
+	 * @author cfigueroa
+	 */
+	public List<String> getOtrosIngresosFichas() {
+		return otrosIngresosFichas;
+	}
+	
+	/**
+	 * Sets the otros ingresos fichas.
+	 *
+	 * @param otrosIngresosFichas the new otros ingresos fichas
+	 * @since 14-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setOtrosIngresosFichas(List<String> otrosIngresosFichas) {
+		this.otrosIngresosFichas = otrosIngresosFichas;
+	}
+	
+	/**
+	 * Gets the ocupacion laboral fichas.
+	 *
+	 * @return the ocupacion laboral fichas
+	 * @since 14-dic-2010
+	 * @author cfigueroa
+	 */
+	public List<String> getOcupacionLaboralFichas() {
+		return ocupacionLaboralFichas;
+	}
+	
+	/**
+	 * Sets the ocupacion laboral fichas.
+	 *
+	 * @param ocupacionLaboralFichas the new ocupacion laboral fichas
+	 * @since 14-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setOcupacionLaboralFichas(List<String> ocupacionLaboralFichas) {
+		this.ocupacionLaboralFichas = ocupacionLaboralFichas;
+	}
+	
+	/**
+	 * Gets the id estado entrevista.
+	 *
+	 * @return the id estado entrevista
+	 * @since 14-dic-2010
+	 * @author cfigueroa
+	 */
+	public Integer getEstadoEntrevista() {
+		return estadoEntrevista;
+	}
+	
+	/**
+	 * Sets the id estado entrevista.
+	 *
+	 * @param idEstadoEntrevista the new estado entrevista
+	 * @since 14-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setEstadoEntrevista(Integer idEstadoEntrevista) {
+		this.estadoEntrevista = idEstadoEntrevista;
+	}
+
+	/**
+	 * Gets the entrevista seleccion.
+	 *
+	 * @return the entrevista seleccion
+	 * @since 14-dic-2010
+	 * @author cfigueroa
+	 */
+	public EntrevistaSeleccion getEntrevistaSeleccion() {
+		return entrevistaSeleccion;
+	}
+
+	/**
+	 * Sets the entrevista seleccion.
+	 *
+	 * @param entrevistaSeleccion the new entrevista seleccion
+	 * @since 14-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setEntrevistaSeleccion(EntrevistaSeleccion entrevistaSeleccion) {
+		this.entrevistaSeleccion = entrevistaSeleccion;
+	}
+
+	/**
+	 * Gets the turno.
+	 *
+	 * @return the turno
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public Integer getTurno() {
+		return turno;
+	}
+
+	/**
+	 * Sets the turno.
+	 *
+	 * @param turno the new turno
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public void setTurno(Integer turno) {
+		this.turno = turno;
+	}
+
+	/**
+	 * Gets the fichas familiares.
+	 *
+	 * @return the fichas familiares
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public List<FichaFamiliar> getFichasFamiliares() {
+		return fichasFamiliares;
+	}
+
+	/**
+	 * Sets the fichas familiares.
+	 *
+	 * @param fichasFamiliares the new fichas familiares
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public void setFichasFamiliares(List<FichaFamiliar> fichasFamiliares) {
+		this.fichasFamiliares = fichasFamiliares;
+	}
+
+	/**
+	 * Gets the relacion vivienda.
+	 *
+	 * @return the relacionVivienda
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public Integer getRelacionVivienda() {
+		return relacionVivienda;
+	}
+
+	/**
+	 * Sets the relacion vivienda.
+	 *
+	 * @param relacionVivienda the relacionVivienda to set
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public void setRelacionVivienda(Integer relacionVivienda) {
+		this.relacionVivienda = relacionVivienda;
+	}
+
+	/**
+	 * Gets the compromiso escolaridad.
+	 *
+	 * @return the compromisoEscolaridad
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public Integer getCompromisoEscolaridad() {
+		return compromisoEscolaridad;
+	}
+
+	/**
+	 * Sets the compromiso escolaridad.
+	 *
+	 * @param compromisoEscolaridad the compromisoEscolaridad to set
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public void setCompromisoEscolaridad(Integer compromisoEscolaridad) {
+		this.compromisoEscolaridad = compromisoEscolaridad;
+	}
+
+	/**
+	 * Gets the posibilidad compromiso pbe.
+	 *
+	 * @return the posibilidadCompromisoPBE
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public Integer getPosibilidadCompromisoPBE() {
+		return posibilidadCompromisoPBE;
+	}
+
+	/**
+	 * Sets the posibilidad compromiso pbe.
+	 *
+	 * @param posibilidadCompromisoPBE the posibilidadCompromisoPBE to set
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public void setPosibilidadCompromisoPBE(Integer posibilidadCompromisoPBE) {
+		this.posibilidadCompromisoPBE = posibilidadCompromisoPBE;
+	}
+
+	/**
+	 * Gets the apto como ra.
+	 *
+	 * @return the aptoComoRA
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public Integer getAptoComoRA() {
+		return aptoComoRA;
+	}
+
+	/**
+	 * Sets the apto como ra.
+	 *
+	 * @param aptoComoRA the aptoComoRA to set
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public void setAptoComoRA(Integer aptoComoRA) {
+		this.aptoComoRA = aptoComoRA;
+	}
+
+	/**
+	 * Gets the entrevistador.
+	 *
+	 * @return the entrevistador
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public String getEntrevistador() {
+		return entrevistador;
+	}
+
+	/**
+	 * Sets the entrevistador.
+	 *
+	 * @param entrevistador the entrevistador to set
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public void setEntrevistador(String entrevistador) {
+		this.entrevistador = entrevistador;
+	}
+	
+	/**
+	 * Gets the id compromiso pbe.
+	 *
+	 * @return the id compromiso pbe
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public Integer getIdCompromisoPBE() {
+		return idCompromisoPBE;
+	}
+
+	/**
+	 * Sets the id compromiso pbe.
+	 *
+	 * @param idCompromisoPBE the new id compromiso pbe
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public void setIdCompromisoPBE(Integer idCompromisoPBE) {
+		this.idCompromisoPBE = idCompromisoPBE;
+	}
+
+	/**
+	 * Gets the id compromiso.
+	 *
+	 * @return the id compromiso
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public Integer getIdCompromiso() {
+		return idCompromiso;
+	}
+
+	/**
+	 * Sets the id compromiso.
+	 *
+	 * @param idCompromiso the new id compromiso
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public void setIdCompromiso(Integer idCompromiso) {
+		this.idCompromiso = idCompromiso;
+	}
+
+	/**
+	 * Gets the id anio abandono.
+	 *
+	 * @return the id anio abandono
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public List<Integer> getIdAnioAbandono() {
+		return idAnioAbandono;
+	}
+
+	/**
+	 * Sets the id anio abandono.
+	 *
+	 * @param idAnioAbandono the new id anio abandono
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public void setIdAnioAbandono(List<Integer> idAnioAbandono) {
+		this.idAnioAbandono = idAnioAbandono;
+	}
+
+	/**
+	 * Gets the id anio repitio.
+	 *
+	 * @return the id anio repitio
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public List<Integer>  getIdAnioRepitio() {
+		return idAnioRepitio;
+	}
+
+	/**
+	 * Sets the id anio repitio.
+	 *
+	 * @param idAnioRepitio the new id anio repitio
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public void setIdAnioRepitio(List<Integer>  idAnioRepitio) {
+		this.idAnioRepitio = idAnioRepitio;
+	}
+
+	/**
+	 * Gets the anio escuela.
+	 *
+	 * @return the anio escuela
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public Integer getAnioEscuela() {
+		return anioEscuela;
+	}
+
+	/**
+	 * Sets the anio escuela.
+	 *
+	 * @param anioEscuela the new anio escuela
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public void setAnioEscuela(Integer anioEscuela) {
+		this.anioEscuela = anioEscuela;
+	}
+
+	/**
+	 * Gets the vinculo f fs.
+	 *
+	 * @return the vinculo f fs
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public  List<Integer> getVinculoFFs() {
+		return vinculoFFs;
+	}
+
+	/**
+	 * Sets the vinculo f fs.
+	 *
+	 * @param vinculoFF the new vinculo f fs
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public void setVinculoFFs( List<Integer> vinculoFF) {
+		this.vinculoFFs = vinculoFF;
+	}
+
+	/**
+	 * Gets the id escuela.
+	 *
+	 * @return the id escuela
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public Long getIdEscuela() {
+		return idEscuela;
+	}
+
+	/**
+	 * Sets the id escuela.
+	 *
+	 * @param idEscuela the new id escuela
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public void setIdEscuela(Long idEscuela) {
+		this.idEscuela = idEscuela;
+	}
+
+	/**
+	 * Gets the nota prim trim.
+	 *
+	 * @return the nota prim trim
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public List<Integer> getNotaPrimTrim() {
+		return notaPrimTrim;
+	}
+
+	/**
+	 * Sets the nota prim trim.
+	 *
+	 * @param notaPrimTrim the new nota prim trim
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public void setNotaPrimTrim(List<Integer> notaPrimTrim) {
+		this.notaPrimTrim = notaPrimTrim;
+	}
+
+	/**
+	 * Gets the nota seg trim.
+	 *
+	 * @return the nota seg trim
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public List<Integer> getNotaSegTrim() {
+		return notaSegTrim;
+	}
+
+	/**
+	 * Sets the nota seg trim.
+	 *
+	 * @param notaSegTrim the new nota seg trim
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public void setNotaSegTrim(List<Integer> notaSegTrim) {
+		this.notaSegTrim = notaSegTrim;
+	}
+
+	/**
+	 * Gets the nota ter trim.
+	 *
+	 * @return the nota ter trim
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public List<Integer> getNotaTerTrim() {
+		return notaTerTrim;
+	}
+
+	/**
+	 * Sets the nota ter trim.
+	 *
+	 * @param notaTerTrim the new nota ter trim
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public void setNotaTerTrim(List<Integer> notaTerTrim) {
+		this.notaTerTrim = notaTerTrim;
+	}
+
+	/**
+	 * Gets the nota final.
+	 *
+	 * @return the nota final
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public List<Integer> getNotaFinal() {
+		return notaFinal;
+	}
+
+	/**
+	 * Sets the nota final.
+	 *
+	 * @param notaFinal the new nota final
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public void setNotaFinal(List<Integer> notaFinal) {
+		this.notaFinal = notaFinal;
+	}
+
+	/**
+	 * Gets the nota marz.
+	 *
+	 * @return the nota marz
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public List<Integer> getNotaMarzo() {
+		return notaMarzo;
+	}
+
+	/**
+	 * Sets the nota marz.
+	 *
+	 * @param notaMarz the new nota marzo
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public void setNotaMarzo(List<Integer> notaMarz) {
+		this.notaMarzo = notaMarz;
+	}
+
+	/**
+	 * Gets the nota abril.
+	 *
+	 * @return the nota abril
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public List<Integer> getNotaDiciembre() {
+		return notaDiciembre;
+	}
+
+	/**
+	 * Sets the nota abril.
+	 *
+	 * @param notaAbril the new nota diciembre
+	 * @since 28-ene-2011
+	 * @author cfigueroa
+	 */
+	public void setNotaDiciembre(List<Integer> notaAbril) {
+		this.notaDiciembre = notaAbril;
+	}
+
+	/**
+	 * Gets the id materia.
+	 *
+	 * @return the id materia
+	 * @since 15-feb-2011
+	 * @author cfigueroa
+	 */
+	public List<Integer> getIdMateria() {
+		return idMateria;
+	}
+
+	/**
+	 * Sets the id materia.
+	 *
+	 * @param idMAteria the new id materia
+	 * @since 15-feb-2011
+	 * @author cfigueroa
+	 */
+	public void setIdMateria(List<Integer> idMAteria) {
+		this.idMateria = idMAteria;
+	}
+
+	/**
+	 * Gets the id boletin seleccions.
+	 *
+	 * @return the id boletin seleccions
+	 * @since 15-feb-2011
+	 * @author cfigueroa
+	 */
+	public List<Long> getIdBoletinSeleccions() {
+		return idBoletinSeleccions;
+	}
+
+	/**
+	 * Sets the id boletin seleccions.
+	 *
+	 * @param idBoletinSeleccions the new id boletin seleccions
+	 * @since 15-feb-2011
+	 * @author cfigueroa
+	 */
+	public void setIdBoletinSeleccions(List<Long> idBoletinSeleccions) {
+		this.idBoletinSeleccions = idBoletinSeleccions;
+	}
+
+	public Long getIdConvocatoria() {
+		return idConvocatoria;
+	}
+
+	public void setIdConvocatoria(Long idConvocatoria) {
+		this.idConvocatoria = idConvocatoria;
+	}
+
+	public Integer getIdPerfilALumno() {
+		return idPerfilALumno;
+	}
+
+	public void setIdPerfilALumno(Integer idPerfilALumno) {
+		this.idPerfilALumno = idPerfilALumno;
+	}
+
+	public Integer getIdMotivoTS() {
+		return idMotivoTS;
+	}
+
+	public void setIdMotivoTS(Integer idMotivoTS) {
+		this.idMotivoTS = idMotivoTS;
+	}
+
+	public Integer getIdMotivoRechazo() {
+		return idMotivoRechazo;
+	}
+
+	public void setIdMotivoRechazo(Integer idMotivoRechazo) {
+		this.idMotivoRechazo = idMotivoRechazo;
+	}
+
+
+	public Integer getVinculoRA2() {
+		return vinculoRA2;
+	}
+
+	public void setVinculoRA2(Integer vinculoRA2) {
+		this.vinculoRA2 = vinculoRA2;
+	}
+
+	public Integer getIdConducta() {
+		return idConducta;
+	}
+
+	public void setIdConducta(Integer idConducta) {
+		this.idConducta = idConducta;
+	}
+
+	public String getNombrePeriodo() {
+		return nombrePeriodo;
+	}
+
+	public void setNombrePeriodo(String nombrePeriodo) {
+		this.nombrePeriodo = nombrePeriodo;
+	}
+
+	public int getEdad() {
+		return edad;
+	}
+
+	public void setEdad(int edad) {		
+		edad=Formateador.calcularEdad(Formateador.parsearFecha(fechaNacimientoCandidato));
+		//System.out.println(edad);
+		this.edad = edad;
+	}
+	
+	
+	
+	
+}

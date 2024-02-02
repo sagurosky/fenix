@@ -1,0 +1,58 @@
+package org.cimientos.intranet.dao;
+
+import java.util.List;
+
+import org.cimientos.intranet.dao.base.Dao;
+import org.cimientos.intranet.modelo.Beca;
+import org.cimientos.intranet.modelo.CicloPrograma;
+import org.cimientos.intranet.modelo.EstadoBeca;
+import org.cimientos.intranet.modelo.Periodo;
+import org.cimientos.intranet.modelo.perfilPadrino.PerfilPadrino;
+import org.cimientos.intranet.modelo.ubicacion.ZonaCimientos;
+import org.displaytag.properties.SortOrderEnum;
+
+/**
+ * The Interface ReporteBecasDisponiblesDAO.
+ */
+public interface ReporteBecasDisponiblesDAO extends Dao<Beca> {
+
+	/**
+	 * Cantidad becas disponibles.
+	 *
+	 * @param estadoBecas the estado becas
+	 * @return the integer
+	 * @since 04-may-2011
+	 * @author cfigueroa
+	 * @param padrino 
+	 * @param zona 
+	 * @param periodo 
+	 * @param estadoBeca 
+	 * @param cicloPrograma 
+	 */
+	public Integer cantidadBecasDisponibles(List<EstadoBeca> estadoBecas, CicloPrograma cicloPrograma, 
+											EstadoBeca estadoBeca, Periodo periodo, 
+											ZonaCimientos zona, PerfilPadrino padrino, Integer idTipo, boolean db);
+
+	/**
+	 * Becas disponibles.
+	 *
+	 * @param estadoBecas the estado becas
+	 * @param firstResult the first result
+	 * @param maxResults the max results
+	 * @param sortDirection the sort direction
+	 * @param sortCriterion the sort criterion
+	 * @param cicloPrograma the ciclo programa
+	 * @param estadoBeca the estado beca
+	 * @param periodo the periodo
+	 * @param zona the zona
+	 * @param padrino the padrino
+	 * @return the list
+	 * @since 05-may-2011
+	 * @author cfigueroa
+	 */
+	public List<Beca> becasDisponibles(List<EstadoBeca> estadoBecas,
+			int firstResult, int maxResults, SortOrderEnum sortDirection,
+			String sortCriterion, CicloPrograma cicloPrograma, 
+			EstadoBeca estadoBeca, Periodo periodo, ZonaCimientos zona, PerfilPadrino padrino, Integer idTipo, boolean db);
+
+}

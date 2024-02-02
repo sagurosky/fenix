@@ -1,0 +1,1246 @@
+package org.cimientos.intranet.web.controller;
+
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.lang.StringUtils;
+import org.cimientos.intranet.modelo.Boletin;
+import org.cimientos.intranet.modelo.CicloPrograma;
+import org.cimientos.intranet.modelo.Materia;
+import org.cimientos.intranet.modelo.Periodo;
+import org.cimientos.intranet.modelo.escuela.Escuela;
+import org.cimientos.intranet.modelo.informe.EstadoInforme;
+import org.cimientos.intranet.modelo.informe.Informe;
+import org.cimientos.intranet.modelo.informe.InformeIS2;
+import org.cimientos.intranet.modelo.pbe.evento.entrevistas.EntrevistaIndividual;
+import org.cimientos.intranet.modelo.perfil.AlumnoPanelEA;
+import org.cimientos.intranet.modelo.perfil.PerfilAlumno;
+import org.cimientos.intranet.modelo.perfilEA.PerfilEA;
+import org.cimientos.intranet.modelo.persona.Persona;
+import org.cimientos.intranet.servicio.AlumnoPanelEASrv;
+import org.cimientos.intranet.servicio.AlumnoSrv;
+import org.cimientos.intranet.servicio.CicloProgramaSrv;
+import org.cimientos.intranet.servicio.EntrevistaSrv;
+import org.cimientos.intranet.servicio.EscuelaSrv;
+import org.cimientos.intranet.servicio.InformeIS1Srv;
+import org.cimientos.intranet.servicio.InformeIS2Srv;
+import org.cimientos.intranet.servicio.InformeSrv;
+import org.cimientos.intranet.servicio.MateriaSrv;
+import org.cimientos.intranet.servicio.PeriodoSrv;
+import org.cimientos.intranet.utils.ConstantesInformes;
+import org.cimientos.intranet.utils.ConstantesMenu;
+import org.cimientos.intranet.utils.ConstantesPaneles;
+import org.cimientos.intranet.utils.Formateador;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.cimientos.intranet.enumerativos.EnumPBE;
+
+
+@Controller
+@RequestMapping("/informeIS2/*")
+public class InformeIS2Controller extends BaseController {
+
+	@Autowired
+	private AlumnoSrv srvAlumno;
+	
+	@Autowired
+	private InformeIS2Srv srvInformeIS2;
+	
+	@Autowired
+	private InformeSrv srvInforme;
+	
+	@Autowired
+	private InformeIS1Srv srvIS1;
+		
+	@Autowired
+	private CicloProgramaSrv srvCiclo;
+	
+	@Autowired
+	private AlumnoPanelEASrv alumnoPanelEaSrv;
+	
+	@Autowired
+	private EntrevistaSrv srvEntrevistas;
+	
+	@Autowired
+	private PeriodoSrv srvPeriodo;
+	
+	@Autowired
+	private EscuelaSrv srvEscuela;
+	
+	@Autowired
+	private MateriaSrv srvMateria;
+	
+	private static final String ACCION_FINALIZAR = "finalizar";
+	private static final String ACCION_REVISAR = "revisar";
+	
+	@RequestMapping("/informeIS2/listaCandidatos.do")
+	public ModelAndView listaCandidatos() 
+	{				
+		Map<String, Object> resul = new HashMap<String, Object>();
+
+		resul.put("alumnos", srvAlumno.obtenerTodos());
+			
+		return forward("/informeIS2/listaCandidatos", resul);
+	}
+			
+	@RequestMapping("/informeIS2/registrarInformeIS2.do")
+	public ModelAndView registrarInformeIS2(@RequestParam("idAlumno") Long id)
+	{
+			
+		Map<String, Object> resul = new HashMap<String, Object>();
+		PerfilAlumno becado = srvAlumno.obtenerAlumno(id);
+		Integer edad = Formateador.calcularEdad(becado.getDatosPersonales().getFechaNacimiento());
+		List<EntrevistaIndividual> entrevistasPagosSuspendidos = srvEntrevistas.obtenerEntrevistasConPagoSuspendidoPorAlumno(becado.getId());
+		resul.put("suspensiones", generarDetalleSuspensiones(entrevistasPagosSuspendidos));
+		Boletin boletin = becado.getBoletin();
+		Periodo periodoFechaPBE = srvPeriodo.obtenerPeriodoPorFechaFP(becado.getFechaPBE());
+		Escuela escuela = srvEscuela.obtenerEscuelaPorId(becado.getEscuela().getId());
+		String modalidadTrabajoEscuela = new String();
+		File file = new File(getProps().getProperty(ConstantesInformes.pathImagen) 
+				+ becado.getDatosPersonales().getDni().toString() + ConstantesInformes.extensionImagen);
+		if(file.exists())
+			resul.put("tieneFoto", true);			
+		else
+			resul.put("tieneFoto", false);		
+		
+		if(becado.getFechaPBE() != null)
+			if(periodoFechaPBE != null)
+				resul.put("periodoFechaPBE", periodoFechaPBE.getNombre() + " " + periodoFechaPBE.getCiclo().getNombre());
+			else
+				resul.put("periodoFechaPBE",Formateador.formatearFechas(becado.getFechaPBE(), "dd/MM/yyyy"));
+		
+		if(becado.getFechaReincorporacionPBE()!= null){ // es un chico reincorporado
+			Periodo periodoFechaReincorporacionPBE = srvPeriodo.obtenerPeriodoPorFechaFP(becado.getFechaReincorporacionPBE());
+				if(periodoFechaReincorporacionPBE != null)
+					resul.put("periodoFechaReincorporacionPBE", periodoFechaReincorporacionPBE.getNombre() + " " + periodoFechaReincorporacionPBE.getCiclo().getNombre());
+				else
+					resul.put("periodoFechaReincorporacionPBE",Formateador.formatearFechas(becado.getFechaReincorporacionPBE(), "dd/MM/yyyy"));
+		}
+		else{
+			resul.put("periodoFechaReincorporacionPBE",null);
+		}
+		
+		resul.put("becado", becado);
+		resul.put("cicloActual", srvCiclo.obtenerCicloActual());
+		resul.put("valores", EnumPBE.getEnumPBE());
+		resul.put("edad", edad);
+		resul.put("escuela", escuela);
+		if(escuela.getModalidadTrabajoEscuela()!= null)
+			modalidadTrabajoEscuela = escuela.getModalidadTrabajoEscuela().getValor();		
+		resul.put("modalidadTrabajoEscuela", modalidadTrabajoEscuela);
+		
+		resul.put("cantidadBecadosCimiento", srvAlumno.cantidadAlumnosActivosMismaEscuela(escuela));
+		if (boletin != null) 
+		{
+			resul.put("boletin", boletin);
+			resul.put("listMateriasInteres", boletin.getMaterias());
+			resul.put("listMateriasCuestan", boletin.getMaterias());
+			resul.put("primero", boletin.getTrimestres().get(0));
+			resul.put("segundo", boletin.getTrimestres().get(1));
+			resul.put("tercero", boletin.getTrimestres().get(2));
+		}
+		else{
+			List<Materia> materiasTroncales = srvMateria.obtenerMateriasBasicas(true);
+			resul.put("listMateriasInteres", materiasTroncales);
+			resul.put("listMateriasCuestan", materiasTroncales);
+		}
+		resul.put("cantMateriasCuestan", 0);
+		resul.put("cantMateriasInteres", 0);
+		return forward("/informeIS2/registrarInformeIS2", resul);
+	}
+		
+	@RequestMapping("/informeIS2/generarIS2.do")
+	public ModelAndView generarInformeInformeIS2(
+			HttpServletRequest req,
+			@RequestParam(required=false, value="accion") String accion,
+			@RequestParam("cantMateriasDesaprobadas") Integer cantMateriasDesaprobadas,
+			@RequestParam("cantInasistencias") Float cantInasistencias,
+			@RequestParam("mensajePadrino") String mensajePadrino,
+			@RequestParam("actividadAcompanamiento") String actividadAcompanamiento,
+			@RequestParam("materiasInteres") String materiasInteres, 
+			@RequestParam("materiasCuestan") String materiasCuestan, 
+			@RequestParam("idAlumno") Long idAlumno,
+			@RequestParam("edad") Integer edad,
+			@RequestParam(required=false, value = "urlRegreso") String urlRegreso){
+		ModelAndView modelAndView = null;
+		Map<String, Object> resul = new HashMap<String, Object>();
+		PerfilAlumno becado = srvAlumno.obtenerAlumno(idAlumno);
+		HttpSession session = req.getSession();
+		List<AlumnoPanelEA> alumnos = new ArrayList<AlumnoPanelEA>();
+		PerfilEA perfilEA = getPerfilEA(req);
+		CicloPrograma cicloActual = srvCiclo.obtenerCicloActual();
+		InformeIS2 informeIS2Becado = srvInformeIS2.obtenerInformePorIdAlumno(idAlumno, cicloActual);
+		InformeIS2 informeIS2 = new InformeIS2();
+		String mensaje = "";
+		String error = "";
+		Integer edadBecado = Formateador.calcularEdad(becado.getDatosPersonales().getFechaNacimiento());
+		if(informeIS2Becado != null){	
+			error = "El becado " + becado.getDatosPersonales().getApellidoNombre() + " ya posee un Informe de Seguimiento Nº 2 "
+					+ "en el ciclo actual";
+		}	
+		else{
+			Escuela escuela = srvEscuela.obtenerEscuelaPorId(becado.getEscuela().getId());
+			informeIS2.setNombre(ConstantesInformes.nombreInformeIS2);
+			informeIS2.setFechaAlta(new Date());
+			informeIS2.setActividadAcompanamiento(actividadAcompanamiento);
+			informeIS2.setMensajePadrino(mensajePadrino);
+			informeIS2.setCicloActual(cicloActual);
+			informeIS2.setEaPerfil(becado.getEa());
+			informeIS2.setRrPerfil(becado.getEa().getRr());
+			informeIS2.setFechaPBE(becado.getFechaPBE());
+			informeIS2.setFechaReincorporacionPBE(becado.getFechaReincorporacionPBE());
+			informeIS2.setFechaUltimaModificacion(new Date());
+			informeIS2.setPadrino(becado.getBeca().getPadrino());
+			informeIS2.setBeca(becado.getBeca());
+			informeIS2.setBecado(becado);
+			informeIS2.setEdad(edadBecado);
+			informeIS2.setFechaCambioUltimoEstado(new Date());
+			informeIS2.setFechaUltimaModificacion(new Date());
+			informeIS2.setCantidadBecados(srvAlumno.cantidadAlumnosActivosMismaEscuela(escuela));
+			informeIS2.setMateriasDesaprobadas(cantMateriasDesaprobadas);
+			informeIS2.setInasistencias(cantInasistencias);
+			informeIS2.setMateriasCuestan(materiasCuestan);
+			informeIS2.setMateriasInteres(materiasInteres);	
+		}
+		if(accion != null && accion.equals(ACCION_FINALIZAR)){
+			if(informeIS2Becado != null){
+				resul.put("error",error);
+			}
+			else{
+				informeIS2.setEstado(EstadoInforme.FINALIZADO);
+				srvInformeIS2.guardarInformeIS2(informeIS2);	
+//				mensaje = "El Informe de Seguimiento Nº2 del becado " + becado.getDatosPersonales().getApellidoNombre() + 
+//					" ha sido Finalizado";
+			}
+			List<Informe> informes = new ArrayList<Informe>();
+			if(perfilEA != null){
+				informes = srvInforme.obtenerInformesConstruccionPorEA(perfilEA);
+				informes.addAll(srvIS1.obtenerRevisionPorEA(perfilEA));
+			}
+			if(StringUtils.isNotBlank(urlRegreso)){
+				resul.put("informes", informes);
+				modelAndView = new ModelAndView("redirect:" + urlRegreso, resul);
+				return modelAndView;
+			}
+			else{
+				modelAndView = new ModelAndView("redirect:/informes/listaInformesConstruccion.do", resul);
+				return modelAndView;
+			}
+		}
+		else{
+			if(informeIS2Becado != null){
+				resul.put("error",error);
+			}
+			else{
+				informeIS2.setEstado(EstadoInforme.CONSTRUCCION);
+				srvInformeIS2.guardarInformeIS2(informeIS2);	
+//				mensaje = "El Informe de Seguimiento Nº2 del becado " + becado.getDatosPersonales().getApellidoNombre() + 
+//						" ha sido guardado en Construcción";
+			}
+			alumnos = alumnoPanelEaSrv.obtenerAlumnosPorEa(perfilEA.getIdPerfilEA());
+			resul.put("alumnos",alumnos);
+			resul.put("edad", edadBecado);
+			resul.put("mensaje",mensaje);
+			session.setAttribute("menu", ConstantesMenu.menuAcompanamiento);						
+			List<Informe> informes = new ArrayList<Informe>();
+			if(perfilEA != null){
+				informes = srvInforme.obtenerInformesConstruccionPorEA(perfilEA);
+				informes.addAll(srvIS1.obtenerRevisionPorEA(perfilEA));
+			}
+			resul.put("informes", informes);
+			modelAndView = new ModelAndView("redirect:/entrevistas/listarBecados.do", resul);
+			return modelAndView;
+		}	
+	}	
+
+	@RequestMapping("/informeIS2/modificarView.do")
+	public ModelAndView modificarView(@RequestParam ("idInformeIS2") Long idInforme,
+									  @RequestParam (required=false, value="urlRegreso") String urlRegreso,
+									  @RequestParam(required=false, value="accion") String accion,
+									  @RequestParam(required=false, value="valorPerfil") String valorPerfil)
+	{
+		Map<String, Object> resul = new HashMap<String, Object>();
+		InformeIS2 informeIS2 = srvInformeIS2.obtenerInformeIS2(idInforme);
+		Periodo periodoFechaPBE = srvPeriodo.obtenerPeriodoPorFechaFP(informeIS2.getFechaPBE());		
+		PerfilAlumno becado = informeIS2.getBecado();
+		Escuela escuela = srvEscuela.obtenerEscuelaPorId(becado.getEscuela().getId());
+		String modalidadTrabajoEscuela = new String();	
+		List<Long> listLocalMateriasInteres = null;
+		int cantMateriasInteres = 0;
+		if (informeIS2.getMateriasInteres()!= null && !informeIS2.getMateriasInteres().equals("")){
+			listLocalMateriasInteres = new ArrayList<Long>();
+			listLocalMateriasInteres = Formateador.toListOfLongs(informeIS2.getMateriasInteres());
+			cantMateriasInteres = listLocalMateriasInteres.size();
+		}		
+		List<Long> listLocalMateriasCuestan = null;
+		int cantMateriasCuestan = 0;
+		if (informeIS2.getMateriasCuestan()!= null && !informeIS2.getMateriasCuestan().equals("")){
+			listLocalMateriasCuestan = new ArrayList<Long>();
+			listLocalMateriasCuestan = Formateador.toListOfLongs(informeIS2.getMateriasCuestan());
+			cantMateriasCuestan = listLocalMateriasCuestan.size();
+		}
+		resul.put("informe", informeIS2);
+		resul.put("cicloActual", srvCiclo.obtenerCicloActual());
+		resul.put("cantMateriasDesaprobadas", informeIS2.getMateriasDesaprobadas());
+		resul.put("cantInasistencias", informeIS2.getInasistencias());
+		resul.put("mensajePadrino", informeIS2.getMensajePadrino());
+		resul.put("actividadAcompanamiento", informeIS2.getActividadAcompanamiento());
+		resul.put("materiasInteres", informeIS2.getMateriasInteres());
+		resul.put("idMateriaInteres", listLocalMateriasInteres);
+		resul.put("cantMateriasInteres", cantMateriasInteres);
+		resul.put("materiasCuestan", informeIS2.getMateriasCuestan());
+		resul.put("idMateriaCuestan", listLocalMateriasCuestan);	
+		resul.put("cantMateriasCuestan", cantMateriasCuestan);
+		if(!informeIS2.getEstado().equals(EstadoInforme.ENVIADO))
+		{
+			Integer edad = Formateador.calcularEdad(becado.getDatosPersonales().getFechaNacimiento());
+			informeIS2.setEdad(edad);
+		}
+		srvInformeIS2.guardarInformeIS2(informeIS2);
+		resul.put("edad", informeIS2.getEdad());
+		resul.put("becado", becado);
+		resul.put("idInformeIS2", idInforme);		
+		resul.put("urlRegreso", urlRegreso);
+		resul.put("escuela", escuela);
+		if(escuela.getModalidadTrabajoEscuela()!= null)
+			modalidadTrabajoEscuela = escuela.getModalidadTrabajoEscuela().getValor();		
+		resul.put("modalidadTrabajoEscuela", modalidadTrabajoEscuela);
+		
+		resul.put("cantidadBecadosCimiento", srvAlumno.cantidadAlumnosActivosMismaEscuela(escuela));
+		
+		Boletin boletin = srvInforme.getBoletinCicloInforme(becado, informeIS2.getCicloActual());
+		if(boletin != null)
+		{
+			resul.put("boletin", boletin);
+			resul.put("listMateriasInteres", boletin.getMaterias());
+			resul.put("listMateriasCuestan", boletin.getMaterias());
+			resul.put("primero", boletin.getTrimestres().get(0));
+			resul.put("segundo", boletin.getTrimestres().get(1));
+			resul.put("tercero", boletin.getTrimestres().get(2));
+		}
+		else{
+			List<Materia> materiasTroncales = srvMateria.obtenerMateriasBasicas(true);
+			resul.put("listMateriasInteres", materiasTroncales);
+			resul.put("listMateriasCuestan", materiasTroncales);
+		}
+		
+		File file = new File(getProps().getProperty(ConstantesInformes.pathImagen) 
+				+ becado.getDatosPersonales().getDni().toString() + ConstantesInformes.extensionImagen);
+		if(file.exists())
+			resul.put("tieneFoto", true);			
+		else
+			resul.put("tieneFoto", false);	
+		
+		if(informeIS2.getFechaPBE() != null)
+			if(periodoFechaPBE != null)
+				resul.put("periodoFechaPBE", periodoFechaPBE.getNombre() + " " + periodoFechaPBE.getCiclo().getNombre());
+			else
+				resul.put("periodoFechaPBE",Formateador.formatearFechas(informeIS2.getFechaPBE(), "dd/MM/yyyy"));
+		
+		if(informeIS2.getFechaReincorporacionPBE()!= null){ // es un chico reincorporado
+			Periodo periodoFechaReincorporacionPBE = srvPeriodo.obtenerPeriodoPorFechaFP(informeIS2.getFechaReincorporacionPBE());
+				if(periodoFechaReincorporacionPBE != null)
+					resul.put("periodoFechaReincorporacionPBE", periodoFechaReincorporacionPBE.getNombre() + " " + periodoFechaReincorporacionPBE.getCiclo().getNombre());
+				else
+					resul.put("periodoFechaReincorporacionPBE",Formateador.formatearFechas(informeIS2.getFechaReincorporacionPBE(), "dd/MM/yyyy"));
+		}
+		else{
+			resul.put("periodoFechaReincorporacionPBE",null);
+		}
+		
+		if(accion != null && accion.equals("edicion")){
+			resul.put("urlRegreso", "/reporteGeneralInformes/verReporteGeneralInformes.do");
+			resul.put("valorPerfil", valorPerfil);
+			resul.put("estadoConstruccion", EstadoInforme.CONSTRUCCION.getValor());
+			resul.put("estadoFinalizado", EstadoInforme.FINALIZADO.getValor());
+			return forward("/informeIS2/actualizarInformeIS2", resul);
+		}
+		
+		return forward("/informeIS2/modificarInformeIS2", resul);
+		
+	}
+	
+	@RequestMapping("/informeIS2/modificarIS2.do")
+	public ModelAndView modificarInformeInformeIS2(HttpServletRequest req,			
+			@RequestParam(required=false, value="idInformeIS2") Long idInforme,
+			@RequestParam(required=false, value="accion") String accion,
+			@RequestParam("cantMateriasDesaprobadas") Integer cantMateriasDesaprobadas,
+			@RequestParam("cantInasistencias") Float cantInasistencias,
+			@RequestParam("mensajePadrino") String mensajePadrino,
+			@RequestParam("actividadAcompanamiento") String actividadAcompanamiento,
+			@RequestParam("materiasInteres") String materiasInteres, 
+			@RequestParam("materiasCuestan") String materiasCuestan, 
+			@RequestParam("idAlumno") Long idAlumno,
+			@RequestParam("edad") Integer edad,
+			@RequestParam(required=false, value = "urlRegreso") String urlRegreso){
+		
+		Map<String, Object> resul = new HashMap<String, Object>();
+		ModelAndView model = null;
+		PerfilAlumno becado = srvAlumno.obtenerAlumno(idAlumno);
+		InformeIS2 informeIS2 = srvInformeIS2.obtenerInformeIS2(idInforme);
+		if(!informeIS2.getEstado().equals(EstadoInforme.ENVIADO)){
+			Integer edadBecado = Formateador.calcularEdad(becado.getDatosPersonales().getFechaNacimiento());
+			informeIS2.setEdad(edadBecado);
+		}
+		informeIS2.setActividadAcompanamiento(actividadAcompanamiento);
+		informeIS2.setMensajePadrino(mensajePadrino);
+//		informeIS2.setCicloActual(srvCiclo.obtenerCicloActual());
+		informeIS2.setEaPerfil(becado.getEa());
+		informeIS2.setRrPerfil(becado.getEa().getRr());
+		informeIS2.setFechaPBE(becado.getFechaPBE());
+		informeIS2.setFechaReincorporacionPBE(becado.getFechaReincorporacionPBE());
+		informeIS2.setFechaUltimaModificacion(new Date());
+		informeIS2.setPadrino(becado.getBeca().getPadrino());
+		informeIS2.setBeca(becado.getBeca());
+		informeIS2.setBecado(becado);
+		Integer edadBecado = Formateador.calcularEdad(becado.getDatosPersonales().getFechaNacimiento());
+		informeIS2.setEdad(edadBecado);
+		informeIS2.setFechaCambioUltimoEstado(new Date());
+		informeIS2.setCantidadBecados( srvAlumno.cantidadAlumnosActivosMismaEscuela(becado.getEscuela()));
+		informeIS2.setMateriasDesaprobadas(cantMateriasDesaprobadas);
+		informeIS2.setInasistencias(cantInasistencias);
+		informeIS2.setMateriasCuestan(materiasCuestan);
+		informeIS2.setMateriasInteres(materiasInteres);
+		if(accion != null && accion.equals(ACCION_REVISAR)){
+			informeIS2.setEstado(EstadoInforme.CONSTRUCCION);
+		}
+		
+		srvInformeIS2.guardarInformeIS2(informeIS2);
+		resul.put("mensaje", "El Informe de Seguimiento Nº2 del becado " + becado.getDatosPersonales().getApellidoNombre() + 
+			" ha sido guardado en Construcción");		
+		if(StringUtils.isNotBlank(urlRegreso)){
+		//	model = new ModelAndView(urlRegreso, resul);
+			return model = new ModelAndView("redirect:" + urlRegreso, resul);
+		}
+		else
+			return model = new ModelAndView("redirect:/informes/listaInformesConstruccion.do", resul);
+	}	
+	
+	
+	@RequestMapping("/informeIS2/supervisar.do")
+	public ModelAndView supervision(
+			HttpServletRequest req,
+			@RequestParam(required=false, value="accion") String accion,
+			@RequestParam(required=false, value="idInformeIS2") Long idInforme,
+			@RequestParam(required=false, value="materiasAprobadas") Integer materiasAprobadas,
+			@RequestParam(required=false, value="materiasDesaprobadas") Integer materiasDesaprobadas,
+			@RequestParam(required=false, value="inasistencias") Float inasistencias,
+			@RequestParam(required=false, value="obsBoletin") String obsBoletin,
+			@RequestParam("compromisoAlumno") Integer compromisoAlumno,
+			@RequestParam("conducta") Integer conducta,
+			@RequestParam("esfuerzo") Integer esfuerzo,
+			@RequestParam("compromisoRA") Integer compromisoRA,
+			@RequestParam("asistenciaBecadoAEntrevistaPBE") Integer asistenciaBecadoAEntrevistaPBE,
+			@RequestParam("presentacionMaterialPBE") Integer presentacionMaterialPBE,
+			@RequestParam("compromisoAlumnoPBE") Integer compromisoAlumnoPBE,
+			@RequestParam("asistenciaRAEntrevistaPBE") Integer asistenciaRAEntrevistaPBE,
+			@RequestParam("compromisoRaPBE") Integer compromisoRaPBE,
+			@RequestParam("actividadAcompanamiento") String actividadAcompanamiento,
+			@RequestParam("comentarios") String comentarios,
+			@RequestParam("obsPersonales") String obsPersonales,
+			@RequestParam("obsFamiliares") String obsFamiliares,
+			@RequestParam("obsGenerales") String obsGenerales,
+			@RequestParam("edad") Integer edad,
+			@RequestParam("idAlumno") Long idAlumno,
+			@RequestParam("utilizacionBeca") String utilizacionBeca,
+			@RequestParam(required=false,value="suspensiones") String suspensiones,
+			@RequestParam(required=false,value="urlRegreso") String urlRegreso
+			)
+	{	
+		
+		ModelAndView modelAndView = null;
+		Map<String, Object> resul = new HashMap<String, Object>();
+		PerfilEA perfilEA = getPerfilEA(req);
+		InformeIS2 informeIS2 = null;
+		PerfilAlumno becado= srvAlumno.obtenerAlumno(idAlumno);
+		if(idInforme != null)
+			informeIS2 =  srvInformeIS2.obtenerInformeIS2(idInforme);
+		else
+		{
+			informeIS2 = new InformeIS2();
+			informeIS2.setFechaAlta(new Date());
+			informeIS2.setEaPerfil(perfilEA);
+			informeIS2.setRrPerfil(perfilEA.getRr());
+			informeIS2.setNombre(ConstantesInformes.nombreInformeIS2);
+			informeIS2.setPadrino(becado.getBeca().getPadrino());
+			informeIS2.setBecado(becado);
+			informeIS2.setBeca(becado.getBeca());
+		}
+		
+		guardarCamposNoSeleccionado(informeIS2, conducta, compromisoAlumno, esfuerzo, asistenciaBecadoAEntrevistaPBE, presentacionMaterialPBE, compromisoAlumnoPBE, asistenciaRAEntrevistaPBE, compromisoRaPBE, compromisoRA);
+		informeIS2.setActividadAcompanamiento(actividadAcompanamiento);
+		informeIS2.setComentarios(comentarios);
+		informeIS2.setObsPersonales(obsPersonales);
+		informeIS2.setObsFamiliares(obsFamiliares);
+		informeIS2.setObsGenerales(obsGenerales);
+		if(!informeIS2.getEstado().equals(EstadoInforme.ENVIADO))
+		{
+			Integer edadBecado = Formateador.calcularEdad(becado.getDatosPersonales().getFechaNacimiento());
+			informeIS2.setEdad(edadBecado);
+		}
+		informeIS2.setUtilizacionBeca(utilizacionBeca);
+		informeIS2.setFechaPBE(becado.getFechaPBE());
+		informeIS2.setEaPerfil(becado.getEa());
+		informeIS2.setRrPerfil(becado.getEa().getRr());
+
+		if(StringUtils.isNotBlank(suspensiones))
+			informeIS2.setSuspensionesBeca(suspensiones);
+
+		Boletin boletin = srvInforme.getBoletinCicloInforme(becado, informeIS2.getCicloActual());
+		if(boletin == null)
+		{	
+			informeIS2.setMateriasAprobadas(materiasAprobadas);
+			informeIS2.setMateriasDesaprobadas(materiasDesaprobadas);
+			informeIS2.setInasistencias(inasistencias);
+			informeIS2.setObsBoletin(obsBoletin);
+		}
+		
+		informeIS2.setFechaUltimaModificacion(new Date());
+		informeIS2.setEstado(EstadoInforme.SUPERVISOR);
+		informeIS2.setFechaCambioUltimoEstado(new Date());
+		resul.put("mensaje", "El informe fue enviado a Supervision");
+		srvInformeIS2.guardarInformeIS2(informeIS2);
+		
+		if(accion.equalsIgnoreCase("informeIS2/correccionInformeIS2View.do"))
+		{
+			Persona personaLogeada = this.obtenerPersona(req);
+			if(personaLogeada != null && personaLogeada.getPerfilCorrector())
+				informeIS2.setCorrectora(personaLogeada.getApellido() + " " + personaLogeada.getNombre());
+			modelAndView = new ModelAndView("redirect:/informes/listaInformesCorreccion.do", resul);
+			return modelAndView;
+		}
+		else if(accion.equalsIgnoreCase("construccion"))
+		{
+			List<Informe> informes = new ArrayList<Informe>();
+			if(perfilEA != null)
+			{
+				informes = srvInforme.obtenerInformesConstruccionPorEA(perfilEA);
+				informes.addAll(srvIS1.obtenerRevisionPorEA(perfilEA));
+			}
+			if(StringUtils.isNotBlank(urlRegreso))
+			{
+				resul.put("informes", informes);
+				modelAndView = new ModelAndView(urlRegreso, resul);
+				return modelAndView;
+			}
+			else
+			{
+				resul.put("informes", informes);
+				modelAndView = new ModelAndView("redirect:/informes/listaInformesConstruccion.do", resul);
+				return modelAndView;
+			}
+		}
+		else
+		{	
+			resul.put("informes", srvInforme.obtenerInformesASupervisarYRevisar(getPerfilRR(req)));
+			return forward("/informes/listaInformesRevision", resul);		
+		}
+		
+	}
+	
+	
+	@RequestMapping("/informeIS2/supervisionView.do")
+	public ModelAndView supervisarView(@RequestParam ("idInformeIS2") Long idInforme)
+	{
+		Map<String, Object> resul = new HashMap<String, Object>();
+		InformeIS2 informeIS2 = srvInformeIS2.obtenerInformeIS2(idInforme);
+		PerfilAlumno becado = informeIS2.getBecado();
+		resul.put("cicloActual", srvCiclo.obtenerCicloActual());		
+		resul.put("materiasAprobadas", informeIS2.getMateriasAprobadas());
+		resul.put("materiasDesaprobadas", informeIS2.getMateriasDesaprobadas());
+		resul.put("inasistencias", informeIS2.getInasistencias());
+		resul.put("obsBoletin", informeIS2.getObsBoletin());
+		resul.put("compromisoAlumno",informeIS2.getCompromisoAlumno());
+		resul.put("conducta", informeIS2.getConducta());
+		resul.put("esfuerzo", informeIS2.getEsfuerzo());		
+		resul.put("compromisoRA",informeIS2.getCompromisoRA());
+		resul.put("asistenciaBecadoAEntrevistaPBE", informeIS2.getAsistenciaBecadoAEntrevistaPBE());
+		resul.put("presentacionMaterialPBE", informeIS2.getPresentacionMaterialPBE());
+		resul.put("compromisoAlumnoPBE", informeIS2.getCompromisoAlumnoPBE());
+		resul.put("asistenciaRAEntrevistaPBE", informeIS2.getAsistenciaRAEntrevistaPBE());
+		resul.put("compromisoRaPBE", informeIS2.getCompromisoRaPBE());
+		resul.put("actividadAcompanamiento", informeIS2.getActividadAcompanamiento());
+		resul.put("comentarios", informeIS2.getComentarios());
+		resul.put("obsPersonales", informeIS2.getObsPersonales());
+		resul.put("obsFamiliares", informeIS2.getObsFamiliares());
+		resul.put("obsGenerales", informeIS2.getObsGenerales());
+		if(!informeIS2.getEstado().equals(EstadoInforme.ENVIADO))
+		{
+			Integer edad = Formateador.calcularEdad(becado.getDatosPersonales().getFechaNacimiento());
+			informeIS2.setEdad(edad);
+			srvInformeIS2.guardarInformeIS2(informeIS2);
+		}
+		resul.put("edad", informeIS2.getEdad());
+		resul.put("observaciones", informeIS2.getObservaciones());
+		resul.put("valores", EnumPBE.getEnumPBE());
+		resul.put("becado", becado);
+		resul.put("idInformeIS2", idInforme);
+		resul.put("informe", informeIS2);
+		resul.put("utilizacionBeca", informeIS2.getUtilizacionBeca());
+		resul.put("suspensiones", informeIS2.getSuspensionesBeca());
+
+		Boletin boletin = srvInforme.getBoletinCicloInforme(becado, informeIS2.getCicloActual());
+		if(boletin != null)
+		{
+			resul.put("boletin", boletin);
+			resul.put("materias", boletin.getMaterias());
+			resul.put("primero", boletin.getTrimestres().get(0));
+			resul.put("segundo", boletin.getTrimestres().get(1));
+			resul.put("tercero", boletin.getTrimestres().get(2));
+		}
+				
+		return forward("/informeIS2/supervisarInformeIS2", resul);
+	}
+	
+	@RequestMapping("/informeIS2/supervisionGuardar.do")
+	public ModelAndView supervisarInformeIS2Guardar(HttpServletRequest req,
+			@RequestParam ("idInformeIS2") Long idInforme,
+			@RequestParam(required=false, value="materiasAprobadas") Integer materiasAprobadas,
+			@RequestParam(required=false, value="materiasDesaprobadas") Integer materiasDesaprobadas,
+			@RequestParam(required=false, value="inasistencias") Float inasistencias,
+			@RequestParam(required=false, value="obsBoletin") String obsBoletin,
+			@RequestParam("compromisoAlumno") Integer compromisoAlumno,
+			@RequestParam("conducta") Integer conducta,
+			@RequestParam("esfuerzo") Integer esfuerzo,
+			@RequestParam("compromisoRA") Integer compromisoRA,
+			@RequestParam("asistenciaBecadoAEntrevistaPBE") Integer asistenciaBecadoAEntrevistaPBE,
+			@RequestParam("presentacionMaterialPBE") Integer presentacionMaterialPBE,
+			@RequestParam("compromisoAlumnoPBE") Integer compromisoAlumnoPBE,
+			@RequestParam("asistenciaRAEntrevistaPBE") Integer asistenciaRAEntrevistaPBE,
+			@RequestParam("compromisoRaPBE") Integer compromisoRaPBE,
+			@RequestParam("actividadAcompanamiento") String actividadAcompanamiento,
+			@RequestParam("comentarios") String comentarios,
+			@RequestParam("obsPersonales") String obsPersonales,
+			@RequestParam("obsFamiliares") String obsFamiliares,
+			@RequestParam("obsGenerales") String obsGenerales,
+			@RequestParam("edad") Integer edad,
+			@RequestParam("utilizacionBeca") String utilizacionBeca,
+			@RequestParam(required=false, value="suspensiones") String suspensiones)
+	{
+		Map<String, Object> resul = new HashMap<String, Object>();
+		ModelAndView model = null;
+		InformeIS2 informeIS2 = srvInformeIS2.obtenerInformeIS2(idInforme);
+		PerfilAlumno becado = informeIS2.getBecado();
+		guardarCamposNoSeleccionado(informeIS2, conducta, compromisoAlumno, esfuerzo, asistenciaBecadoAEntrevistaPBE, presentacionMaterialPBE, compromisoAlumnoPBE, asistenciaRAEntrevistaPBE, compromisoRaPBE, compromisoRA);
+		informeIS2.setActividadAcompanamiento(actividadAcompanamiento);
+		informeIS2.setComentarios(comentarios);
+		informeIS2.setObsPersonales(obsPersonales);
+		informeIS2.setObsFamiliares(obsFamiliares);
+		informeIS2.setObsGenerales(obsGenerales);
+		if(!informeIS2.getEstado().equals(EstadoInforme.ENVIADO))
+		{
+			Integer edadBecado = Formateador.calcularEdad(becado.getDatosPersonales().getFechaNacimiento());
+			informeIS2.setEdad(edadBecado);
+		}
+		informeIS2.setUtilizacionBeca(utilizacionBeca);
+		if(StringUtils.isNotBlank(suspensiones))
+			informeIS2.setSuspensionesBeca(suspensiones);
+
+		Boletin boletin = srvInforme.getBoletinCicloInforme(becado, informeIS2.getCicloActual());	
+		if(boletin == null)
+		{
+			informeIS2.setMateriasAprobadas(materiasAprobadas);
+			informeIS2.setMateriasDesaprobadas(materiasDesaprobadas);
+			informeIS2.setInasistencias(inasistencias);
+			informeIS2.setObsBoletin(obsBoletin);
+		}
+
+		informeIS2.setFechaUltimaModificacion(new Date());
+		srvInformeIS2.guardarInformeIS2(informeIS2);
+		return model = new ModelAndView("redirect:/informes/listaInformesSupervision.do", resul);
+	}
+	
+	@RequestMapping("/informeIS2/correccion.do")
+	public ModelAndView correcion(HttpServletRequest req,			
+			@RequestParam ("idInformeIS2") Long idInforme,
+			@RequestParam(required=false, value="materiasAprobadas") Integer materiasAprobadas,
+			@RequestParam(required=false, value="materiasDesaprobadas") Integer materiasDesaprobadas,
+			@RequestParam(required=false, value="inasistencias") Float inasistencias,
+			@RequestParam(required=false, value="obsBoletin") String obsBoletin,
+			@RequestParam("compromisoAlumno") Integer compromisoAlumno,
+			@RequestParam("conducta") Integer conducta,
+			@RequestParam("esfuerzo") Integer esfuerzo,
+			@RequestParam("compromisoRA") Integer compromisoRA,
+			@RequestParam("asistenciaBecadoAEntrevistaPBE") Integer asistenciaBecadoAEntrevistaPBE,
+			@RequestParam("presentacionMaterialPBE") Integer presentacionMaterialPBE,
+			@RequestParam("compromisoAlumnoPBE") Integer compromisoAlumnoPBE,
+			@RequestParam("asistenciaRAEntrevistaPBE") Integer asistenciaRAEntrevistaPBE,
+			@RequestParam("compromisoRaPBE") Integer compromisoRaPBE,
+			@RequestParam("actividadAcompanamiento") String actividadAcompanamiento,
+			@RequestParam("comentarios") String comentarios,
+			@RequestParam("obsPersonales") String obsPersonales,
+			@RequestParam("obsFamiliares") String obsFamiliares,
+			@RequestParam("obsGenerales") String obsGenerales,
+			@RequestParam("edad") Integer edad,
+			@RequestParam("utilizacionBeca") String utilizacionBeca,
+			@RequestParam(required=false,value="suspensiones") String suspensiones)
+	{
+		Map<String, Object> resul = new HashMap<String, Object>();
+		ModelAndView modelAndView = null;
+		InformeIS2 informeIS2 = srvInformeIS2.obtenerInformeIS2(idInforme);
+		PerfilAlumno becado = informeIS2.getBecado();
+		guardarCamposNoSeleccionado(informeIS2, conducta, compromisoAlumno, esfuerzo, asistenciaBecadoAEntrevistaPBE, presentacionMaterialPBE, compromisoAlumnoPBE, asistenciaRAEntrevistaPBE, compromisoRaPBE, compromisoRA);
+		informeIS2.setActividadAcompanamiento(actividadAcompanamiento);
+		informeIS2.setComentarios(comentarios);
+		informeIS2.setObsPersonales(obsPersonales);
+		informeIS2.setObsFamiliares(obsFamiliares);
+		informeIS2.setObsGenerales(obsGenerales);
+		if(!informeIS2.getEstado().equals(EstadoInforme.ENVIADO))
+		{
+			Integer edadBecado = Formateador.calcularEdad(becado.getDatosPersonales().getFechaNacimiento());
+			informeIS2.setEdad(edadBecado);
+		}
+		informeIS2.setUtilizacionBeca(utilizacionBeca);
+		if(StringUtils.isNotBlank(suspensiones))
+			informeIS2.setSuspensionesBeca(suspensiones);
+
+		Boletin boletin = srvInforme.getBoletinCicloInforme(becado, informeIS2.getCicloActual());
+		if(boletin == null)
+		{
+			informeIS2.setMateriasAprobadas(materiasAprobadas);
+			informeIS2.setMateriasDesaprobadas(materiasDesaprobadas);
+			informeIS2.setInasistencias(inasistencias);
+			informeIS2.setObsBoletin(obsBoletin);
+		}
+		
+		if ((informeIS2.getEstado().equals(EstadoInforme.SUPERVISOR)))
+		{
+			informeIS2.setEstado(EstadoInforme.CORRECTORA);
+			informeIS2.setFechaCambioUltimoEstado(new Date());
+			informeIS2.setFechaUltimaModificacion(new Date());
+			Persona personaLogeada = this.obtenerPersona(req);
+			if(personaLogeada != null && personaLogeada.getPerfilCorrector())
+				informeIS2.setCorrectora(personaLogeada.getApellido() + " " + personaLogeada.getNombre());
+			srvInformeIS2.guardarInformeIS2(informeIS2);
+			modelAndView = new ModelAndView("redirect:/informes/listaInformesSupervision.do", resul);
+			return modelAndView;
+		
+		}
+		else
+		{
+			informeIS2.setFechaUltimaModificacion(new Date());
+			Persona personaLogeada = this.obtenerPersona(req);
+			if(personaLogeada != null && personaLogeada.getPerfilCorrector())
+				informeIS2.setCorrectora(personaLogeada.getApellido() + " " + personaLogeada.getNombre());
+			srvInformeIS2.guardarInformeIS2(informeIS2);
+			modelAndView = new ModelAndView("redirect:/informes/listaInformesCorreccion.do", resul);
+			return modelAndView;
+			
+				
+		}
+		
+	}
+	
+	
+	@RequestMapping("/informeIS2/correccionInformeIS2View.do")
+	public ModelAndView correcionInformeIS2View(@RequestParam ("idInformeIS2") Long idInforme)
+	{
+		Map<String, Object> resul = cargarDatosCorreccion(idInforme);
+		return forward("/informeIS2/correccionIS2", resul);
+	}
+
+	private Map<String, Object> cargarDatosCorreccion(Long idInforme) 
+	{
+	
+		Map<String, Object> resul = new HashMap<String, Object>();
+		InformeIS2 informeIS2 = srvInformeIS2.obtenerInformeIS2(idInforme);
+		PerfilAlumno becado = informeIS2.getBecado();
+		Periodo periodoFechaPBE = srvPeriodo.obtenerPeriodoPorFechaFP(informeIS2.getFechaPBE());	
+		Escuela escuela = srvEscuela.obtenerEscuelaPorId(informeIS2.getBecado().getEscuela().getId());
+		String modalidadTrabajoEscuela = new String();	
+		File file = new File(getProps().getProperty(ConstantesInformes.pathImagen) 
+				+ informeIS2.getBecado().getDatosPersonales().getDni().toString() + ConstantesInformes.extensionImagen);
+		if(file.exists())
+			resul.put("tieneFoto", true);			
+		else
+			resul.put("tieneFoto", false);		
+		
+		if(informeIS2.getFechaPBE() != null)
+			if(periodoFechaPBE != null)
+				resul.put("periodoFechaPBE", periodoFechaPBE.getNombre() + " " + periodoFechaPBE.getCiclo().getNombre());
+			else
+				resul.put("periodoFechaPBE",Formateador.formatearFechas(informeIS2.getFechaPBE(), "dd/MM/yyyy"));
+
+		if(informeIS2.getFechaReincorporacionPBE()!= null){ // es un chico reincorporado
+			Periodo periodoFechaReincorporacionPBE = srvPeriodo.obtenerPeriodoPorFechaFP(informeIS2.getFechaReincorporacionPBE());
+				if(periodoFechaReincorporacionPBE != null)
+					resul.put("periodoFechaReincorporacionPBE", periodoFechaReincorporacionPBE.getNombre() + " " + periodoFechaReincorporacionPBE.getCiclo().getNombre());
+				else
+					resul.put("periodoFechaReincorporacionPBE",Formateador.formatearFechas(informeIS2.getFechaReincorporacionPBE(), "dd/MM/yyyy"));
+		}
+		else{
+			resul.put("periodoFechaReincorporacionPBE",null);
+		}
+		
+		Boletin boletin = srvInforme.getBoletinCicloInforme(informeIS2.getBecado(), informeIS2.getCicloActual());
+		List<Materia> listaMaterias = null;
+		if(boletin != null)
+		{
+			listaMaterias = boletin.getMaterias();			
+		}
+		else{
+			listaMaterias = srvMateria.obtenerMateriasBasicas(true);			
+		}
+		String materiasInteres = "";
+		if (informeIS2.getMateriasInteres()!= null && !informeIS2.getMateriasInteres().equals("")){
+			List<Long> listLocalMateriasInteres = null;
+			listLocalMateriasInteres = new ArrayList<Long>();
+			listLocalMateriasInteres = Formateador.toListOfLongs(informeIS2.getMateriasInteres());
+			for (Iterator iterator = listLocalMateriasInteres.iterator(); iterator.hasNext();) {
+				Long pos = (Long) iterator.next();
+				String materia = this.obtenerMateriaSeleccionada(listaMaterias, pos);
+				if(materiasInteres.equals(""))
+					materiasInteres += materia;				
+				else 
+					materiasInteres += ", " + materia;				
+			}
+		}	
+		String materiasCuestan = "";
+		if (informeIS2.getMateriasCuestan()!= null && !informeIS2.getMateriasCuestan().equals("")){
+			List<Long> listLocalMateriasCuestan = null;			
+			listLocalMateriasCuestan = new ArrayList<Long>();
+			listLocalMateriasCuestan = Formateador.toListOfLongs(informeIS2.getMateriasCuestan());
+			for (Iterator iterator = listLocalMateriasCuestan.iterator(); iterator.hasNext();) {
+				Long pos = (Long) iterator.next();
+				String materia = this.obtenerMateriaSeleccionada(listaMaterias, pos);
+				if(materiasCuestan.equals(""))
+					materiasCuestan += materia;				
+				else 
+					materiasCuestan += ", " + materia;				
+			}
+		}
+		resul.put("informe", informeIS2);
+		resul.put("cantMateriasDesaprobadas", informeIS2.getMateriasDesaprobadas());
+		resul.put("cantInasistencias", informeIS2.getInasistencias());
+		resul.put("mensajePadrino", informeIS2.getMensajePadrino());
+		resul.put("actividadAcompanamiento", informeIS2.getActividadAcompanamiento());
+		resul.put("materiasInteres", materiasInteres);
+		resul.put("materiasCuestan", materiasCuestan);
+		if(!informeIS2.getEstado().equals(EstadoInforme.ENVIADO))
+		{
+			Integer edad = Formateador.calcularEdad(becado.getDatosPersonales().getFechaNacimiento());
+			informeIS2.setEdad(edad);
+			srvInformeIS2.guardarInformeIS2(informeIS2);
+		}
+		resul.put("edad", informeIS2.getEdad());
+		resul.put("becado", informeIS2.getBecado());
+		resul.put("escuela", escuela);
+		if(escuela.getModalidadTrabajoEscuela()!= null)
+			modalidadTrabajoEscuela = escuela.getModalidadTrabajoEscuela().getValor();		
+		resul.put("modalidadTrabajoEscuela", modalidadTrabajoEscuela);
+		
+		resul.put("cantidadBecadosCimiento", srvAlumno.cantidadAlumnosActivosMismaEscuela(escuela));
+		
+		return resul;
+	
+	}
+	
+	
+	@RequestMapping("/informeIS2/correccionGuardar.do")
+	public ModelAndView correccionIS2Guardar(
+			HttpServletRequest req,
+			@RequestParam ("idInformeIS2") Long idInforme,
+			@RequestParam ("observaciones") String observaciones)
+			
+	{
+		Map<String, Object> resul = new HashMap<String, Object>();
+		ModelAndView modelAndView = null;
+		InformeIS2 informeIS2 = srvInformeIS2.obtenerInformeIS2(idInforme);
+		PerfilAlumno becado = informeIS2.getBecado();
+		if(!informeIS2.getEstado().equals(EstadoInforme.ENVIADO))
+		{
+			Integer edad = Formateador.calcularEdad(becado.getDatosPersonales().getFechaNacimiento());
+			informeIS2.setEdad(edad);
+		}
+
+		informeIS2.setObservaciones(observaciones);
+		srvInformeIS2.guardarInformeIS2(informeIS2);
+
+		Persona personaLogeada = this.obtenerPersona(req);
+		if(personaLogeada != null && personaLogeada.getPerfilCorrector())
+			informeIS2.setCorrectora(personaLogeada.getApellido() + " " + personaLogeada.getNombre());
+		informeIS2.setFechaUltimaModificacion(new Date());
+		resul.put("mensaje", "El informe fue guardado");
+		modelAndView = new ModelAndView("redirect:/informes/listaInformesCorreccion.do" , resul);
+		return modelAndView;
+		
+	}
+	
+	@RequestMapping("/informeIS2/revisar.do")
+	public ModelAndView revisar(@RequestParam ("idInformeIS2") Long idInforme,
+								@RequestParam ("observaciones") String observaciones)
+	{
+		Map<String, Object> resul = new HashMap<String, Object>();
+		ModelAndView modelAndView = null;
+		InformeIS2 informeIS2 = srvInformeIS2.obtenerInformeIS2(idInforme);
+		if(!informeIS2.getEstado().equals(EstadoInforme.ENVIADO))
+		{
+			Integer edad = Formateador.calcularEdad(informeIS2.getBecado().getDatosPersonales().getFechaNacimiento());
+			informeIS2.setEdad(edad);
+		}
+		informeIS2.setObservaciones(observaciones);
+		informeIS2.setEstado(EstadoInforme.REVISION);
+		informeIS2.setFechaUltimaModificacion(new Date());
+		srvInformeIS2.guardarInformeIS2(informeIS2);
+		
+		resul.put("mensaje", "El informe fue enviado a revision");
+		modelAndView = new ModelAndView("redirect:/informes/listaInformesCorreccion.do", resul);
+		return modelAndView;
+	}
+	
+	@RequestMapping("/informeIS2/finalizar.do")
+	public ModelAndView finalizar(  HttpServletRequest req,
+									@RequestParam(required=false, value="idInformeIS2") Long idInforme,
+									@RequestParam(required=false, value="accion") String accion,
+									@RequestParam("cantMateriasDesaprobadas") Integer cantMateriasDesaprobadas,
+									@RequestParam("cantInasistencias") Float cantInasistencias,
+									@RequestParam("mensajePadrino") String mensajePadrino,
+									@RequestParam("actividadAcompanamiento") String actividadAcompanamiento,
+									@RequestParam("materiasInteres") String materiasInteres, 
+									@RequestParam("materiasCuestan") String materiasCuestan, 
+									@RequestParam("idAlumno") Long idAlumno,
+									@RequestParam("edad") Integer edad,
+									@RequestParam(required=false, value = "urlRegreso") String urlRegreso){
+		
+		Map<String, Object> resul = new HashMap<String, Object>();
+		ModelAndView modelAndView = null;
+		InformeIS2 informeIS2 = srvInformeIS2.obtenerInformeIS2(idInforme);
+		PerfilAlumno becado = informeIS2.getBecado();
+		if(!informeIS2.getEstado().equals(EstadoInforme.ENVIADO))
+		{
+			Integer edadBecado = Formateador.calcularEdad(becado.getDatosPersonales().getFechaNacimiento());
+			informeIS2.setEdad(edadBecado);
+		}
+//		guardarCamposNoSeleccionado(informeIS2, conducta, compromisoAlumno, esfuerzo, asistenciaBecadoAEntrevistaPBE, presentacionMaterialPBE, compromisoAlumnoPBE, asistenciaRAEntrevistaPBE, compromisoRaPBE, compromisoRA);
+		informeIS2.setActividadAcompanamiento(actividadAcompanamiento);
+		informeIS2.setMensajePadrino(mensajePadrino);
+//		informeIS2.setCicloActual(srvCiclo.obtenerCicloActual());
+		informeIS2.setEaPerfil(becado.getEa());
+		informeIS2.setRrPerfil(becado.getEa().getRr());
+		informeIS2.setFechaPBE(becado.getFechaPBE());
+		informeIS2.setFechaReincorporacionPBE(becado.getFechaReincorporacionPBE());
+		informeIS2.setFechaUltimaModificacion(new Date());
+		informeIS2.setPadrino(becado.getBeca().getPadrino());
+		informeIS2.setBeca(becado.getBeca());
+		informeIS2.setBecado(becado);
+		Integer edadBecado = Formateador.calcularEdad(becado.getDatosPersonales().getFechaNacimiento());
+		informeIS2.setEdad(edadBecado);
+		informeIS2.setFechaCambioUltimoEstado(new Date());
+		informeIS2.setCantidadBecados( srvAlumno.cantidadAlumnosActivosMismaEscuela(becado.getEscuela()));
+		informeIS2.setMateriasDesaprobadas(cantMateriasDesaprobadas);
+		informeIS2.setInasistencias(cantInasistencias);
+		informeIS2.setMateriasCuestan(materiasCuestan);
+		informeIS2.setMateriasInteres(materiasInteres);
+		informeIS2.setEstado(EstadoInforme.FINALIZADO);
+		
+		srvInformeIS2.guardarInformeIS2(informeIS2);	
+		resul.put("mensaje", "El Informe de Seguimiento Nº2 del becado " + becado.getDatosPersonales().getApellidoNombre() + 
+			" ha sido Finalizado");
+		if(StringUtils.isNotBlank(urlRegreso)){
+			//	model = new ModelAndView(urlRegreso, resul);
+			return new ModelAndView("redirect:" + urlRegreso, resul);
+		}
+		else
+			return new ModelAndView("redirect:/informes/listaInformesConstruccion.do", resul);
+	}
+	
+	
+	@RequestMapping("/informeIS2/revisionInformeIS2View.do")
+	public ModelAndView revisionInformeIS2View(@RequestParam ("idInformeIS2") Long idInforme)
+	{
+		Map<String, Object> resul = cargarDatosCorreccion(idInforme);
+				
+		return forward("/informeIS2/supervisarInformeIS2", resul);
+	}
+	
+	@RequestMapping("/informeIS2/revisionGuardar.do")
+	public ModelAndView revisionIS2Guardar(
+			@RequestParam ("idInformeIS2") Long idInforme,
+			@RequestParam("orbservaciones") String observaciones)
+			
+	{
+		Map<String, Object> resul = new HashMap<String, Object>();
+		ModelAndView modelAndView = null;
+		InformeIS2 informeIS2 = srvInformeIS2.obtenerInformeIS2(idInforme);
+		PerfilAlumno becado = informeIS2.getBecado();
+
+		informeIS2.setObservaciones(observaciones);
+		informeIS2.setFechaUltimaModificacion(new Date());
+		if(!informeIS2.getEstado().equals(EstadoInforme.ENVIADO))
+		{
+			Integer edad = Formateador.calcularEdad(becado.getDatosPersonales().getFechaNacimiento());
+			informeIS2.setEdad(edad);
+		}
+		srvInformeIS2.guardarInformeIS2(informeIS2);
+		resul.put("mensaje", "El informe fue guardado");				
+		modelAndView = new ModelAndView("redirect:/informes/listaInformesCorreccion.do", resul);
+		return modelAndView;
+		
+	}
+	
+	
+	@RequestMapping("/informeIS2/verInformeIS2.do")
+	public ModelAndView verInforme(@RequestParam ("idAlumno") Long idAlumno){
+
+		AlumnoPanelEA alumnoPanel = alumnoPanelEaSrv.obtenerAlumnoPanelPorIdPerfilAlumno(idAlumno);
+		InformeIS2 informe = srvInformeIS2.obtenerInformePorAlumno(alumnoPanel.getIdPerfilAlumno(),srvCiclo.obtenerCicloActual());
+		
+		if(informe.getEstado().equals(EstadoInforme.CONSTRUCCION))
+		{
+			String urlRegreso = "/entrevistas/listarBecados.do";
+			return  modificarView(informe.getId(), urlRegreso, null, null);
+		}
+		else{
+			Map<String, Object> resul = cargarDatosCorreccion(informe.getId());
+			return forward("/informeIS2/verIS2", resul);
+		}
+	}
+
+	@RequestMapping("/informeIS2/verInformeIS2General.do")
+	public ModelAndView verInformeIS2(@RequestParam ("idInformeIS2") Long idInforme){
+
+		InformeIS2 informe = srvInformeIS2.obtenerInformeIS2(idInforme);
+		Map<String, Object> resul = new HashMap<String, Object>();//cargarDatosCorreccion(informe.getId());
+		Periodo periodoFechaPBE = srvPeriodo.obtenerPeriodoPorFechaFP(informe.getFechaPBE());	
+		Escuela escuela = srvEscuela.obtenerEscuelaPorId(informe.getBecado().getEscuela().getId());
+		String modalidadTrabajoEscuela = new String();	
+		
+		File file = new File(getProps().getProperty(ConstantesInformes.pathImagen) 
+				+ informe.getBecado().getDatosPersonales().getDni().toString() + ConstantesInformes.extensionImagen);
+		if(file.exists())
+			resul.put("tieneFoto", true);			
+		else
+			resul.put("tieneFoto", false);		
+		
+		if(informe.getFechaPBE() != null)
+			if(periodoFechaPBE != null)
+				resul.put("periodoFechaPBE", periodoFechaPBE.getNombre() + " " + periodoFechaPBE.getCiclo().getNombre());
+			else
+				resul.put("periodoFechaPBE",Formateador.formatearFechas(informe.getFechaPBE(), "dd/MM/yyyy"));
+
+		if(informe.getFechaReincorporacionPBE()!= null){ // es un chico reincorporado
+			Periodo periodoFechaReincorporacionPBE = srvPeriodo.obtenerPeriodoPorFechaFP(informe.getFechaReincorporacionPBE());
+				if(periodoFechaReincorporacionPBE != null)
+					resul.put("periodoFechaReincorporacionPBE", periodoFechaReincorporacionPBE.getNombre() + " " + periodoFechaReincorporacionPBE.getCiclo().getNombre());
+				else
+					resul.put("periodoFechaReincorporacionPBE",Formateador.formatearFechas(informe.getFechaReincorporacionPBE(), "dd/MM/yyyy"));
+		}
+		else{
+			resul.put("periodoFechaReincorporacionPBE",null);
+		}
+		
+		Boletin boletin = srvInforme.getBoletinCicloInforme(informe.getBecado(), informe.getCicloActual());
+		List<Materia> listaMaterias = null;
+		if(boletin != null)
+		{
+			listaMaterias = boletin.getMaterias();			
+		}
+		else{
+			listaMaterias = srvMateria.obtenerMateriasBasicas(true);			
+		}
+		String materiasInteres = "";
+		if (informe.getMateriasInteres()!= null && !informe.getMateriasInteres().equals("")){
+			List<Long> listLocalMateriasInteres = null;
+			listLocalMateriasInteres = new ArrayList<Long>();
+			listLocalMateriasInteres = Formateador.toListOfLongs(informe.getMateriasInteres());
+			for (Iterator iterator = listLocalMateriasInteres.iterator(); iterator.hasNext();) {
+				Long pos = (Long) iterator.next();
+				String materia = this.obtenerMateriaSeleccionada(listaMaterias, pos);
+				if(materiasInteres.equals(""))
+					materiasInteres += materia;				
+				else 
+					materiasInteres += ", " + materia;				
+			}
+		}	
+		String materiasCuestan = "";
+		if (informe.getMateriasCuestan()!= null && !informe.getMateriasCuestan().equals("")){
+			List<Long> listLocalMateriasCuestan = null;			
+			listLocalMateriasCuestan = new ArrayList<Long>();
+			listLocalMateriasCuestan = Formateador.toListOfLongs(informe.getMateriasCuestan());
+			for (Iterator iterator = listLocalMateriasCuestan.iterator(); iterator.hasNext();) {
+				Long pos = (Long) iterator.next();
+				String materia = this.obtenerMateriaSeleccionada(listaMaterias, pos);
+				if(materiasCuestan.equals(""))
+					materiasCuestan += materia;				
+				else 
+					materiasCuestan += ", " + materia;				
+			}
+		}
+		resul.put("informe", informe);
+		resul.put("cantMateriasDesaprobadas", informe.getMateriasDesaprobadas());
+		resul.put("cantInasistencias", informe.getInasistencias());
+		resul.put("mensajePadrino", informe.getMensajePadrino());
+		resul.put("actividadAcompanamiento", informe.getActividadAcompanamiento());
+		resul.put("materiasInteres", materiasInteres);
+		resul.put("materiasCuestan", materiasCuestan);
+		resul.put("edad", informe.getEdad());
+		resul.put("becado", informe.getBecado());
+		resul.put("escuela", escuela);
+		if(escuela.getModalidadTrabajoEscuela()!= null)
+			modalidadTrabajoEscuela = escuela.getModalidadTrabajoEscuela().getValor();		
+		resul.put("modalidadTrabajoEscuela", modalidadTrabajoEscuela);
+		
+		resul.put("cantidadBecadosCimiento", srvAlumno.cantidadAlumnosActivosMismaEscuela(escuela));
+		
+		return forward("/informeIS2/verIS2", resul);
+		
+	}
+	
+	@RequestMapping("/informeIS2/verDetalleIS2.do")
+	public ModelAndView verDetalleInforme(@RequestParam ("idAlumno") Long idAlumno){
+
+		AlumnoPanelEA alumnoPanel = alumnoPanelEaSrv.obtenerAlumnoPanelPorIdPerfilAlumno(idAlumno);
+		InformeIS2 informe = srvInformeIS2.obtenerInformePorAlumno(alumnoPanel.getIdPerfilAlumno(),srvCiclo.obtenerCicloActual());
+		
+		Map<String, Object> resul = cargarDatosCorreccion(informe.getId());
+		return forward("/informeIS2/verIS2", resul);
+		
+	}
+	
+	@RequestMapping("/informeIS2/eliminarIS2.do")
+	public ModelAndView eliminarIS2(@RequestParam ("idIS2") Long idIS2, @RequestParam ("urlRegreso") String urlRegreso){
+		ModelAndView modelAndView = new ModelAndView("redirect:/reporteGeneralInformes/verReporteGeneralInformes.do");
+		String mensaje = "";
+		String error = "";
+		InformeIS2 informeIS2 = srvInformeIS2.obtenerInformeIS2(idIS2);
+		if(!informeIS2.getEstado().equals(EstadoInforme.ENVIADO)){
+			CicloPrograma cicloActual = srvCiclo.obtenerCicloActual();
+			boolean infoCicloActual = true;
+			if(!cicloActual.equals(informeIS2.getCicloActual())){
+				infoCicloActual = false;
+			}
+			if(infoCicloActual){
+				srvInformeIS2.eliminarInformeIS2(informeIS2);
+				AlumnoPanelEA ape = alumnoPanelEaSrv.obtenerAlumnoPanelPorIdPerfilAlumno(informeIS2.getBecado().getId());
+				if(ape != null){
+					ape.setColorIS2(ConstantesPaneles.RED);					
+					alumnoPanelEaSrv.modificarAlumnoPanelEA(ape);
+				}
+			}
+			else{
+				srvInformeIS2.eliminarInformeIS2(informeIS2);
+			}
+			mensaje = "El Informe de Seguimiento Nº2 del becado " + informeIS2.getBecado().getDatosPersonales().getApellidoNombre() + 
+					" ha sido eliminado";
+		}
+		else
+			error = "El Informe de Seguimiento Nº2 del becado " + informeIS2.getBecado().getDatosPersonales().getApellidoNombre() + 
+				" no se puede eliminar porque el mismo ya ha sido enviada al padrino";
+		
+		if(StringUtils.isNotBlank(mensaje))
+			modelAndView = new ModelAndView("redirect:" + urlRegreso + "?mensaje=" + mensaje);
+		if(StringUtils.isNotBlank(error))
+			modelAndView = new ModelAndView("redirect:" + urlRegreso + "?error=" + error);
+		
+		return modelAndView;
+	}
+	
+	private String generarDetalleSuspensiones(List<EntrevistaIndividual> entrevistasPagoSuspendido) 
+	{
+		StringBuffer informacionSuspension = new StringBuffer("");
+		if(entrevistasPagoSuspendido != null && !entrevistasPagoSuspendido.isEmpty()){
+			informacionSuspension.append("Cantidad: " + entrevistasPagoSuspendido.size());
+			informacionSuspension.append(System.getProperty("line.separator"));
+			for (EntrevistaIndividual entrevistaIndividual : entrevistasPagoSuspendido) {
+				informacionSuspension.append("Mes: " + entrevistaIndividual.getPeriodoDePago().getNombre());
+				informacionSuspension.append(", Motivo: " + entrevistaIndividual.getMotivoSuspension().getValor());
+				informacionSuspension.append(System.getProperty("line.separator"));
+			}
+		}
+		return informacionSuspension.toString();
+	}
+	
+	private void guardarCamposNoSeleccionado(InformeIS2 informeIS2, Integer conducta, Integer compromisoAlumno, Integer esfuerzo, Integer asistenciaBecadoAEntrevistaPBE,
+			Integer presentacionMaterialPBE, Integer compromisoAlumnoPBE, Integer asistenciaRAEntrevistaPBE,
+			Integer compromisoRaPBE, Integer compromisoRA)
+	{
+		
+		
+		if(conducta == null)
+			informeIS2.setConducta(null);
+		else
+			informeIS2.setConducta(EnumPBE.getEnumPBE(conducta));
+		
+		if(compromisoAlumno == null)
+			informeIS2.setCompromisoAlumno(null);
+		else
+			informeIS2.setCompromisoAlumno(EnumPBE.getEnumPBE(compromisoAlumno));
+		
+		if(esfuerzo == null)
+			informeIS2.setEsfuerzo(null);
+		else
+			informeIS2.setEsfuerzo(EnumPBE.getEnumPBE(esfuerzo));
+		
+		if(asistenciaBecadoAEntrevistaPBE == null)
+			informeIS2.setAsistenciaBecadoAEntrevistaPBE(null);
+		else
+			informeIS2.setAsistenciaBecadoAEntrevistaPBE(EnumPBE.getEnumPBE(asistenciaBecadoAEntrevistaPBE));
+		
+		if(presentacionMaterialPBE == null)
+			informeIS2.setPresentacionMaterialPBE(null);
+		else
+			informeIS2.setPresentacionMaterialPBE(EnumPBE.getEnumPBE(presentacionMaterialPBE));
+		
+		if(compromisoAlumnoPBE == null)
+			informeIS2.setCompromisoAlumnoPBE(null);
+		else
+			informeIS2.setCompromisoAlumnoPBE(EnumPBE.getEnumPBE(compromisoAlumnoPBE));
+		
+		if(asistenciaRAEntrevistaPBE == null)
+			informeIS2.setAsistenciaRAEntrevistaPBE(null);
+		else
+			informeIS2.setAsistenciaRAEntrevistaPBE(EnumPBE.getEnumPBE(asistenciaRAEntrevistaPBE));
+		
+		if(compromisoRaPBE == null)
+			informeIS2.setCompromisoRaPBE(null);
+		else
+			informeIS2.setCompromisoRaPBE(EnumPBE.getEnumPBE(compromisoRaPBE));
+		
+		if(compromisoRA == null)
+			informeIS2.setCompromisoRA(null);
+		else
+			informeIS2.setCompromisoRA(EnumPBE.getEnumPBE(compromisoRA));
+		
+		srvInformeIS2.guardarInformeIS2(informeIS2);
+	}
+	
+	@InitBinder
+	public void initBinder(HttpServletRequest request,WebDataBinder binder) {
+		
+	    // custom date binding
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	    binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+	    
+	}
+	
+	private String obtenerMateriaSeleccionada(List<Materia> listaMaterias, Long pos){
+		int i = 0;
+		String materia = "";
+		boolean encontro = false;
+		while (i< listaMaterias.size() && !encontro) {
+			if(listaMaterias.get(i).getId().equals(pos)){
+				materia = listaMaterias.get(i).getNombre();
+				encontro = true;
+			}
+			i++;
+		}
+		return materia;
+	}
+}

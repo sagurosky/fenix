@@ -1,0 +1,484 @@
+package org.cimientos.intranet.web.controller;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.lang.StringUtils;
+import org.cimientos.intranet.modelo.CicloPrograma;
+import org.cimientos.intranet.modelo.Periodo;
+import org.cimientos.intranet.modelo.escuela.Escuela;
+import org.cimientos.intranet.modelo.perfil.AlumnoPanelEA;
+import org.cimientos.intranet.modelo.perfil.EstadoAlumno;
+import org.cimientos.intranet.modelo.perfil.PerfilAlumno;
+import org.cimientos.intranet.modelo.perfilEA.PerfilEA;
+import org.cimientos.intranet.modelo.perfilPadrino.PerfilPadrino;
+import org.cimientos.intranet.modelo.perfilPadrino.TipoPadrino;
+import org.cimientos.intranet.modelo.ubicacion.Provincia;
+import org.cimientos.intranet.modelo.ubicacion.ZonaCimientos;
+import org.cimientos.intranet.servicio.AlumnoPanelEASrv;
+import org.cimientos.intranet.servicio.AlumnoSrv;
+import org.cimientos.intranet.servicio.CicloProgramaSrv;
+import org.cimientos.intranet.servicio.EscuelaSrv;
+import org.cimientos.intranet.servicio.PerfilEASrv;
+import org.cimientos.intranet.servicio.PerfilPadrinoSvr;
+import org.cimientos.intranet.servicio.PeriodoSrv;
+import org.cimientos.intranet.servicio.ProvinciaSrv;
+import org.cimientos.intranet.servicio.ZonaCimientosSrv;
+import org.cimientos.intranet.utils.ConstantesMenu;
+import org.cimientos.intranet.utils.Formateador;
+import org.cimientos.intranet.utils.paginacion.ExtendedPaginatedList;
+import org.cimientos.intranet.utils.paginacion.PaginateListFactory;
+import org.displaytag.tags.TableTagParameters;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.cimientos.intranet.enumerativos.AnioEscolar;
+import com.cimientos.intranet.enumerativos.SituacionEscolarAlumno;
+
+@Controller("/alumnosInactivos/*")
+public class AlumnosInactivosController extends BaseController {
+	
+
+	@Autowired
+	private AlumnoSrv alumnoSrv;
+	
+	/** The paginate list factory. */
+	@Autowired
+	private PaginateListFactory paginateListFactory;
+	@Autowired
+	private ZonaCimientosSrv zonaCimientosSrv;
+	@Autowired
+	private PerfilPadrinoSvr padrinoSvr;
+
+	@Autowired
+	private PerfilEASrv eaSrv;
+	
+	@Autowired
+	private EscuelaSrv escuelaSrv;
+	
+	@Autowired
+	private CicloProgramaSrv cicloSrv;
+	
+	@Autowired
+	private PeriodoSrv svrPeriodo;
+	
+	@Autowired
+	private ProvinciaSrv provinciaSrv;
+	
+	@Autowired
+	private AlumnoPanelEASrv alumnoPanelEASrv;
+
+	private Map<String,Object> map;
+	
+	//Constante para identificar desde cuando se necesitan los ciclos
+	private static String ciclo2010 = "2010";
+	
+	/**
+	 * 
+	 * @param request
+	 * @param idEstadoAlumno
+	 * @param idAnioEscolar
+	 * @param anioAdicional
+	 * @param idZonaCimientos
+	 * @param idPadrino
+	 * @param idEa
+	 * @param ea
+	 * @param idEscuela
+	 * @param escuela
+	 * @param dniAlumno
+	 * @param nombreAlumno
+	 * @param cicloId
+	 * @param periodoId
+	 * @param idSituacionAlumno
+	 * @return lista de todos los alumnos inactivos
+	 */
+	@RequestMapping("/alumnosInactivos/listaAlumnosInactivos.do")
+	public ModelAndView listaReincorporarAlumnos(HttpServletRequest request,
+			@RequestParam(required=false,value="idEstadoAlumno")Integer idEstadoAlumno,
+			@RequestParam(required=false,value="idAnioEscolar")Integer idAnioEscolar,
+			@RequestParam(required=false,value="idZonaCimientos")Long idZonaCimientos,
+			@RequestParam(required=false,value="idProvincia")Long idProvincia,
+			@RequestParam(required=false,value="idPadrino")Long idPadrino,
+			@RequestParam(required=false,value="idEA")Long idEa,
+			@RequestParam(required= false, value="ea") String ea,
+			@RequestParam(required=false,value="idEscuela")Long idEscuela,
+			@RequestParam(required= false, value="escuela") String escuela,
+			@RequestParam(value="dniAlumno",required=false) Integer dniAlumno,
+			@RequestParam(value="nombreAlumno",required=false) String nombreAlumno,
+			@RequestParam(required= false, value="cicloId") String cicloId,
+			@RequestParam(required= false, value="periodoId") String periodoId,
+			@RequestParam(required=false,value="idSituacionAlumno")Integer idSituacionAlumno,
+			@RequestParam(required= false, value="cicloIdEgreso") String cicloIdEgreso,
+			@RequestParam(required= false, value="periodoIdEgreso") String periodoIdEgreso,
+			@RequestParam(required= false, value="cantPrevias") String cantPrevias,
+			@RequestParam(required= false, value="eae") String eae,
+			@RequestParam(required= false, value="tipoId") Integer tipoId,
+			@RequestParam(required=false,value="sexo")String sexo,
+			@RequestParam(required= false, value="fechaDesde") String fechaDesde,
+			@RequestParam(required= false, value="fechaHasta") String fechaHasta,
+			@RequestParam(required= false, value="mensaje") String mensaje,
+			@RequestParam(required= false, value="error") String error){
+
+		boolean export = request.getParameter(TableTagParameters.PARAMETER_EXPORTING) != null;
+		EstadoAlumno estadoAlumno = null;
+		AnioEscolar anio = null;
+		ZonaCimientos zona=null;
+		Provincia prov = null;
+		PerfilPadrino padrino=null;
+		PerfilEA perfilEA =null;
+		Escuela escuelaAlumno = null;
+		Long idCiclo = null;
+		Long idCicloEgreso = null;
+		Long idPeriodo = null;
+		Long idPeriodoEgreso = null;
+		List<Periodo> listPeriodosBaja = null;
+		List<CicloPrograma> listCiclosBaja = null;
+		List<Long> listPeriodosIdBaja = new ArrayList<Long>();
+		List<Periodo> listPeriodosEgreso = null;
+		List<CicloPrograma> listCiclosEgreso = null;
+		List<Long> listPeriodosIdEgreso = new ArrayList<Long>();
+		Integer idAnio = idAnioEscolar != null && idAnioEscolar.equals(0) ? null : idAnioEscolar;
+		Integer estadoAlumnoId = idEstadoAlumno != null && idEstadoAlumno.equals(0) ? null : idEstadoAlumno;
+//		Long idPeriodo = periodoId != null && periodoId.equals(0l) ? null : periodoId;
+//		Long idPeriodoEgreso = periodoIdEgreso != null && periodoIdEgreso.equals(0l) ? null : periodoIdEgreso;
+		SituacionEscolarAlumno situacionEscolar = null;
+		idSituacionAlumno = idSituacionAlumno != null && idSituacionAlumno.equals(0)?null:idSituacionAlumno;
+		Integer previas = null;
+		Integer idTipo = tipoId != null && tipoId.equals(0) ? null : tipoId;
+		Boolean sexo1 = null;
+		Date dFechaDesde = null;
+		Date dFechaHasta = null;
+		
+		//Filtros de busqueda
+		map = new HashMap<String, Object>();
+
+		if(estadoAlumnoId != null){
+			estadoAlumno= EstadoAlumno.getEstados(estadoAlumnoId);
+			map.put("estado", estadoAlumno);
+		}
+		
+		if(idAnio != null){
+			anio= AnioEscolar.getAnioEscolar(idAnio);
+			map.put("anio", anio);
+		}
+		
+		if(idZonaCimientos != null){
+			zona = zonaCimientosSrv.obtenerZonaCimientos(idZonaCimientos);
+			map.put("zonaCimientos", zona);
+		}
+		
+		if(idProvincia != null){
+			prov = provinciaSrv.obtenerPorId(idProvincia);
+			map.put("provincia", prov);
+		}
+		
+		if(idPadrino != null ){
+			padrino = padrinoSvr.obtenerPorId(idPadrino);
+			map.put("padrino", padrino);
+		}
+		if(idEa != null){
+			perfilEA = eaSrv.obtenerPerfilEA(idEa);
+			map.put("ea",ea );
+			map.put("idEA", idEa);
+		}
+		
+		if(nombreAlumno != null){
+			if(nombreAlumno == "")
+				nombreAlumno=null;
+			map.put("nombreAlumno", nombreAlumno);
+		}
+		
+		if(dniAlumno != null){
+			map.put("dniAlumno", dniAlumno);
+		}
+		
+		if(eae != null){
+			map.put("eae", eae);
+		}
+		
+		if(idEscuela != null){
+			escuelaAlumno = escuelaSrv.obtenerEscuelaPorId(idEscuela);
+			map.put("escuela", escuela);
+			map.put("idEscuela", idEscuela);
+		}
+
+		if(StringUtils.isNotBlank(cicloId)){
+			idCiclo = Long.parseLong(cicloId);
+			if(idCiclo == 0){ //Todos los ciclos, por ende no funciona el filtro periodoIdBaja
+				listCiclosBaja = cicloSrv.obtenerCiclosConvocatoriaDesde(ciclo2010);
+				listPeriodosBaja = svrPeriodo.buscarPeriodosPorCiclo(this.obtenerListaCiclosId(listCiclosBaja));
+				listPeriodosIdBaja = this.obtenerListaPeriodosId(listPeriodosBaja);
+			}
+			else{ //Se seleccionó un ciclo de baja en particular					
+				if(StringUtils.isNotBlank(periodoId)){ 
+					idPeriodo = Long.parseLong(periodoId);
+					if(idPeriodo == 0){ // Se seleccionó la opción todos en el filtro periodoIdBaja
+						listPeriodosBaja = svrPeriodo.buscarPeriodosPorCiclo(idCiclo);
+						listPeriodosIdBaja = this.obtenerListaPeriodosId(listPeriodosBaja);
+					}
+					else{ // Se seleccionó un periodo en particular
+						listPeriodosIdBaja.add(idPeriodo);
+					}
+				}
+				else{//primer filtro para que traiga todas las bajas del ciclo seleccionado
+					listPeriodosBaja = svrPeriodo.buscarPeriodosPorCiclo(idCiclo);
+					listPeriodosIdBaja = this.obtenerListaPeriodosId(listPeriodosBaja);
+				}
+			}
+		}else { //ciclo actual con todos los periodos de dicho ciclo
+			idCiclo = cicloSrv.obtenerCicloActual().getId();
+			cicloId = idCiclo.toString();				
+			if(StringUtils.isNotBlank(periodoId)){ 
+				idPeriodo = Long.parseLong(periodoId);
+				if(idPeriodo == 0){ // Se seleccionó la opción todos en el filtro periodoIdBaja
+					listPeriodosBaja = svrPeriodo.buscarPeriodosPorCiclo(idCiclo);
+					listPeriodosIdBaja = this.obtenerListaPeriodosId(listPeriodosBaja);
+				}
+				else{ // Se seleccionó un periodo en particular
+					listPeriodosIdBaja.add(idPeriodo);
+				}
+			}
+			else{//primer filtro para que traiga todas las bajas del ciclo actual
+				listPeriodosBaja = svrPeriodo.buscarPeriodosPorCiclo(idCiclo);
+				listPeriodosIdBaja = this.obtenerListaPeriodosId(listPeriodosBaja);
+			}
+		}
+		
+		
+		if(idSituacionAlumno != null){
+			situacionEscolar = SituacionEscolarAlumno.getSituacionEscolarAlumno(idSituacionAlumno);
+			map.put("situacion", situacionEscolar);
+		}
+		
+		if(StringUtils.isNotBlank(cicloIdEgreso)){
+			idCicloEgreso = Long.parseLong(cicloIdEgreso);
+			if(idCicloEgreso == 0){ //Todos los ciclos, por ende no funciona el filtro periodoIdEgreso
+				listCiclosEgreso = cicloSrv.obtenerCiclosConvocatoriaDesde(ciclo2010);
+				listPeriodosEgreso = svrPeriodo.buscarPeriodosPorCiclo(this.obtenerListaCiclosId(listCiclosEgreso));
+				listPeriodosIdEgreso = this.obtenerListaPeriodosId(listPeriodosEgreso);
+			}
+			else{ //Se seleccionó un ciclo de egreso en particular					
+				if(StringUtils.isNotBlank(periodoIdEgreso)){ 
+					idPeriodoEgreso = Long.parseLong(periodoIdEgreso);
+					if(idPeriodoEgreso == 0){ // Se seleccionó la opción todos en el filtro periodoIdEgreso
+						listPeriodosEgreso = svrPeriodo.buscarPeriodosPorCiclo(idCicloEgreso);
+						listPeriodosIdEgreso = this.obtenerListaPeriodosId(listPeriodosEgreso);
+					}
+					else{ // Se seleccionó un periodo en particular
+						listPeriodosIdEgreso.add(idPeriodoEgreso);
+					}
+				}
+				else{//primer filtro para que traiga todas los egresados del ciclo seleccionado
+					listPeriodosEgreso = svrPeriodo.buscarPeriodosPorCiclo(idCicloEgreso);
+					listPeriodosIdEgreso = this.obtenerListaPeriodosId(listPeriodosEgreso);
+				}
+			}
+		}else {
+			if(cicloIdEgreso != null){//ciclo actual con todos los periodos de dicho ciclo
+				idCicloEgreso = cicloSrv.obtenerCicloActual().getId();
+				cicloIdEgreso = idCicloEgreso.toString();
+				if(StringUtils.isNotBlank(periodoIdEgreso)){ 
+					idPeriodoEgreso = Long.parseLong(periodoIdEgreso);
+					if(idPeriodoEgreso == 0){ // Se seleccionó la opción todos en el filtro periodoIdEgreso
+						listPeriodosEgreso = svrPeriodo.buscarPeriodosPorCiclo(idCicloEgreso);
+						listPeriodosIdEgreso = this.obtenerListaPeriodosId(listPeriodosEgreso);
+					}
+					else{ // Se seleccionó un periodo en particular
+						listPeriodosIdEgreso.add(idPeriodoEgreso);
+					}
+				}
+				else{//primer filtro para que traiga todas los egresados del ciclo actual
+					listPeriodosEgreso = svrPeriodo.buscarPeriodosPorCiclo(idCicloEgreso);
+					listPeriodosIdEgreso = this.obtenerListaPeriodosId(listPeriodosEgreso);
+				}
+			}
+		}
+		
+		if(cantPrevias != null){
+			previas = parsearPrevia(cantPrevias);
+		}
+		
+		if(sexo != null){
+			sexo1 = generarSexo(sexo);
+			map.put("sexo", sexo);
+		}
+		
+		if (StringUtils.isNotBlank(fechaDesde))
+			dFechaDesde = Formateador.parsearFecha(fechaDesde);
+
+		if (StringUtils.isNotBlank(fechaHasta))
+			dFechaHasta = Formateador.parsearFecha(fechaHasta);
+	
+		ExtendedPaginatedList listaPaginada = paginarAlumnos(export, request,zona,padrino,perfilEA,dniAlumno,nombreAlumno,estadoAlumno,
+				escuelaAlumno,anio,situacionEscolar,listPeriodosIdBaja,listPeriodosIdEgreso,previas,idTipo,sexo1,prov,dFechaDesde,dFechaHasta, eae);
+		map.put("alumnos",listaPaginada);
+		map.put("cicloId", cicloId);
+		map.put("cicloIdEgreso", cicloIdEgreso); 
+		map.put("listEstadoAlumnos",EstadoAlumno.getListaEstadosInactivos());
+		map.put("listSituacionAlumnos",SituacionEscolarAlumno.getSituacionEscolarAlumno());
+		map.put("periodos", svrPeriodo.buscarPeriodosPorCiclo(idCiclo));
+		map.put("periodoId", periodoId);
+		map.put("periodosEgreso", svrPeriodo.buscarPeriodosPorCiclo(idCicloEgreso));
+		map.put("periodoIdEgreso", periodoIdEgreso);		
+		map.put("ciclos", cicloSrv.obtenerCiclosConvocatoriaDesde(ciclo2010));
+		map.put("listAniosEscolares", AnioEscolar.getAnioEscolares());
+		map.put("listaPrevias", generarListaPrevias());
+		map.put("previa", cantPrevias);
+		map.put("tipoId", tipoId);
+		map.put("tipos", TipoPadrino.getListaTipos());
+		ArrayList<String> listaSexo = generarListaSexo();
+		map.put("listSexo", listaSexo);
+		map.put("sexo", sexo);
+		map.put("fechaDesde", dFechaDesde);
+		map.put("fechaHasta", dFechaHasta);
+		HttpSession session = request.getSession();
+		session.setAttribute("menu", ConstantesMenu.menuExportacion);
+		
+		if(StringUtils.isNotBlank(mensaje))
+			map.put("mensaje", mensaje);	
+		
+		if(StringUtils.isNotBlank(error))
+			map.put("error", error);
+		
+		return forward("/alumnosInactivos/alumnosInactivos", map);
+	}
+
+	
+	private Boolean generarSexo(String sexo) {
+		if(sexo.equals("Todos"))
+			return null;
+		else
+			return sexo.equals("Masculino");
+	}
+
+	private ArrayList<String> generarListaSexo() {
+		ArrayList<String> listaSexo = new ArrayList<String>();
+		listaSexo.add("Femenino");
+		listaSexo.add("Masculino");
+		return listaSexo;
+	}
+
+	private Integer parsearPrevia(String cantPrevias) {
+		if(cantPrevias.equals("0"))
+			return null;
+		else
+			if(cantPrevias.equals("Sin previas"))
+				return 0;
+			else
+				if(cantPrevias.equals("+3"))
+					return 4;
+				else
+					return new Integer(cantPrevias);
+	}
+
+
+	private Object generarListaPrevias() {
+		List<String> result = new ArrayList<String>();
+		result.add("Sin previas");
+		result.add("1");
+		result.add("2");
+		result.add("3");
+		result.add("+3");
+		return result;
+	}
+
+
+	private ExtendedPaginatedList paginarAlumnos(boolean export, HttpServletRequest request, ZonaCimientos zona, 
+			PerfilPadrino padrino, PerfilEA ea, Integer dni, String nombreAlumno, EstadoAlumno estadoAlumno,
+			Escuela escuelaAlumno, AnioEscolar anio, SituacionEscolarAlumno situacionEscolar,List<Long> listPeriodosIdBaja, 
+			List<Long> listPeriodosIdEgreso, Integer cantPrevias, Integer idTipo, Boolean sexo, Provincia prov, Date dFechaDesde, Date dFechaHasta, String eae) {
+		
+		List<PerfilAlumno> dtos = null;
+		
+		ExtendedPaginatedList listaPaginada = paginateListFactory.getPaginatedListFromRequest(request);
+		
+		int totalRows = alumnoSrv.obtenerCantidadAlumnosInactivos(zona,padrino,ea,dni,nombreAlumno,estadoAlumno,
+				escuelaAlumno,anio,situacionEscolar,listPeriodosIdBaja,listPeriodosIdEgreso,cantPrevias,idTipo,sexo,prov,dFechaDesde,dFechaHasta,eae);
+		
+		//Si es un export debo cargar toda la lista entera, si no lo es entonces se carga la lista de a una pagina por vez
+		if(export){
+			dtos = alumnoSrv.obtenerAlumnosInactivos(0, totalRows,listaPaginada.getSortDirection(), listaPaginada.getSortCriterion(),
+													zona,padrino,ea,dni,nombreAlumno,estadoAlumno,escuelaAlumno,anio,situacionEscolar,
+												listPeriodosIdBaja,listPeriodosIdEgreso,cantPrevias,idTipo,sexo,prov,dFechaDesde,dFechaHasta,eae);
+		}else{
+			dtos = alumnoSrv.obtenerAlumnosInactivos(listaPaginada.getFirstRecordIndex(), 
+													listaPaginada.getPageSize(),listaPaginada.getSortDirection(), 
+													listaPaginada.getSortCriterion(),zona,padrino,ea,dni,nombreAlumno,estadoAlumno,
+													escuelaAlumno,anio,situacionEscolar,listPeriodosIdBaja,listPeriodosIdEgreso,cantPrevias,idTipo,
+													sexo,prov,dFechaDesde,dFechaHasta,eae);
+		}
+		
+		listaPaginada.setList(dtos);
+		listaPaginada.setTotalNumberOfRows(totalRows);
+
+		return listaPaginada;
+	}
+	
+	/**
+	 * 
+	 * @param request
+	 * @param id
+	 * Realiza todas las tareas para reincoporar a un alumno. Cambia el estado de dicho alumno y demas tareas para llevar al alumno
+	 * a la lista de candiadtos
+	 */
+	
+	@RequestMapping("/alumnosInactivos/reincorporaralumno.do")
+	public ModelAndView reincorporarAlumno(HttpServletRequest request, @RequestParam("idAlumno") Long id){
+		//TODO aca va la parte de cambiar lo necesario para que el alumno vuelva a la lista de convocados
+		//seguro tiene que cambiar el estado, hay que ver que mas es necesario
+		String mensaje = "";
+		String error = "";
+		try {
+			PerfilAlumno perfilAlumno = alumnoSrv.obtenerAlumno(id);
+			if(perfilAlumno.getBoletin() != null && !perfilAlumno.getHistorialBoletin().contains(perfilAlumno.getBoletin())){
+				perfilAlumno.getHistorialBoletin().add(perfilAlumno.getBoletin());
+				perfilAlumno.setBoletin(null);
+			}
+			if(perfilAlumno.getEa() != null){
+				perfilAlumno.getHistorialEa().add(perfilAlumno.getEa());
+				perfilAlumno.setEa(null);
+			}
+			if(perfilAlumno.getBeca() != null && !perfilAlumno.getHistorialBeca().contains(perfilAlumno.getBeca())){
+				perfilAlumno.getHistorialBeca().add(perfilAlumno.getBeca());
+				perfilAlumno.setBeca(null);
+			}
+			perfilAlumno.setFechaAltaBeca(null);
+			perfilAlumno.setEstadoAlumno(EstadoAlumno.APROBADO);
+			alumnoSrv.agregarAlumno(perfilAlumno);
+			mensaje = "El alumno/a " + perfilAlumno.getDatosPersonales().getApellidoNombre() + " ha sido enviado al listado de candidatos";			
+		} catch (Exception e) {
+			// TODO: handle exception
+			error="Error al intentar reincorporar al alumno/a seleccionado/a";
+		}
+		return listaReincorporarAlumnos(request, null, null, null, null, null, null, null,null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, mensaje, error);
+	}
+	
+	
+	private List<Long> obtenerListaCiclosId(List<CicloPrograma> listCiclosBaja){
+		List<Long> listCicloIdBajeList = new ArrayList<Long>();
+		for (Iterator iterator = listCiclosBaja.iterator(); iterator.hasNext();) {
+			CicloPrograma ciclo = (CicloPrograma) iterator.next();
+			listCicloIdBajeList.add(ciclo.getId());
+		}
+		return listCicloIdBajeList;
+	}
+	
+	private List<Long> obtenerListaPeriodosId(List<Periodo> listPeriodos){
+		List<Long> listPeriodoIdList = new ArrayList<Long>();
+		for (Iterator iterator = listPeriodos.iterator(); iterator.hasNext();) {
+			Periodo periodo = (Periodo) iterator.next();
+			listPeriodoIdList.add(periodo.getId());
+		}
+		return listPeriodoIdList;
+	}
+}

@@ -1,0 +1,49 @@
+package org.cimientos.intranet;
+/**
+ * test	
+ * @author Juan Irungaray
+ *
+ */
+public class test {
+
+	public static void main(String[] arg) {
+		String dni="29332448";
+		int sexo=2;
+		String prefijo;
+		if (sexo == 1) {
+			prefijo = "20";
+		} else if (sexo == 2) {
+			prefijo = "27";
+		} else {
+			prefijo = "30";
+		}
+		int suma = 0;
+		suma += (Integer.parseInt(prefijo.charAt(0) + "") * 5);
+		suma += (Integer.parseInt(prefijo.charAt(1) + "") * 4);
+		suma += (Integer.parseInt(dni.charAt(0) + "") * 3);
+		suma += (Integer.parseInt(dni.charAt(1) + "") * 2);
+		suma += (Integer.parseInt(dni.charAt(2) + "") * 7);
+		suma += (Integer.parseInt(dni.charAt(3) + "") * 6);
+		suma += (Integer.parseInt(dni.charAt(4) + "") * 5);
+		suma += (Integer.parseInt(dni.charAt(5) + "") * 4);
+		suma += (Integer.parseInt(dni.charAt(6) + "") * 3);
+		suma += (Integer.parseInt(dni.charAt(7) + "") * 2);
+		int resultado = suma % 11;
+		String sufijo;
+		if (resultado == 0) {
+			sufijo = "0";
+		} else if (resultado == 1) {
+			if (sexo == 1) {
+				sufijo = "9";
+				prefijo = "23";
+			} else {
+				sufijo = "4";
+				prefijo = "23";
+			}
+		} else {
+			sufijo = "" + (11 - resultado);
+		}
+
+		//System.out.println(prefijo + "-" + dni + "-" + sufijo); ;
+	}
+}

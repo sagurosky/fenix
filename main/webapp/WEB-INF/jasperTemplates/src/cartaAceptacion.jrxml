@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cartaRechazo" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="144"/>
+	<field name="date" class="java.util.Date"/>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="pathImg" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="146" splitType="Stretch">
+			<image>
+				<reportElement x="178" y="23" width="183" height="73"/>
+				<imageExpression class="java.lang.String"><![CDATA[$F{pathImg}]]></imageExpression>
+			</image>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="282" y="122" width="287" height="24"/>
+				<textElement>
+					<font fontName="Lucida Bright" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{date}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="347" splitType="Stretch">
+			<staticText>
+				<reportElement x="18" y="97" width="538" height="74"/>
+				<textElement>
+					<font fontName="Lucida Bright" size="12"/>
+				</textElement>
+				<text><![CDATA[ha sido seleccionado/a para participar del Programa Futuros Egresados, ya que  reúne los requisitos necesarios.
+Cordialmente,
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="165" height="51"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Lucida Bright" size="12"/>
+				</textElement>
+				<text><![CDATA[Estimada Familia:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="231" width="284" height="51"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Lucida Bright" size="12"/>
+				</textElement>
+				<text><![CDATA[Programa Futuros Egresados
+Cimientos | construyamos desde la educación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="64" width="441" height="33"/>
+				<textElement textAlignment="Justified" verticalAlignment="Bottom">
+					<font fontName="Lucida Bright" size="12"/>
+				</textElement>
+				<text><![CDATA[Por medio de la presente queremos informarle que su hijo/a]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="430" y="64" width="126" height="33"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Lucida Bright" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

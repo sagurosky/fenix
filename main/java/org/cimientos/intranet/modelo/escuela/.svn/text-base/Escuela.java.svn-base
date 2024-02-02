@@ -1,0 +1,1100 @@
+package org.cimientos.intranet.modelo.escuela;
+
+import java.io.Serializable;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+
+import org.cimientos.intranet.modelo.CicloPrograma;
+import org.cimientos.intranet.modelo.Parametro;
+import org.cimientos.intranet.modelo.perfil.Turno;
+import org.cimientos.intranet.modelo.ubicacion.Localidad;
+import org.cimientos.intranet.modelo.ubicacion.Provincia;
+import org.cimientos.intranet.modelo.ubicacion.ZonaCimientos;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.CollectionOfElements;
+
+import com.cimientos.intranet.enumerativos.AniosEscuela;
+import com.cimientos.intranet.enumerativos.Dependencia;
+import com.cimientos.intranet.enumerativos.EspacioApoyo;
+import com.cimientos.intranet.enumerativos.EstadoEscuela;
+import com.cimientos.intranet.enumerativos.FaseProyecto;
+import com.cimientos.intranet.enumerativos.Modalidad;
+import com.cimientos.intranet.enumerativos.ModalidadTrabajoEscuela;
+import com.cimientos.intranet.enumerativos.NivelEscuela;
+import com.cimientos.intranet.enumerativos.Programa;
+
+/**
+ * Escuela.
+ *
+ * @author pmlabaronnie
+ */
+@Entity
+@Cache(usage=CacheConcurrencyStrategy.READ_WRITE, region="org.cimientos.intranet.modelo.escuela.Escuela")
+public class Escuela implements Serializable{
+
+	/*
+	 * Datos formales de la escuela y de contacto 
+	 */
+	
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue
+	private Long id;
+	
+	private Long codigoUnicoEscolar;
+	
+	private String nombre;
+	
+	@Enumerated(EnumType.ORDINAL)
+	private Modalidad modalidad;
+	
+	@ManyToOne
+	private Parametro modalidadEscolar;
+	
+	@Column(length=10000)
+	private String  orientacion;
+	
+	@Enumerated(EnumType.ORDINAL)
+	private NivelEscuela  nivelAtiendeEscuela;
+	
+	@Enumerated(EnumType.ORDINAL)
+	private AniosEscuela cantidadDeAnios;
+	
+	@Enumerated(EnumType.ORDINAL)
+	private Dependencia  dependencia;
+	
+	private String  direccionCalle;
+	
+	private Integer direccionNumero;
+	
+	private String codigoPostal;
+	
+	private String barrio;
+	
+	@ManyToOne
+	private Localidad localidad;
+	
+	@ManyToOne
+	private Provincia provincia;
+	
+	@ManyToOne
+	private ZonaCimientos zonaCimientos;
+	
+	private String telefono1;
+	
+	private String telefono2;
+	
+	private String mail;
+	
+	private String director;
+	
+	private String directorCelular;
+	
+	private String directorMail;
+	
+	private String secretario;
+	
+	private String secretarioCelular;
+	
+	private String secretarioMail;
+	
+	private String responsable;
+	
+	private String responsableCelular;
+	
+	private String responsableMail;
+	
+	//SI = true / NO = false / Sin dato = null
+	private Boolean rural;
+	
+	//SI = true / NO = false / Sin dato = null
+	private Boolean subsidioEstatal;
+	
+	/*
+	 * Informacion general Cimientos 
+	 */
+	
+	@Enumerated(EnumType.ORDINAL)
+	private EstadoEscuela estadoEscuela; 
+	
+	@Column(length=10000)
+	private String motivoNoSeleccion;
+	
+	//Año de incorporación a Cimientos
+	private Integer anioIncorporacion;
+	
+	@Enumerated(EnumType.ORDINAL)
+	private Programa programa;
+	
+	//Si programa es OTRO, se aclara el nombre
+	private String nombrePrograma;
+	
+	@Enumerated(EnumType.ORDINAL)
+	private ModalidadTrabajoEscuela modalidadTrabajoEscuela;
+	
+	private boolean lugarEntrevista;
+	
+	private Boolean activo;
+	
+	@Column(length=3000)
+	private String objetivoProyecto;
+	
+	@Column(length=3000)
+	private String obsGenerales;
+	
+	private Integer matricula;
+
+	@CollectionOfElements
+	@JoinTable(name="turnos_escuela")
+	@Enumerated(EnumType.ORDINAL)
+	private List<Turno> turno;
+	
+	private Float indicadorRepitencia;
+	
+	private Float indicadorAbandono;
+	
+	@Enumerated(EnumType.ORDINAL)
+	private FaseProyecto faseProyecto;
+	
+	@CollectionOfElements
+	@JoinTable(name="espacio_apoyo_escuela")
+	@Enumerated(EnumType.ORDINAL)
+	private List<EspacioApoyo> espacioApoyo;
+	
+	@ManyToOne
+	private CicloPrograma comienzoProyecto;
+	
+	@ManyToOne
+	private CicloPrograma comienzoPBE;
+	
+	@Column(length=3000)
+	private String observaciones;
+	
+	private Float porcentajeInasistencia;
+	
+	/**
+	 * Gets the id.
+	 *
+	 * @return the id
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * Sets the id.
+	 *
+	 * @param id the new id
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	/**
+	 * Gets the nombre.
+	 *
+	 * @return the nombre
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public String getNombre() {
+		return nombre;
+	}
+
+	/**
+	 * Sets the nombre.
+	 *
+	 * @param nombre the new nombre
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	/**
+	 * Gets the localidad.
+	 *
+	 * @return the localidad
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public Localidad getLocalidad() {
+		return localidad;
+	}
+
+	/**
+	 * Sets the localidad.
+	 *
+	 * @param localidad the new localidad
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public void setLocalidad(Localidad localidad) {
+		this.localidad = localidad;
+	}
+
+	/**
+	 * Gets the provincia.
+	 *
+	 * @return the provincia
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public Provincia getProvincia() {
+		return provincia;
+	}
+
+	/**
+	 * Sets the provincia.
+	 *
+	 * @param provincia the new provincia
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public void setProvincia(Provincia provincia) {
+		this.provincia = provincia;
+	}
+
+	/**
+	 * Gets the modalidad escolar.
+	 *
+	 * @return the modalidad escolar
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public Parametro getModalidadEscolar() {
+		return modalidadEscolar;
+	}
+
+	/**
+	 * Sets the modalidad escolar.
+	 *
+	 * @param modalidadEscolar the new modalidad escolar
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public void setModalidadEscolar(Parametro modalidadEscolar) {
+		this.modalidadEscolar = modalidadEscolar;
+	}
+
+	/**
+	 * Checks if is lugar entrevista.
+	 *
+	 * @return true, if is lugar entrevista
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public boolean isLugarEntrevista() {
+		return lugarEntrevista;
+	}
+
+	/**
+	 * Sets the lugar entrevista.
+	 *
+	 * @param lugarEntrevista the new lugar entrevista
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public void setLugarEntrevista(boolean lugarEntrevista) {
+		this.lugarEntrevista = lugarEntrevista;
+	}
+
+	/**
+	 * Gets the estado escuela.
+	 *
+	 * @return the estadoEscuela
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public EstadoEscuela getEstadoEscuela() {
+		return estadoEscuela;
+	}
+
+	/**
+	 * Sets the estado escuela.
+	 *
+	 * @param estadoEscuela the estadoEscuela to set
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public void setEstadoEscuela(EstadoEscuela estadoEscuela) {
+		this.estadoEscuela = estadoEscuela;
+	}
+
+	/**
+	 * Gets the zona cimientos.
+	 *
+	 * @return the zona cimientos
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public ZonaCimientos getZonaCimientos() {
+		return zonaCimientos;
+	}
+
+	/**
+	 * Sets the zona cimientos.
+	 *
+	 * @param zonaCimientos the new zona cimientos
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public void setZonaCimientos(ZonaCimientos zonaCimientos) {
+		this.zonaCimientos = zonaCimientos;
+	}
+
+	/**
+	 * Gets the codigo unico escolar.
+	 *
+	 * @return the codigoUnicoEscolar
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public Long getCodigoUnicoEscolar() {
+		return codigoUnicoEscolar;
+	}
+
+	/**
+	 * Sets the codigo unico escolar.
+	 *
+	 * @param codigoUnicoEscolar the codigoUnicoEscolar to set
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public void setCodigoUnicoEscolar(Long codigoUnicoEscolar) {
+		this.codigoUnicoEscolar = codigoUnicoEscolar;
+	}
+
+	/**
+	 * Gets the orientacion.
+	 *
+	 * @return the orientacion
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public String getOrientacion() {
+		return orientacion;
+	}
+
+	/**
+	 * Sets the orientacion.
+	 *
+	 * @param orientacion the orientacion to set
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public void setOrientacion(String orientacion) {
+		this.orientacion = orientacion;
+	}
+
+	/**
+	 * Gets the nivel atiende escuela.
+	 *
+	 * @return the nivelAtiendeEscuela
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public NivelEscuela getNivelAtiendeEscuela() {
+		return nivelAtiendeEscuela;
+	}
+
+	/**
+	 * Sets the nivel atiende escuela.
+	 *
+	 * @param nivelAtiendeEscuela the nivelAtiendeEscuela to set
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public void setNivelAtiendeEscuela(NivelEscuela nivelAtiendeEscuela) {
+		this.nivelAtiendeEscuela = nivelAtiendeEscuela;
+	}
+
+	/**
+	 * Gets the cantidad de anios.
+	 *
+	 * @return the cantidadDeAnios
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public AniosEscuela getCantidadDeAnios() {
+		return cantidadDeAnios;
+	}
+
+	/**
+	 * Sets the cantidad de anios.
+	 *
+	 * @param cantidadDeAnios the cantidadDeAnios to set
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public void setCantidadDeAnios(AniosEscuela cantidadDeAnios) {
+		this.cantidadDeAnios = cantidadDeAnios;
+	}
+
+	/**
+	 * Gets the dependencia.
+	 *
+	 * @return the dependencia
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public Dependencia getDependencia() {
+		return dependencia;
+	}
+
+	/**
+	 * Sets the dependencia.
+	 *
+	 * @param dependencia the dependencia to set
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public void setDependencia(Dependencia dependencia) {
+		this.dependencia = dependencia;
+	}
+
+	/**
+	 * Gets the direccion calle.
+	 *
+	 * @return the direccionCalle
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public String getDireccionCalle() {
+		return direccionCalle;
+	}
+
+	/**
+	 * Sets the direccion calle.
+	 *
+	 * @param direccionCalle the direccionCalle to set
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public void setDireccionCalle(String direccionCalle) {
+		this.direccionCalle = direccionCalle;
+	}
+
+	/**
+	 * Gets the direccion numero.
+	 *
+	 * @return the direccionNumero
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public Integer getDireccionNumero() {
+		return direccionNumero;
+	}
+
+	/**
+	 * Sets the direccion numero.
+	 *
+	 * @param direccionNumero the direccionNumero to set
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public void setDireccionNumero(Integer direccionNumero) {
+		this.direccionNumero = direccionNumero;
+	}
+
+	/**
+	 * Gets the codigo postal.
+	 *
+	 * @return the codigoPostal
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public String getCodigoPostal() {
+		return codigoPostal;
+	}
+
+	/**
+	 * Sets the codigo postal.
+	 *
+	 * @param codigoPostal the codigoPostal to set
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public void setCodigoPostal(String codigoPostal) {
+		this.codigoPostal = codigoPostal;
+	}
+
+	/**
+	 * Gets the barrio.
+	 *
+	 * @return the barrio
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public String getBarrio() {
+		return barrio;
+	}
+
+	/**
+	 * Sets the barrio.
+	 *
+	 * @param barrio the barrio to set
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public void setBarrio(String barrio) {
+		this.barrio = barrio;
+	}
+
+	/**
+	 * Gets the telefono1.
+	 *
+	 * @return the telefono1
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public String getTelefono1() {
+		return telefono1;
+	}
+
+	/**
+	 * Sets the telefono1.
+	 *
+	 * @param telefono1 the telefono1 to set
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public void setTelefono1(String telefono1) {
+		this.telefono1 = telefono1;
+	}
+
+	/**
+	 * Gets the telefono2.
+	 *
+	 * @return the telefono2
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public String getTelefono2() {
+		return telefono2;
+	}
+
+	/**
+	 * Sets the telefono2.
+	 *
+	 * @param telefono2 the telefono2 to set
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public void setTelefono2(String telefono2) {
+		this.telefono2 = telefono2;
+	}
+
+	/**
+	 * Gets the mail.
+	 *
+	 * @return the mail
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public String getMail() {
+		return mail;
+	}
+
+	/**
+	 * Sets the mail.
+	 *
+	 * @param mail the mail to set
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
+	/**
+	 * Gets the director.
+	 *
+	 * @return the director
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public String getDirector() {
+		return director;
+	}
+
+	/**
+	 * Sets the director.
+	 *
+	 * @param director the director to set
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public void setDirector(String director) {
+		this.director = director;
+	}
+
+	/**
+	 * Gets the director celular.
+	 *
+	 * @return the directorCelular
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public String getDirectorCelular() {
+		return directorCelular;
+	}
+
+	/**
+	 * Sets the director celular.
+	 *
+	 * @param directorCelular the directorCelular to set
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public void setDirectorCelular(String directorCelular) {
+		this.directorCelular = directorCelular;
+	}
+
+	/**
+	 * Gets the director mail.
+	 *
+	 * @return the directorMail
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public String getDirectorMail() {
+		return directorMail;
+	}
+
+	/**
+	 * Sets the director mail.
+	 *
+	 * @param directorMail the directorMail to set
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public void setDirectorMail(String directorMail) {
+		this.directorMail = directorMail;
+	}
+
+	/**
+	 * Gets the secretario.
+	 *
+	 * @return the secretario
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public String getSecretario() {
+		return secretario;
+	}
+
+	/**
+	 * Sets the secretario.
+	 *
+	 * @param secretario the secretario to set
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public void setSecretario(String secretario) {
+		this.secretario = secretario;
+	}
+
+	/**
+	 * Gets the secretario celular.
+	 *
+	 * @return the secretarioCelular
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public String getSecretarioCelular() {
+		return secretarioCelular;
+	}
+
+	/**
+	 * Sets the secretario celular.
+	 *
+	 * @param secretarioCelular the secretarioCelular to set
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public void setSecretarioCelular(String secretarioCelular) {
+		this.secretarioCelular = secretarioCelular;
+	}
+
+	/**
+	 * Gets the secretario mail.
+	 *
+	 * @return the secretarioMail
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public String getSecretarioMail() {
+		return secretarioMail;
+	}
+
+	/**
+	 * Sets the secretario mail.
+	 *
+	 * @param secretarioMail the secretarioMail to set
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public void setSecretarioMail(String secretarioMail) {
+		this.secretarioMail = secretarioMail;
+	}
+
+	/**
+	 * Gets the responsable.
+	 *
+	 * @return the responsable
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public String getResponsable() {
+		return responsable;
+	}
+
+	/**
+	 * Sets the responsable.
+	 *
+	 * @param responsable the responsable to set
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public void setResponsable(String responsable) {
+		this.responsable = responsable;
+	}
+
+	/**
+	 * Gets the responsable celular.
+	 *
+	 * @return the responsableCelular
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public String getResponsableCelular() {
+		return responsableCelular;
+	}
+
+	/**
+	 * Sets the responsable celular.
+	 *
+	 * @param responsableCelular the responsableCelular to set
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public void setResponsableCelular(String responsableCelular) {
+		this.responsableCelular = responsableCelular;
+	}
+
+	/**
+	 * Gets the responsable mail.
+	 *
+	 * @return the responsableMail
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public String getResponsableMail() {
+		return responsableMail;
+	}
+
+	/**
+	 * Sets the responsable mail.
+	 *
+	 * @param responsableMail the responsableMail to set
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public void setResponsableMail(String responsableMail) {
+		this.responsableMail = responsableMail;
+	}
+
+	/**
+	 * Gets the rural.
+	 *
+	 * @return the rural
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public Boolean getRural() {
+		return rural;
+	}
+
+	/**
+	 * Sets the rural.
+	 *
+	 * @param rural the rural to set
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public void setRural(Boolean rural) {
+		this.rural = rural;
+	}
+
+	/**
+	 * Gets the subsidio estatal.
+	 *
+	 * @return the subsidioEstatal
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public Boolean getSubsidioEstatal() {
+		return subsidioEstatal;
+	}
+
+	/**
+	 * Sets the subsidio estatal.
+	 *
+	 * @param subsidioEstatal the subsidioEstatal to set
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public void setSubsidioEstatal(Boolean subsidioEstatal) {
+		this.subsidioEstatal = subsidioEstatal;
+	}
+
+	/**
+	 * Gets the motivo no seleccion.
+	 *
+	 * @return the motivoNoSeleccion
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public String getMotivoNoSeleccion() {
+		return motivoNoSeleccion;
+	}
+
+	/**
+	 * Sets the motivo no seleccion.
+	 *
+	 * @param motivoNoSeleccion the motivoNoSeleccion to set
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public void setMotivoNoSeleccion(String motivoNoSeleccion) {
+		this.motivoNoSeleccion = motivoNoSeleccion;
+	}
+
+	/**
+	 * Gets the anio incorporacion.
+	 *
+	 * @return the anioIncorporacion
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public Integer getAnioIncorporacion() {
+		return anioIncorporacion;
+	}
+
+	/**
+	 * Sets the anio incorporacion.
+	 *
+	 * @param anioIncorporacion the anioIncorporacion to set
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public void setAnioIncorporacion(Integer anioIncorporacion) {
+		this.anioIncorporacion = anioIncorporacion;
+	}
+
+	/**
+	 * Gets the programa.
+	 *
+	 * @return the programa
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public Programa getPrograma() {
+		return programa;
+	}
+
+	/**
+	 * Sets the programa.
+	 *
+	 * @param programa the programa to set
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public void setPrograma(Programa programa) {
+		this.programa = programa;
+	}
+
+	/**
+	 * Gets the nombre programa.
+	 *
+	 * @return the nombrePrograma
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public String getNombrePrograma() {
+		return nombrePrograma;
+	}
+
+	/**
+	 * Sets the nombre programa.
+	 *
+	 * @param nombrePrograma the nombrePrograma to set
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public void setNombrePrograma(String nombrePrograma) {
+		this.nombrePrograma = nombrePrograma;
+	}
+
+	/**
+	 * Gets the modalidad trabajo escuela.
+	 *
+	 * @return the modalidadTrabajoEscuela
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public ModalidadTrabajoEscuela getModalidadTrabajoEscuela() {
+		return modalidadTrabajoEscuela;
+	}
+
+	/**
+	 * Sets the modalidad trabajo escuela.
+	 *
+	 * @param modalidadTrabajoEscuela the modalidadTrabajoEscuela to set
+	 * @author hhrodriguez
+	 * @since 01-feb-2011
+	 */
+	public void setModalidadTrabajoEscuela(ModalidadTrabajoEscuela modalidadTrabajoEscuela) {
+		this.modalidadTrabajoEscuela = modalidadTrabajoEscuela;
+	}
+
+	/**
+	 * @return the modalidad
+	 */
+	public Modalidad getModalidad() {
+		return modalidad;
+	}
+
+	/**
+	 * @param modalidad the modalidad to set
+	 */
+	public void setModalidad(Modalidad modalidad) {
+		this.modalidad = modalidad;
+	}
+
+	public Boolean getActivo() {
+		return activo;
+	}
+
+	public void setActivo(Boolean activo) {
+		this.activo = activo;
+	}
+
+	public String getObjetivoProyecto() {
+		return objetivoProyecto;
+	}
+
+	public void setObjetivoProyecto(String objetivoProyecto) {
+		this.objetivoProyecto = objetivoProyecto;
+	}
+
+	public String getObsGenerales() {
+		return obsGenerales;
+	}
+
+	public void setObsGenerales(String obsGenerales) {
+		this.obsGenerales = obsGenerales;
+	}
+
+	public Integer getMatricula() {
+		return matricula;
+	}
+
+	public void setMatricula(Integer matricula) {
+		this.matricula = matricula;
+	}
+
+	public List<Turno> getTurno() {
+		return turno;
+	}
+
+	public void setTurno(List<Turno> turno) {
+		this.turno = turno;
+	}
+
+	public Float getIndicadorRepitencia() {
+		return indicadorRepitencia;
+	}
+
+	public void setIndicadorRepitencia(Float indicadorRepitencia) {
+		this.indicadorRepitencia = indicadorRepitencia;
+	}
+
+	public Float getIndicadorAbandono() {
+		return indicadorAbandono;
+	}
+
+	public void setIndicadorAbandono(Float indicadorAbandono) {
+		this.indicadorAbandono = indicadorAbandono;
+	}
+
+	public FaseProyecto getFaseProyecto() {
+		return faseProyecto;
+	}
+
+	public void setFaseProyecto(FaseProyecto faseProyecto) {
+		this.faseProyecto = faseProyecto;
+	}
+
+	public List<EspacioApoyo> getEspacioApoyo() {
+		return espacioApoyo;
+	}
+
+	public void setEspacioApoyo(List<EspacioApoyo> espacioApoyo) {
+		this.espacioApoyo = espacioApoyo;
+	}
+
+	public CicloPrograma getComienzoProyecto() {
+		return comienzoProyecto;
+	}
+
+	public void setComienzoProyecto(CicloPrograma comienzoProyecto) {
+		this.comienzoProyecto = comienzoProyecto;
+	}
+
+	public CicloPrograma getComienzoPBE() {
+		return comienzoPBE;
+	}
+
+	public void setComienzoPBE(CicloPrograma comienzoPBE) {
+		this.comienzoPBE = comienzoPBE;
+	}
+
+	/**
+	 * @return the observaciones
+	 */
+	public String getObservaciones() {
+		return observaciones;
+	}
+
+	/**
+	 * @param observaciones the observaciones to set
+	 */
+	public void setObservaciones(String observaciones) {
+		this.observaciones = observaciones;
+	}
+	
+	public Float getPorcentajeInasistencia() {
+		return porcentajeInasistencia;
+	}
+
+	public void setPorcentajeInasistencia(Float porcentajeInasistencia) {
+		this.porcentajeInasistencia = porcentajeInasistencia;
+	}
+}

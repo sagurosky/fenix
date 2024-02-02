@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/fenix/!svn/ver/217/src/main/webapp/WEB-INF/pages/cuenta
+END
+verCreacionCuentas.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/cuenta/verCreacionCuentas.jsp
+END
+cargaManualCuenta.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/cuenta/cargaManualCuenta.jsp
+END
+informeCuentas.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/fenix/!svn/ver/340/src/main/webapp/WEB-INF/pages/cuenta/informeCuentas.jsp
+END
+altaCuenta.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/cuenta/altaCuenta.jsp
+END
+cuentasInactivas.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/fenix/!svn/ver/345/src/main/webapp/WEB-INF/pages/cuenta/cuentasInactivas.jsp
+END
+importarArchivoCuentas.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/cuenta/importarArchivoCuentas.jsp
+END

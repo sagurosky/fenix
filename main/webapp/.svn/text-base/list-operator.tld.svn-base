@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN" "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+
+<!-- a tag library descriptor -->
+
+<taglib>
+    <tlib-version>1.2</tlib-version>
+    <jsp-version>2.5</jsp-version>
+    <short-name>list-operator</short-name>
+    <description>List operators Tag library</description>
+    
+    <function>
+        <name>contiene</name>
+        <function-class>com.softtek.framework.web.ListOperatorTag</function-class>
+        <function-signature>boolean contiene(java.util.List, java.lang.Object)</function-signature>
+    </function>
+
+    <function>
+        <name>contieneInt</name>
+        <function-class>com.softtek.framework.web.ListOperatorTag</function-class>
+        <function-signature>boolean contieneInt(java.util.List, java.lang.Integer)</function-signature>
+    </function>
+
+    <function>
+        <name>contieneLong</name>
+        <function-class>com.softtek.framework.web.ListOperatorTag</function-class>
+        <function-signature>boolean contieneLong(java.util.List, java.lang.Long)</function-signature>
+    </function>
+
+</taglib>
+

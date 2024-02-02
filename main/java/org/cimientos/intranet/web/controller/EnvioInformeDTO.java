@@ -1,0 +1,121 @@
+package org.cimientos.intranet.web.controller;
+
+import org.cimientos.intranet.modelo.Beca;
+import org.cimientos.intranet.modelo.informe.EstadoInforme;
+import org.cimientos.intranet.modelo.perfilPadrino.PerfilPadrino;
+import org.cimientos.intranet.modelo.ubicacion.ZonaCimientos;
+
+/**
+ * @author plabaronnie
+ *
+ */
+public class EnvioInformeDTO {
+
+	private String nombreInforme;
+	
+	private Integer cantidad;
+	
+	private Beca beca;
+	
+	private EstadoInforme estadoInforme;
+	
+	private PerfilPadrino padrino;
+	
+	private ZonaCimientos zona;
+	
+	public String getAcciones() {
+		return new String ("<div  style=\"width:0.5cm\" class=\"ui-state-default ui-corner-all\">" + 
+		"<a  onclick=\"enviarForm(\'enviar\',\'"+ beca.getId() + "\',\'" + estadoInforme.getId() + "\',\'" + nombreInforme
+		+ "\',\'" + cantidad + "\');\"><span class=\"ui-icon ui-icon-mail-closed\"></span></a></div>");
+	}
+	
+	public String getDescripcionPadrino() {
+		String descripcionPadrino = null;
+		if (beca.getPadrino().getEmpresa() == null){
+			descripcionPadrino = beca.getPadrino().getDatosPersonales().getApellido() + ", " + beca.getPadrino().getDatosPersonales().getNombre();
+		}
+		if (beca.getPadrino().getDatosPersonales() == null){
+			descripcionPadrino = beca.getPadrino().getEmpresa().getDenominacion();
+		}
+		return descripcionPadrino;
+	}
+	
+	/**
+	 * @return the nombreInforme
+	 */
+	public String getNombreInforme() {
+		return nombreInforme;
+	}
+	/**
+	 * @return the cantidad
+	 */
+	public Integer getCantidad() {
+		return cantidad;
+	}
+	/**
+	 * @param cantidad the cantidad to set
+	 */
+	public void setCantidad(Integer cantidad) {
+		this.cantidad = cantidad;
+	}
+
+	/**
+	 * @param nombreInforme the nombreInforme to set
+	 */
+	public void setNombreInforme(String nombreInforme) {
+		this.nombreInforme = nombreInforme;
+	}
+
+	
+
+	/**
+	 * @return the beca
+	 */
+	public Beca getBeca() {
+		return beca;
+	}
+	/**
+	 * @param beca the beca to set
+	 */
+	public void setBeca(Beca beca) {
+		this.beca = beca;
+	}
+	/**
+	 * @return the padrino
+	 */
+	public PerfilPadrino getPadrino() {
+		return padrino;
+	}
+	/**
+	 * @param padrino the padrino to set
+	 */
+	public void setPadrino(PerfilPadrino padrino) {
+		this.padrino = padrino;
+	}
+	/**
+	 * @return the zona
+	 */
+	public ZonaCimientos getZona() {
+		return zona;
+	}
+	/**
+	 * @param zona the zona to set
+	 */
+	public void setZona(ZonaCimientos zona) {
+		this.zona = zona;
+	}
+	/**
+	 * @return the estadoInforme
+	 */
+	public EstadoInforme getEstadoInforme() {
+		return estadoInforme;
+	}
+	/**
+	 * @param estadoInforme the estadoInforme to set
+	 */
+	public void setEstadoInforme(EstadoInforme estadoInforme) {
+		this.estadoInforme = estadoInforme;
+	} 
+	
+
+}

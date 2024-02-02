@@ -1,0 +1,238 @@
+9
+
+dir
+312
+http://intranet.cimientos.org:8080/svn/fenix/src/main/webapp/WEB-INF/pages
+http://intranet.cimientos.org:8080/svn/fenix
+
+
+
+2012-06-19T14:46:36.763000Z
+312
+cquetto
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+a0b8f1d6-41fb-7243-91fc-83b326c3c0d1
+
+Exceptions
+dir
+
+alumno
+dir
+
+alumnosInactivos
+dir
+
+asignacionBecadosEa
+dir
+
+asignacionEaRr
+dir
+
+banco
+dir
+
+barrio
+dir
+
+beca
+dir
+
+candidato
+dir
+
+ciclo
+dir
+
+comunicado
+dir
+
+convocado
+dir
+
+convocatoria
+dir
+
+cuenta
+dir
+
+detallePerfil
+dir
+
+emitirCarta
+dir
+
+empresa
+dir
+
+entrevistaSeleccion
+dir
+
+entrevistaSupervisionEscolar
+dir
+
+entrevistaTrabajadorSocial
+dir
+
+entrevistas
+dir
+
+envioInformes
+dir
+
+escuela
+dir
+
+eventoGenerico
+dir
+
+exportacionEntrevistas
+dir
+
+exportarAlumnos
+dir
+
+fichaAlumno
+dir
+
+includes
+dir
+
+informeCesacion
+dir
+
+informeFP
+dir
+
+informeIS1
+dir
+
+informeIS2
+dir
+
+informeIS3
+dir
+
+informeSA
+dir
+
+informes
+dir
+
+listasComunes
+dir
+
+localidad
+dir
+
+login
+dir
+
+objetivoSeleccion
+dir
+
+pago
+dir
+
+panelControl
+dir
+
+parametro
+dir
+
+perfilEA
+dir
+
+perfilPadrino
+dir
+
+perfilRR
+dir
+
+perfilStaff
+dir
+
+perfilTS
+dir
+
+perfilVoluntario
+dir
+
+periodo
+dir
+
+persona
+dir
+
+privado
+dir
+
+provincia
+dir
+
+reasignacionBecas
+dir
+
+renovacionBecas
+dir
+
+reporteBecadosAB
+dir
+
+reporteBecadosLE
+dir
+
+reporteBecasAlumnosDisponibles
+dir
+
+reporteBecasDisponibles
+dir
+
+reporteEntrevistasPendientes
+dir
+
+reporteGeneralInformes
+dir
+
+reporteInformesPendientes
+dir
+
+responsable
+dir
+
+seleccionBecas
+dir
+
+seleccionarCandidatosBecas
+dir
+
+sucursalBanco
+dir
+
+supervisorEscolar
+dir
+
+textos
+dir
+
+usuario
+dir
+
+viatico
+dir
+
+zona
+dir
+

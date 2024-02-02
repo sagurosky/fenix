@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/parametro
+END
+altaParametrosView.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/parametro/altaParametrosView.jsp
+END
+verParametros.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/parametro/verParametros.jsp
+END
+modificarParametroView.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/parametro/modificarParametroView.jsp
+END

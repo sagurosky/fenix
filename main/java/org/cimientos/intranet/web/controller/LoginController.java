@@ -1,0 +1,214 @@
+package org.cimientos.intranet.web.controller;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.cimientos.intranet.dao.PersonaDao;
+import org.cimientos.intranet.modelo.persona.Persona;
+import org.cimientos.intranet.modelo.usuario.Usuario;
+import org.cimientos.intranet.servicio.CicloProgramaSrv;
+import org.cimientos.intranet.servicio.UsuarioSrv;
+import org.cimientos.intranet.utils.ConstantesMenu;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.StaticApplicationContext;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import org.cimientos.intranet.web.controller.Globales;;
+
+
+@Controller
+@RequestMapping("/login/*")
+public class LoginController extends BaseController{
+
+	@Autowired
+	UsuarioSrv srvUsuario;
+	
+	@Autowired
+	CicloProgramaSrv cicloProgramaSrv;
+	
+	@Autowired
+	PersonaDao personaDao;
+	
+	@RequestMapping("/login/loginView.do")
+	public ModelAndView showLoginForm() {
+		return new ModelAndView("login/loginView");
+		//return new ModelAndView("login/menuPpal");
+	}
+
+	@RequestMapping("/login/home.do")
+	public ModelAndView selectHome(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+		Usuario logeado = srvUsuario.obtenerPorUsuario((String)session.getAttribute("SPRING_SECURITY_LAST_USERNAME"),true);
+		Persona persona= logeado.getPersona();
+		session.setAttribute(PERSONA_LOGUEADA, persona);
+		
+		String usuario=persona.getNombre() + " " + persona.getApellido();
+		String mail=persona.getMail();
+		Long personaId = persona.getId();
+		
+		//System.out.println(logeado.getUsuario());
+		//System.out.println(usuario);
+		
+		Globales.tenant=usuario;
+		Globales.mail=mail;
+		Globales.id=personaId;
+		
+		
+		//System.out.println(Globales.tenant);
+		//System.out.println(Globales.mail);
+		
+		String url="";
+		try {
+		if(persona.getPerfilEA()!=null && persona.getPerfilEA().getActivo()){
+			url ="/Intranet/entrevistas/listarBecados.do";
+		}else if(persona.getPerfilRR()!=null && persona.getPerfilRR().getActivo()){
+			url = "/Intranet/entrevistas/listarEas.do";
+		}else if(persona.getPerfilSelector()){
+			//url = "/Intranet/panelControl/seleccionPanelControl.do";
+			url = "/Intranet/exportarAlumnos/listaAlumnosExportar.do";
+		}else if(persona.getPerfilDI()){
+			url = "/Intranet/envioInformes/listaInformes.do";
+		}else if(persona.getPerfilAdmin()){
+			url = "/Intranet/pago/verAprobadosNoAprobView.do";
+		}else if(persona.getPerfilCoordPBE()){
+			url = "/Intranet/ciclo/listaCiclos.do";
+			
+		}else if(persona.getPerfilCorrector()){
+			url = "/Intranet/informes/listaInformesCorreccion.do";
+		}else if(persona.getPerfilSysAdmin()){
+			url = "/Intranet/usuario/listaUsuarios.do";
+		}else if(persona.getPerfilTS() != null && persona.getPerfilTS().getActivo()){
+			url = "/Intranet/entrevistaTrabajadorSocial/reporteEntrevistaTS.do";
+		}else if(persona.getPerfilRRHH() || persona.getPerfilAsist()){
+			url = "/Intranet/reporteConvocatoria/reporteConvocatoria.do";
+		}else if(persona.getPerfilVisita()){
+			url = "/Intranet/exportarAlumnos/listaAlumnosExportar.do";
+		}else if(persona.getPerfilSuperUsuario()){
+			url = "/Intranet/exportarAlumnos/listaAlumnosExportar.do";
+		}
+		if(url.equals(""))
+			url = "/Intranet/login/menuStaff.do";
+		
+		response.sendRedirect(url);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return new ModelAndView("login/loginView");
+		
+	}
+	
+	@RequestMapping("/login/menuMaestros.do")
+	public ModelAndView showMaestros(HttpServletRequest req)
+	{
+		Map<String, Object> model = new HashMap<String, Object>();
+		HttpSession session = req.getSession();
+		session.setAttribute("menu", ConstantesMenu.menuAdministracionMaestros);
+		return new ModelAndView("includes/Template", model);
+	}
+	
+	@RequestMapping("/login/menuUsuarios.do")
+	public ModelAndView showUsuarios(HttpServletRequest req)
+	{
+		Map<String, Object> model = new HashMap<String, Object>();
+		HttpSession session = req.getSession();
+		session.setAttribute("menu", ConstantesMenu.menuAdministracionUsuarios);
+		return new ModelAndView("includes/Template", model);
+	}
+	
+
+	@RequestMapping("/login/menuAcompanamientoDos.do")
+	public ModelAndView showAcompanamientoDos(HttpServletRequest req)
+	{
+		Map<String, Object> model = new HashMap<String, Object>();
+		HttpSession session = req.getSession();
+		session.setAttribute("menu", ConstantesMenu.menuAcompanamientoDos);
+		return new ModelAndView("includes/Template", model);
+	}
+	
+	@RequestMapping("/login/menuGestionBeca.do")
+	public ModelAndView showGestionBeca(HttpServletRequest req)
+	{
+		Map<String, Object> model = new HashMap<String, Object>();
+		HttpSession session = req.getSession();
+		session.setAttribute("menu", ConstantesMenu.menuGestionBecas);
+		return new ModelAndView("includes/Template", model);
+	}
+	
+	@RequestMapping("/login/menuCorrectora.do")
+	public ModelAndView showGestionCorrectora(HttpServletRequest req)
+	{
+		Map<String, Object> model = new HashMap<String, Object>();
+		HttpSession session = req.getSession();
+		session.setAttribute("menu", ConstantesMenu.menuCorrectora);
+		return new ModelAndView("includes/Template", model);
+	}
+	
+	@RequestMapping("/login/menuDi.do")
+	public ModelAndView showGestionDi(HttpServletRequest req)
+	{
+		Map<String, Object> model = new HashMap<String, Object>();
+		HttpSession session = req.getSession();
+		session.setAttribute("menu", ConstantesMenu.menuDI);
+		return new ModelAndView("includes/Template", model);
+	}
+	
+	@RequestMapping("/login/menuSeleccion.do")
+	public ModelAndView showSeleccion(HttpServletRequest req)
+	{
+		Map<String, Object> model = new HashMap<String, Object>();
+		HttpSession session = req.getSession();
+		session.setAttribute("menu", ConstantesMenu.menuSeleccion);
+		return new ModelAndView("includes/Template", model);
+	}
+	
+	@RequestMapping("/login/menuGestionPrograma.do")
+	public ModelAndView showGestionPrograma(HttpServletRequest req)
+	{
+		Map<String, Object> model = new HashMap<String, Object>();
+		HttpSession session = req.getSession();
+		session.setAttribute("menu", ConstantesMenu.menuGestionPrograma);
+		return new ModelAndView("includes/Template", model);
+	}
+	
+	@RequestMapping("/login/menuAdministracion.do")
+	public ModelAndView showAdministracion(HttpServletRequest req)
+	{
+		Map<String, Object> model = new HashMap<String, Object>();
+		HttpSession session = req.getSession();
+		session.setAttribute("menu", ConstantesMenu.menuAdministracion);
+		return new ModelAndView("includes/Template", model);
+	}
+	
+	@RequestMapping("/login/menuVoluntariado.do")
+	public ModelAndView showVoluntariado(HttpServletRequest req)
+	{
+		Map<String, Object> model = new HashMap<String, Object>();
+		HttpSession session = req.getSession();
+		session.setAttribute("menu", ConstantesMenu.menuVoluntariado);
+		return new ModelAndView("includes/Template", model);
+	}
+	
+	@RequestMapping("/login/menuStaff.do")
+	public ModelAndView showStaff(HttpServletRequest req)
+	{
+		Map<String, Object> model = new HashMap<String, Object>();
+		HttpSession session = req.getSession();
+		session.setAttribute("menu", ConstantesMenu.menuStaff);
+		return new ModelAndView("includes/Template", model);
+	}
+	
+	@RequestMapping("/login/menuExportacion.do")
+	public ModelAndView showExportacion(HttpServletRequest req)
+	{
+		Map<String, Object> model = new HashMap<String, Object>();
+		HttpSession session = req.getSession();
+		session.setAttribute("menu", ConstantesMenu.menuExportacion);
+		return new ModelAndView("includes/Template", model);
+	}
+}

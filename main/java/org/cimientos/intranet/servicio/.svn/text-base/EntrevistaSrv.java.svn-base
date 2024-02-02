@@ -1,0 +1,300 @@
+package org.cimientos.intranet.servicio;
+
+import java.util.List;
+
+import org.cimientos.intranet.dao.EntrevistaDao;
+import org.cimientos.intranet.modelo.CicloPrograma;
+import org.cimientos.intranet.modelo.pbe.evento.entrevistas.Entrevista;
+import org.cimientos.intranet.modelo.pbe.evento.entrevistas.EntrevistaGrupal;
+import org.cimientos.intranet.modelo.pbe.evento.entrevistas.EntrevistaIndividual;
+import org.cimientos.intranet.modelo.perfil.EstadoAlumno;
+import org.cimientos.intranet.modelo.perfil.PerfilAlumno;
+import org.cimientos.intranet.modelo.perfilEA.PerfilEA;
+import org.cimientos.intranet.modelo.perfilRR.PerfilRR;
+import org.cimientos.intranet.utils.ExportacionEspecialHelper;
+import org.displaytag.properties.SortOrderEnum;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.cimientos.intranet.enumerativos.entrevista.TipoEntrevista;
+
+/**
+ * @author plabaronnie
+ *
+ */
+@Service
+@Transactional
+public class EntrevistaSrv {
+
+	@Autowired
+	EntrevistaDao entrevistaDao;
+	
+	@Autowired
+	ExportacionEspecialHelper exportacionHelper;
+	
+	
+	public void guardarEntrevista(Entrevista entrevista){
+		entrevistaDao.guardar(entrevista);
+		entrevistaDao.flush();
+	}
+	
+	
+	public Entrevista obtenerEntrevista(Long id){
+		return entrevistaDao.obtener(id);
+	}
+	
+	
+	public List<Entrevista> obtenerTodos(){
+		return entrevistaDao.obtenerTodos();
+	}
+
+
+	public List<EntrevistaIndividual> obtenerEntrevistasIndividuales() {
+		return entrevistaDao.obtenerEntrevistasIndividuales();
+	}
+	
+	
+	public List<EntrevistaIndividual> obtenerEntrevistasAAprobar(Long idRR){
+		return entrevistaDao.obtenerEntrevistasAAprobar(idRR);
+	}
+
+
+	public Object obtenerEntrevistasIndividualesPorId(Long idAlumno, List<Long> periodosIds) {
+		return entrevistaDao.obtenerEntrevistasIndividualesPorId(idAlumno, periodosIds);
+	}
+
+	public EntrevistaIndividual obtenerEntrevistasIndividualesPorAlumno(Long idAlumno, EstadoAlumno estado, CicloPrograma cicloPrograma) {
+		return entrevistaDao.obtenerEntrevistasIndividualesPorAlumno(idAlumno, estado, cicloPrograma);
+	}
+
+	public List<EntrevistaIndividual> obtenerEntrevistasPorIds(List<Long> entrevistasIds) {
+		return entrevistaDao.obtenerEntrevistasPorId("id", entrevistasIds);
+	}
+
+
+	/**
+	 * obtiene la lista de todas las entrevistas grupales
+	 * 
+	 * @return la lista de entrevistas grupales
+	 */
+	public List<EntrevistaGrupal> obtenerEntrevistasGrupales() {
+		return entrevistaDao.obtenerEntrevistasGrupales();
+	}
+
+
+	/**
+	 * Obtiene una entrevista grupal por su id
+	 * 
+	 * @param id
+	 * @return la entrevista grupal
+	 */
+	public EntrevistaGrupal obtenerEntrevistaGrupal(Long id) {
+		return entrevistaDao.obtenerEntrevistaGrupal(id);
+	}
+
+
+	/**
+	 * Obtiene las entrevistas de un tipo en los periodos pasados
+	 * @param id
+	 * @param periodosIds
+	 * @param tipo
+	 * @return
+	 */
+	public List<EntrevistaIndividual> obtenerEntrevistaPorTipo(Long id, List<Long> periodosIds, TipoEntrevista tipo) {
+		return entrevistaDao.obtenerEntrevistaPorTipo(id,periodosIds,tipo);
+	}
+
+	/**
+	 * Obtiene las entrevistas de un tipo
+	 * @param id
+	 * @param periodosIds
+	 * @param tipo
+	 * @return
+	 */
+	public List<EntrevistaIndividual> obtenerEntrevistaPorTipo(Long id,	TipoEntrevista tipo) {
+		return entrevistaDao.obtenerEntrevistaPorTipo(id,tipo);
+	}
+
+
+	/**
+	 * Obtiene todas las entrevistas de alumnos activos de un EA para el ciclo dado. Los alumnos
+	 * activos son aquellos que aparecen el en panel de control del EA.
+	 * @param idEA
+	 * @param obtenerCicloActual
+	 * @return
+	 */
+	public List<EntrevistaIndividual> obtenerTodasEntrevistasPorEa(Long idEA,List<Long> periodosIds) {
+		return entrevistaDao.obtenerTodasEntrevistasPorEa(idEA,periodosIds);
+	}
+
+	
+	/**
+	 * Obtiene la ultima entrevista del alumno en los periodos pasados
+	 * @param p
+	 * @param periodosIds
+	 * @return
+	 */
+	public EntrevistaIndividual obtenerUltimaEntrevista(PerfilAlumno p,	List<Long> periodosIds) {
+		return entrevistaDao.obtenerUltimaEntrevista(p,periodosIds);
+	}
+
+
+	public EntrevistaIndividual obtenerEntrevistasCesacion(Long idPerfilAlumno,CicloPrograma cicloActual) {
+		return entrevistaDao.obtenerEntrevistasCesacion(idPerfilAlumno,cicloActual);
+	}
+
+
+	public EntrevistaIndividual obtenerEntrevistasIncorporacion(Long idPerfilAlumno, CicloPrograma cicloActual) {
+		return entrevistaDao.obtenerEntrevistasIncorporacion(idPerfilAlumno,cicloActual);
+	}
+
+
+	public EntrevistaIndividual obtenerEntrevistasRenovacion(Long idPerfilAlumno, CicloPrograma cicloActual) {
+		return entrevistaDao.obtenerEntrevistasRenovacion(idPerfilAlumno,cicloActual);
+	}
+
+
+	/**
+	 * Recupera las entrevistas grupales de el EA pasado por parametro
+	 * @param idPerfilEA
+	 * @return
+	 */
+	public List<EntrevistaGrupal> obtenerEntrevistasGrupalesPorEa(Long idPerfilEA, CicloPrograma cicloActual) {	
+		return entrevistaDao.obtenerEntrevistasGrupalesPorEa(idPerfilEA, cicloActual);
+	}
+
+
+	/**
+	 * @param ciclo 
+	 * @param eaId 
+	 * @param rrId 
+	 * @param nombreAlumno 
+	 * @param adicional 
+	 * @param anio 
+	 * @param string 
+	 * @param sortOrderEnum 
+	 * @param j 
+	 * @param i 
+	 * @return
+	 */
+	public List<EntrevistaIndividual> obtenerEntrevistasAExportar(List<CicloPrograma> ciclo, List<Integer > tipoId, List<Integer> idEstado, List<Integer> idSituacion, 
+			List<Long> idPeriodo, Integer idForma, Long padrinoId, Long zonaId,Long rrId, Long eaId, String nombreAlumno, List<Integer> anio,
+			Boolean adicional, Long escuelaId, List <Integer> idsEstadoRenovacion, List<Integer >idsMotivoNoRenovacion,
+			List <Integer> idsMotivoPendiente, List <Integer> idsMotivoSuspension, List <Integer> idsMotivoCesacion,
+			List <Integer> idsEstadoIncorporacion, List <Integer> idsMotivoIncorporacionPendiente, List <Integer> idsMotivoNoIncorporacion,
+			List <Integer> idsEstadoEntrevista, List <Integer> idsSituacioneEscolares,
+			int firstResult, int maxResults, SortOrderEnum sortDirection, String sortCriterion) {
+
+		List<EntrevistaIndividual> entrevistas = entrevistaDao.obtenerEntrevistasAExportar(ciclo, tipoId , idEstado, idSituacion, 
+				idPeriodo, idForma, padrinoId, zonaId, rrId, eaId,nombreAlumno,anio,adicional, 
+				escuelaId, idsEstadoRenovacion, idsMotivoNoRenovacion, idsMotivoPendiente, idsMotivoSuspension, idsMotivoCesacion, idsEstadoIncorporacion, 
+				idsMotivoIncorporacionPendiente, idsMotivoNoIncorporacion, idsEstadoEntrevista, idsSituacioneEscolares,
+				firstResult, maxResults,	sortDirection, sortCriterion);
+		
+		//return exportacionHelper.obtenerListaExportacion(entrevistas);
+		return entrevistas;
+	
+	}
+
+
+	
+	/**
+	 * @param ciclo
+	 * @param tipoId
+	 * @param idEstado
+	 * @param idSituacion
+	 * @param idPeriodo
+	 * @param idForma
+	 * @param padrinoId
+	 * @param eaId 
+	 * @param rrId 
+	 * @param nombreAlumno 
+	 * @param adicional 
+	 * @param anio 
+	 * @return
+	 */
+	public int obtenerCantidadEntrevistasAExportar(List<CicloPrograma> ciclo, List<Integer> tipoId, List<Integer> idEstado, List<Integer> idSituacion, 
+			List<Long> idPeriodo, Integer idForma, Long padrinoId, Long zonaId, Long rrId, Long eaId, String nombreAlumno, List<Integer> anio, Boolean adicional,
+			Long escuelaId, List <Integer> idsEstadoRenovacion, List<Integer >idMotivoNoRenovacion,
+			List <Integer> idsMotivoPendiente, List <Integer> idsMotivoSuspension, List <Integer> idsMotivoCesacion,
+			List <Integer> idsEstadoIncorporacion, List <Integer> idsMotivoIncorporacionPendiente, List <Integer> idsMotivoNoIncorporacion,
+			List <Integer> idsEstadoEntrevista, List <Integer> idsSituacioneEscolares
+) {
+		return entrevistaDao.obtenerCantidadEntrevistasAExportar(ciclo, tipoId, idEstado, idSituacion,
+				idPeriodo, idForma, padrinoId, zonaId, rrId, eaId, nombreAlumno,anio,adicional,
+				escuelaId, idsEstadoRenovacion, idMotivoNoRenovacion, idsMotivoPendiente, idsMotivoSuspension, idsMotivoCesacion, idsEstadoIncorporacion, 
+				idsMotivoIncorporacionPendiente, idsMotivoNoIncorporacion, idsEstadoEntrevista, idsSituacioneEscolares);
+	}
+
+
+	/**
+	 * @param eaAnterior
+	 * @param idsAlumnosSeleccionados
+	 * @return
+	 */
+	public List<EntrevistaIndividual> obtenerEntrevistasInconclusasAlumnosEa(
+			PerfilEA eaAnterior, List<Long> idsAlumnosSeleccionados) {
+		return entrevistaDao.obtenerEntrevistasInconclusasAlumnosEa(eaAnterior, idsAlumnosSeleccionados);
+	}
+
+
+	/**
+	 * @param rrAnterior
+	 * @param easIds
+	 * @return
+	 */
+	public List<EntrevistaIndividual> obtenerEntrevistasInconclusasEasRR(
+			PerfilRR rrAnterior, List<Long> easIds) {
+		return entrevistaDao.obtenerEntrevistasInconclusasEasRR(rrAnterior, easIds);
+	}
+	
+	/**
+	 * @param idAlumno
+	 * @param cicloPrograma
+	 * @return
+	 */
+	public List<EntrevistaIndividual> obtenerEntrevistasConPagoSuspendidoPorAlumno(Long idAlumno){
+		return entrevistaDao.obtenerEntrevistasConPagoSuspendidoPorAlumno(idAlumno);
+	}
+	
+	public List<EntrevistaIndividual> obtenerEntrevistasPorAlumno(Long idAlumno, CicloPrograma cicloPrograma) {
+		
+		return entrevistaDao.obtenerEntrevistasPorAlumno(idAlumno, cicloPrograma, "ascendente");
+	}
+	
+	/**
+	 * Recupera las entrevistas grupales del RR pasado por parametro
+	 * @param idPerfilEA
+	 * @return
+	 */
+	public List<EntrevistaGrupal> obtenerEntrevistasGrupalesPorRR(Long idPerfilRR, CicloPrograma cicloActual) {
+		return entrevistaDao.obtenerEntrevistasGrupalesPorRR(idPerfilRR, cicloActual);
+	}
+	
+	public List<EntrevistaIndividual> obtenerEntrevistasMensualesPorAlumno(Long idAlumno, CicloPrograma cicloPrograma) {
+		
+		return entrevistaDao.obtenerEntrevistasMensualesPorAlumno(idAlumno, cicloPrograma);
+	}
+	
+	public void guardarEntrevistas(List<EntrevistaIndividual> entrevistas){
+		entrevistaDao.guardarEntrevistas(entrevistas);
+		entrevistaDao.flush();
+	}
+	
+	public void clearObjetoCache(){
+		entrevistaDao.clear();
+	}
+	
+	public List<EntrevistaIndividual> obtenerEntrevistasPorAlumnoOrden(Long idAlumno, CicloPrograma cicloPrograma, String orden) {		
+		return entrevistaDao.obtenerEntrevistasPorAlumno(idAlumno, cicloPrograma, orden);
+	}
+	
+	public List<EntrevistaIndividual> obtenerTodasEntrevistasPorAlumno(Long idAlumno, String orden){
+		return entrevistaDao.obtenerTodasEntrevistasPorAlumno(idAlumno,  orden);
+	}
+	
+	public void eliminarEntrevista(Entrevista entrevista){
+		entrevistaDao.eliminar(entrevista);
+	}
+}

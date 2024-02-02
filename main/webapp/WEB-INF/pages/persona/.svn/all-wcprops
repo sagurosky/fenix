@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/persona
+END
+modificarPersonaView.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/persona/modificarPersonaView.jsp
+END
+listaPersona.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/persona/listaPersona.jsp
+END
+fichaPersona.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/persona/fichaPersona.jsp
+END
+registrarPersonaView.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/persona/registrarPersonaView.jsp
+END

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/security
+http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+
+	<http use-expressions="true" auto-config="true">
+		<intercept-url pattern="/static/**" filters="none" />
+		<intercept-url pattern="/login/**" filters="none" />
+		<intercept-url pattern="/index.jsp" filters="none" />
+		<intercept-url pattern="/**" access="isAuthenticated()" />
+		<form-login login-page="/login/loginView.do" 
+			default-target-url="/login/home.do" authentication-failure-url="/login/loginView.do?error=error.wrong_login"  always-use-default-target="true" />
+		
+		<form-login/>
+		<!-- 
+		<custom-filter position="CONCURRENT_SESSION_FILTER" ref="concurrencyFilter" />
+    	<session-management session-authentication-strategy-ref="sas"/>
+    	 -->
+		<session-management	session-authentication-error-url="/login/loginView.do?error=error.session_error" />
+		<logout logout-url="/logout/logout.do"/>
+	</http>
+
+	<authentication-manager>
+		<authentication-provider user-service-ref="seguridadSrv"/>
+	</authentication-manager>
+
+	<global-method-security pre-post-annotations="enabled" />
+
+	  <beans:bean id="concurrencyFilter"
+	      class="org.springframework.security.web.session.ConcurrentSessionFilter">
+	    <beans:property name="sessionRegistry" ref="sessionRegistry" />
+	  </beans:bean>
+	
+	  <beans:bean id="sas"
+	      class="org.springframework.security.web.authentication.session.ConcurrentSessionControlStrategy">
+	    <beans:constructor-arg name="sessionRegistry" ref="sessionRegistry" />
+	    <beans:property name="maximumSessions" value="1" />
+	  </beans:bean>
+	
+	  <beans:bean id="sessionRegistry" class="org.springframework.security.core.session.SessionRegistryImpl" />
+
+</beans:beans>

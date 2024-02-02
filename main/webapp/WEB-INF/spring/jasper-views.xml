@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+        
+<!-- Esto es para configurar el bean  para exportar a PDF  se debe declarar un bean, para cada reporte jasper -->
+<bean id="cartasPDF" class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	<property name="url" value="/WEB-INF/jasperTemplates/compile/cartaRechazo-LE.jasper"/>
+</bean>
+<!--<bean id="cartaAceptacionPDF" class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	<property name="url" value="/WEB-INF/jasperTemplates/compile/cartaAceptacion.jasper"/>
+</bean>
+
+--><bean id="informeCesacionPDF" class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	<property name="url" value="/WEB-INF/jasperTemplates/compile/informeCesacion.jasper"/>
+</bean>
+
+<bean id="informeIS1PDF" class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	<property name="url" value="/WEB-INF/jasperTemplates/compile/informeIS1.jasper"/>
+</bean>
+
+<bean id="informeIS2PDF" class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	<property name="url" value="/WEB-INF/jasperTemplates/compile/informeIS2.jasper"/>
+</bean>
+
+<bean id="informeIS32PDF" class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	<property name="url" value="/WEB-INF/jasperTemplates/compile/informeIS3.jasper"/>
+</bean>
+
+<bean id="informeFPPDF" class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	<property name="url" value="/WEB-INF/jasperTemplates/compile/informeFP.jasper"/>
+</bean>
+</beans>

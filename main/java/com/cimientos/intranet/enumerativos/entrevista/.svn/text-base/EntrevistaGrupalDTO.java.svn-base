@@ -1,0 +1,85 @@
+package com.cimientos.intranet.enumerativos.entrevista;
+
+public class EntrevistaGrupalDTO {
+	
+	private String id;
+	private String fecha;
+	private String lugar;
+	private String objetivo;
+	private String temas;
+	private String observaciones;
+	private String ea;
+	private String alumno;
+	
+	public EntrevistaGrupalDTO() {
+		super();
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(String fecha) {
+		this.fecha = fecha;
+	}
+
+	public String getLugar() {
+		return lugar;
+	}
+
+	public void setLugar(String lugar) {
+		this.lugar = lugar;
+	}
+
+	public String getObjetivo() {
+		return objetivo;
+	}
+
+	public void setObjetivo(String objetivo) {
+		this.objetivo = objetivo;
+	}
+
+	public String getTemas() {
+		return temas;
+	}
+
+	public void setTemas(String temas) {
+		this.temas = temas;
+	}
+
+	public String getObservaciones() {
+		return observaciones;
+	}
+
+	public void setObservaciones(String observaciones) {
+		this.observaciones = observaciones;
+	}
+
+	public String getEa() {
+		return ea;
+	}
+
+	public void setEa(String ea) {
+		this.ea = ea;
+	}
+
+	public String getAlumno() {
+		return alumno;
+	}
+
+	public void setAlumno(String alumno) {
+		this.alumno = alumno;
+	}
+	
+	
+	
+
+}

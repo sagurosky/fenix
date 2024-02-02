@@ -1,0 +1,225 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Datos Personales</title>
+</head>
+<body>
+<div id="div01">
+<!-- Datos Personales -->
+<fieldset>
+	<table width="100%" align="left" cellspacing="3">
+
+		<tr>
+			<td>Nombre *</td>
+			<td><input type="text" id="alumnoNombre"
+				name="datosPersonales.nombre" class="required"
+				value="${perfilAlumno.datosPersonales.nombre}"></td>
+			<td colspan="2">
+		</tr>
+		<tr>
+			<td>Apellido *</td>
+			<td><input type="text" id="alumnoApellido"
+				name="datosPersonales.apellido" class="required"
+				value="${perfilAlumno.datosPersonales.apellido}"></td>
+			<td colspan="2">
+		</tr>
+		<tr>
+			<td>Tipo de DNI</td>
+			<td><select name="tipoDNI" id="dni" class="required" >
+				<c:forEach items="${listDni}" var="dni">
+					<c:choose>
+						<c:when test="${dni.id == perfilAlumno.datosPersonales.tipoDni.id}">
+							<option value="${dni.id}" selected="selected">${dni.valor}</option>
+						</c:when>
+						<c:otherwise>
+							<option value="${dni.id}">${dni.valor}</option>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+			</select></td>
+			<td colspan="2">
+		</tr>
+		<tr>
+			<td>DNI *</td>
+			<sec:authorize access="not hasRole('SuperUsuario')">
+				<td>
+					<input type="text" id="dniAlumno"
+						onkeypress="validarDNI('dniAlumno')" disabled="disabled" readonly="readonly" onblur="buscarAlumno()"
+						name="datosPersonales.dni" class="digits required "
+						maxlength="8" value="${perfilAlumno.datosPersonales.dni}">
+				</td>
+			</sec:authorize>
+			<sec:authorize access="hasRole('SuperUsuario')">
+				<td>
+					<input type="text" id="dniAlumno"
+						onkeypress="validarDNI('dniAlumno')" name="datosPersonales.dni" class="digits required"
+						maxlength="8" value="${perfilAlumno.datosPersonales.dni}">
+				</td>
+			</sec:authorize>
+			<td colspan="2">
+		</tr>
+		<tr>
+			<td>Nacionalidad *</td>
+			<td><input type="text" id="alumnoNacionalidad"
+				name="datosPersonales.nacionalidad" class="required"
+				value="${perfilAlumno.datosPersonales.nacionalidad}"></td>
+			<td colspan="2">
+		</tr>
+		<tr>
+			<td>Sexo</td>
+			<td>
+				<c:if test="${perfilAlumno.datosPersonales.sexo == false}">
+					M<input type="radio" id="alumnoSexoM" name="datosPersonales.sexo" value="true"> 
+					F<input type="radio" id="alumnoSexoF" name="datosPersonales.sexo" checked="checked" value="false">
+				</c:if>
+				<c:if test="${perfilAlumno.datosPersonales.sexo}">
+					M<input type="radio" id="alumnoSexoM" name="datosPersonales.sexo" checked="checked" value="true"> 
+					F<input type="radio" id="alumnoSexoF" name="datosPersonales.sexo" value="false">
+				</c:if>
+			</td>
+			<td colspan="2">
+		</tr>
+		<tr>
+			<td>Fecha de Nacimiento *</td>
+			<td><input name="fechaNac" id="fechaDeNacimiento"
+					class="date required"
+					value="<fmt:formatDate value="${perfilAlumno.datosPersonales.fechaNacimiento}" pattern="dd/MM/yyyy"/>"></td>
+			<td colspan="2">
+		</tr>
+		<tr>
+			<td>Foto</td>
+			<td><input name="foto" id="foto" type="file" onchange="validarExtension()"></td>
+			<td colspan="2">
+		</tr>		
+		<tr>
+			<td colspan="2">El tamaño de la foto no debe superar los 100kb y la extension debe ser "jpg"</td>
+		</tr>
+		<c:if test="${tieneFoto == true}">
+			<tr>
+				<td>Foto cargada</td>
+				<td colspan="2">
+					<img src="../fichaAlumno/mostrarImagen.do?dni=${perfilAlumno.datosPersonales.dni}" width="100px">
+				</td>
+			</tr>
+		</c:if>
+		<tr>
+			<td style="height: 15px;" colspan="4"></td>
+		</tr>
+		<tr>
+			<td>Calle *<!-- Direccion --></td>
+			<td><input type="text" id="alumnoDireccion"
+				name="datosPersonales.direccion" class="required"
+				value="${perfilAlumno.datosPersonales.direccion}"></td>
+			<td colspan="2">
+		</tr>
+		<tr>
+			<td>Número *</td>
+			<td><input type="text" id="alumnoNumero"
+				name="datosPersonales.numeroCalle" class="required"
+				value="${perfilAlumno.datosPersonales.numeroCalle}"></td>
+			<td colspan="2">
+		</tr>
+		<tr>
+			<td>Piso</td>
+			<td><input type="text" id="alumnoPiso"
+				name="datosPersonales.piso"
+				value="${perfilAlumno.datosPersonales.piso}"></td>
+			<td colspan="2">
+		</tr>
+		<tr>
+			<td>Código Postal *</td>
+			<td><input type="text" id="alumnoCodigoPostal"
+				name="datosPersonales.codigoPostal" class="required"
+				value="${perfilAlumno.datosPersonales.codigoPostal}"></td>
+			<td colspan="2">
+		</tr>
+		<tr>
+			<td>Entre Calles *</td>
+			<td><input type="text" id="alumnoEntreCalles"
+				name="datosPersonales.entreCalles" class="required"
+				value="${perfilAlumno.datosPersonales.entreCalles}"></td>
+			<td colspan="2">
+		</tr>
+		<tr>
+			<td>Barrio *</td>
+			<td><input type="text" id="barrio"
+				name="datosPersonales.barrio" class="required"
+				value="${perfilAlumno.datosPersonales.barrio}"></td>
+			<td colspan="2">
+		</tr>
+		<tr>
+			<td>Localidad</td>
+			<td><select name="idLocalidad">
+				<c:forEach items="${localidades}" var="localidad">
+					<c:choose>
+						<c:when test="${perfilAlumno.datosPersonales.localidad.id == localidad.id}">
+							<option value="${localidad.id}" selected="selected">${localidad.nombre}</option>
+						</c:when>
+						<c:otherwise>
+							<option value="${localidad.id}">${localidad.nombre}</option>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+			</select></td>
+			<td colspan="2">
+		</tr>
+		<tr>
+			<td>Provincia</td>
+			<td><select name="idProvincia">
+				<c:forEach items="${listProvincias}" var="provincia">
+					<c:choose>
+						<c:when test="${perfilAlumno.datosPersonales.provincia.id == provincia.id}">
+							<option value="${provincia.id}" selected="selected">${provincia.descripcion}</option>
+						</c:when>
+						<c:otherwise>
+							<option value="${provincia.id}">${provincia.descripcion}</option>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+			</select></td>
+			<td colspan="2">
+		</tr>
+		<tr>
+			<td>Teléfono *</td>
+			<td><input type="text"
+				name="datosPersonales.telefono" id="alumnoTelefono"
+				class="required digits" value="${perfilAlumno.datosPersonales.telefono}" />
+			</td>
+			<td colspan="2">
+		</tr>
+		<tr>
+			<td>Contacto 1</td>
+			<td><input type="text" name="contactoTelefono1"
+					id="alumnoContactoTelefono1" value="${perfilAlumno.contactoTelefono1}" /></td>
+			<td width="100">Teléfono</td>
+			<td width="200"><input type="text" name="telefono1"
+					id="telefono1" value="${perfilAlumno.telefono1}" /></td>
+		</tr>
+		<tr>
+			<td>Contacto 2</td>
+			<td><input type="text" name="contactoTelefono2"
+					id="alumnoContactoTelefono2" value="${perfilAlumno.contactoTelefono2}" /></td>
+			<td>Teléfono</td>
+			<td><input type="text" name="telefono2"
+					id="alumnoContactoTelefono2" value="${perfilAlumno.telefono2}" /></td>
+		</tr>
+		<tr>
+			<td>Mail</td>
+			<td><input type="text" name="datosPersonales.mail"
+					id="alumnoMail" value="${perfilAlumno.datosPersonales.mail}" /></td>
+			<td colspan="2">
+		</tr>
+		<tr><td style="height: 10px" colspan="4"></td></tr>
+	</table>
+</fieldset>
+</div>	
+</body>
+</html>

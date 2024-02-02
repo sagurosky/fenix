@@ -1,0 +1,90 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<table>
+	<tr>
+		<td>
+			<table id="table-informe">
+				<c:if test="${periodo != null && entrevista.periodoDePago == null}">
+					<tr>		
+						<td><label>Periodo Entrevista</label></td>
+						<td><label><b>${periodo.nombre}</b></label></td>
+					</tr>
+				</c:if>
+				<c:if test="${entrevista.periodoDePago != null}">
+					<tr>		
+						<td><label>Periodo Entrevista</label></td>
+						<td><label><b>${entrevista.periodoDePago.nombre}</b></label></td>
+					</tr>
+				</c:if>
+				<tr>
+					<td class="datepicker" nowrap="nowrap"><label>Fecha De Incorporacion al PFE</label></td>
+					<td><label><b><fmt:formatDate value="${alumno.fechaPBE}" pattern="dd/MM/yyyy"/></b></label></td>
+				</tr>	
+				<tr>
+					<td class="datepicker" ><label>Fecha Entrevista</label></td>
+					<td><input name="fechaEntrevista" id="datepicker" value="<fmt:formatDate value="${entrevista.fechaEntrevista}" pattern="dd/MM/yyyy"/>" disabled="disabled"></td>
+				</tr>
+				<tr>		
+					<td nowrap="nowrap"><label>Entrevista Reprogramada</label></td>
+					<td>
+						<form:select path="entrevistaReprogramada" disabled="true">
+							<form:options items="${entrevistas}" itemLabel="valor" itemValue="id"/>				
+						</form:select>
+					</td>
+				</tr>
+				<tr>
+					<td><label>Lugar Entrevista</label></td>
+					<td>
+						<input type="text" id="escuela" name="lugarEntrevista" size="39" value="${escuelaZona}" disabled="disabled"/>
+					</td>					
+				</tr>
+				<tr>	
+					<td><label>Participo Becado</label></td>
+					<td>
+						<form:checkbox path="participoBecado" id="participoBecado" disabled="true"/>
+					</td>
+				</tr>
+				<tr>
+					<td><label>Motivo Ausencia</label></td>
+					<td>
+						<form:select path="motivoAusencia" id="motivoAusencia" disabled="true">
+							<form:option value="">Seleccione una opción...</form:option>
+							<form:options items="${motivoAusencias}" itemLabel="valor" itemValue="id"/>				
+						</form:select>
+					</td>
+				</tr>
+				<tr>
+					<td><label>Otro Motivo</label></td>
+					<td>
+						<form:textarea path="otroMotivoAusencia" id="otroMotivoAusencia" rows="4" cols="30" disabled="true"/>
+					</td>
+				</tr>
+				<tr>
+					<td><label>Participo RA</label></td>
+					<td>
+						<form:checkbox path="participoRA" id="participoRA" disabled="true"/>
+					</td>
+				</tr>
+				<tr>
+					<td><label>Motivo Ausencia RA</label></td>
+					<td>
+						<form:select path="motivoAusenciaRA" id="motivoAusenciaRA" disabled="true">
+							<form:option value="">Seleccione una opción...</form:option>
+							<form:options items="${motivoAusenciaRA}" itemLabel="valor" itemValue="id"/>				
+						</form:select>
+					</td>
+				</tr>
+				<tr>
+					<td width="180"><label>Otro Motivo</label></td>
+					<td>
+						<form:textarea path="otroMotivoAusenciaRA" id="otroMotivoAusenciaRA" rows="4" cols="30" disabled="true" />
+					</td>
+				</tr>		
+			</table>
+		</td>
+	</tr>
+</table>

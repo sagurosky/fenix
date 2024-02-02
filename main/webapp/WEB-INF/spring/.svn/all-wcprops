@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/fenix/!svn/ver/290/src/main/webapp/WEB-INF/spring
+END
+excel-views.xml
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/fenix/!svn/ver/408/src/main/webapp/WEB-INF/spring/excel-views.xml
+END
+main.xml
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/spring/main.xml
+END
+datasource-beans.xml
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/fenix/!svn/ver/392/src/main/webapp/WEB-INF/spring/datasource-beans.xml
+END
+jasper-views.xml
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/spring/jasper-views.xml
+END
+security-beans.xml
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/spring/security-beans.xml
+END

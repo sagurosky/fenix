@@ -1,0 +1,86 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<table>
+	<tr>
+		<td>
+			<table id="table-informe">
+				<c:if test="${periodo != null && entrevista.periodoDePago == null}">
+					<tr>		
+						<td><label>Periodo Entrevista</label></td>
+						<td nowrap="nowrap"><label><b>${periodo.nombre}</b></label></td>
+					</tr>
+				</c:if>
+				<c:if test="${entrevista.periodoDePago != null}">
+					<tr>		
+						<td><label>Periodo Entrevista</label></td>
+						<td nowrap="nowrap"><label><b>${entrevista.periodoDePago.nombre}</b></label></td>
+					</tr>
+				</c:if>
+				<tr>
+					<td class="datepicker" nowrap="nowrap"><label>Fecha De Incorporacion al PFE</label></td>
+					<td nowrap="nowrap"><label><b><fmt:formatDate value="${alumno.fechaPBE}" pattern="dd/MM/yyyy"/></b></label></td>
+				</tr>		
+				<tr>
+					<td class="datepicker" nowrap="nowrap"><label>Fecha Entrevista *</label></td>
+					<td nowrap="nowrap"><input name="fechaEntrevista" id="datepicker" class="required" value="<fmt:formatDate value="${entrevista.fechaEntrevista}" pattern="dd/MM/yyyy"/>"  ></td>
+				</tr>
+				<tr>
+					<td><label>Lugar Entrevista</label></td>
+					<td>
+						<input type="text" id="escuela" name="lugarEntrevista" size="39" value="${escuelaZona}" class="required"/>
+						<input type="hidden" class="required" id="lugarEntrevistaId" name="lugarEntrevista.id" value="${entrevista.lugarEntrevista.id}"></input>				
+						<input id="idProxima" type="hidden" />
+					</td>
+				</tr>
+					<tr>	
+					<td><label>Participo Becado *</label></td>
+					<td>
+						<form:checkbox path="participoBecado" disabled="true" id="participoBecado" onclick="habilitarCamposBecado(this)"/>
+					</td>
+				</tr>
+				<tr>
+					<td><label>Motivo Ausencia *</label></td>
+					<td>
+						<form:select path="motivoAusencia" id="motivoAusencia" disabled="true" class="required" onchange="habilitarOtroMotivo(this)">
+							<form:option value="">Seleccione una opción...</form:option>
+							<form:options items="${motivoAusencias}" itemLabel="valor" itemValue="id"/>				
+						</form:select>
+					</td>
+				</tr>
+				<tr>
+					<td><label>Otro Motivo</label></td>
+					<td>
+						<form:textarea path="otroMotivoAusencia" id="otroMotivoAusencia" rows="4" cols="60" cssStyle="width:98%" disabled="true"
+							onblur="chequearLongitud(this);" onkeypress="chequearLongitud(this);"/>
+					</td>
+				</tr>
+				<tr>
+					<td><label>Participo RA *</label></td>
+					<td>
+						<form:checkbox path="participoRA" id="participoRA" disabled="true" onclick="habilitarCamposRA(this)"/>
+					</td>
+				</tr>
+				<tr>
+					<td><label>Motivo Ausencia RA *</label></td>
+					<td>
+						<form:select path="motivoAusenciaRA" id="motivoAusenciaRA" disabled="true" class="required" onchange="habilitarOtroMotivoRA(this)">
+							<form:option value="">Seleccione una opción...</form:option>
+							<form:options items="${motivoAusenciaRA}" itemLabel="valor" itemValue="id"/>				
+						</form:select>
+					</td>
+				</tr>
+				<tr>
+					<td nowrap="nowrap" width="32%"><label>Otro Motivo</label></td>
+					<td>
+						<form:textarea path="otroMotivoAusenciaRA" id="otroMotivoAusenciaRA" rows="4" cols="60" cssStyle="width:98%" disabled="true"
+							onblur="chequearLongitud(this);" onkeypress="chequearLongitud(this);" />
+					</td>
+				</tr>		
+			</table>
+		</td>			
+	</tr>
+</table>

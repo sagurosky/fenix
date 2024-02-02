@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/localidad
+END
+modificarView.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/localidad/modificarView.jsp
+END
+registrarView.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/localidad/registrarView.jsp
+END
+listaLocalidades.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/localidad/listaLocalidades.jsp
+END

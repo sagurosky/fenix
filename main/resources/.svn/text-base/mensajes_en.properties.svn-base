@@ -1,0 +1,11 @@
+saludo = Welcome
+
+tooltip.delete = Eliminar
+tooltip.details = Ver Detalles
+tooltip.edit = Editar
+tooltip.seeResume = Ver CV
+
+#Errores
+error.wrong_login = Esa combinacion de usuario y contraseña son incorrectos
+error.expired_session = Su sesion ha caducado
+error.session_error = ha ocurrido un error en su sesion

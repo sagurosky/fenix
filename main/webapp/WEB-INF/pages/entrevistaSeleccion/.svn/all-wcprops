@@ -1,0 +1,89 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/fenix/!svn/ver/305/src/main/webapp/WEB-INF/pages/entrevistaSeleccion
+END
+datosEscolaresAlumno.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/fenix/!svn/ver/339/src/main/webapp/WEB-INF/pages/entrevistaSeleccion/datosEscolaresAlumno.jsp
+END
+reporteEntrevistasSeleccion.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/fenix/!svn/ver/407/src/main/webapp/WEB-INF/pages/entrevistaSeleccion/reporteEntrevistasSeleccion.jsp
+END
+boletinSeleccion.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/fenix/!svn/ver/232/src/main/webapp/WEB-INF/pages/entrevistaSeleccion/boletinSeleccion.jsp
+END
+observacionesGenerales.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/entrevistaSeleccion/observacionesGenerales.jsp
+END
+listaEntrevistasSeleccion.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/entrevistaSeleccion/listaEntrevistasSeleccion.jsp
+END
+materiasInteres.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/fenix/!svn/ver/88/src/main/webapp/WEB-INF/pages/entrevistaSeleccion/materiasInteres.jsp
+END
+evaluacion.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/fenix/!svn/ver/407/src/main/webapp/WEB-INF/pages/entrevistaSeleccion/evaluacion.jsp
+END
+fichaResponsable2.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/entrevistaSeleccion/fichaResponsable2.jsp
+END
+datosPersonalesAlumno.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/fenix/!svn/ver/407/src/main/webapp/WEB-INF/pages/entrevistaSeleccion/datosPersonalesAlumno.jsp
+END
+fichaFamiliar.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/fenix/!svn/ver/339/src/main/webapp/WEB-INF/pages/entrevistaSeleccion/fichaFamiliar.jsp
+END
+asistenciaClase.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/entrevistaSeleccion/asistenciaClase.jsp
+END
+entrevistaSeleccionView.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/fenix/!svn/ver/407/src/main/webapp/WEB-INF/pages/entrevistaSeleccion/entrevistaSeleccionView.jsp
+END
+fichaCandidato.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/fenix/!svn/ver/407/src/main/webapp/WEB-INF/pages/entrevistaSeleccion/fichaCandidato.jsp
+END
+fichaResponsable.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/fenix/!svn/ver/407/src/main/webapp/WEB-INF/pages/entrevistaSeleccion/fichaResponsable.jsp
+END

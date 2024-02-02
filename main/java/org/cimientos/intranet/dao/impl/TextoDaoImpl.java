@@ -1,0 +1,180 @@
+package org.cimientos.intranet.dao.impl;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import org.cimientos.intranet.dao.TextoDao;
+import org.cimientos.intranet.dao.base.SpringHibernateDao;
+import org.cimientos.intranet.modelo.CicloPrograma;
+import org.cimientos.intranet.modelo.Texto;
+import org.displaytag.properties.SortOrderEnum;
+import org.hibernate.Criteria;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.cimientos.intranet.enumerativos.entrevista.MotivoNoRenovacion;
+import com.cimientos.intranet.enumerativos.entrevista.MotivoPendiente;
+
+@Repository
+public class TextoDaoImpl extends SpringHibernateDao<Texto>
+	implements TextoDao {
+
+	/**
+	 * @param sessionFactory
+	 */
+	@Autowired
+	public TextoDaoImpl(SessionFactory sessionFactory) {
+		super(sessionFactory);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.cimientos.intranet.dao.base.SpringHibernateDao#getObjetoManejado()
+	 */
+	@Override
+	protected Class<Texto> getObjetoManejado() {
+		return Texto.class;
+	}
+	
+	@Override
+	public Texto obtenerTextoPorId(Long idTexto){
+		Criteria criteria = getSession().createCriteria(getObjetoManejado());
+		criteria.add(Restrictions.eq("id", idTexto));
+		List<Texto> result = criteria.list();
+		if(result.isEmpty()){
+			return null;
+		}else{
+			return (Texto) result.get(0);	
+		}
+	}
+	
+	@Override
+	public Texto obtenerTextoPorCicloYTipo(CicloPrograma ciclo, String tipoInforme, String tipoMail, MotivoPendiente motivoPendiente,
+			MotivoNoRenovacion motivoNoRenovacion) {
+		Criteria criteria = getSession().createCriteria(getObjetoManejado());
+		criteria.add(Restrictions.eq("tipoInforme", tipoInforme));
+		criteria.add(Restrictions.eq("tipoMail", tipoMail));
+		if(motivoPendiente != null)
+			criteria.add(Restrictions.eq("motivoPendiente", motivoPendiente));
+		if(motivoNoRenovacion !=null)
+			criteria.add(Restrictions.eq("motivoNoRenovacion",motivoNoRenovacion));
+		
+		criteria.add(Restrictions.eq("cicloPrograma", ciclo) );
+		List<Texto> result = criteria.list();
+		if(result.isEmpty()){
+			return null;
+		}else{
+			return (Texto) result.get(0);	
+		}
+	}
+	
+	@Override
+	public String obtenerTituloPorCicloTipoInfYTipoMail(CicloPrograma ciclo, String tipoInforme, String tipoMail){
+		Criteria criteria = getSession().createCriteria(getObjetoManejado());
+		criteria.add(Restrictions.eq("tipoInforme", tipoInforme));
+		criteria.add(Restrictions.eq("tipoMail", tipoMail));
+		criteria.add(Restrictions.eq("cicloPrograma", ciclo) );
+		List<Texto> result = criteria.list();
+		if(result.isEmpty()){
+			return null;
+		}else{
+			Texto texto = (Texto) result.get(0);
+			return (String)texto.getTitulo();	
+		}
+	}
+	
+	@Override
+	public int obtenerCantidadTextosMailAReportar(List<Long> ciclo, List<String> tipoInforme, List<String> tipoMail,
+			List<Integer> idsMotivoNoRenovacion, List<Integer> idsMotivoPendiente, String nombreUsuario, Date fechaDesde, Date fechaHasta){
+
+		DetachedCriteria criteria = getCriteriaTextosMailAReportar(ciclo, tipoInforme, tipoMail, idsMotivoNoRenovacion, idsMotivoPendiente,
+				nombreUsuario, fechaDesde, fechaHasta);
+		
+		criteria.setProjection(Projections.rowCount());
+		List results = getHibernateTemplate().findByCriteria(criteria);
+		int count = ((Integer) results.get(0)).intValue();
+		return count;
+	}
+	
+	@Override
+	public List<Texto> obtenerTextosMailAReportar(List<Long> ciclo, List<String> tipoInforme, List<String> tipoMail, 
+			List<Integer> idsMotivoNoRenovacion, List<Integer> idsMotivoPendiente, String nombreUsuario, Date fechaDesde, 
+			Date fechaHasta, int firstResult, int maxResults,SortOrderEnum sortDirection, String sortCriterion) {
+
+		DetachedCriteria criteria = getCriteriaTextosMailAReportar(ciclo, tipoInforme, tipoMail, idsMotivoNoRenovacion, idsMotivoPendiente,
+				nombreUsuario, fechaDesde, fechaHasta);
+		
+		if (sortCriterion != null) {
+            if (sortDirection.equals(SortOrderEnum.ASCENDING)) {
+                criteria.addOrder(Order.asc(sortCriterion));
+            }
+            if (sortDirection.equals(SortOrderEnum.DESCENDING)) {
+                criteria.addOrder(Order.desc(sortCriterion));
+            }
+        }
+		return getHibernateTemplate().findByCriteria(criteria,
+                firstResult, maxResults);
+	}
+	
+	private DetachedCriteria getCriteriaTextosMailAReportar(List<Long> ciclo, List<String> tipoInforme, List<String> tipoMail, 
+			List<Integer> idsMotivoNoRenovacion, List<Integer> idsMotivoPendiente, String nombreUsuario, Date fechaDesde, Date fechaHasta){
+		
+		DetachedCriteria criteria = DetachedCriteria.forClass(Texto.class);
+		
+		if(ciclo != null){
+			criteria.createAlias("cicloPrograma", "cicloPrograma");
+			criteria.add(Restrictions.in("cicloPrograma.id", ciclo));
+		}
+		
+		if(tipoInforme != null){
+			criteria.add(Restrictions.in("tipoInforme", tipoInforme));
+		}
+		
+		if(tipoMail != null){
+			criteria.add(Restrictions.in("tipoMail", tipoMail));
+		}
+		
+		//Filtro motivosNoRenovacion
+		if(idsMotivoNoRenovacion != null){
+			criteria.add(Restrictions.in("motivoNoRenovacion", MotivoNoRenovacion.getMotivosNoRenovacion(idsMotivoNoRenovacion)));
+		}
+
+		//Filtro motivosPendiente
+		if(idsMotivoPendiente != null){
+			criteria.add(Restrictions.in("motivoPendiente", MotivoPendiente.getMotivosPendientes(idsMotivoPendiente)));
+		}
+		
+		if(nombreUsuario != null){
+			criteria.createAlias("usuario", "usuario");
+			for ( String split : nombreUsuario.split(" "))
+				criteria.add(Restrictions.or(Restrictions.like("usuario.nombre", "%"+split+"%"), Restrictions.like("usuario.apellido", "%"+split+"%")));
+		}
+		
+		if (fechaDesde!=null){
+			criteria.add(Restrictions.ge("fechaCreacion", fechaDesde));
+		}
+		
+		if (fechaHasta!=null){
+			Calendar c = Calendar.getInstance();
+			c.setTime(fechaHasta);
+			c.set(Calendar.HOUR_OF_DAY, 23);
+			c.set(Calendar.MINUTE, 59);
+			c.set(Calendar.SECOND, 59);
+			c.set(Calendar.MILLISECOND, 999);
+			Date endOfDate = c.getTime();		
+			criteria.add(Restrictions.le("fechaCreacion", endOfDate));
+		}
+		
+		return criteria;	
+		
+	}
+	
+
+	
+	
+}

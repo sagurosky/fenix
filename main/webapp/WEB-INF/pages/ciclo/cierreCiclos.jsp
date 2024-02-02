@@ -1,0 +1,120 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+
+<script type="text/javascript" src="<c:url value="/static/js/jquery.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/static/js/jquery-ui-1.8.5.custom.min.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/static/js/table/jquery.dataTables.min.js"/>"></script>
+<script type="text/javascript" src="/Intranet/static/js/table/tabletools/js/TableTools.min.js"></script>
+
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Cierre de Ciclo</title>
+
+<style type="text/css">
+	input[name=search_browser]{	
+		font-size: x-small;
+		color: gray;
+		font-style: italic; 
+	}
+	
+	table#laTabla{
+		 background-color: #C0C2FF;
+		 border: 0;
+	}
+</style>
+
+<script type="text/javascript" src="<c:url  value="/static/js/table/funcionesTabla.js"/>"></script>
+
+<script type="text/javascript">
+
+$(function() {
+	TableToolsInit.sSwfPath = '<c:url  value="/static/js/table/tabletools/swf/ZeroClipboard.swf"/>'
+		
+	oTable = $('#tablaCierre').dataTable( {
+		"oLanguage": {
+		"sLengthMenu": 'Mostrar <select>'+
+		'<option value="25">20</option>' +
+		'<option value="50">50</option>'+
+		'<option value="75">75</option>'+
+		'<option value="100">100</option>'+
+		'<option value="-1">Todos</option>'+
+		'</select> registros por hoja',
+		"sZeroRecords": "No se encontraron registros",
+		"sInfo": "Mostrando del _START_ al _END_ de _TOTAL_ registros",
+		"sInfoEmtpy": "Mostrando 0 registros",
+		"sInfoFiltered": "(filtrado de _MAX_ registros totales)",
+		"sSearch": "Buscar",
+		"oPaginate": {
+			"sFirst":    "Primera",
+			"sPrevious": "Anterior",
+			"sNext":     "Siguiente",
+			"sLast":     "Ultima"
+		}
+		
+		},
+		"bJQueryUI": true,
+		"sPaginationType": "full_numbers",
+		"iDisplayLength": 20,
+		"sDom": '<"H"Tl>rt<"F"ip>'
+	});
+	
+	});
+
+</script>
+</head>
+<body>
+<c:if test="${!empty cantidad}">
+	<div class="ui-state-highlight ui-corner-all"
+		style="margin-top: 10px; margin-left:5px; padding: 0 .7em; width: 650px; font: normal; font-size: 13px; vertical-align: middle; height: 20px;">
+		<p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+			 <strong><c:out	value="${cantidad}"></c:out></strong>
+		</p>
+	</div>
+</c:if>
+<div id="main-content">
+<br />
+<br />
+<CENTER>
+<table align="center" class="dataTables_wrapper" id="tablaCierre" width="100%" border="0" style="background-color: #C0C2FF" cellspacing="1"> 
+	<thead align="center">
+		<tr>
+			<th>Nombre RR</th>
+			<th>Nombre EA</th>
+			<th>Espacio de acompañamiento pendientes</th>
+		</tr>
+		<tr>
+			<c:forEach begin="0" end="1">
+				<td><input name="search_browser" value="Buscar" class="search_init"/></td>
+			</c:forEach>
+			<td></td>	
+		</tr>
+	</thead>
+	<tbody align="center">
+		<c:forEach items="${eas}" var="ea">
+			<tr>
+				<td align="left" valign="middle" style="font-size: 14px">${ea.nombreRR}</td>
+				<td align="left" valign="middle" style="font-size: 14px">${ea.nombreEA}</td>
+				<td align="left" valign="middle" style="font-size: 14px">${ea.cantidades}</td>					
+			</tr>					
+		</c:forEach>
+	</tbody>
+</table>
+<table align="center">
+<tr>
+	<td>
+		<input type="button" value="Volver" class="ui-state-default ui-corner-all" onclick="location.href='../ciclo/listaCiclos.do'; return false;" />
+	</td>
+</tr>
+</table>
+</CENTER>	
+</div>
+
+</body>
+</html>

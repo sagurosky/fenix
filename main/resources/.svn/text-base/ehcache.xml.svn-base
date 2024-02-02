@@ -1,0 +1,67 @@
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd" updateCheck="false">
+
+    <diskStore path="java.io.tmpdir/IntranetCimientosCache"/>
+    	<defaultCache maxElementsInMemory="10000" 
+    			eternal="false" 
+    			timeToIdleSeconds="120" 
+    			timeToLiveSeconds="120"  
+    			overflowToDisk="true"
+    			maxElementsOnDisk="100000"
+    			diskPersistent="false"
+                diskExpiryThreadIntervalSeconds="120"
+                memoryStoreEvictionPolicy="LRU"/>
+    
+    <!-- StandardQueryCache -->
+    <cache name="org.hibernate.cache.StandardQueryCache"
+    	   maxElementsInMemory="30"
+    	   eternal="true"
+    	   timeToLiveSeconds="180"
+    	   overflowToDisk="true"/>
+    
+    <!-- UpdateTimestampsCache: Es para queries que no son Named -->
+    <cache name="org.hibernate.cache.UpdateTimestampsCache"
+    	maxElementsInMemory="2000"
+    	eternal="true"
+    	overflowToDisk="true"/>
+    	
+
+    <!-- Estos son Cache para Objetos de Dominio -->
+
+	<cache name="org.cimientos.intranet.modelo.perfil.AlumnoPanelEA" maxElementsInMemory="4000"
+	       eternal="true" overflowToDisk="false" memoryStoreEvictionPolicy="LRU" diskPersistent="false"/>
+	        
+	<cache name="org.cimientos.intranet.modelo.perfilEA.PerfilEA" maxElementsInMemory="50"
+	       eternal="true" overflowToDisk="false"/>
+    
+    <cache name="org.cimientos.intranet.modelo.perfilRR.PerfilRR" maxElementsInMemory="10"
+	       eternal="true" overflowToDisk="false"/> 
+
+	<!--   Pruebas eSalvador: @Cacheable Methods - Google Annotations for Ehcache & Spring -->
+    <cache name="org.cimientos.intranet.modelo.escuela.Escuela" maxElementsInMemory="2000"
+	       eternal="false" timeToIdleSeconds="1" timeToLiveSeconds="100" overflowToDisk="true" 
+	       memoryStoreEvictionPolicy="LRU" diskPersistent="true"/>
+	       
+	<cache name="org.cimientos.intranet.modelo.persona.Persona" maxElementsInMemory="4000"
+	       eternal="false" overflowToDisk="true" memoryStoreEvictionPolicy="LRU" diskPersistent="true"/>
+	
+	<cache name="org.cimientos.intranet.modelo.perfil.PerfilAlumno" maxElementsInMemory="3000"
+	       eternal="false" overflowToDisk="true" memoryStoreEvictionPolicy="LRU" diskPersistent="true"
+	       timeToIdleSeconds="1" timeToLiveSeconds="100"/>
+	       
+	<cache name="org.cimientos.intranet.modelo.Beca" maxElementsInMemory="3000"
+	       eternal="false" overflowToDisk="true" memoryStoreEvictionPolicy="LRU" diskPersistent="true"
+	       timeToIdleSeconds="1" timeToLiveSeconds="100"/>      
+
+	<cache name="org.cimientos.intranet.dto.ConvocadoDTO" maxElementsInMemory="3000"
+	       eternal="false" overflowToDisk="true" memoryStoreEvictionPolicy="LRU" diskPersistent="true"
+	       timeToIdleSeconds="1" timeToLiveSeconds="100"/>	       
+
+	<cache name="org.cimientos.intranet.modelo.convocado.CandidatoDTO" maxElementsInMemory="3000"
+	       eternal="false" overflowToDisk="true" memoryStoreEvictionPolicy="LRU" diskPersistent="true"
+	       timeToIdleSeconds="1" timeToLiveSeconds="100"/>		       
+	       
+	       
+	<!-- FIN: Pruebas - eSalvador -->
+		       
+</ehcache>

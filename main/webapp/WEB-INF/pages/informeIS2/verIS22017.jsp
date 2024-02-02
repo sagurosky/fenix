@@ -1,0 +1,468 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Ver Informe de Seguimiento Nº 2</title>
+<style>
+	 span{ background-color: yellow; }
+</style>
+<style type="text/css">
+.td
+{
+text-indent: 30px;
+}
+.fechas
+{
+text-indent: 60px;
+text-transform: inherit;
+font-family: cursive;
+font-size: small;
+font-stretch: ultra-condensed;
+color: purple;
+font-weight: bold;
+vertical-align: top;
+}
+.column-right 
+{
+	vertical-align: top;
+}
+.title-right 
+{
+	text-indent: 20px;
+	margin-left: 20px;
+	font-weight: bold;
+	color: purple;
+	font-family: cursive;
+	
+}
+.tabla
+{
+	background-image:url('../static/images/papel.jpg');
+	color:black;
+	font-family:sans-serif;
+	align:center; 
+	border:0; 
+}
+.ui-dropdownchecklist-text {
+	font-size: 11px;
+}
+</style>
+<script type="text/javascript" src="<c:url value="/static/js/ui.dropdownchecklist.js"/>"></script>
+
+</head>
+<body>
+<div id="main-content">
+<form id="corregirInformeIS2" class="cmxform" action="<c:url value='/informeIS2/correccion.do' />" method="post">
+<h1 id="titulo-informe">:: Informe de Seguimiento Nº 2 ::</h1>
+    <table  border="0" align="left" cellpadding="0" cellspacing="0" id="table-informe">
+		<tr>
+			<td><label>${informe.estado.valor}</label></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td><label>Ciclo lectivo </label>
+				<label>${informe.cicloActual.nombre}</label>
+			</td>
+		</tr> 
+		<tr>
+			<td colspan="2"><h1 id="subtitulo-informe">Mis datos</h1></td>
+		</tr>
+		<tr>
+			<td>
+				<table width="200" border="0" align="left" cellpadding="0" cellspacing="0" id="table-forms"> 
+					<tr>
+						<td colspan="2">
+							${becado.datosPersonales.nombre}&nbsp;${becado.datosPersonales.apellido}
+						</td>
+					</tr>		
+					<c:if test="${tieneFoto == true}">
+						<tr>				
+							<td colspan="2">
+								<img src="../fichaAlumno/mostrarImagen.do?dni=${becado.datosPersonales.dni}" width="100px">
+							</td>
+						</tr>
+					</c:if>
+					<c:if test="${tieneFoto == false}">			
+						<tr>
+							<td colspan="2">
+								<img src="../fichaAlumno/mostrarImagen.do?dni=0" width="100px">
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<label>
+									Recuerda que si no cargaste una foto, ésta es la que se enviará en el Informe al padrino.<img src="../static/images/atencion.gif" width=10>
+								</label>
+							</td>
+						</tr>	
+					</c:if>	
+					<tr>
+						<td colspan="2"> 
+							Nací el <fmt:formatDate value="${becado.datosPersonales.fechaNacimiento}" pattern="dd/MM/yyyy"/>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							Tengo ${edad} años
+						</td>
+					</tr>
+					<tr>	
+						<td colspan="2">
+							Vivo en ${becado.datosPersonales.localidad.nombre}
+						</td>
+					</tr>
+					<tr>	
+						<td colspan="2">
+							Curso 
+							<c:if test="${empty boletin}">
+								${becado.anioEscolar.valor}
+							</c:if>
+							<c:if test="${!empty boletin}">
+								${boletin.ano.valor}
+							</c:if>
+					</tr>		
+					<c:if test="${!empty becado.responsable2}">
+						<tr>
+							<td colspan="2">
+								Viene a las entrevistas					
+								${becado.responsable2.nombre }&nbsp;${becado.responsable2.apellido}
+							</td>				
+						</tr>
+						<c:if test="${!empty becado.responsable2.idVinculo}">
+							<tr>
+								<td colspan="2">
+									V&iacute;nculo 
+									${becado.responsable2.idVinculo.valor}
+								</td>
+							</tr>
+						</c:if>
+					</c:if>
+					<c:if test="${empty becado.responsable2}">
+						<tr>
+							<td colspan="2">
+								Viene a las entrevistas				
+								${becado.responsable1.nombre }&nbsp;${becado.responsable1.apellido}
+							</td>					
+						</tr>
+						<c:if test="${!empty becado.responsable1.idVinculo}">
+							<tr>
+								<td colspan="2">
+									V&iacute;nculo 
+									${becado.responsable1.idVinculo.valor}
+								</td>
+							</tr>
+						</c:if>
+					</c:if>
+					<tr>
+						<td colspan="2">
+							Fecha incorporación al Programa 
+							${periodoFechaPBE}
+						</td>
+					</tr>	
+					<c:if test="${!empty periodoFechaReincorporacionPBE}">
+						<tr>
+							<td colspan="2">
+								Fecha reincorporación al Programa 
+								${periodoFechaReincorporacionPBE}
+							</td>
+						</tr>
+					</c:if>			
+				</table>
+			</td>
+		</tr>
+		
+		<tr>
+			<td colspan="2"><h1 id="subtitulo-informe"><label>Mi escuela</label></h1></td>
+		</tr>
+		<tr>
+			<td>
+				<table width="200" border="0" align="left" cellpadding="0" cellspacing="0" id="table-forms"> 
+					<c:if test="${empty escuela.modalidadTrabajoEscuela}">
+						<tr>
+							<td nowrap="nowrap">Nombre:</td>
+							<td>
+								<input type="text" class="required" readonly="readonly" size="100" style="border:0;" name="escuelaNombre"
+									value="${escuela.nombre}"/>
+							</td>
+						</tr>
+						<tr>
+							<td nowrap="nowrap">Modalidad de trabajo:</td>
+							<td>
+								<input type="text" class="required" readonly="readonly" size="45" style="border:0;" name="modalidadTrabajoEscuela"
+									value="${modalidadTrabajoEscuela}"></input>
+							</td>
+						</tr>
+						<tr>
+							<td nowrap="nowrap">El programa se implementa desde:</td>
+							<td>
+								<input type="text" class="required" readonly="readonly" size="45" style="border:0;" name="escuelaComienzoPBE"
+									value="${escuela.comienzoPBE.nombre}"/>
+							</td>
+						</tr>
+						<tr>
+							<td nowrap="nowrap">Matricula total:</td>
+							<td>
+								<input type="text" class="required" readonly="readonly" size="45" style="border:0;" name="escuelaMatricula"
+									value="${escuela.matricula}"/>
+							</td>
+						</tr>	
+						<tr>
+							<td nowrap="nowrap">Becados por Cimientos:</td>
+							<td>
+								<input type="text" class="required" readonly="readonly" size="45" style="border:0;" name="cantidadBecados"
+									value="${cantidadBecadosCimiento}"/>
+							</td>
+						</tr>	
+						<!-- tr>
+							<td nowrap="nowrap">Indicadores de repitencia:</td>
+							<td>
+								<input type="text" class="required" readonly="readonly" size="45" style="border:0;" name="escuelaIndicadorRepitencia"
+									value="${escuela.indicadorRepitencia}"/>
+							</td>
+						</tr>
+						<tr>
+							<td nowrap="nowrap">Indicadores de abandono:</td>
+							<td>
+								<input type="text" class="required" readonly="readonly" size="45" style="border:0;" name="escuelaIndicadorAbandono"
+									value="${escuela.indicadorAbandono}"/>
+							</td>
+						</tr>
+						<tr>
+							<td nowrap="nowrap">Porcentaje de inasistencia de los alumnos a la escuela:</td>
+							<td>
+								<input type="text" class="required" readonly="readonly" size="45" style="border:0;" name="escuelaPorcentajeInasistencia"
+									value="${escuela.porcentajeInasistencia}"/>
+							</td>
+						</tr-->						
+					</c:if>
+					<c:if test="${!empty escuela.modalidadTrabajoEscuela.id && escuela.modalidadTrabajoEscuela.id == 1}">
+						<tr>
+							<td nowrap="nowrap">Nombre:</td>
+							<td>
+								<input type="text" class="required" readonly="readonly" size="100" style="border:0;" name="escuelaNombre"
+									value="${escuela.nombre}"/>
+							</td>
+						</tr>
+						<tr>
+							<td nowrap="nowrap">Modalidad de trabajo:</td>
+							<td>
+								<input type="text" class="required" readonly="readonly" size="45" style="border:0;" name="modalidadTrabajoEscuela"
+									value="${escuela.modalidadTrabajoEscuela.valor}"></input>
+							</td>
+						</tr>
+						<tr>				
+							<td colspan="2">
+								<img src="../escuela/mostrarImagen.do" align="center" width="90px" height="90px">
+							</td>
+						</tr>
+						<tr>
+							<td nowrap="nowrap">Becados por Cimientos:</td>
+							<td>
+								<input type="text" class="required" readonly="readonly" size="45" style="border:0;" name="cantidadBecados"
+									value="${cantidadBecadosCimiento}"/>
+							</td>
+						</tr>							
+					</c:if>		
+					<c:if test="${!empty escuela.modalidadTrabajoEscuela.id && escuela.modalidadTrabajoEscuela.id != 1}">
+						<tr>
+							<td nowrap="nowrap">Nombre:</td>
+							<td>
+								<input type="text" class="required" readonly="readonly" size="100" style="border:0;" name="escuelaNombre"
+									value="${escuela.nombre}"/>
+							</td>
+						</tr>
+						<tr>
+							<td nowrap="nowrap">Modalidad de trabajo:</td>
+							<td>
+								<input type="text" class="required" readonly="readonly" size="45" style="border:0;" name="modalidadTrabajoEscuela"
+									value="${escuela.modalidadTrabajoEscuela.valor}"></input>
+							</td>
+						</tr>
+						<tr>
+							<td nowrap="nowrap">El programa se implementa desde:</td>
+							<td>
+								<input type="text" class="required" readonly="readonly" size="45" style="border:0;" name="escuelaComienzoPBE"
+									value="${escuela.comienzoPBE.nombre}"/>
+							</td>
+						</tr>
+						<tr>
+							<td nowrap="nowrap">Matricula total:</td>
+							<td>
+								<input type="text" class="required" readonly="readonly" size="45" style="border:0;" name="escuelaMatricula"
+									value="${escuela.matricula}"/>
+							</td>
+						</tr>	
+						<tr>
+							<td nowrap="nowrap">Becados por Cimientos:</td>
+							<td>
+								<input type="text" class="required" readonly="readonly" size="45" style="border:0;" name="cantidadBecados"
+									value="${cantidadBecadosCimiento}"/>
+							</td>
+						</tr>	
+						<!-- tr>
+							<td nowrap="nowrap">Indicadores de repitencia:</td>
+							<td>
+								<input type="text" class="required" readonly="readonly" size="45" style="border:0;" name="escuelaIndicadorRepitencia"
+									value="${escuela.indicadorRepitencia}"/>
+							</td>
+						</tr>
+						<tr>
+							<td nowrap="nowrap">Indicadores de abandono:</td>
+							<td>
+								<input type="text" class="required" readonly="readonly" size="45" style="border:0;" name="escuelaIndicadorAbandono"
+									value="${escuela.indicadorAbandono}"/>
+							</td>
+						</tr>
+						<tr>
+							<td nowrap="nowrap">Porcentaje de inasistencia de los alumnos a la escuela:</td>
+							<td>
+								<input type="text" class="required" readonly="readonly" size="45" style="border:0;" name="escuelaPorcentajeInasistencia"
+									value="${escuela.porcentajeInasistencia}"/>
+							</td>
+						</tr-->	
+					</c:if>			
+				</table>
+			</td>
+		</tr>
+		
+		<tr>
+			<td colspan="2"><h1 id="subtitulo-informe"><label>En el acompañamiento trabajamos ....</label></h1></td>
+		</tr>
+		<tr>
+			<td width="860px">${actividadAcompanamiento}</td>
+		</tr>
+		
+		<tr>
+			<td colspan="2"><h1 id="subtitulo-informe"><label>Que trabajaste en el acompañamiento estos meses</label></h1></td>
+		</tr>	
+		<tr>
+			<td colspan="2">
+				<textarea cols="60" rows="5"  name="qtam" id="qtam" >${qtam}</textarea> 
+			</td>
+		</tr>	
+				
+		<!-- tr>
+			<td colspan="2"><h1 id="subtitulo-informe"><label>Mis preferencias</label></h1></td>
+		</tr>
+		<tr>
+			<td>
+				<table width="200" border="0" align="left" cellpadding="0" cellspacing="0" id="table-forms"> 
+					<tr>
+						<td width="200px">Materias que me interesan:</td>
+						<td>
+							${materiasInteres}
+						</td>
+					</tr>
+					<tr>
+						<td>Materias que me cuestan:</td>
+						<td>
+							${materiasCuestan}
+						</td>
+					</tr>
+					<tr>
+						<td>Cantidad materias desaprobadas:</td>
+						<td>${cantMateriasDesaprobadas}</td>
+					</tr>
+					<tr>
+						<td>Cantidad inasistencias a la escuela:</td>
+						<td>${cantInasistencias}</td>
+					</tr>					
+				</table>
+			</td>
+		</tr-->		
+		
+		<!-- tr>
+			<td colspan="2"><h1 id="subtitulo-informe"><label>Mensaje al padrino</label></h1></td>
+		</tr>
+		<tr>
+			<td>
+				<table width="200" border="0" align="left" cellpadding="0" cellspacing="0" id="table-forms"> 
+					<tr>
+						<td width="120px">Querido padrino:</td>
+						<td width="780px" align="justify">${mensajePadrino}</td>
+					</tr>
+				</table>
+			</td>
+		</tr-->
+		
+		<!-- tr>
+			<td colspan="2"><h1 id="subtitulo-informe"><label>Concepto general de la situación escolar</label></h1></td>
+		</tr>
+		<tr>
+			<td valign="top">
+				<select id="cgse" name="cgse" style="width:120px;" class="required">													
+					<option value="suo">Seleccioná</option>
+					<option value="enRiesgo">En Riesgo</option>
+					<option value="regular">Regular</option>
+					<option value="bueno">Bueno</option>
+					<option value="muyBueno">Muy Bueno</option>					
+			 	</select>			
+			</td>
+		</tr>
+		<tr>		
+			<td>
+				<select id="cgseM" name="cgseM" style="width:600px;" class="required">													
+														
+			 	</select>
+			</td>
+			
+		</tr>
+		<tr>
+			<td colspan="2"><h1 id="subtitulo-informe"><label>Concepto general de la Participación en PFE</label></h1></td>
+		</tr>
+		<tr>
+			<td valign="top">
+				<select id="cgpp" name="cgpp" style="width:120px;" class="required">													
+					<option value="suo">Seleccioná</option>
+					<option value="enRiesgo">En Riesgo</option>
+					<option value="regular">Regular</option>
+					<option value="bueno">Bueno</option>
+					<option value="muyBueno">Muy Bueno</option>
+				</select>						
+			</td>
+		</tr>
+		<tr>
+			<td>
+			 	
+			 	<select id="cgppM" name="cgppM" style="width:600px;"  multiple="multiple" class="required">													
+														
+			 	</select>
+			</td>
+		</tr-->
+		<tr>
+      	    <td>&nbsp;</td>
+       	    <td>&nbsp;</td>
+      	</tr>
+     	<tr>
+        	<td>&nbsp;</td>
+    	    <td>&nbsp;</td>
+    	</tr>
+    	
+      	<tr>
+ 	       <td colspan="2">
+ 	       		<table align="left">
+ 	       			<tr>
+					  <td width="50" align="left" valign="middle">
+				       	<center>
+							<input type="button" value="Volver" class="ui-state-default ui-corner-all"	onclick="history.back();" />
+						</center>
+				       </td>
+ 	       			</tr>
+ 	       		</table>			
+	       </td>
+	   </tr>
+	</table>
+</form>
+</div>
+</body>
+</html>

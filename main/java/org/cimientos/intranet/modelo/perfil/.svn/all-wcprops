@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/fenix/!svn/ver/308/src/main/java/org/cimientos/intranet/modelo/perfil
+END
+PerfilAlumno.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/fenix/!svn/ver/364/src/main/java/org/cimientos/intranet/modelo/perfil/PerfilAlumno.java
+END
+AlumnoPanelEA.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/modelo/perfil/AlumnoPanelEA.java
+END
+EstadoAlumno.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/fenix/!svn/ver/409/src/main/java/org/cimientos/intranet/modelo/perfil/EstadoAlumno.java
+END
+AlumnoSeleccion.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/fenix/!svn/ver/339/src/main/java/org/cimientos/intranet/modelo/perfil/AlumnoSeleccion.java
+END
+Turno.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/fenix/!svn/ver/1/src/main/java/org/cimientos/intranet/modelo/perfil/Turno.java
+END

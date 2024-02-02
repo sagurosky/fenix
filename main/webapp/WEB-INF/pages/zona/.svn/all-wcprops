@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/zona
+END
+listaZonas.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/zona/listaZonas.jsp
+END
+modificarView.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/zona/modificarView.jsp
+END
+registrarView.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/zona/registrarView.jsp
+END

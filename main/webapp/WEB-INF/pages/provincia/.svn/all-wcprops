@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/provincia
+END
+listaProvincias.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/provincia/listaProvincias.jsp
+END
+modificarView.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/provincia/modificarView.jsp
+END
+registrarView.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/provincia/registrarView.jsp
+END

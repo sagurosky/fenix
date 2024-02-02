@@ -1,0 +1,147 @@
+package com.cimientos.intranet.enumerativos.entrevista;
+
+import java.security.InvalidParameterException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public enum ContenidosAbordados {
+
+	PLANIFICACION(1,"Alumno: Planificación del estudio"),
+	ESTRATEGIAS(2,"Alumno: Estrategias de aprendizaje"),
+	CRITERIOS(3,"Alumno: Criterios de permanencia PFE"),
+	PLANIFICACIONPROYECTO(4,"Alumno: Planificación Proyecto de Vida"),
+	PLANIFICACIONTIEMPO(5,"Alumno: Planificación Tiempo Libre"),
+	AUTONOMIA(6,"Alumno: Autonomía"),
+	AUTOCONOCIMIENTO(7,"Alumno: Responsabilidad"),
+	COMPROMISOBECADO(8,"Alumno: Compromiso del becado"),
+	COMPROMISORA(9,"RA: Compromiso del RA"),
+	ROLRA(10,"RA: Rol de RA, apoyo y orientación"),
+	HERRAMIENTASRA(11,"RA: Herramientas para favorecer la terminalidad"),
+	RELACIONESCUELARA(12,"RA: Relación escuela y familia"),
+	DESEMPENIOESCOLAR(13, "Escuela: Desempeño escolar"),
+	PERMANENCIAALUM(14,"Escuela: Permanencia de los alumnos"),
+	PROMOCIONMATERIA(15,"Escuela: Promoción de materias"),
+	REPITENCIA(16,"Escuela: Repitencia"),
+	EGRESO(17,"Escuela: Egreso efectivo y terminalidad del secundario"),
+	DISENIOPLANIFICACION(18,"Escuela: Diseño y Planificación de acciones conjuntas"),
+	IMPLEMENESTRATEGIA(19,"Escuela: Implementación de estrategia/s "),
+	REUNIONDIRECTIVOS(20, "Escuela: Reunión con directivos/docentes"),
+	REUNIONEQUIPO(21,"Escuela: Reunión con equipo de orientación"),
+	OBSERCLASES(22,"Escuela: Observación de clases/taller"),
+	CAPACITACION(23,"Escuela: Capacitación"),
+	INDICADORES(24,"Escuela: Indicadores de rendimiento académico "),
+	JORNADAINSTITUCIONAL(25,"Escuela: Jornada institucional");
+
+	private Integer id;
+	private String valor;
+	
+	
+	private ContenidosAbordados(Integer id, String valor) {
+		this.id = id;
+		this.valor = valor;
+	}
+
+
+	public Integer getId() {
+		return id;
+	}
+
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+
+	public String getValor() {
+		return valor;
+	}
+
+
+	public void setValor(String valor) {
+		this.valor = valor;
+	}
+	
+	
+	public static ContenidosAbordados getContenidosAbordados(Integer id){
+		switch (id) {
+		case 1:
+			return PLANIFICACION;
+		case 2:
+			return ESTRATEGIAS;
+		case 3:
+			return CRITERIOS;
+		case 4:
+			return PLANIFICACIONPROYECTO;
+		case 5:
+			return PLANIFICACIONTIEMPO;
+		case 6:
+			return AUTONOMIA;
+		case 7:
+			return AUTOCONOCIMIENTO;
+		case 8:
+			return COMPROMISOBECADO;
+		case 9:
+			return COMPROMISORA;
+		case 10:
+			return ROLRA;
+		case 11:
+			return HERRAMIENTASRA;
+		case 12:
+			return RELACIONESCUELARA;
+		case 13:
+			return DESEMPENIOESCOLAR;
+		case 14:
+			return PERMANENCIAALUM;
+		case 15:
+			return PROMOCIONMATERIA;
+		case 16:
+			return REPITENCIA;
+		case 17:
+			return EGRESO;
+		case 18:
+			return DISENIOPLANIFICACION;
+		case 19:
+			return IMPLEMENESTRATEGIA;
+		case 20:
+			return REUNIONDIRECTIVOS;
+		case 21:
+			return REUNIONEQUIPO;
+		case 22:
+			return OBSERCLASES;
+		case 23:
+			return CAPACITACION;
+		case 24:
+			return INDICADORES;
+		case 25:
+			return JORNADAINSTITUCIONAL;
+		
+		default:
+			throw new InvalidParameterException("Compromiso abordado desconocido: "
+					+ id);
+		}
+
+	}
+
+
+	public static List<ContenidosAbordados> getContenidosAbordados() {
+		return Arrays.asList(values());
+	}
+	
+	public static List<ContenidosAbordados> getContenidosAbordadosEntrevistaMensual() {
+		ArrayList<ContenidosAbordados> listaContAbordadosEntrevMensual = new ArrayList<ContenidosAbordados>();
+		listaContAbordadosEntrevMensual.add(PLANIFICACION);
+		listaContAbordadosEntrevMensual.add(ESTRATEGIAS);
+		listaContAbordadosEntrevMensual.add(CRITERIOS);
+		listaContAbordadosEntrevMensual.add(PLANIFICACIONPROYECTO);
+		listaContAbordadosEntrevMensual.add(PLANIFICACIONTIEMPO);
+		listaContAbordadosEntrevMensual.add(AUTONOMIA);
+		listaContAbordadosEntrevMensual.add(AUTOCONOCIMIENTO);
+		listaContAbordadosEntrevMensual.add(COMPROMISOBECADO);
+		listaContAbordadosEntrevMensual.add(COMPROMISORA);
+		listaContAbordadosEntrevMensual.add(ROLRA);
+		listaContAbordadosEntrevMensual.add(HERRAMIENTASRA);
+		listaContAbordadosEntrevMensual.add(RELACIONESCUELARA);
+		return listaContAbordadosEntrevMensual;
+	}
+}

@@ -1,0 +1,39 @@
+/**
+ * 
+ */
+package org.cimientos.intranet.dao;
+
+import java.util.List;
+
+import org.cimientos.intranet.dao.base.Dao;
+import org.cimientos.intranet.modelo.evento.eventoGenerico.EventoGenerico;
+import org.cimientos.intranet.modelo.perfilEA.PerfilEA;
+import org.cimientos.intranet.modelo.perfilRR.PerfilRR;
+
+/**
+ * @author plabaronnie
+ *
+ */
+public interface EventoGenericoDao extends Dao<EventoGenerico>{
+
+	/**
+	 * @return
+	 */
+	List<EventoGenerico> obtenerActivos();
+
+	/**
+	 * @param ea
+	 * @return
+	 */
+	List<EventoGenerico> obtenerEventosGenericosPorEA(PerfilEA ea);
+	
+	
+	/**
+	 * @param rr
+	 * @return
+	 */
+	List<EventoGenerico> obtenerEventosGenericosPorRR(PerfilRR rr);
+	
+	List<EventoGenerico> obtenerEventosGenericosTodos();
+
+}

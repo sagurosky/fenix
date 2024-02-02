@@ -1,0 +1,709 @@
+package org.cimientos.intranet.utils.informe;
+
+
+
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.cimientos.intranet.servicio.InformeSrv;
+import org.cimientos.intranet.utils.Formateador;
+import org.springframework.web.servlet.view.document.AbstractExcelView;
+
+import com.cimientos.intranet.dto.FichaFamiliarDTO;
+import com.cimientos.intranet.dto.MateriaDTO;
+import com.cimientos.intranet.dto.ReporteInformeFPDTO;
+import com.cimientos.intranet.enumerativos.AnioEscolar;
+
+public class FPExcelView_2023 extends AbstractExcelView{
+	
+	private static int bachSize = 1000;
+	private static final String NO_APLICA = "No aplica";
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	protected void buildExcelDocument(Map<String,Object> model, HSSFWorkbook workbook,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		
+		InformeSrv informeSrv = (InformeSrv) model.get("informeSrv");
+		
+		HSSFSheet sheet = workbook.getSheet("FP");
+		
+		List<Long> idsCiclo = (List<Long>) model.get("cicloId");
+		Integer tipoId = (Integer) model.get("idTipo"); 
+		List<Integer> estadoId = (List<Integer>) model.get("estadoId");
+		List<String> tipoInformeId = (List<String>) model.get("tipoInformeId");
+		List<Number> padrinoId = (List<Number>) model.get("idPadrino");
+		String padrino = (String) model.get("padrino");
+		List<Number> zonaId = (List<Number>) model.get("idZona");
+		String zona = (String) model.get("zona");
+		String nombreAlumno = (String) model.get("nombreAlumno");
+		String nombreEA = (String) model.get("ea");		
+		Long idEa = (Long) model.get("idEA");
+		String nombreRR = (String) model.get("rr");
+		Long idRR = (Long) model.get("idRR");
+		AnioEscolar anioEscolar = (AnioEscolar) model.get("anioEscolar");	
+		String fechaDesde = (String) model.get("fechaDesde");
+		String fechaHasta = (String) model.get("fechaHasta");
+		String eae = (String) model.get("eae");
+		Date dFechaDesde = null;
+		Date dFechaHasta = null;
+		//System.out.println("eae: "+eae);
+		if (StringUtils.isNotBlank(fechaDesde))
+			dFechaDesde = Formateador.parsearFecha(fechaDesde);
+
+		if (StringUtils.isNotBlank(fechaHasta))
+			dFechaHasta = Formateador.parsearFecha(fechaHasta);
+	
+
+		int totalRows = informeSrv.obtenerCantidadInformesAReportar(idsCiclo, tipoId, tipoInformeId, estadoId, padrinoId, zonaId, nombreAlumno, 
+				idEa, idRR, anioEscolar, dFechaDesde, dFechaHasta,eae);
+		
+		List<ReporteInformeFPDTO> informes = null;
+		int rowNum = 2;
+		int parcial = 0;
+		int inicial = 0;
+		HSSFRow row;
+		while (parcial < totalRows) {
+			parcial = parcial + bachSize;
+			
+			informes = informeSrv.obtenerInformesFPAReportar(idsCiclo, tipoId, tipoInformeId, estadoId, padrinoId, zonaId, nombreAlumno, 
+					idEa, idRR, anioEscolar, dFechaDesde, dFechaHasta, inicial, bachSize,null, null,eae);
+		
+			if(sheet != null){
+				for (ReporteInformeFPDTO fp : informes) {
+					row = sheet.createRow(rowNum++);
+					crearFila(fp, row);
+				}		
+			}
+			inicial = parcial;
+			informes = null;
+		}	
+	}
+
+	private void crearFila(ReporteInformeFPDTO fp, HSSFRow row) {		
+		row.createCell(0).setCellValue(fp.getId());
+		row.createCell(1).setCellValue(fp.getTipoInforme() +" - " + fp.getCicloActual());
+		row.createCell(2).setCellValue(fp.getEstadoInforme());
+		if (fp.getEstadoInforme() != "Enviado"){
+			row.createCell(3).setCellValue(fp.getFechaUltimaModificacion());
+		}else{
+			row.createCell(3).setCellValue(fp.getFechaEnvio());
+		}		
+		row.createCell(3).setCellValue(fp.getFechaUltimoCambioEstado());
+		row.createCell(4).setCellValue(fp.getFechaEnvio());
+		row.createCell(5).setCellValue(fp.getTipoPadrino());
+		row.createCell(6).setCellValue(fp.getPadrino());
+		if (fp.getNroCtesPlataformaContable()==0){
+			row.createCell(7).setCellValue("-");
+		}else{
+			row.createCell(7).setCellValue(fp.getNroCtesPlataformaContable());
+		}
+		row.createCell(8).setCellValue(fp.getContacto());
+		row.createCell(9).setCellValue(fp.getMail());
+		row.createCell(10).setCellValue(fp.getIdAlumno());
+		row.createCell(11).setCellValue(fp.getApellidoAlumno() +" " + fp.getNombreAlumno());
+		row.createCell(12).setCellValue(fp.getDni());		
+		row.createCell(13).setCellValue(fp.getFechaNacimiento());	
+		row.createCell(14).setCellValue(fp.getEdad());		
+		row.createCell(15).setCellValue(fp.getLocalidad());	
+		row.createCell(16).setCellValue(fp.getAnioEscolar());
+		row.createCell(17).setCellValue(fp.getAnioAdicional());
+		row.createCell(18).setCellValue(fp.getEscuelaNombre());
+		row.createCell(19).setCellValue(fp.getEscuelaLocalidad());
+		row.createCell(20).setCellValue(fp.getResponsable() + "-" + fp.getVinculo());
+		row.createCell(21).setCellValue(fp.getFechaPBE());
+		row.createCell(22).setCellValue(getFechaReIncorporacionPBE(fp));
+		row.createCell(23).setCellValue(fp.getRr());
+		row.createCell(24).setCellValue(fp.getEa());
+		row.createCell(25).setCellValue(fp.getMateriasInteres());
+		row.createCell(26).setCellValue(fp.getIncluirBoletin());
+		//this.getBoletin(fp, row);
+		
+		// calculo año posible de egreso
+		/*
+		  
+		 
+		if (fp.getAnioAdicional()=="No"){
+			anioAdicional=1;
+		}
+		if (fp.getAnioEscolar().equals("7º primaria")){
+			posibleAnioEgreso=7-anioAdicional;
+		}else{
+			posibleAnioEgreso=7-anioAdicional-Long.parseLong(fp.getAnioEscolar().substring(0, 1));
+		}
+		
+		posibleAnioEgreso=Long.parseLong( fp.getCicloActual())+posibleAnioEgreso;		
+		if(fp.getEae().equals("7/5")){
+			posibleAnioEgreso--;
+		}
+		*/
+		// calculo año posible de egreso
+				long posibleAnioEgreso=0;
+				long anioAdicional=0;
+				if (fp.getAnioAdicional()=="No"){
+					anioAdicional=1;
+				}		
+				if (fp.getAnioEscolar().equals("7º primaria")){
+					posibleAnioEgreso=7-anioAdicional-1;
+				}
+				else{
+					if (fp.getAnioEscolar().equals("-")){
+						
+					}
+					else{
+						posibleAnioEgreso=7-anioAdicional-Long.parseLong(fp.getAnioEscolar().substring(0, 1));
+					}
+					
+				}
+				posibleAnioEgreso=Long.parseLong(fp.getCicloActual())+posibleAnioEgreso;
+				if(fp.getEae().equals("7/5")){
+					posibleAnioEgreso--;
+				}
+		
+		
+		
+		
+		row.createCell(80).setCellValue(posibleAnioEgreso);
+		row.createCell(81).setCellValue(fp.getEae());
+		row.createCell(82).setCellValue(fp.getVosMismo());
+		row.createCell(83).setCellValue(fp.getCuandoTermine());
+		
+		
+		
+		
+		
+		
+		// boletin
+		
+		if(fp.getMaterias() != null){
+			String notaFin="";
+			String notaDic="";
+			String notaMar="";
+			String notaFDM="";
+	
+			String nota1="";
+			String nota2="";
+			String nota3="";
+			String nota123="";
+			
+			
+			
+				for (MateriaDTO materia: fp.getMaterias()) {	
+									
+						nota1=materia.getNotaPrimero();
+						nota2=materia.getNotaSegundo();
+						nota3=materia.getNotaTercero();
+					
+						if (materia.getNotaPrimero().equals(" ")){
+							nota1="-";
+						}
+						if (materia.getNotaSegundo().equals(" ")){
+							nota2="-";
+						}
+						if (materia.getNotaTercero().equals(" ")){
+							nota3="-";
+						}
+						
+						nota123=nota1+","+nota2+","+nota3;
+						
+						notaFin=materia.getNotaFin();
+						notaDic=materia.getNotaDic();
+						notaMar=materia.getNotaMarzo();
+
+						if (materia.getNotaFin().equals(" ")){
+							notaFin="-";
+						}
+						if (materia.getNotaDic().equals(" ")){
+							notaDic="-";
+						}
+						if (materia.getNotaMarzo().equals(" ")){
+							notaMar="-";
+						}
+						
+						
+						notaFDM=notaFin+","+notaDic+","+notaMar;
+						
+						
+						if(materia.getNombre().equals("Educación plástica-artística")){	
+							row.createCell(27).setCellValue(nota123);
+							row.createCell(47).setCellValue(notaFDM);
+						}
+						
+						if(materia.getNombre().equals("Biología")){
+							row.createCell(28).setCellValue(nota123);
+							row.createCell(48).setCellValue(notaFDM);
+						}
+						if(materia.getNombre().equals("Ciencias Naturales")){
+							row.createCell(29).setCellValue(nota123);
+							row.createCell(49).setCellValue(notaFDM);
+						}
+						if(materia.getNombre().equals("Ciencias Sociales")){
+							row.createCell(30).setCellValue(nota123);
+							row.createCell(50).setCellValue(notaFDM);
+						}
+						if(materia.getNombre().equals("Informática")){
+							row.createCell(31).setCellValue(nota123);
+							row.createCell(51).setCellValue(notaFDM);
+						}
+						if(materia.getNombre().equals("Construcción de ciudadanía / Educación cívica")){
+							row.createCell(32).setCellValue(nota123);
+							row.createCell(52).setCellValue(notaFDM);
+						}
+						if(materia.getNombre().equals("Contabilidad / Educación práctica contable")){
+							row.createCell(33).setCellValue(nota123);
+							row.createCell(53).setCellValue(notaFDM);
+						}		
+						if(materia.getNombre().equals("Educación física / corporal")){
+							row.createCell(34).setCellValue(nota123);
+							row.createCell(54).setCellValue(notaFDM);
+						}
+						if(materia.getNombre().equals("Física")){
+							row.createCell(35).setCellValue(nota123);
+							row.createCell(55).setCellValue(notaFDM);
+						}
+						if(materia.getNombre().equals("Físico-química")){
+							row.createCell(36).setCellValue(nota123);
+							row.createCell(56).setCellValue(notaFDM);
+						}
+						if(materia.getNombre().equals("Geografía")){
+							row.createCell(37).setCellValue(nota123);
+							row.createCell(57).setCellValue(notaFDM);
+						}
+						if(materia.getNombre().equals("Historia")){
+							row.createCell(38).setCellValue(nota123);
+							row.createCell(58).setCellValue(notaFDM);
+						}
+						if(materia.getNombre().equals("Inglés")){
+							row.createCell(39).setCellValue(nota123);
+							row.createCell(59).setCellValue(notaFDM);
+						}
+						if(materia.getNombre().equals("Lengua / Literatura")){
+							row.createCell(40).setCellValue(nota123);
+							row.createCell(60).setCellValue(notaFDM);
+						}
+						if(materia.getNombre().equals("Matemática")){
+							row.createCell(41).setCellValue(nota123);
+							row.createCell(61).setCellValue(notaFDM);
+						}
+						if(materia.getNombre().equals("Música")){
+							row.createCell(42).setCellValue(nota123);
+							row.createCell(62).setCellValue(notaFDM);
+						}
+						if(materia.getNombre().equals("Pasantía / Práctica profesional")){
+							row.createCell(43).setCellValue(nota123);
+							row.createCell(63).setCellValue(notaFDM);
+						}
+						if(materia.getNombre().equals("Química")){
+							row.createCell(44).setCellValue(nota123);
+							row.createCell(64).setCellValue(notaFDM);
+						}
+						if(materia.getNombre().equals("Salud y Adolescencia")){
+							row.createCell(45).setCellValue(nota123);
+							row.createCell(65).setCellValue(notaFDM);
+						}
+						if(materia.getNombre().equals("Tecnología / TIC")){
+							row.createCell(46).setCellValue(nota123);
+							row.createCell(66).setCellValue(notaFDM);
+						}
+						
+				}
+		}
+		
+		
+		row.createCell(67).setCellValue(fp.getCantidadConvivientes());
+		if(fp.getConvivientes() != null){
+			int i = 68;
+			int j = 0;	
+			Iterator iterator = fp.getConvivientes().iterator();	
+			while (iterator.hasNext() && j < 12) {
+				FichaFamiliarDTO fichaFamiliar = (FichaFamiliarDTO) iterator.next();
+				row.createCell(i).setCellValue(fichaFamiliar.getVinculo() + "-" + fichaFamiliar.getNombreApellido() + "-" + 
+						fichaFamiliar.getEdad() + "-" + fichaFamiliar.getNivelEstudio() + "-" +  fichaFamiliar.getOcupacion());
+				i++;
+				j++;
+			}
+		}
+	}
+	
+	private void getBoletin(ReporteInformeFPDTO fp, HSSFRow row){
+		if(fp.getMaterias() != null){
+			for (MateriaDTO materia: fp.getMaterias()) {
+				if(materia.getNombre().equals("Educación plástica-artística")){
+					row.createCell(27).setCellValue(materia.getNotaPrimero() + "," + materia.getNotaSegundo() + "," + materia.getNotaTercero());
+				}
+				else{
+					row.createCell(27).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Biología")){
+					row.createCell(28).setCellValue(materia.getNotaPrimero() + "," + materia.getNotaSegundo() + "," + materia.getNotaTercero());
+				}
+				else{
+					row.createCell(28).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Ciencias Naturales")){
+					row.createCell(29).setCellValue(materia.getNotaPrimero() + "," + materia.getNotaSegundo() + "," + materia.getNotaTercero());
+				}
+				else{
+					row.createCell(29).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Ciencias Sociales")){
+					row.createCell(30).setCellValue(materia.getNotaPrimero() + "," + materia.getNotaSegundo() + "," + materia.getNotaTercero());
+				}
+				else{
+					row.createCell(30).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Informática")){
+					row.createCell(31).setCellValue(materia.getNotaPrimero() + "," + materia.getNotaSegundo() + "," + materia.getNotaTercero());
+				}
+				else{
+					row.createCell(31).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Construcción de ciudadanía / Educación cívica")){
+					row.createCell(32).setCellValue(materia.getNotaPrimero() + "," + materia.getNotaSegundo() + "," + materia.getNotaTercero());
+				}
+				else{
+					row.createCell(32).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Contabilidad / Educación práctica contable")){
+					row.createCell(33).setCellValue(materia.getNotaPrimero() + "," + materia.getNotaSegundo() + "," + materia.getNotaTercero());
+				}
+				else{
+					row.createCell(33).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Educación física / corporal")){
+					row.createCell(34).setCellValue(materia.getNotaPrimero() + "," + materia.getNotaSegundo() + "," + materia.getNotaTercero());
+				}
+				else{
+					row.createCell(34).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Física")){
+					row.createCell(35).setCellValue(materia.getNotaPrimero() + "," + materia.getNotaSegundo() + "," + materia.getNotaTercero());
+				}
+				else{
+					row.createCell(35).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Físico-química")){
+					row.createCell(36).setCellValue(materia.getNotaPrimero() + "," + materia.getNotaSegundo() + "," + materia.getNotaTercero());
+				}
+				else{
+					row.createCell(36).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Geografía")){
+					row.createCell(37).setCellValue(materia.getNotaPrimero() + "," + materia.getNotaSegundo() + "," + materia.getNotaTercero());
+				}
+				else{
+					row.createCell(37).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Historia")){
+					row.createCell(38).setCellValue(materia.getNotaPrimero() + "," + materia.getNotaSegundo() + "," + materia.getNotaTercero());
+				}
+				else{
+					row.createCell(38).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Inglés")){
+					row.createCell(39).setCellValue(materia.getNotaPrimero() + "," + materia.getNotaSegundo() + "," + materia.getNotaTercero());
+				}
+				else{
+					row.createCell(39).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Lengua / Literatura")){
+					row.createCell(40).setCellValue(materia.getNotaPrimero() + "," + materia.getNotaSegundo() + "," + materia.getNotaTercero());
+				}
+				else{
+					row.createCell(40).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Matemática")){
+					row.createCell(41).setCellValue(materia.getNotaPrimero() + "," + materia.getNotaSegundo() + "," + materia.getNotaTercero());
+				}
+				else{
+					row.createCell(41).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Música")){
+					row.createCell(42).setCellValue(materia.getNotaPrimero() + "," + materia.getNotaSegundo() + "," + materia.getNotaTercero());
+				}
+				else{
+					row.createCell(42).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Pasantía / Práctica profesional")){
+					row.createCell(43).setCellValue(materia.getNotaPrimero() + "," + materia.getNotaSegundo() + "," + materia.getNotaTercero());
+				}
+				else{
+					row.createCell(43).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Química")){
+					row.createCell(44).setCellValue(materia.getNotaPrimero() + "," + materia.getNotaSegundo() + "," + materia.getNotaTercero());
+				}
+				else{
+					row.createCell(44).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Salud y Adolescencia")){
+					row.createCell(45).setCellValue(materia.getNotaPrimero() + "," + materia.getNotaSegundo() + "," + materia.getNotaTercero());
+				}
+				else{
+					row.createCell(45).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Tecnología / TIC")){
+					row.createCell(46).setCellValue(materia.getNotaPrimero() + "," + materia.getNotaSegundo() + "," + materia.getNotaTercero());
+				}
+				else{
+					row.createCell(46).setCellValue("-");
+				}	
+				if(materia.getNombre().equals("Educación plástica-artística")){
+					row.createCell(47).setCellValue(materia.getNotaFin());
+				}
+				else{
+					row.createCell(47).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Biología")){
+					row.createCell(48).setCellValue(materia.getNotaFin());
+				}
+				else{
+					row.createCell(48).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Ciencias Naturales")){
+					row.createCell(49).setCellValue(materia.getNotaFin());
+				}
+				else{
+					row.createCell(49).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Ciencias Sociales")){
+					row.createCell(50).setCellValue(materia.getNotaFin());
+				}
+				else{
+					row.createCell(50).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Informática")){
+					row.createCell(51).setCellValue(materia.getNotaFin());
+				}
+				else{
+					row.createCell(51).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Construcción de ciudadanía / Educación cívica")){
+					row.createCell(52).setCellValue(materia.getNotaFin());
+				}
+				else{
+					row.createCell(52).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Contabilidad / Educación práctica contable")){
+					row.createCell(53).setCellValue(materia.getNotaFin());
+				}
+				else{
+					row.createCell(53).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Educación física / corporal")){
+					row.createCell(54).setCellValue(materia.getNotaFin());
+				}
+				else{
+					row.createCell(54).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Física")){
+					row.createCell(55).setCellValue(materia.getNotaFin());
+				}
+				else{
+					row.createCell(55).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Físico-química")){
+					row.createCell(56).setCellValue(materia.getNotaFin());
+				}
+				else{
+					row.createCell(56).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Geografía")){
+					row.createCell(57).setCellValue(materia.getNotaFin());
+				}
+				else{
+					row.createCell(57).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Historia")){
+					row.createCell(58).setCellValue(materia.getNotaFin());
+				}
+				else{
+					row.createCell(58).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Inglés")){
+					row.createCell(59).setCellValue(materia.getNotaFin());
+				}
+				else{
+					row.createCell(59).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Lengua / Literatura")){
+					row.createCell(60).setCellValue(materia.getNotaFin());
+				}
+				else{
+					row.createCell(60).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Matemática")){
+					row.createCell(61).setCellValue(materia.getNotaFin());
+				}
+				else{
+					row.createCell(61).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Música")){
+					row.createCell(62).setCellValue(materia.getNotaFin());
+				}
+				else{
+					row.createCell(62).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Pasantía / Práctica profesional")){
+					row.createCell(63).setCellValue(materia.getNotaFin());
+				}
+				else{
+					row.createCell(63).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Química")){
+					row.createCell(64).setCellValue(materia.getNotaFin());
+				}
+				else{
+					row.createCell(64).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Salud y Adolescencia")){
+					row.createCell(65).setCellValue(materia.getNotaFin());
+				}
+				else{
+					row.createCell(65).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Tecnología / TIC")){
+					row.createCell(66).setCellValue(materia.getNotaFin());
+				}
+				else{
+					row.createCell(66).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Educación plástica-artística")){
+					row.createCell(67).setCellValue(materia.getNotaDic() + "," + materia.getNotaMarzo());
+				}
+				else{
+					row.createCell(67).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Biología")){
+					row.createCell(68).setCellValue(materia.getNotaDic() + "," + materia.getNotaMarzo());
+				}
+				else{
+					row.createCell(68).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Ciencias Naturales")){
+					row.createCell(69).setCellValue(materia.getNotaDic() + "," + materia.getNotaMarzo());
+				}
+				else{
+					row.createCell(69).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Ciencias Sociales")){
+					row.createCell(70).setCellValue(materia.getNotaDic() + "," + materia.getNotaMarzo());
+				}
+				else{
+					row.createCell(70).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Informática")){
+					row.createCell(71).setCellValue(materia.getNotaDic() + "," + materia.getNotaMarzo());
+				}
+				else{
+					row.createCell(71).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Construcción de ciudadanía / Educación cívica")){
+					row.createCell(72).setCellValue(materia.getNotaDic() + "," + materia.getNotaMarzo());
+				}
+				else{
+					row.createCell(72).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Contabilidad / Educación práctica contable")){
+					row.createCell(73).setCellValue(materia.getNotaDic() + "," + materia.getNotaMarzo());
+				}
+				else{
+					row.createCell(73).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Educación física / corporal")){
+					row.createCell(74).setCellValue(materia.getNotaDic() + "," + materia.getNotaMarzo());
+				}
+				else{
+					row.createCell(74).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Física")){
+					row.createCell(75).setCellValue(materia.getNotaDic() + "," + materia.getNotaMarzo());
+				}
+				else{
+					row.createCell(75).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Físico-química")){
+					row.createCell(76).setCellValue(materia.getNotaDic() + "," + materia.getNotaMarzo());
+				}
+				else{
+					row.createCell(76).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Geografía")){
+					row.createCell(77).setCellValue(materia.getNotaDic() + "," + materia.getNotaMarzo());
+				}
+				else{
+					row.createCell(77).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Historia")){
+					row.createCell(78).setCellValue(materia.getNotaDic() + "," + materia.getNotaMarzo());
+				}
+				else{
+					row.createCell(78).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Inglés")){
+					row.createCell(79).setCellValue(materia.getNotaDic() + "," + materia.getNotaMarzo());
+				}
+				else{
+					row.createCell(79).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Lengua / Literatura")){
+					row.createCell(80).setCellValue(materia.getNotaDic() + "," + materia.getNotaMarzo());
+				}
+				else{
+					row.createCell(80).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Matemática")){
+					row.createCell(81).setCellValue(materia.getNotaDic() + "," + materia.getNotaMarzo());
+				}
+				else{
+					row.createCell(81).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Música")){
+					row.createCell(82).setCellValue(materia.getNotaDic() + "," + materia.getNotaMarzo());
+				}
+				else{
+					row.createCell(82).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Pasantía / Práctica profesional")){
+					row.createCell(83).setCellValue(materia.getNotaDic() + "," + materia.getNotaMarzo());
+				}
+				else{
+					row.createCell(83).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Química")){
+					row.createCell(84).setCellValue(materia.getNotaDic() + "," + materia.getNotaMarzo());
+				}
+				else{
+					row.createCell(84).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Salud y Adolescencia")){
+					row.createCell(85).setCellValue(materia.getNotaDic() + "," + materia.getNotaMarzo());
+				}
+				else{
+					row.createCell(85).setCellValue("-");
+				}
+				if(materia.getNombre().equals("Tecnología / TIC")){
+					row.createCell(86).setCellValue(materia.getNotaDic() + "," + materia.getNotaMarzo());
+				}
+				else{
+					row.createCell(86).setCellValue("-");
+				}
+			}
+		}
+	}
+	
+	public String getFechaReIncorporacionPBE(ReporteInformeFPDTO fp) {
+		return StringUtils.isNotBlank(fp.getFechaReincorporacionPBE()) ? 
+				fp.getFechaReincorporacionPBE(): NO_APLICA;
+	}
+}

@@ -1,0 +1,482 @@
+package org.cimientos.intranet.dto;
+
+public class EscuelaDTO {
+	
+	private String idEscuela;
+	private String nombre;
+	private String cue; 
+	private String modalidad;
+	private String orientacion;
+	private String nivel;
+	private String anios;
+	private String dependencia;
+	private String cp;
+	private String calle;
+	private String numero;
+	private String barrio;
+	private String localidad;
+	private String provincia;
+	private String zona;
+	private String tel1;
+	private String tel2;
+	private String mail;
+	private String director;
+	private String directorCel;
+	private String directorMail;
+	private String secretario;
+	private String secretarioCel;
+	private String secretarioMail;
+	private String resonsable;
+	private String responsableCel;
+	private String responsablMail;
+	private String rural;
+	private String subsidio;	
+	private String observacionesGrales;	
+	private String estado;
+	private String motivoNoSeleccion;
+	private String programa;
+	private String modalidadTrabajoEscuela;
+	private String anioComienzoProyecto;
+	private String anioComienzoPBE;
+	private String fase;
+	private String objetivoProyecto;
+	private String observaciones;
+	private String matricula;
+	private String repitencia;
+	private String abandono;
+	private String inasistencias;
+	private String turnos;
+	private String espacios;
+	
+	public EscuelaDTO() {
+		super();
+	}
+
+	public EscuelaDTO(String idEscuela, String nombre, String cue,
+			String modalidad, String orientacion, String nivel, String anios,
+			String dependencia, String cp, String calle, String numero,
+			String barrio, String localidad, String provincia, String zona,
+			String tel1, String tel2, String mail, String director,
+			String directorCel, String directorMail, String secretario,
+			String secretarioCel, String secretarioMail, String resonsable,
+			String responsableCel, String responsablMail, String rural,
+			String subsidio, String observacionesGrales, String estado,
+			String motivoNoSeleccion, String programa,
+			String modalidadTrabajoEscuela, String anioComienzoProyecto,
+			String anioComienzoPBE, String fase, String objetivoProyecto,
+			String observaciones, String matricula, String repitencia,
+			String abandono, String inasistencias, String turnos,
+			String espacios) {
+		super();
+		this.idEscuela = idEscuela;
+		this.nombre = nombre;
+		this.cue = cue;
+		this.modalidad = modalidad;
+		this.orientacion = orientacion;
+		this.nivel = nivel;
+		this.anios = anios;
+		this.dependencia = dependencia;
+		this.cp = cp;
+		this.calle = calle;
+		this.numero = numero;
+		this.barrio = barrio;
+		this.localidad = localidad;
+		this.provincia = provincia;
+		this.zona = zona;
+		this.tel1 = tel1;
+		this.tel2 = tel2;
+		this.mail = mail;
+		this.director = director;
+		this.directorCel = directorCel;
+		this.directorMail = directorMail;
+		this.secretario = secretario;
+		this.secretarioCel = secretarioCel;
+		this.secretarioMail = secretarioMail;
+		this.resonsable = resonsable;
+		this.responsableCel = responsableCel;
+		this.responsablMail = responsablMail;
+		this.rural = rural;
+		this.subsidio = subsidio;
+		this.observacionesGrales = observacionesGrales;
+		this.estado = estado;
+		this.motivoNoSeleccion = motivoNoSeleccion;
+		this.programa = programa;
+		this.modalidadTrabajoEscuela = modalidadTrabajoEscuela;
+		this.anioComienzoProyecto = anioComienzoProyecto;
+		this.anioComienzoPBE = anioComienzoPBE;
+		this.fase = fase;
+		this.objetivoProyecto = objetivoProyecto;
+		this.observaciones = observaciones;
+		this.matricula = matricula;
+		this.repitencia = repitencia;
+		this.abandono = abandono;
+		this.inasistencias = inasistencias;
+		this.turnos = turnos;
+		this.espacios = espacios;
+	}
+
+	public String getIdEscuela() {
+		return idEscuela;
+	}
+
+	public void setIdEscuela(String idEscuela) {
+		this.idEscuela = idEscuela;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getCue() {
+		return cue;
+	}
+
+	public void setCue(String cue) {
+		this.cue = cue;
+	}
+
+	public String getModalidad() {
+		return modalidad;
+	}
+
+	public void setModalidad(String modalidad) {
+		this.modalidad = modalidad;
+	}
+
+	public String getOrientacion() {
+		return orientacion;
+	}
+
+	public void setOrientacion(String orientacion) {
+		this.orientacion = orientacion;
+	}
+
+	public String getNivel() {
+		return nivel;
+	}
+
+	public void setNivel(String nivel) {
+		this.nivel = nivel;
+	}
+
+	public String getAnios() {
+		return anios;
+	}
+
+	public void setAnios(String anios) {
+		this.anios = anios;
+	}
+
+	public String getDependencia() {
+		return dependencia;
+	}
+
+	public void setDependencia(String dependencia) {
+		this.dependencia = dependencia;
+	}
+
+	public String getCp() {
+		return cp;
+	}
+
+	public void setCp(String cp) {
+		this.cp = cp;
+	}
+
+	public String getCalle() {
+		return calle;
+	}
+
+	public void setCalle(String calle) {
+		this.calle = calle;
+	}
+
+	public String getNumero() {
+		return numero;
+	}
+
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
+
+	public String getBarrio() {
+		return barrio;
+	}
+
+	public void setBarrio(String barrio) {
+		this.barrio = barrio;
+	}
+
+	public String getLocalidad() {
+		return localidad;
+	}
+
+	public void setLocalidad(String localidad) {
+		this.localidad = localidad;
+	}
+
+	public String getProvincia() {
+		return provincia;
+	}
+
+	public void setProvincia(String provincia) {
+		this.provincia = provincia;
+	}
+
+	public String getZona() {
+		return zona;
+	}
+
+	public void setZona(String zona) {
+		this.zona = zona;
+	}
+
+	public String getTel1() {
+		return tel1;
+	}
+
+	public void setTel1(String tel1) {
+		this.tel1 = tel1;
+	}
+
+	public String getTel2() {
+		return tel2;
+	}
+
+	public void setTel2(String tel2) {
+		this.tel2 = tel2;
+	}
+
+	public String getMail() {
+		return mail;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
+	public String getDirector() {
+		return director;
+	}
+
+	public void setDirector(String director) {
+		this.director = director;
+	}
+
+	public String getDirectorCel() {
+		return directorCel;
+	}
+
+	public void setDirectorCel(String directorCel) {
+		this.directorCel = directorCel;
+	}
+
+	public String getDirectorMail() {
+		return directorMail;
+	}
+
+	public void setDirectorMail(String directorMail) {
+		this.directorMail = directorMail;
+	}
+
+	public String getSecretario() {
+		return secretario;
+	}
+
+	public void setSecretario(String secretario) {
+		this.secretario = secretario;
+	}
+
+	public String getSecretarioCel() {
+		return secretarioCel;
+	}
+
+	public void setSecretarioCel(String secretarioCel) {
+		this.secretarioCel = secretarioCel;
+	}
+
+	public String getSecretarioMail() {
+		return secretarioMail;
+	}
+
+	public void setSecretarioMail(String secretarioMail) {
+		this.secretarioMail = secretarioMail;
+	}
+
+	public String getResonsable() {
+		return resonsable;
+	}
+
+	public void setResonsable(String resonsable) {
+		this.resonsable = resonsable;
+	}
+
+	public String getResponsableCel() {
+		return responsableCel;
+	}
+
+	public void setResponsableCel(String responsableCel) {
+		this.responsableCel = responsableCel;
+	}
+
+	public String getResponsablMail() {
+		return responsablMail;
+	}
+
+	public void setResponsablMail(String responsablMail) {
+		this.responsablMail = responsablMail;
+	}
+
+	public String getRural() {
+		return rural;
+	}
+
+	public void setRural(String rural) {
+		this.rural = rural;
+	}
+
+	public String getSubsidio() {
+		return subsidio;
+	}
+
+	public void setSubsidio(String subsidio) {
+		this.subsidio = subsidio;
+	}
+
+	public String getObservacionesGrales() {
+		return observacionesGrales;
+	}
+
+	public void setObservacionesGrales(String observacionesGrales) {
+		this.observacionesGrales = observacionesGrales;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	public String getMotivoNoSeleccion() {
+		return motivoNoSeleccion;
+	}
+
+	public void setMotivoNoSeleccion(String motivoNoSeleccion) {
+		this.motivoNoSeleccion = motivoNoSeleccion;
+	}
+
+	public String getPrograma() {
+		return programa;
+	}
+
+	public void setPrograma(String programa) {
+		this.programa = programa;
+	}
+
+	public String getModalidadTrabajoEscuela() {
+		return modalidadTrabajoEscuela;
+	}
+
+	public void setModalidadTrabajoEscuela(String modalidadTrabajoEscuela) {
+		this.modalidadTrabajoEscuela = modalidadTrabajoEscuela;
+	}
+
+	public String getAnioComienzoProyecto() {
+		return anioComienzoProyecto;
+	}
+
+	public void setAnioComienzoProyecto(String anioComienzoProyecto) {
+		this.anioComienzoProyecto = anioComienzoProyecto;
+	}
+
+	public String getAnioComienzoPBE() {
+		return anioComienzoPBE;
+	}
+
+	public void setAnioComienzoPBE(String anioComienzoPBE) {
+		this.anioComienzoPBE = anioComienzoPBE;
+	}
+
+	public String getFase() {
+		return fase;
+	}
+
+	public void setFase(String fase) {
+		this.fase = fase;
+	}
+
+	public String getObjetivoProyecto() {
+		return objetivoProyecto;
+	}
+
+	public void setObjetivoProyecto(String objetivoProyecto) {
+		this.objetivoProyecto = objetivoProyecto;
+	}
+
+	public String getObservaciones() {
+		return observaciones;
+	}
+
+	public void setObservaciones(String observaciones) {
+		this.observaciones = observaciones;
+	}
+
+	public String getMatricula() {
+		return matricula;
+	}
+
+	public void setMatricula(String matricula) {
+		this.matricula = matricula;
+	}
+
+	public String getRepitencia() {
+		return repitencia;
+	}
+
+	public void setRepitencia(String repitencia) {
+		this.repitencia = repitencia;
+	}
+
+	public String getAbandono() {
+		return abandono;
+	}
+
+	public void setAbandono(String abandono) {
+		this.abandono = abandono;
+	}
+
+	public String getInasistencias() {
+		return inasistencias;
+	}
+
+	public void setInasistencias(String inasistencias) {
+		this.inasistencias = inasistencias;
+	}
+
+	public String getTurnos() {
+		return turnos;
+	}
+
+	public void setTurnos(String turnos) {
+		this.turnos = turnos;
+	}
+
+	public String getEspacios() {
+		return espacios;
+	}
+
+	public void setEspacios(String espacios) {
+		this.espacios = espacios;
+	}
+
+	
+	
+	
+	
+}

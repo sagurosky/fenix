@@ -1,0 +1,185 @@
+package org.cimientos.intranet.servicio;
+
+import java.util.List;
+
+import org.cimientos.intranet.dao.CicloProgramaDao;
+import org.cimientos.intranet.modelo.CicloPrograma;
+import org.cimientos.intranet.modelo.EstadoCiclo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+/**
+ * @author msagarduy
+ * 
+ */
+@Service
+@Transactional
+public class CicloProgramaSrv {
+
+	@Autowired
+	private CicloProgramaDao dao;
+	
+	/**
+	 * Persiste un ciclo en la base de datos.
+	 * 
+	 * @param ciclo
+	 */
+	public void agregarCiclo(CicloPrograma ciclo) {
+		if(ciclo.getId() == null){
+			//un ciclo se crea con estado disponible y sin numero de orden
+			ciclo.setEstado(EstadoCiclo.DISPONIBLE);
+		}
+		dao.guardar(ciclo);
+		dao.flush();
+	}
+
+	/**
+	 * Elimina un ciclo de la base de datos.
+	 * 
+	 * @param ciclo
+	 */
+	public void eliminarCiclo(CicloPrograma ciclo) {
+		dao.eliminar(ciclo);
+		dao.flush();
+	}
+
+	/**
+	 * Recupera un ciclo por id de la base de datos.
+	 * 
+	 * @param id
+	 * @return ciclo
+	 */
+	public CicloPrograma obtenerCiclo(long id) {
+		return dao.obtener(id);
+	}
+
+	/**
+	 * Recupera todos los ciclos persistidos.
+	 * 
+	 * @return una Lista de ciclos que representa a todos los objetos persistidos.
+	 */
+	public List<CicloPrograma> obtenerTodos() {
+		return dao.obtenerTodos();
+	}
+	
+	public boolean obtenerPorNombre(String nombre){
+		CicloPrograma ciclo = dao.obtenerPorNombre(nombre);
+		return ciclo != null;
+	}
+	
+	public boolean obtenerCicloExistente(String id, String nombre){
+		CicloPrograma cicloExiste =  dao.obtenerCicloSiExiste(nombre, id);
+		return cicloExiste != null; 
+	}
+	
+	/**
+	 * Obtener ciclo por anio.
+	 *
+	 * @param anio the anio
+	 * @return the ciclo programa
+	 * @since 30-dic-2010
+	 * @author cfigueroa
+	 */
+	public CicloPrograma obtenerCicloPorAnio(String anio){
+		return dao.obtenerCicloPorAnio(anio);
+	}
+
+	/**
+	 * Inicia o abre el ciclo seleccionado. Para eso obtiene el ciclo actual
+	 * y lo cierra y abre el seleccionado y le agrega el orden siguiente. En caso
+	 * de que no exista un ciclo seteado como actual, se setea el ciclo seleccionado
+	 * como actual y se le setea 1 como orden.
+	 * 
+	 * @param ciclo
+	 */
+	public void iniciarCiclo(CicloPrograma ciclo){
+		CicloPrograma cicloActual = dao.obtenerCicloActual();
+		Integer ordenActual = 0;
+		if(cicloActual != null){
+			ordenActual = cicloActual.getOrden();
+			cicloActual.setEstado(EstadoCiclo.CERRADO);
+			dao.guardar(cicloActual);
+		}
+		ciclo.setOrden(++ordenActual);
+		ciclo.setEstado(EstadoCiclo.ACTUAL);
+		dao.guardar(ciclo);
+		
+	}
+	
+	/**
+	 * Obtiene el ciclo actual
+	 * @return
+	 */
+	public CicloPrograma obtenerCicloActual(){
+		return dao.obtenerCicloActual();
+	}
+
+	
+	/**
+	 * @return
+	 */
+	public List<CicloPrograma> obtenerCiclosParaCreacionBeca() {
+		//solo los disponibles y el actual
+		//EstadoCiclo[] estados = new EstadoCiclo[]{EstadoCiclo.DISPONIBLE, EstadoCiclo.ACTUAL, EstadoCiclo.CERRADO};
+		EstadoCiclo[] estados = new EstadoCiclo[]{EstadoCiclo.DISPONIBLE, EstadoCiclo.ACTUAL};
+		return dao.obtenerCiclosPorEstados(estados);
+	}
+	
+	public List<CicloPrograma> obtenerCiclosParaCreacionBecaTexto() {
+		//solo los disponibles y el actual
+		EstadoCiclo[] estados = new EstadoCiclo[]{EstadoCiclo.DISPONIBLE, EstadoCiclo.ACTUAL, EstadoCiclo.CERRADO};
+		//EstadoCiclo[] estados = new EstadoCiclo[]{EstadoCiclo.DISPONIBLE, EstadoCiclo.ACTUAL};
+		return dao.obtenerCiclosPorEstados(estados);
+	}
+	
+	
+	/**
+	 * Retorna el ciclo con el orden pasado por parametro
+	 * @param i
+	 * @return
+	 */
+	public CicloPrograma obtenerCicloPorOrden(int orden) {
+		return dao.obtenerCicloPorOrden(orden);
+	}
+	
+	/**
+	 * Obtener siguiente ciclo.
+	 *
+	 * @return the ciclo programa
+	 * @since 22-mar-2011
+	 * @author cfigueroa
+	 */
+	public CicloPrograma obtenerSiguienteCiclo(){
+		return dao.obtenerSiguienteCiclo();
+	}
+
+	/**
+	 * Este servicio devuelve todos los ciclos a partir del 2010. Esto es asi, ya que existen becas
+	 * desde ese año y no se necesitan los anteriores
+	 * @return
+	 */
+	public List<CicloPrograma> obtenerCiclosClonarBecas() {
+		return dao.obtenerCiclosClonarBecas();
+	}
+	
+	/**
+	 * Este servicio devuelve todos los ciclos a partir del 2006. Esto es asi, ya que existen convocatorias
+	 * desde ese año y no se necesitan los anteriores
+	 * @param idCiclo 
+	 * @return
+	 */
+	public List<CicloPrograma> obtenerCiclosConvocatoria() {
+		return dao.obtenerCiclosConvocatoria();
+	}
+	
+	/**
+	 * Este servicio devuelve todos los ciclos a partir del ciclo pasado por parametro. 
+	 * @param idCiclo 
+	 * @return
+	 */
+	public List<CicloPrograma> obtenerCiclosConvocatoriaDesde(String anio) {
+		return dao.obtenerCiclosConvocatoriaDesde(anio);
+	}
+
+}

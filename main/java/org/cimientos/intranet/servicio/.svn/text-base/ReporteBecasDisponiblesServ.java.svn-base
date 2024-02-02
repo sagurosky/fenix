@@ -1,0 +1,76 @@
+package org.cimientos.intranet.servicio;
+
+import java.util.List;
+
+import org.cimientos.intranet.dao.ReporteBecasDisponiblesDAO;
+import org.cimientos.intranet.modelo.Beca;
+import org.cimientos.intranet.modelo.CicloPrograma;
+import org.cimientos.intranet.modelo.EstadoBeca;
+import org.cimientos.intranet.modelo.Periodo;
+import org.cimientos.intranet.modelo.perfilPadrino.PerfilPadrino;
+import org.cimientos.intranet.modelo.ubicacion.ZonaCimientos;
+import org.displaytag.properties.SortOrderEnum;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+/**
+ * The Class ReporteBecasDisponiblesServ.
+ *
+ * @author nlopez
+ */
+
+@Service
+@Transactional
+public class ReporteBecasDisponiblesServ  {
+
+	@Autowired
+	private ReporteBecasDisponiblesDAO becasDisponiblesDAO;
+
+	/**
+	 * Cantidad becas disponibles.
+	 *
+	 * @param estadoBecas the estado becas
+	 * @return the integer
+	 * @since 04-may-2011
+	 * @author cfigueroa
+	 * @param padrino 
+	 * @param zona 
+	 * @param periodo 
+	 * @param estadoBeca 
+	 * @param cicloPrograma 
+	 */
+	public Integer cantidadBecasDisponibles(List<EstadoBeca> estadoBecas, CicloPrograma cicloPrograma, 
+											EstadoBeca estadoBeca, Periodo periodo, 
+											ZonaCimientos zona, PerfilPadrino padrino, Integer idTipo) {
+		return becasDisponiblesDAO.cantidadBecasDisponibles(estadoBecas,cicloPrograma,estadoBeca,periodo,zona,padrino,idTipo);
+	}
+
+	/**
+	 * Becas disponibles.
+	 *
+	 * @param estadoBecas the estado becas
+	 * @param firstResult the first result
+	 * @param maxResults the max results
+	 * @param sortDirection the sort direction
+	 * @param sortCriterion the sort criterion
+	 * @return the list
+	 * @since 04-may-2011
+	 * @author cfigueroa
+	 * @param padrino 
+	 * @param zona 
+	 * @param periodo 
+	 * @param estadoBeca 
+	 * @param cicloPrograma 
+	 */
+	public List<Beca> becasDisponibles(List<EstadoBeca> estadoBecas,int firstResult, int maxResults,
+									  SortOrderEnum sortDirection, String sortCriterion, 
+									  CicloPrograma cicloPrograma, EstadoBeca estadoBeca, 
+									  Periodo periodo, ZonaCimientos zona, PerfilPadrino padrino, Integer idTipo) {
+		
+		return becasDisponiblesDAO.becasDisponibles(estadoBecas,firstResult,maxResults,
+													sortDirection,sortCriterion,cicloPrograma,
+													estadoBeca,periodo,zona,padrino, idTipo);
+	}
+	
+}

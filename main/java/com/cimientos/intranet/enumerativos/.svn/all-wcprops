@@ -1,0 +1,257 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/fenix/!svn/ver/283/src/main/java/com/cimientos/intranet/enumerativos
+END
+AnioEscolar.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/fenix/!svn/ver/223/src/main/java/com/cimientos/intranet/enumerativos/AnioEscolar.java
+END
+ConceptoViaticos.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/ConceptoViaticos.java
+END
+TipoDni.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/fenix/!svn/ver/283/src/main/java/com/cimientos/intranet/enumerativos/TipoDni.java
+END
+CalificacionMateria.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/fenix/!svn/ver/342/src/main/java/com/cimientos/intranet/enumerativos/CalificacionMateria.java
+END
+Convive.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/Convive.java
+END
+ConductaAlumno.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/ConductaAlumno.java
+END
+ResultadoAnioEscolar.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/ResultadoAnioEscolar.java
+END
+NivelEducativo.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/NivelEducativo.java
+END
+Equipo.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/Equipo.java
+END
+ProyeccionAnioProximo.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/ProyeccionAnioProximo.java
+END
+ModalidadContratacion.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/ModalidadContratacion.java
+END
+ModalidadTrabajoEscuela.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/ModalidadTrabajoEscuela.java
+END
+ProyeccionDeseada.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/fenix/!svn/ver/283/src/main/java/com/cimientos/intranet/enumerativos/ProyeccionDeseada.java
+END
+SituacionEscolarMergeada.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/fenix/!svn/ver/324/src/main/java/com/cimientos/intranet/enumerativos/SituacionEscolarMergeada.java
+END
+AniosEscuela.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/AniosEscuela.java
+END
+NivelEscuela.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/fenix/!svn/ver/283/src/main/java/com/cimientos/intranet/enumerativos/NivelEscuela.java
+END
+TipoBeca.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/TipoBeca.java
+END
+CompromisoRA.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/CompromisoRA.java
+END
+Categoria.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/Categoria.java
+END
+Antiguedad.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/Antiguedad.java
+END
+EstadoPagoViatico.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/EstadoPagoViatico.java
+END
+Vinculo.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/Vinculo.java
+END
+TipoAfyp.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/TipoAfyp.java
+END
+EstadoCivil.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/EstadoCivil.java
+END
+EspacioApoyo.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/fenix/!svn/ver/215/src/main/java/com/cimientos/intranet/enumerativos/EspacioApoyo.java
+END
+Modalidad.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/Modalidad.java
+END
+TipoConvocatoria.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/TipoConvocatoria.java
+END
+EmitioCarta.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/EmitioCarta.java
+END
+Dependencia.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/fenix/!svn/ver/283/src/main/java/com/cimientos/intranet/enumerativos/Dependencia.java
+END
+RecomendacionesTS.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/RecomendacionesTS.java
+END
+CargaHoraria.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/CargaHoraria.java
+END
+Esfuerzo.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/Esfuerzo.java
+END
+EstadoMateria.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/EstadoMateria.java
+END
+EstadoPago.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/fenix/!svn/ver/334/src/main/java/com/cimientos/intranet/enumerativos/EstadoPago.java
+END
+RolUsuario.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/RolUsuario.java
+END
+Conducta.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/Conducta.java
+END
+Programa.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/Programa.java
+END
+SituacionActual.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/fenix/!svn/ver/394/src/main/java/com/cimientos/intranet/enumerativos/SituacionActual.java
+END
+SituacionEscolarAlumno.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/SituacionEscolarAlumno.java
+END
+EstadoEscuela.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/fenix/!svn/ver/1/src/main/java/com/cimientos/intranet/enumerativos/EstadoEscuela.java
+END
+FaseProyecto.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/fenix/!svn/ver/215/src/main/java/com/cimientos/intranet/enumerativos/FaseProyecto.java
+END
+EnumPBE.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/fenix/!svn/ver/394/src/main/java/com/cimientos/intranet/enumerativos/EnumPBE.java
+END

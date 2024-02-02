@@ -1,0 +1,229 @@
+package org.cimientos.intranet.dto;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+
+import com.cimientos.intranet.dto.FichaFamiliarDTO;
+import com.cimientos.intranet.dto.MateriaDTO;
+
+
+public class InformeFPDTO {
+
+	
+	//Datos Restantes
+	private String anioActual;
+	
+	private String materiasInteres;
+	
+	private List<MateriaDTO> materias = new ArrayList<MateriaDTO>();
+	
+	private String alumno;
+	
+	private String anio;
+	
+	private String fechaAlta;
+	
+	private String fechaPBE;
+	
+	private String fechaNacimiento;
+		
+	private String edad;
+	
+	private String localidad;
+	
+	private String responsable;
+		
+	private String escuela;
+	
+	private String escuelaLocalidad;
+	
+	private String padrino;
+		
+	private String relacion;
+	
+	private String comentarios;
+	
+	private String pathImg;
+		
+	private List<FichaFamiliarDTO> convivientes = new ArrayList<FichaFamiliarDTO>();
+	
+	private String fechaReincorporacionPBE;
+	
+	public String getAnioActual() {
+		return anioActual;
+	}
+
+	public void setAnioActual(String anioActual) {
+		this.anioActual = anioActual;
+	}
+
+	public String getFechaNacimiento() {
+		return fechaNacimiento;
+	}
+
+	
+	public String getFechaPBE() {
+		return fechaPBE;
+	}
+
+	public void setFechaPBE(String fechaPBE) {
+		this.fechaPBE = fechaPBE;
+	}
+
+	public void setFechaNacimiento(String fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
+	}
+
+	public String getEdad() {
+		return edad;
+	}
+
+	public void setEdad(String edad) {
+		this.edad = edad;
+	}
+
+	public String getLocalidad() {
+		return localidad;
+	}
+
+	public void setLocalidad(String localidad) {
+		this.localidad = localidad;
+	}
+
+	public String getEscuela() {
+		return escuela;
+	}
+
+	public void setEscuela(String escuela) {
+		this.escuela = escuela;
+	}
+
+	public String getEscuelaLocalidad() {
+		return escuelaLocalidad;
+	}
+
+	public void setEscuelaLocalidad(String escuelaLocalidad) {
+		this.escuelaLocalidad = escuelaLocalidad;
+	}
+
+
+	public String getFechaAlta() {
+		return fechaAlta;
+	}
+
+	public void setFechaAlta(String fechaAlta) {
+		this.fechaAlta = fechaAlta;
+	}
+
+	public String getPadrino() {
+		return padrino;
+	}
+
+	public void setPadrino(String padrino) {
+		this.padrino = padrino;
+	}
+
+	public String getRelacion() {
+		return relacion;
+	}
+
+	public void setRelacion(String relacion) {
+		this.relacion = relacion;
+	}
+
+	public String getComentarios() {
+		return comentarios;
+	}
+
+	public void setComentarios(String comentarios) {
+		this.comentarios = comentarios;
+	}
+
+	public String getAnio() {
+		return anio;
+	}
+
+	public void setAnio(String anio) {
+		this.anio = anio;
+	}
+
+	public String getPathImg() {
+		return pathImg;
+	}
+
+	public void setPathImg(String pathImg) {
+		this.pathImg = pathImg;
+	}
+
+	public String getAlumno() {
+		return alumno;
+	}
+
+	public void setAlumno(String alumno) {
+		this.alumno = alumno;
+	}
+
+	public String getResponsable() {
+		return responsable;
+	}
+
+	public void setResponsable(String responsable) {
+		this.responsable = responsable;
+	}
+
+	public String getMateriasInteres() {
+		return materiasInteres;
+	}
+
+	public void setMateriasInteres(String materiasInteres) {
+		this.materiasInteres = materiasInteres;
+	}
+	
+	public List<FichaFamiliarDTO> getConvivientes() {
+		return convivientes;
+	}
+
+	public void setConvivientes(List<FichaFamiliarDTO> convivientes) {
+		this.convivientes = convivientes;
+	}
+
+	public JRDataSource getFicha()   
+    {       
+        return new JRBeanCollectionDataSource(convivientes);   
+    } 
+	
+	public void addFicha(FichaFamiliarDTO ficha)   
+	{       
+	   this.convivientes.add(ficha);   
+	}
+
+	public List<MateriaDTO> getMaterias() {
+		return materias;
+	}
+
+	public void setMaterias(List<MateriaDTO> materias) {
+		this.materias = materias;
+	} 
+	
+	public JRDataSource getBoletin()   
+    {       
+        return new JRBeanCollectionDataSource(materias);   
+    } 
+	
+	public void addMateria(MateriaDTO materia)   
+	{       
+	   this.materias.add(materia);   
+	}
+
+	public String getFechaReincorporacionPBE() {
+		return fechaReincorporacionPBE;
+	}
+
+	public void setFechaReincorporacionPBE(String fechaReincorporacionPBE) {
+		this.fechaReincorporacionPBE = fechaReincorporacionPBE;
+	}	
+}
+

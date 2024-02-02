@@ -1,0 +1,333 @@
+package org.cimientos.intranet.utils.entrevistas;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Date;
+import java.util.logging.SimpleFormatter;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.cimientos.intranet.dto.BoletinDTO;
+import org.cimientos.intranet.modelo.CicloPrograma;
+import org.cimientos.intranet.modelo.candidato.convocatoria.Convocatoria;
+import org.cimientos.intranet.modelo.perfil.EstadoAlumno;
+import org.cimientos.intranet.modelo.perfilEA.PerfilEA;
+import org.cimientos.intranet.modelo.perfilPadrino.PerfilPadrino;
+import org.cimientos.intranet.modelo.ubicacion.ZonaCimientos;
+import org.cimientos.intranet.servicio.AlumnoSrv;
+import org.cimientos.intranet.utils.Formateador;
+import org.springframework.web.servlet.view.document.AbstractExcelView;
+
+import com.cimientos.intranet.dto.MateriaDTO;
+import com.cimientos.intranet.enumerativos.AnioEscolar;
+
+public class BoletinExcelView extends AbstractExcelView{
+	
+	private static int bachSize = 1000;
+	private static final String NO_APLICA = "No aplica";	
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	protected void buildExcelDocument(Map<String,Object> model, HSSFWorkbook workbook,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		
+		AlumnoSrv alumnoSrv = (AlumnoSrv) model.get("alumnoSrv");
+		
+		
+		HSSFSheet sheet = workbook.getSheet("Boletines");
+		
+		boolean becadosActivos = (Boolean) model.get("becadosActivos"); 
+		EstadoAlumno estadoAlumno = (EstadoAlumno) model.get("estado");
+		AnioEscolar anio = (AnioEscolar) model.get("anio");
+		Boolean adicional = (Boolean) model.get("adicional"); 
+		ZonaCimientos zona = (ZonaCimientos) model.get("zonaCimientos"); 
+		Convocatoria convocatoria = (Convocatoria) model.get("convocatoria");
+		PerfilPadrino padrino = (PerfilPadrino) model.get("padrino");
+		PerfilEA ea = (PerfilEA) model.get("perfilEA");
+		String nombreAlumno = (String) model.get("nombreAlumno");
+		CicloPrograma ciclo = (CicloPrograma) model.get("ciclo");
+
+		int totalRows = alumnoSrv.obtenerCantidadAlumnosExportar(estadoAlumno,zona,convocatoria,padrino,ea,nombreAlumno,anio,adicional,becadosActivos);
+		
+		List<BoletinDTO> boletines = null;
+		int rowNum = 3;
+		int parcial = 0;
+		int inicial = 0;
+		HSSFRow row;
+		while (parcial < totalRows) {
+			parcial = parcial + bachSize;
+						
+			boletines = alumnoSrv.obtenerBoletinesAExportar(estadoAlumno,zona,convocatoria,padrino,ea,nombreAlumno,anio,
+					adicional,becadosActivos,ciclo,inicial,bachSize,null,null);		
+			if(sheet != null){
+				for (BoletinDTO ic : boletines) {
+					row = sheet.createRow(rowNum++);
+					crearFila(ic, row);
+				}		
+			}
+			inicial = parcial;
+			boletines = null;
+		}	
+	}
+
+	/**
+	 * Permite convertir un String en fecha (Date). 
+	 * @param fecha (String) la fecha a la cual deseo convertir
+	 * @return Date la fecha en formato Date
+	 * @author Argenis R.
+	 */
+
+	public Date DeStringADate(String fecha){
+			SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+			String strFecha = fecha;
+			Date fechaDate = null;
+			try {
+				fechaDate = formato.parse(strFecha);
+	                       // System.out.println(fechaDate.toString());
+				return fechaDate;
+			} catch (ParseException ex) {
+				ex.printStackTrace();
+				return fechaDate;
+			}
+		}
+
+
+	
+	private void crearFila(BoletinDTO boletin, HSSFRow row) {		
+		
+		row.createCell(0).setCellValue(boletin.getIdAlumno());
+		row.createCell(1).setCellValue(boletin.getApellidoAlumno() +" " + boletin.getNombreAlumno());
+		row.createCell(2).setCellValue(boletin.getDni());		
+		row.createCell(3).setCellValue(boletin.getFechaNacimiento());	
+		
+		Integer edad=0;
+		edad=Formateador.calcularEdad(DeStringADate(boletin.getFechaNacimiento()));
+		row.createCell(4).setCellValue(edad);		
+		row.createCell(5).setCellValue(boletin.getAnioEscolar());
+		row.createCell(6).setCellValue(boletin.getAnioAdicional());
+		row.createCell(7).setCellValue(boletin.getEscuelaNombre());
+		row.createCell(8).setCellValue(boletin.getEscuelaLocalidad());
+		if (boletin.getVinculo()!= null){
+			row.createCell(9).setCellValue(boletin.getResponsable() + "-" + boletin.getVinculo());
+		}
+		else{
+			row.createCell(9).setCellValue(boletin.getResponsable() + "- - ");
+		}
+		row.createCell(10).setCellValue(boletin.getFechaPBE());
+		row.createCell(11).setCellValue(getFechaReIncorporacionPBE(boletin));
+		row.createCell(12).setCellValue(boletin.getRr());
+		row.createCell(13).setCellValue(boletin.getEa());			
+		row.createCell(14).setCellValue(boletin.getTipoPadrino());
+		row.createCell(15).setCellValue(boletin.getPadrino());		
+		row.createCell(16).setCellValue(boletin.getExisteBoletin()==true?"Si":"No");
+		row.createCell(17).setCellValue(boletin.getCicloBoletin());
+		row.createCell(18).setCellValue(boletin.getAnioEscolarBoletin());			
+		this.setBoletin(row, boletin);
+	}	
+	
+	private String getFechaReIncorporacionPBE(BoletinDTO boletin) {
+		return StringUtils.isNotBlank(boletin.getFechaReincorporacionPBE()) ? 
+				boletin.getFechaReincorporacionPBE(): NO_APLICA;
+	}
+	
+	private HSSFRow setBoletin(HSSFRow row, BoletinDTO boletin){
+		//materias del boletin
+		String notaFin="";
+		String notaDic="";
+		String notaMar="";
+		String notaFDM="";
+		String nota1="";
+		String nota2="";
+		String nota3="";
+		String nota123="";	
+		
+		for (MateriaDTO materia: boletin.getMateriasDto()) {						
+				nota1=materia.getNotaPrimero();
+				nota2=materia.getNotaSegundo();
+				nota3=materia.getNotaTercero();			
+				if (materia.getNotaPrimero().equals(" ")){
+					nota1="-";
+				}
+				if (materia.getNotaSegundo().equals(" ")){
+					nota2="-";
+				}
+				if (materia.getNotaTercero().equals(" ")){
+					nota3="-";
+				}				
+				
+				nota123=nota1+","+nota2+","+nota3;				
+				notaFin=materia.getNotaFin();
+				notaDic=materia.getNotaDic();
+				notaMar=materia.getNotaMarzo();
+				if (materia.getNotaFin().equals(" ")){
+					notaFin="-";
+				}
+				if (materia.getNotaDic().equals(" ")){
+					notaDic="-";
+				}
+				if (materia.getNotaMarzo().equals(" ")){
+					notaMar="-";
+				}				
+				notaFDM=notaFin+","+notaDic+","+notaMar;	
+				
+				if(materia.getNombre() != null){
+					if(materia.getNombre().equals("Educación plástica-artística")){	
+						row.createCell(19).setCellValue(nota123);
+						row.createCell(39).setCellValue(notaFDM);
+					}				
+					if(materia.getNombre().equals("Biología")){
+						row.createCell(20).setCellValue(nota123);
+						row.createCell(40).setCellValue(notaFDM);
+					}
+					if(materia.getNombre().equals("Ciencias Naturales")){
+						row.createCell(21).setCellValue(nota123);
+						row.createCell(41).setCellValue(notaFDM);
+					}
+					if(materia.getNombre().equals("Ciencias Sociales")){
+						row.createCell(22).setCellValue(nota123);
+						row.createCell(42).setCellValue(notaFDM);
+					}
+					if(materia.getNombre().equals("Informática")){
+						row.createCell(23).setCellValue(nota123);
+						row.createCell(43).setCellValue(notaFDM);
+					}
+					if(materia.getNombre().equals("Construcción de ciudadanía / Educación cívica")){
+						row.createCell(24).setCellValue(nota123);
+						row.createCell(44).setCellValue(notaFDM);
+					}
+					if(materia.getNombre().equals("Contabilidad / Educación práctica contable")){
+						row.createCell(25).setCellValue(nota123);
+						row.createCell(45).setCellValue(notaFDM);
+					}		
+					if(materia.getNombre().equals("Educación física / corporal")){
+						row.createCell(26).setCellValue(nota123);
+						row.createCell(46).setCellValue(notaFDM);
+					}
+					if(materia.getNombre().equals("Física")){
+						row.createCell(27).setCellValue(nota123);
+						row.createCell(47).setCellValue(notaFDM);
+					}
+					if(materia.getNombre().equals("Físico-química")){
+						row.createCell(28).setCellValue(nota123);
+						row.createCell(48).setCellValue(notaFDM);
+					}
+					if(materia.getNombre().equals("Geografía")){
+						row.createCell(29).setCellValue(nota123);
+						row.createCell(49).setCellValue(notaFDM);
+					}
+					if(materia.getNombre().equals("Historia")){
+						row.createCell(30).setCellValue(nota123);
+						row.createCell(50).setCellValue(notaFDM);
+					}
+					if(materia.getNombre().equals("Inglés")){
+						row.createCell(31).setCellValue(nota123);
+						row.createCell(51).setCellValue(notaFDM);
+					}
+					if(materia.getNombre().equals("Lengua / Literatura")){
+						row.createCell(32).setCellValue(nota123);
+						row.createCell(52).setCellValue(notaFDM);
+					}
+					if(materia.getNombre().equals("Matemática")){
+						row.createCell(33).setCellValue(nota123);
+						row.createCell(52).setCellValue(notaFDM);
+					}
+					if(materia.getNombre().equals("Música")){
+						row.createCell(34).setCellValue(nota123);
+						row.createCell(54).setCellValue(notaFDM);
+					}
+					if(materia.getNombre().equals("Pasantía / Práctica profesional")){
+						row.createCell(35).setCellValue(nota123);
+						row.createCell(55).setCellValue(notaFDM);
+					}
+					if(materia.getNombre().equals("Química")){
+						row.createCell(36).setCellValue(nota123);
+						row.createCell(56).setCellValue(notaFDM);
+					}
+					if(materia.getNombre().equals("Salud y Adolescencia")){
+						row.createCell(37).setCellValue(nota123);
+						row.createCell(57).setCellValue(notaFDM);
+					}
+					if(materia.getNombre().equals("Tecnología / TIC")){
+						row.createCell(38).setCellValue(nota123);
+						row.createCell(58).setCellValue(notaFDM);
+					}
+				}
+				else{
+					//System.out.println("*****" + boletin.getIdAlumno());
+				}
+				
+		}
+		if (boletin.getConductaB() != null){
+			row.createCell(59).setCellValue(boletin.getConductaB());
+		}
+		
+		if (boletin.getDiasHabiles() !=null){
+			row.createCell(60).setCellValue(boletin.getDiasHabiles());
+		}
+		if (boletin.getDiasHabilesFinales() !=null){
+			row.createCell(61).setCellValue(boletin.getDiasHabilesFinales());
+		}
+		if (boletin.getInasistencias() !=null){
+			row.createCell(62).setCellValue(boletin.getInasistencias());
+		}
+		if (boletin.getInasistencasFinales() !=null){
+			row.createCell(63).setCellValue(boletin.getInasistencasFinales());
+		}		
+		
+		// materias previas		
+		String previa1="";
+		String previa2="";
+		String previa3="";
+		String notaD="";
+		String notaM="";
+		String notaJ="";		
+		int contador=0;	
+	
+		for (MateriaDTO materiaP: boletin.getPreviasDTO()) {			
+			if (materiaP.getNotaFin().equals(" ")){
+				notaJ="-";
+			}else {
+				notaJ=materiaP.getNotaFin();
+			}
+			
+			if (materiaP.getNotaDic().equals(" ")){
+				notaD="-";
+			}else{
+				notaD=materiaP.getNotaDic();
+			}						
+				
+			if (materiaP.getNotaMarzo().equals(" ")){
+				notaM="-";
+			}else{
+				notaM=materiaP.getNotaMarzo();
+			}
+			
+			if (contador==0){							
+				previa1=materiaP.getNombre() + ", " +materiaP.getCiclo()+", "+ notaJ + ", "+ notaD +", "+ notaM; 
+				row.createCell(64).setCellValue(previa1);
+			}
+			if (contador==1){
+				previa2=materiaP.getNombre() + ", " +materiaP.getCiclo()+", "+ notaJ + ", "+ notaD +", "+ notaM;
+				row.createCell(65).setCellValue(previa2);
+			}
+			if (contador==2){
+				previa3=materiaP.getNombre() + ", " +materiaP.getCiclo()+", "+ notaJ + ", "+ notaD +", "+ notaM;
+				row.createCell(66).setCellValue(previa3);
+			}
+			contador++;			
+		}
+		return row;
+	}
+}

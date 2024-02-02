@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:ehcache="http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring"
+	xmlns:sec="http://www.springframework.org/schema/security"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+         http://www.springframework.org/schema/beans/spring-beans-3.0.xsd  
+         http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring  
+         http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring/ehcache-spring-1.1.xsd 
+         http://www.springframework.org/schema/context/spring-context-3.0.xsd 
+ 		http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">  
+
+  <!-- INICIO: Pruebas de Spring-Ehcache-Annotations, @Cacheable Methods - @author: eSalvador -->
+	<ehcache:annotation-driven cache-manager="ehCacheManager"/>
+	<bean id="ehCacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"/>
+
+    <bean id="escuelaDaoImpl" class="org.cimientos.intranet.dao.impl.EscuelaDaoImpl" />
+    <bean id="personaDaoImpl" class="org.cimientos.intranet.dao.impl.PersonaDaoImpl" />
+    <bean id="alumnoDaoImpl" class="org.cimientos.intranet.dao.impl.AlumnoDaoImpl" />
+    <bean id="becaDaoImpl" class="org.cimientos.intranet.dao.impl.BecaDaoImpl" />
+    <bean id="convocadoDaoImpl" class="org.cimientos.intranet.dao.impl.ConvocadoDaoImpl" />
+  <!-- FIN: Pruebas de Spring-Ehcache-Annotations, @Cacheable Methods - @author: eSalvador-->
+
+  <!-- Hay que mirar antes de hacer un deploy las nuevas properties que se pusieron en la configuracion de 3cpo.
+  	   Hay que cambiar el tiempo que espera antes de forzar a retornar cualquier conexion -->	
+  <!-- INICIO - Implementacion de Pool de Conexiones con Spring y C3P0 & Ehcache-core - @author: eSalvador -->
+	<bean id="cimientosPool" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+	    <property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<!-- RECORDAR DE CAMBIAR EN CONEXION LA BASE DE DATOS -->
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/cimientos_testing" /><!-- RECORDAR DE CAMBIAR EN CONEXION LA BASE DE DATOS -->
+		<property name="user" value="root" />
+		<property name="password" value="root" />
+	<!-- C3P0 connection pool configuration 
+		<property name="maxConnectionAge" value="10000"/>
+	    <property name="minPoolSize" value="3"/>
+		<property name="maxPoolSize" value="20"/>
+		<property name="checkoutTimeout" value="1000"/>
+		<property name="maxStatements" value="50"/>
+		<property name="maxIdleTime" value="500"/>
+		<property name="maxIdleTimeExcessConnections" value="200"/>
+		<property name="idleConnectionTestPeriod" value="3000"/> -->
+		<property name="unreturnedConnectionTimeout" value="300"/>
+		<property name="debugUnreturnedConnectionStackTraces" value="1"/>
+		<property name="minPoolSize" value="50"/>
+		<property name="maxPoolSize" value="500"/>
+		<property name="checkoutTimeout" value="1000"/>
+		<property name="maxStatements" value="100"/>
+		<property name="maxIdleTime" value="180"/>
+		<property name="numHelperThreads" value="5"/>
+		<property name="maxAdministrativeTaskTime" value="300"/>
+	</bean>
+
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean" depends-on="hibernateStringEncryptor">   
+		<property name="packagesToScan">
+			<list>
+			<value>org.cimientos.intranet.modelo</value>
+			<value>org.cimientos.intranet.servicio</value>
+			</list>
+		</property>
+		<property name="namingStrategy"  ref="namingStrategy"/>
+		<property name="dataSource" ref="cimientosPool" />   
+		<property name="hibernateProperties">      
+			<props>
+				<!-- <prop key="hibernate.show_sql">true</prop>  -->         
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.generate_statistics">true</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>         
+				<prop key="hibernate.connection.isolation">3</prop>
+				<prop key="hibernate.cache.region_prefix"></prop> 
+				<prop key="hibernate.cache.region.factory_class">net.sf.ehcache.hibernate.SingletonEhCacheRegionFactory</prop> 
+				<prop key="net.sf.ehcache.configurationResourceName">ehcache.xml</prop> 
+				<prop key="hibernate.cache.use_second_level_cache">true</prop>
+                <prop key="hibernate.cache.use_query_cache">true</prop>
+			</props>   
+		</property>
+		<property name="annotatedClasses">      
+			<list>         
+				<value>org.cimientos.intranet.modelo.persona.Persona</value>      
+				<value>org.cimientos.intranet.modelo.escuela.Escuela</value>
+				<value>org.cimientos.intranet.modelo.perfil.PerfilAlumno</value>
+				<value>org.cimientos.intranet.modelo.Beca</value>
+				<value>org.cimientos.intranet.dto.ConvocadoDTO</value>
+				<value>org.cimientos.intranet.modelo.convocado.CandidatoDTO</value>
+			</list>
+     	</property>
+	</bean>
+	<!-- FIN - Implementacion de Pool de Conexiones con Spring y C3P0 & Ehcache-core - @author: eSalvador -->
+
+
+	<bean id="namingStrategy" class="org.hibernate.cfg.ImprovedNamingStrategy"/>
+
+	<bean name="openSessionViewInterceptor"
+		class="org.springframework.orm.hibernate3.support.OpenSessionInViewInterceptor">
+		<property name="sessionFactory" ref="sessionFactory" />
+		<property name="flushMode">
+			<bean
+				id="org.springframework.orm.hibernate3.HibernateAccessor.FLUSH_ALWAYS"
+				class="org.springframework.beans.factory.config.FieldRetrievingFactoryBean" />
+		</property>
+	</bean>
+
+	<bean id="strongEncryptor" class="org.jasypt.encryption.pbe.StandardPBEStringEncryptor">
+		<property name="password" value="180884EsTaEsUnAClaVeSeGuRa1234567890" />
+	</bean>
+
+	<bean id="hibernateStringEncryptor"
+		class="org.jasypt.hibernate.encryptor.HibernatePBEStringEncryptor">
+		<property name="registeredName" value="hibernateStringEncryptor" />
+		<property name="encryptor" ref="strongEncryptor" />
+
+	</bean>
+
+</beans>

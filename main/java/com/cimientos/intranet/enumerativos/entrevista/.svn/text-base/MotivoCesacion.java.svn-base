@@ -1,0 +1,94 @@
+package com.cimientos.intranet.enumerativos.entrevista;
+
+import java.security.InvalidParameterException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public enum MotivoCesacion {
+	
+	ABANDONO(1,"Abandono escolar"),
+	MUDANZA(2,"Mudanza a donde PFE no está"),
+	CONDUCTA(3,"Falta grave de conducta"),
+	DEJAXBECA(4,"Deja PFE por otra beca"),
+	DEJAXTRABAJO(5,"Deja PFE x trabajo"),
+	DEJAXEXIGENCIA(6,"Deja PFE por exigencias"),
+	DEJAXINASISTENCIA(7,"Deja PFE x 3-4 inasistencias a entrevista"),
+	DEJAXESITECO(8,"Deja PFE x cambio de situación económica"),
+	FALLECIMIENTO(9,"Fallecimiento"),
+	CAMBIODEESCUELA(10,"Cambio de escuela");
+	private Integer id;
+	private String valor;
+	
+	
+	private MotivoCesacion(Integer id, String valor) {
+		this.id = id;
+		this.valor = valor;
+	}
+
+
+	public Integer getId() {
+		return id;
+	}
+
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+
+	public String getValor() {
+		return valor;
+	}
+
+
+	public void setValor(String valor) {
+		this.valor = valor;
+	}
+	
+	public static List<MotivoCesacion> getMotivosCesacion(List<Integer> ids){
+		ArrayList<MotivoCesacion> valor = new ArrayList<MotivoCesacion>();
+		
+		for (Integer id: ids)
+			valor.add(MotivoCesacion.getMotivoCesacion(id));
+		
+		return valor;
+	}
+	
+	public static MotivoCesacion getMotivoCesacion(Integer id){
+
+		switch (id) {
+		case 1:
+			return ABANDONO;
+		case 2:
+			return MUDANZA;
+		case 3:
+			return CONDUCTA;
+		case 4:
+			return DEJAXBECA;
+		case 5:
+			return DEJAXTRABAJO;
+		case 6:
+			return DEJAXEXIGENCIA;
+		case 7:
+			return DEJAXINASISTENCIA;
+		case 8:
+			return DEJAXESITECO;
+		case 9:
+			return FALLECIMIENTO;
+		case 10:
+			return CAMBIODEESCUELA;
+					
+		default:
+			throw new InvalidParameterException("Motivo de cesacion desconocido: "
+					+ id);
+		}
+
+	}
+
+
+	public static List<MotivoCesacion> getMotivoCesacion() {
+		return Arrays.asList(values());
+	}
+	
+}

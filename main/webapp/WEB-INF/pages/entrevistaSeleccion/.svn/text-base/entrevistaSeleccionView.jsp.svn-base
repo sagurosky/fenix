@@ -1,0 +1,517 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
+	
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+
+<div ID="waitDiv" style="position:absolute;left:380;top:280;visibility:hidden;filter:alpha(opacity:80);">
+	<center>
+		<table border=0 cellpadding=0 cellspacing=0 width="1130" height="3600">
+			<tr>
+				<td bgcolor="#000000">
+					<table cellpadding=2 cellspacing=1 border=0 width="1130" height="3600">
+						<tr>	
+							<td bgcolor="#000000">
+								<table width="450" height="20">
+									<tr>
+										<td bgcolor="#FBFAFA">
+											<center><font color="#786C6C" face="Verdana, Arial, Helvetica, sans-serif" size="3">
+														<img src="../static/images/busy.gif" /><b>Espere por favor...</b></font>
+											</center>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</center>
+</div>
+
+<script type="text/javascript"src="<c:url  value="/static/js/jquery.js"/>"></script>
+<script type="text/javascript" src="<c:url  value="/static/js/jquery.ui.datepicker-es.js"/>"></script>
+<script type="text/javascript" src="<c:url  value="/static/js/jquery-ui-1.8.5.custom.min.js"/>"></script>
+<link rel="stylesheet" href="<c:url  value="/static/css/cimientos/jquery-ui-1.8.5.custom.css"/>"	media="all">
+<script type="text/javascript" src="<c:url  value="/static/js/jquery.validate.js"/>"></script>
+<script type="text/javascript" src="<c:url  value="/static/js/validador.js"/>"></script>
+<link rel="stylesheet" type="text/css"	href="../pages/includes/jquery.tabs.css" />
+<script type="text/javascript" src="<c:url  value="/static/js/dFilter.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/static/js/jquery.dialog.detail.js"/>"></script>
+
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<style type="text/css">
+	
+	label { width: 12em; float: left;font-weight: bold;vertical-align: text-bottom; }
+	legend { width: 9em; float: left;font-size: 15px;padding-left: .1em}
+	label.error { float: none; color: red; padding-left: .5em; vertical-align: top; }
+	p { clear: both; }
+	.submit { margin-left: 12em; }
+	em { font-weight: bold; padding-right: 1em; vertical-align: top; }
+	textarea {text-align : justify;}
+</style>
+
+<script type="text/javascript">
+
+//Funciones pantalla "Espere por Favor..."
+var DHTML = (document.getElementById || document.all || document.layers);
+function ap_getObj(name) {
+  if (document.getElementById) {
+    return document.getElementById(name).style;
+  } else if (document.all) {
+    return document.all[name].style;
+  } else if (document.layers) {
+    return document.layers[name];
+  }
+}
+function ap_showWaitMessage(div,flag)  {
+  if (!DHTML)
+    return;
+  var x = ap_getObj(div);
+  x.visibility = (flag) ? 'visible':'hidden'
+  if(! document.getElementById)
+    if(document.layers)
+      x.left=280/2;
+}
+//Fin Funciones pantalla "Espere por Favor..."
+
+
+$(document).ready(function(){
+
+	$("#body").css("height","4000");
+	//Habilita o deshabilita los campos
+	enableDisableInasistencia()
+	jQuery.validator.messages.required = "(*)";
+	jQuery.validator.messages.minlength = "Ingrese al menos 7 digitos";
+	var estado1 = document.getElementById("estados").value;
+	var convocatoria = document.getElementById("convocatoria").value;
+	habilitarInputEstadoAlumno(estado1);
+	$("#altaEntrevista").validate({
+		  rules: {
+			  	"perfilAlumno.datosPersonales.dni": {
+		      	required: true,
+		      	minlength: 7
+		    },
+		    	"perfilAlumno.responsable1.dni": {
+			    required: true,
+			    minlength: 7
+			},
+				"entrevistaSeleccion.convocatoria.idConvocatoria":{
+				required:true
+			},
+				"estados":{
+				required:true
+			},
+				"Tipo":{
+				required:true
+			},
+				"anioEscuela":{
+				required:true
+			},
+				"turno":{
+				required:true
+			},
+				"perfilAlumno.datosPersonales.localidad.id":{
+				required:true
+			},
+				"perfilAlumno.datosPersonales.provincia.id":{
+				required:true
+			},
+				"idCompromiso":{
+				required:true
+			},
+				"idCompromisoPBE":{
+				required:true
+			},
+				"dni":{
+				required:true
+			},
+				"vinculoRA":{
+				required:true
+			},
+				"compromisoEscolaridad":{
+				required:true
+			},
+				"posibilidadCompromisoPBE":{
+				required:true
+			},
+				"aptoComoRA":{
+				required:true
+			},
+				"relacionVivienda":{
+				required:true
+			}
+		  },
+	 invalidHandler: function(form, validator) {
+	      var errors = validator.numberOfInvalids();
+	      if (errors) {
+	    	  var estado = document.getElementById("estados").value;
+	    	  var motivo = document.getElementById("motivoRechazo").value;
+	    	  habilitarInputEstadoAlumno(estado);
+	    	  habilitarMotivo(motivo);
+	    	  habilitarRA2();
+	    	$("#zonaCimientos").attr("disabled","disabled");
+	    	$("#respoBanco").attr("disabled","disabled");
+	    	$("#numeroCuentaRespo").attr("disabled","disabled");
+	    	if(document.forms['formAlumno'].accion.value == "carga"){
+	    		$("#dniAlumno").attr("disabled","disabled");
+	    	}
+	    	ap_showWaitMessage('waitDiv', 0);
+	    	
+	    	disabledInput();
+	      }
+	    }
+	});
+	//Este metodo pone todo los input en disabled, esto pasa cuando se viene de la pantalla de reportes de entrevistas
+		disabledInput();	
+	
+	// jQuery.validator.addMethod("accept", function(value, element, param) { return value.match(new RegExp("^" + param + "$")); });
+
+ $("#fechaNacimiento").datepicker({
+ 	  changeMonth: true,
+ 	  changeYear: true,
+ 	  yearRange:'1900:'+ new Date()	
+ 	  });
+ $("#fechaNacimientoRes").datepicker({
+	  changeMonth: true,
+	  changeYear: true,
+	  yearRange:'1900:'+ new Date()	
+	  });
+ $("#fechaNacimientoRes2").datepicker({
+	  changeMonth: true,
+	  changeYear: true,
+	  yearRange:'1900:'+ new Date()	
+	  });
+ 	//$(":text").css("width", "100px");
+ 	//$("#celdaBody").css("width","900px");
+ 	
+});
+
+function validarDNI(id){
+	var selector = "#" + id;
+	var error = "#" + id + "Error";
+	var dni = $(selector).val();
+	if(dni.length > 5){
+		$(error).css("display","none");
+	}else{
+		$(error).css("display","block");
+	}
+}
+function habilitarRA2(){
+	if($("#noAsisteEntrevista").attr("checked")){
+		//No asiste: Habilita RA2
+		$("#tablaDatosResponsable2 :text").removeAttr("disabled");
+		$("#vinculoRespo2").removeAttr("disabled");
+	}else{
+		//Asiste: Deshabilita y Borra
+		$("#responsable2Telefono1").val("");
+		$("#responsable2ContactoTelefono1").val("");
+		$("#nombreResponsable2").val("");
+		$("#apellidoResponsable2").val("");
+		$("#vinculoRespo2").val("");
+		$("#vinculoRespo2").attr("disabled","disabled");
+		$("#tablaDatosResponsable2 :text").attr("disabled","disabled");
+	}
+}
+
+function validarSubmit(){
+
+	$("#direccionRA").val($("#alumnoDireccion").val());
+	$("#codPostalRA").val($("#alumnoCodigoPostal").val());
+	$("#entreCallesRA").val($("#alumnoEntreCalles").val());
+	$("#nroCalleRA").val($("#alumnoNumero").val());
+	$("input").removeAttr("disabled");
+	$("select").removeAttr("disabled");
+	$("textarea").removeAttr("disabled");
+	habilitarRA2();
+	if($("#fechaNacimientoRes2").val() == ""){
+		$("#fechaNacimientoRes2").attr("disabled","disabled");
+	}
+	var fechaAlum = $("#fechaNacimiento").val();
+	var fechaResp = $("#fechaNacimientoRes").val();
+	var mens;
+	var flag=false;
+	if(fechaAlum.length > 10){
+		mens = 'La fecha de nacimientos del alumno es invalida\n';
+		flag = true;
+	}
+	if(fechaResp.length > 10){
+		mens += 'La fecha de nacimiento del responsable es invalida';
+		flag=true;
+		
+	}
+	if(flag){
+	  jAlert('warning', mens, 'Advertencia');
+	}
+	return flag;
+	
+	 
+	
+}
+
+//Este metodo es para mostrar los accordiones 
+function mostrar(idx){
+
+
+	var selector;
+		switch (idx) {
+		case 1:
+			selector = "#datosCandidato";
+			break
+		case 2:
+			selector = "#responsable";
+			break
+		case 3:
+			selector = "#fichaFamiliar";
+			break
+		case 4:
+			selector = "#observacionesGenerales";
+		}
+
+		$(selector).toggle("blind");
+	}
+/**
+ * Metodo para enviar el formulario
+ */
+function enviarForm(action){
+	if(action == 'finalizado'){
+		
+		llenarFechaHidden();
+		if(${isOtraEntrevista}){
+			
+			document.forms['altaEntrevista'].action ="<c:url value='altaNuevaEntrevistaSeleccion.do'/>";
+		}
+		else{
+			
+			document.forms['altaEntrevista'].action ="<c:url value='altaEntrevistaSeleccion.do'/>";
+		}
+		
+		$('#estadoEntrevista').val('3');
+		
+		document.forms['altaEntrevista'].dni.value = $('#dniAlumno').val();	
+		if(validarSubmit()){
+			
+			return;
+		};
+		ap_showWaitMessage('waitDiv', 1);
+		//disabledInput();
+		//Esto es para que jquery valide los campos con los formularios
+		$('#altaEntrevista').submit();
+		return
+		
+	}
+	if(action == 'construccion'){
+		document.forms['altaEntrevista'].action ="<c:url value='altaEntrevistaSeleccion.do'/>";
+		$('#estadoEntrevista').val('1');
+		//validarSubmit();
+		document.forms['altaEntrevista'].submit();
+		return
+	}
+	if(action=='volver'){
+		document.forms['altaEntrevista'].action ="<c:url value='/entrevistaSeleccion/reporteEntrevistaSeleccion.do'/>";
+		document.forms['altaEntrevista'].submit();
+		return
+	}
+	if(action == 'obtenerAlumno'){
+		
+		document.forms['formAlumno'].action ="<c:url value='/entrevistaSeleccion/detalleEntrevistaSeleccion.do?isDetalleEntrevista=true'/>";
+		document.forms['formAlumno'].idAlumno.value= $('#dniAlumno').val();
+		document.forms['formAlumno'].submit();
+		return
+	}
+	
+	if(action  == 'nuevaEntrevista' ){
+		document.forms['formAlumno'].accion.value = "carga";
+		document.forms['formAlumno'].action ="<c:url value='/entrevistaSeleccion/detalleEntrevistaSeleccion.do?isDetalleEntrevista=false'/>";
+		//document.forms['formAlumno'].idAlumno.value= $('#dniAlumno').val();
+		document.forms['formAlumno'].submit();
+		return
+	}
+
+	if(action == 'verDetalleEntrevistas'){
+		document.forms['formAlumno'].action ="<c:url value='/entrevistaSeleccion/detalleEntrevistaSeleccion.do?isDetalleEntrevista=true'/>";
+		//document.forms['formAlumno'].idAlumno.value= $('#dniAlumno').val();
+		document.forms['formAlumno'].submit();
+		return
+	}
+}
+
+function disabledInput(){
+	
+	if(${isDetalleEntrevista} == true){
+		$("input").attr("disabled","disabled");
+		$("select").attr("disabled","disabled");
+		$("textarea").attr("disabled","disabled");
+		$("#buttonVolver").removeAttr("disabled");
+		$("#alumnoNombre").attr("disabled","disabled");
+		$("#alumnoApellido").attr("disabled","disabled");
+		$("#dniAlumno").attr("disabled","disabled");
+		$("#fechaNacimiento").attr("disabled","disabled");
+		$("#dni").attr("disabled","disabled");
+		$("#alumnoNacionalidad").attr("disabled","disabled");
+		$("#zonaCimientos").attr("disabled","disabled");
+		$("#escuela").attr("disabled","disabled");
+		$("#anioEscuela").attr("disabled","disabled");
+		$("#alumnoDivision").attr("disabled","disabled");
+		$("#turno").attr("disabled","disabled");
+		$("#alumnoDireccion").attr("disabled","disabled");
+		$("#alumnoEntreCalles").attr("disabled","disabled");
+		$("#alumnoCodigoPostal").attr("disabled","disabled");
+		$("#barrioUser").attr("disabled","disabled");
+		$("#localidad").attr("disabled","disabled");
+		$("#alumnoTelefono").attr("disabled","disabled");
+		$("#alumnoContactoTelefono1").attr("disabled","disabled");
+		$("#alumnoContactoTelefono2").attr("disabled","disabled");
+		$("#alumnoContactoTelefono3").attr("disabled","disabled");
+		$("#alumnoMail").attr("disabled","disabled");
+		$("#alumnoMail").attr("disabled","disabled");
+		$("#localidadAlumno").attr("disabled","disabled");
+		$("#provinciaAlumno").attr("disabled","disabled");
+		$("#telefono2").attr("disabled","disabled");
+		$("#telefono1").attr("disabled","disabled");
+		$("#alumnoNumero").attr("disabled","disabled");
+		$("#alumnoPiso").attr("disabled","disabled");
+		
+		$("#idAnioRepitio").attr("disabled","disabled");
+		$("#motivoRepitencia").attr("disabled","disabled");
+		$("#idAnioAbandono").attr("disabled","disabled");
+		$("#motivoAbandono").attr("disabled","disabled");
+		
+		//Responsable Adulto 1
+		$("#tablaDatosResponsable :text").attr("disabled","disabled");
+		$("#tablaDatosResponsable :checkbox").attr("disabled","disabled");
+		$("#tablaDatosResponsable :input").attr("disabled","disabled");
+		$("#respoSucursal").attr("disabled","disabled");
+		
+		//Responsable Adulto 2
+		$("#tablaDatosResponsable2 :text").attr("disabled","disabled");
+		$("#tablaDatosResponsable2 :checkbox").attr("disabled","disabled");
+		$("#tablaDatosResponsable2 :input").attr("disabled","disabled");
+		//Ficha Familiar
+		$("#tablaFicha :text").attr("disabled","disabled");
+		$("#tablaFicha :checkbox").attr("disabled","disabled");
+		$("#tablaFicha :input").attr("disabled","disabled");
+		
+		$("#botonAgregarFicha").attr("disabled","disabled");
+		$("#botonBorrarFicha").attr("disabled","disabled");
+		$("#relacionViviendaFicha").attr("disabled","disabled");
+		$("#egresosTotalesFicha").attr("disabled","disabled");				
+	}
+	else{
+		var repitio = $('[name="entrevistaSeleccion.repitio"]:checked').val();
+		var abandono = $('[name="entrevistaSeleccion.abandono"]:checked').val();
+	
+		if(repitio == 'false'){
+			$("#idAnioRepitio").attr("disabled","disabled");
+			$("#motivoRepitencia").attr("disabled","true");	
+			$('#idAnioRepitio').removeClass('required');
+		}
+		else{
+			$("#idAnioRepitios").removeAttr("disabled");
+			$("#motivoRepitencia").removeAttr("disabled");
+			$('#idAnioRepitio').addClass('required');
+		}
+		if(abandono == 'false'){
+			$("#idAnioAbandono").attr("disabled","disabled");
+			$("#motivoAbandono").attr("disabled","true");		
+			$('#idAnioAbandono').removeClass('required');
+		}
+		else{
+			$("#idAnioAbandono").removeAttr("disabled");
+			$('#idAnioAbandono').addClass('required');
+			$("#motivoAbandono").removeAttr("disabled");		
+		}
+	}
+}
+
+function chequearLongitudRA(obj){
+	if (obj.value.length > 1000) {
+	obj.value = obj.value.substring(0, 1000);
+	}
+}
+
+function chequearLongitud(obj){
+	if (obj.value.length > 10000) {
+	obj.value = obj.value.substring(0, 10000);
+	}
+}
+
+</script>	
+</head>
+
+<body>
+<div id="main-content">
+<!-- Formulario para la busqueda del alumno por DNI -->
+
+<form action="" method="post" id="formAlumno" name="formAlumno">
+	<input type="hidden" id="idEntrevista" name="idEntrevista">
+	<input type="hidden" id="accion" name="accion" value="${accion}">
+</form>
+<form:form modelAttribute="entrevistaSeleccionDTO" id="altaEntrevista" commandName="entrevistaSeleccionDTO"  method="post"  name="altaEntrevista">
+<!-- Hidden para la validacion del alumno por ajax -->
+	<input type="hidden" id="accion" name="accion" value="${accion}">
+	<input type="hidden" id="idEntrevista" name="idEntrevista" value="${idEntrevista}">
+<c:if test="${!empty entrevistaSeleccionDTO.perfilAlumno.id}">
+	<form:hidden path="perfilAlumno.id"/>
+	<form:hidden path="perfilAlumno.datosPersonales.id"/>
+	<form:hidden path="perfilAlumno.responsable1.id"/>
+	<form:hidden path="perfilAlumno.responsable2.id"/>
+	<form:hidden path="entrevistaSeleccion.idPerfilAlumno"/>
+</c:if>
+
+<input type="hidden" id="estadoEntrevista" name="estadoEntrevista" value="">
+
+	<div id="accordion"  style="width:auto">
+	
+	  	<h3  class="ui-accordion-header  ui-state-default ui-corner-all"  align="left" ><a href="#" onclick="mostrar(1)" >Ficha  del Candidato</a></h3>
+			<div id="datosCandidato" style="width:auto; height:auto; overflow:scroll;">
+			  	<jsp:include page="fichaCandidato.jsp"></jsp:include>
+			</div>
+			
+		<h3  class="ui-accordion-header  ui-state-default ui-corner-all" align="left"  ><a href="#" onclick="mostrar(2)">Responsable</a></h3>
+			<div id="responsable" style="width:auto; height:auto; overflow:scroll;">	
+				<jsp:include page="fichaResponsable.jsp"></jsp:include>
+			</div>
+
+		<h3  class="ui-accordion-header  ui-state-default ui-corner-all" align="left"><a href="#" onclick="mostrar(3)">Ficha Familiar</a></h3>
+			<div id="fichaFamiliar" style="width:auto; height:auto; overflow:scroll;">
+				<jsp:include page="fichaFamiliar.jsp" ></jsp:include>
+			</div>
+			
+		<h3  class="ui-accordion-header  ui-state-default ui-corner-all" align="left"><a href="#" onclick="mostrar(4)">Observaciones generales</a></h3>
+			<div id="observacionesGenerales" style="width:auto; height:auto; overflow:scroll;">
+				<jsp:include page="observacionesGenerales.jsp"></jsp:include>
+			</div>
+		
+	</div>
+		<c:choose>
+			<c:when test="${isDetalleEntrevista}">
+				<table align="center">
+					<tr>
+						<td>
+							<input type="button" value="Volver" class="ui-state-default ui-corner-all" id="buttonVolver" onclick="location.href='../entrevistaSeleccion/reporteEntrevistaSeleccion.do'; return false;" />
+						</td>
+					</tr>
+				</table>
+			</c:when>
+			<c:otherwise>
+				<table align="center">
+					<tr>
+						<td>
+							<input class="ui-state-default ui-corner-all " type="button" value="Finalizado" onclick="enviarForm('finalizado')"/>
+						</td>
+					</tr>
+				</table>
+			</c:otherwise>
+		</c:choose>
+</form:form>
+</div>
+</body>
+</html>

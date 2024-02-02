@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/fenix/!svn/ver/151/src/main/webapp/WEB-INF/pages/fichaAlumno/tabAlumno
+END
+datosPersonales.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/fenix/!svn/ver/343/src/main/webapp/WEB-INF/pages/fichaAlumno/tabAlumno/datosPersonales.jsp
+END
+escuelaAlumno.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/fichaAlumno/tabAlumno/escuelaAlumno.jsp
+END
+responsableAlumno.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/fenix/!svn/ver/12/src/main/webapp/WEB-INF/pages/fichaAlumno/tabAlumno/responsableAlumno.jsp
+END
+fichaFamiliarAlumno.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/fichaAlumno/tabAlumno/fichaFamiliarAlumno.jsp
+END

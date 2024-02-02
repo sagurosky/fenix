@@ -1,0 +1,229 @@
+package org.cimientos.intranet.modelo.pbe.evento.entrevistas;
+
+import java.util.Date;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import org.cimientos.intranet.modelo.escuela.Escuela;
+import org.cimientos.intranet.modelo.perfilEA.PerfilEA;
+import org.cimientos.intranet.modelo.perfilRR.PerfilRR;
+
+import com.cimientos.intranet.enumerativos.entrevista.EstadoEntrevista;
+
+@Entity
+@Table (name="entrevista")
+@Inheritance (strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn (name="tipo", discriminatorType=DiscriminatorType.STRING)
+@DiscriminatorValue("entrevista")
+public abstract class Entrevista{
+	
+	/** The id evento. */
+	@Id
+	@GeneratedValue(strategy = GenerationType.TABLE)
+	private Long id;
+	
+	@Column (name = "tipo", insertable = false, updatable = false)
+	private String tipo = null;
+	
+	@OneToOne
+	private PerfilEA ea;
+	
+	@OneToOne
+	private PerfilRR rr;
+	
+	private Date fechaCarga;
+	
+	private Date fechaEntrevista;	
+	
+	@OneToOne
+	private Escuela lugarEntrevista;
+	
+	private boolean rendicionGastos;
+	
+	private String estadoFormulario;
+	
+	@Column(length=10000)
+	private String observacionesGenerales;
+	
+	private String cargadorEntrevista;
+	
+	private boolean pagaEntrevista;
+	
+	private String nroCtesPlataformaContable;
+	
+	@Enumerated(EnumType.ORDINAL)
+	private EstadoEntrevista estadoEntrevista;
+
+	@OneToOne(cascade=CascadeType.ALL)
+	private ExportacionEspecial exportacionEspecial;
+	
+	public EstadoEntrevista getEstadoEntrevista() {
+		return estadoEntrevista;
+	}
+
+	public void setEstadoEntrevista(EstadoEntrevista estadoEntrevista) {
+		this.estadoEntrevista = estadoEntrevista;
+	}
+
+	public Date getFechaCarga() {
+		return fechaCarga;
+	}
+
+	public void setFechaCarga(Date fechaCarga) {
+		this.fechaCarga = fechaCarga;
+	}
+
+	public Date getFechaEntrevista() {
+		return fechaEntrevista;
+	}
+
+	public void setFechaEntrevista(Date fechaEntrevista) {
+		this.fechaEntrevista = fechaEntrevista;
+	}
+
+
+	public Escuela getLugarEntrevista() {
+		return lugarEntrevista;
+	}
+
+	public void setLugarEntrevista(Escuela lugarEntrevista) {
+		this.lugarEntrevista = lugarEntrevista;
+	}
+
+
+
+	public boolean isRendicionGastos() {
+		return rendicionGastos;
+	}
+
+	public void setRendicionGastos(boolean rendicionGastos) {
+		this.rendicionGastos = rendicionGastos;
+	}
+
+
+	public String getEstadoFormulario() {
+		return estadoFormulario;
+	}
+
+	public void setEstadoFormulario(String estadoFormulario) {
+		this.estadoFormulario = estadoFormulario;
+	}
+
+	public String getObservacionesGenerales() {
+		return observacionesGenerales;
+	}
+
+	public void setObservacionesGenerales(String observacionesGenerales) {
+		this.observacionesGenerales = observacionesGenerales;
+	}
+
+	public String getCargadorEntrevista() {
+		return cargadorEntrevista;
+	}
+
+	public void setCargadorEntrevista(String cargadorEntrevista) {
+		this.cargadorEntrevista = cargadorEntrevista;
+	}
+
+	public boolean isPagaEntrevista() {
+		return pagaEntrevista;
+	}
+
+	public void setPagaEntrevista(boolean pagaEntrevista) {
+		this.pagaEntrevista = pagaEntrevista;
+	}
+
+	public PerfilEA getEa() {
+		return ea;
+	}
+
+	public void setEa(PerfilEA ea) {
+		this.ea = ea;
+	}
+
+	public PerfilRR getRr() {
+		return rr;
+	}
+
+	public void setRr(PerfilRR rr) {
+		this.rr = rr;
+	}
+	
+	//Implementado en las subclases
+	public abstract boolean esFinal();
+
+	/**
+	 * @return the exportacionEspecial
+	 */
+	public ExportacionEspecial getExportacionEspecial() {
+		return exportacionEspecial;
+	}
+
+	/**
+	 * @param exportacionEspecial the exportacionEspecial to set
+	 */
+	public void setExportacionEspecial(ExportacionEspecial exportacionEspecial) {
+		this.exportacionEspecial = exportacionEspecial;
+	}
+
+
+	/**
+	 * @return the tipo
+	 */
+	public String getTipo() {
+		return tipo;
+	}
+
+	/**
+	 * @param tipo the tipo to set
+	 */
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
+	@Override
+	public boolean equals(Object ent) {
+		return (this.id != null) && this.id.equals(((Entrevista) ent).getId());
+	}
+
+	public String getNroCtesPlataformaContable() {
+		return nroCtesPlataformaContable;
+	}
+
+	public void setNroCtesPlataformaContable(String nroCtesPlataformaContable) {
+		this.nroCtesPlataformaContable = nroCtesPlataformaContable;
+	}
+
+	
+	
+	
+
+}

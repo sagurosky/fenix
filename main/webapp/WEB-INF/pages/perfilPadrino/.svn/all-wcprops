@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/fenix/!svn/ver/119/src/main/webapp/WEB-INF/pages/perfilPadrino
+END
+listaPadrinos.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/fenix/!svn/ver/372/src/main/webapp/WEB-INF/pages/perfilPadrino/listaPadrinos.jsp
+END
+modificarPadrinoCorp.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/fenix/!svn/ver/390/src/main/webapp/WEB-INF/pages/perfilPadrino/modificarPadrinoCorp.jsp
+END
+modificarPadrino.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/fenix/!svn/ver/345/src/main/webapp/WEB-INF/pages/perfilPadrino/modificarPadrino.jsp
+END
+registrarPersonaPadrinoView.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/fenix/!svn/ver/107/src/main/webapp/WEB-INF/pages/perfilPadrino/registrarPersonaPadrinoView.jsp
+END
+altaPadrino.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/fenix/!svn/ver/345/src/main/webapp/WEB-INF/pages/perfilPadrino/altaPadrino.jsp
+END

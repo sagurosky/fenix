@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/objetivoSeleccion
+END
+modificarObjetivoSeleccion.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/objetivoSeleccion/modificarObjetivoSeleccion.jsp
+END
+altaObjetivoSeleccion.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/objetivoSeleccion/altaObjetivoSeleccion.jsp
+END
+listaObjetivoSelecciones.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/objetivoSeleccion/listaObjetivoSelecciones.jsp
+END
+listaObjetivoSeleccionAnioActual.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/objetivoSeleccion/listaObjetivoSeleccionAnioActual.jsp
+END
+objetivoSeleccionView.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/fenix/!svn/ver/1/src/main/webapp/WEB-INF/pages/objetivoSeleccion/objetivoSeleccionView.jsp
+END

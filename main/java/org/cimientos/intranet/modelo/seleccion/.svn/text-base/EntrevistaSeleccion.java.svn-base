@@ -1,0 +1,948 @@
+package org.cimientos.intranet.modelo.seleccion;
+
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+
+import org.cimientos.intranet.modelo.candidato.convocatoria.ConvocatoriaSeleccion;
+import org.cimientos.intranet.modelo.perfil.AlumnoSeleccion;
+import org.cimientos.intranet.modelo.perfil.EstadoAlumno;
+import org.cimientos.intranet.modelo.perfilTS.PerfilTS;
+import org.hibernate.annotations.CollectionOfElements;
+
+import com.cimientos.intranet.enumerativos.AnioEscolar;
+import com.cimientos.intranet.enumerativos.Conducta;
+import com.cimientos.intranet.enumerativos.entrevista.EstadoEntrevista;
+import com.cimientos.intranet.enumerativos.entrevista.MotivoEnvioTS;
+import com.cimientos.intranet.enumerativos.entrevista.MotivoRechazo;
+import com.googlecode.ehcache.annotations.Cacheable;
+
+/**
+ * The Class EntrevistaSeleccion.
+ */
+/**
+ * @author plabaronnie
+ *
+ */
+@Entity
+public class EntrevistaSeleccion {
+	
+	/** The id. */
+	@Id
+	@GeneratedValue
+	private Long id;
+	
+	/** The id perfil alumno. */
+	@OneToOne(cascade = CascadeType.ALL)
+	private AlumnoSeleccion perfilAlumno;
+	
+	/** The estado entrevista. */
+	@Enumerated(EnumType.ORDINAL)
+	private EstadoEntrevista estadoEntrevista;
+	
+	/** The convocatoria. */
+	@OneToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+	private ConvocatoriaSeleccion convocatoria;
+	
+	/** The estado entrevista alumno. */
+	@Enumerated(EnumType.ORDINAL)
+	private EstadoAlumno  estadoEntrevistaAlumno;
+	
+	/** The fecha carga entrevista. */
+	private Date fechaCargaEntrevista;
+	
+	/** The otro motivo rechazo. */
+	@Column(length=10000)
+	private String otroMotivoRechazo;
+	
+	/** The repitio. */
+	private Boolean repitio;
+	
+	/** The anio repitio. */
+	@CollectionOfElements(targetElement = AnioEscolar.class)
+	@Column(name = "anio_repitio", nullable = false)
+	@Enumerated(EnumType.ORDINAL)
+	private List<AnioEscolar> anioRepitio;
+	
+	@CollectionOfElements(targetElement = AnioEscolar.class)
+	@Column(name = "anio_abandono", nullable = false) 
+	@Enumerated(EnumType.ORDINAL)
+	private List<AnioEscolar> anioAbandono;
+	
+	/** The abandono. */
+	private Boolean abandono;
+	
+	@Column(length=10000)
+	private String observacionesMaterias;
+	
+	/** The motivo abandono. */
+	@Column(length=10000)
+	private String motivoAbandono;
+	
+	/** The motivo repitencia. */
+	@Column(length=10000)
+	private String motivoRepitencia;
+	
+	/** The conducta. */
+	@Enumerated(EnumType.ORDINAL)
+	private Conducta conducta;
+	
+	/** The cantidad inasistencia anio pasado. */
+	private Integer cantidadInasistenciaAnioPasado;
+	
+	/** The motivos inasistencia anio pasado. */
+	@Column(length=10000)
+	private String motivosInasistenciaAnioPasado; 
+	
+	/** The motivos inasistencia anio curso. */
+	@Column(length=10000)
+	private String motivosInasistenciaAnioCurso;
+	
+	/** The cantidad inasistencia anio curso. */
+	private Integer cantidadInasistenciaAnioCurso;
+	
+	/** The informacion complementaria. */
+	@Column(length=10000)
+	private String informacionComplementaria;
+	
+	/** The percepciones candidato. */
+	@Column(length=10000)
+	private String percepcionesCandidato;
+	
+	/** The recibe otra beca. */
+	private Boolean recibeOtraBeca;
+	
+	/** The materia lengua. */
+	private Boolean materiaLengua;
+	
+	/** The materia matematica. */
+	private Boolean materiaMatem;
+	
+	/** The materia ciencias sociales. */
+	private Boolean materiaCiencSociales;
+	
+	/** The materia ingles lengua extranjera. */
+	private Boolean materiaInglesLengExt;
+	
+	/** The materia educacion fisica. */
+	private Boolean materiaEduFisica;
+	
+	/** The materia educacion artistica. */
+	private Boolean materiaEduArt;
+	
+	/** The materia ciencias naturales. */
+	private Boolean materiaCienciasNaturales;
+	
+	/** The boletin seleccions. */
+	@ManyToMany(cascade=CascadeType.ALL)
+	private List<BoletinSeleccion> boletinSeleccions;
+	
+	/** The motivo rechazo. */
+	@Enumerated(EnumType.ORDINAL)
+	/** The motivo rechazo. */
+	private MotivoRechazo motivoRechazo;
+	
+	/** The motivo envio ts. */
+	@Enumerated(EnumType.ORDINAL)
+	/** The motivo envio ts. */
+	private MotivoEnvioTS motivoEnvioTS;
+	
+	/** The cual beca. */
+	private String cualBeca;
+	
+	/** The perfil ts. */
+	@OneToOne
+	private PerfilTS  perfilTS;
+	
+	/** The nombre periodo. */
+	private String nombrePeriodo;
+	
+	/** The nombre ciclo. */
+	private String nombreCiclo;
+
+	/** The ingresos totales ficha familiar. */
+	private Integer ingresosTotalesFichaFamiliar;
+	
+	/** The observaciones generales. */
+	@Column(length=1000)
+	private String observacionesGenerales;
+	
+	/** The observaciones egreso ingreso. */
+	@Column(length=10000)
+	private String observacionesEgresoIngreso;
+	
+	/** Agregada para relacionar la entrevista seleccion 
+	 * con su perfil alumno de acompañamiento*/
+	private Long idPerfilAlumno;
+	
+	/**
+	 * Gets the id.
+	 *
+	 * @return the id
+	 * @since 13-dic-2010
+	 * @author cfigueroa
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * Sets the id.
+	 *
+	 * @param id the id to set
+	 * @since 13-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
+	/**
+	 * Gets the id perfil alumno.
+	 *
+	 * @return the perfilAlumno
+	 * @since 13-dic-2010
+	 * @author cfigueroa
+	 */
+	@Cacheable(cacheName = "org.cimientos.intranet.modelo.perfil.PerfilAlumno")
+	public AlumnoSeleccion getPerfilAlumno() {
+		return perfilAlumno;
+	}
+	
+	/**
+	 * Sets the id perfil alumno.
+	 *
+	 * @param alumnoSeleccion the new perfil alumno
+	 * @since 13-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setPerfilAlumno(AlumnoSeleccion alumnoSeleccion) {
+		this.perfilAlumno = alumnoSeleccion;
+	}
+	
+	/**
+	 * Gets the estado entrevista.
+	 *
+	 * @return the estadoEntrevista
+	 * @since 13-dic-2010
+	 * @author cfigueroa
+	 */
+	public EstadoEntrevista getEstadoEntrevista() {
+		return estadoEntrevista;
+	}
+	
+	/**
+	 * Sets the estado entrevista.
+	 *
+	 * @param estadoEntrevista the estadoEntrevista to set
+	 * @since 13-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setEstadoEntrevista(EstadoEntrevista estadoEntrevista) {
+		this.estadoEntrevista = estadoEntrevista;
+	}
+
+	/**
+	 * Gets the convocatoria.
+	 *
+	 * @return the convocatoria
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public ConvocatoriaSeleccion getConvocatoria() {
+		return convocatoria;
+	}
+
+	/**
+	 * Sets the convocatoria.
+	 *
+	 * @param convocatoria the new convocatoria
+	 * @since 15-dic-2010
+	 * @author cfigueroa
+	 */
+	public void setConvocatoria(ConvocatoriaSeleccion convocatoria) {
+		this.convocatoria = convocatoria;
+	}
+
+	/**
+	 * Gets the estado entrevista alumno.
+	 *
+	 * @return the estado entrevista alumno
+	 * @since 25-ene-2011
+	 * @author cfigueroa
+	 */
+	public EstadoAlumno getEstadoEntrevistaAlumno() {
+		return estadoEntrevistaAlumno;
+	}
+
+	/**
+	 * Sets the estado entrevista alumno.
+	 *
+	 * @param estadoEntrevistaAlumno the new estado entrevista alumno
+	 * @since 25-ene-2011
+	 * @author cfigueroa
+	 */
+	public void setEstadoEntrevistaAlumno(EstadoAlumno estadoEntrevistaAlumno) {
+		this.estadoEntrevistaAlumno = estadoEntrevistaAlumno;
+	}
+	
+	/**
+	 * Gets the fecha carga entrevista.
+	 *
+	 * @return the fecha carga entrevista
+	 * @since 25-ene-2011
+	 * @author cfigueroa
+	 */
+	public Date getFechaCargaEntrevista() {
+		return fechaCargaEntrevista;
+	}
+
+	/**
+	 * Sets the fecha carga entrevista.
+	 *
+	 * @param fechaCargaEntrevista the new fecha carga entrevista
+	 * @since 25-ene-2011
+	 * @author cfigueroa
+	 */
+	public void setFechaCargaEntrevista(Date fechaCargaEntrevista) {
+		this.fechaCargaEntrevista = fechaCargaEntrevista;
+	}
+
+	/**
+	 * Gets the repitio.
+	 *
+	 * @return the repitio
+	 * @since 25-ene-2011
+	 * @author cfigueroa
+	 */
+	public Boolean getRepitio() {
+		return repitio;
+	}
+
+	/**
+	 * Sets the repitio.
+	 *
+	 * @param repitio the new repitio
+	 * @since 25-ene-2011
+	 * @author cfigueroa
+	 */
+	public void setRepitio(Boolean repitio) {
+		this.repitio = repitio;
+	}
+
+	/**
+	 * Gets the abandono.
+	 *
+	 * @return the abandono
+	 * @since 25-ene-2011
+	 * @author cfigueroa
+	 */
+	public Boolean getAbandono() {
+		return abandono;
+	}
+
+	/**
+	 * Sets the abandono.
+	 *
+	 * @param abandonoAnio the new abandono
+	 * @since 25-ene-2011
+	 * @author cfigueroa
+	 */
+	public void setAbandono(Boolean abandonoAnio) {
+		this.abandono = abandonoAnio;
+	}
+
+	/**
+	 * Gets the motivo abandono.
+	 *
+	 * @return the motivo abandono
+	 * @since 25-ene-2011
+	 * @author cfigueroa
+	 */
+	public String getMotivoAbandono() {
+		return motivoAbandono;
+	}
+
+	/**
+	 * Sets the motivo abandono.
+	 *
+	 * @param motivoAbandono the new motivo abandono
+	 * @since 25-ene-2011
+	 * @author cfigueroa
+	 */
+	public void setMotivoAbandono(String motivoAbandono) {
+		this.motivoAbandono = motivoAbandono;
+	}
+
+
+	public Conducta getConducta() {
+		return conducta;
+	}
+
+	public void setConducta(Conducta conducta) {
+		this.conducta = conducta;
+	}
+
+	/**
+	 * Gets the cantidad inasistencia anio pasado.
+	 *
+	 * @return the cantidad inasistencia anio pasado
+	 * @since 25-ene-2011
+	 * @author cfigueroa
+	 */
+	public Integer getCantidadInasistenciaAnioPasado() {
+		return cantidadInasistenciaAnioPasado;
+	}
+
+	/**
+	 * Sets the cantidad inasistencia anio pasado.
+	 *
+	 * @param cantidadInasistenciaAnioPasado the new cantidad inasistencia anio pasado
+	 * @since 25-ene-2011
+	 * @author cfigueroa
+	 */
+	public void setCantidadInasistenciaAnioPasado(
+			Integer cantidadInasistenciaAnioPasado) {
+		this.cantidadInasistenciaAnioPasado = cantidadInasistenciaAnioPasado;
+	}
+
+	/**
+	 * Gets the motivos inasistencia anio curso.
+	 *
+	 * @return the motivos inasistencia anio curso
+	 * @since 25-ene-2011
+	 * @author cfigueroa
+	 */
+	public String getMotivosInasistenciaAnioCurso() {
+		return motivosInasistenciaAnioCurso;
+	}
+
+	/**
+	 * Sets the motivos inasistencia anio curso.
+	 *
+	 * @param motivosInasistenciaAnioCurso the new motivos inasistencia anio curso
+	 * @since 25-ene-2011
+	 * @author cfigueroa
+	 */
+	public void setMotivosInasistenciaAnioCurso(String motivosInasistenciaAnioCurso) {
+		this.motivosInasistenciaAnioCurso = motivosInasistenciaAnioCurso;
+	}
+
+	/**
+	 * Gets the cantidad inasistencia anio curso.
+	 *
+	 * @return the cantidad inasistencia anio curso
+	 * @since 25-ene-2011
+	 * @author cfigueroa
+	 */
+	public Integer getCantidadInasistenciaAnioCurso() {
+		return cantidadInasistenciaAnioCurso;
+	}
+
+	/**
+	 * Sets the cantidad inasistencia anio curso.
+	 *
+	 * @param cantidadInasistenciaAnioCurso the new cantidad inasistencia anio curso
+	 * @since 25-ene-2011
+	 * @author cfigueroa
+	 */
+	public void setCantidadInasistenciaAnioCurso(
+			Integer cantidadInasistenciaAnioCurso) {
+		this.cantidadInasistenciaAnioCurso = cantidadInasistenciaAnioCurso;
+	}
+
+	/**
+	 * Gets the motivos inasistencia anio pasado.
+	 *
+	 * @return the motivos inasistencia anio pasado
+	 * @since 25-ene-2011
+	 * @author cfigueroa
+	 */
+	public String getMotivosInasistenciaAnioPasado() {
+		return motivosInasistenciaAnioPasado;
+	}
+
+	/**
+	 * Sets the motivos inasistencia anio pasado.
+	 *
+	 * @param motivosInasistenciaAnioPasado the new motivos inasistencia anio pasado
+	 * @since 25-ene-2011
+	 * @author cfigueroa
+	 */
+	public void setMotivosInasistenciaAnioPasado(
+			String motivosInasistenciaAnioPasado) {
+		this.motivosInasistenciaAnioPasado = motivosInasistenciaAnioPasado;
+	}
+
+	/**
+	 * Gets the informacion complementaria.
+	 *
+	 * @return the informacion complementaria
+	 * @since 25-ene-2011
+	 * @author cfigueroa
+	 */
+	public String getInformacionComplementaria() {
+		return informacionComplementaria;
+	}
+
+	/**
+	 * Sets the informacion complementaria.
+	 *
+	 * @param informacionComplementaria the new informacion complementaria
+	 * @since 25-ene-2011
+	 * @author cfigueroa
+	 */
+	public void setInformacionComplementaria(String informacionComplementaria) {
+		this.informacionComplementaria = informacionComplementaria;
+	}
+
+	/**
+	 * Gets the percepciones candidato.
+	 *
+	 * @return the percepciones candidato
+	 * @since 25-ene-2011
+	 * @author cfigueroa
+	 */
+	public String getPercepcionesCandidato() {
+		return percepcionesCandidato;
+	}
+
+	/**
+	 * Sets the percepciones candidato.
+	 *
+	 * @param percepcionesCandidato the new percepciones candidato
+	 * @since 25-ene-2011
+	 * @author cfigueroa
+	 */
+	public void setPercepcionesCandidato(String percepcionesCandidato) {
+		this.percepcionesCandidato = percepcionesCandidato;
+	}
+
+	/**
+	 * Gets the recibe otra beca.
+	 *
+	 * @return the recibe otra beca
+	 * @since 25-ene-2011
+	 * @author cfigueroa
+	 */
+	public Boolean getRecibeOtraBeca() {
+		return recibeOtraBeca;
+	}
+
+	/**
+	 * Sets the recibe otra beca.
+	 *
+	 * @param recibeOtraBeca the new recibe otra beca
+	 * @since 25-ene-2011
+	 * @author cfigueroa
+	 */
+	public void setRecibeOtraBeca(Boolean recibeOtraBeca) {
+		this.recibeOtraBeca = recibeOtraBeca;
+	}
+
+	/**
+	 * Gets the materia lengua.
+	 *
+	 * @return the materia lengua
+	 * @since 25-ene-2011
+	 * @author cfigueroa
+	 */
+	public Boolean getMateriaLengua() {
+		return materiaLengua;
+	}
+
+	/**
+	 * Sets the materia lengua.
+	 *
+	 * @param materiaLengua the new materia lengua
+	 * @since 25-ene-2011
+	 * @author cfigueroa
+	 */
+	public void setMateriaLengua(Boolean materiaLengua) {
+		this.materiaLengua = materiaLengua;
+	}
+
+	/**
+	 * Gets the materia matematica.
+	 *
+	 * @return the materia matematica
+	 * @since 25-ene-2011
+	 * @author cfigueroa
+	 */
+	public Boolean getMateriaMatem() {
+		return materiaMatem;
+	}
+
+	/**
+	 * Sets the materia matematica.
+	 *
+	 * @param materiaMatem the new materia matematica
+	 * @since 25-ene-2011
+	 * @author cfigueroa
+	 */
+	public void setMateriaMatem(Boolean materiaMatem) {
+		this.materiaMatem = materiaMatem;
+	}
+
+	/**
+	 * Gets the materia ciencias sociales.
+	 *
+	 * @return the materia ciencias sociales
+	 * @since 25-ene-2011
+	 * @author cfigueroa
+	 */
+	public Boolean getMateriaCiencSociales() {
+		return materiaCiencSociales;
+	}
+
+	/**
+	 * Sets the materia ciencias sociales.
+	 *
+	 * @param materiaCiencSociales the new materia ciencias sociales
+	 * @since 25-ene-2011
+	 * @author cfigueroa
+	 */
+	public void setMateriaCiencSociales(Boolean materiaCiencSociales) {
+		this.materiaCiencSociales = materiaCiencSociales;
+	}
+
+	/**
+	 * Gets the materia ingles lengua extranjera.
+	 *
+	 * @return the materia ingles lengua extranjera
+	 * @since 25-ene-2011
+	 * @author cfigueroa
+	 */
+	public Boolean getMateriaInglesLengExt() {
+		return materiaInglesLengExt;
+	}
+
+	/**
+	 * Sets the materia ingles lengua extranjera.
+	 *
+	 * @param materiaInglesLengExt the new materia ingles lengua extranjera
+	 * @since 25-ene-2011
+	 * @author cfigueroa
+	 */
+	public void setMateriaInglesLengExt(Boolean materiaInglesLengExt) {
+		this.materiaInglesLengExt = materiaInglesLengExt;
+	}
+
+	/**
+	 * Gets the materia educacion fisica.
+	 *
+	 * @return the materia educacion fisica.
+	 * @since 25-ene-2011
+	 * @author cfigueroa
+	 */
+	public Boolean getMateriaEduFisica() {
+		return materiaEduFisica;
+	}
+
+	/**
+	 * Sets the materia educacion fisica.
+	 *
+	 * @param materiaEduFisica the new educacion fisica.
+	 * @since 25-ene-2011
+	 * @author cfigueroa
+	 */
+	public void setMateriaEduFisica(Boolean materiaEduFisica) {
+		this.materiaEduFisica = materiaEduFisica;
+	}
+
+	/**
+	 * Gets the materia educacion artistica.
+	 *
+	 * @return the materia educacion artistica
+	 * @since 25-ene-2011
+	 * @author cfigueroa
+	 */
+	public Boolean getMateriaEduArt() {
+		return materiaEduArt;
+	}
+
+	/**
+	 * Sets the materia educacion artistica.
+	 *
+	 * @param materiaEduArt the new materia educacion artistica
+	 * @since 25-ene-2011
+	 * @author cfigueroa
+	 */
+	public void setMateriaEduArt(Boolean materiaEduArt) {
+		this.materiaEduArt = materiaEduArt;
+	}
+
+	/**
+	 * Gets the boletin seleccions.
+	 *
+	 * @return the boletin seleccions
+	 */
+	public List<BoletinSeleccion> getBoletinSeleccions() {
+		return boletinSeleccions;
+	}
+
+	/**
+	 * Sets the boletin seleccions.
+	 *
+	 * @param boletinSeleccions the new boletin seleccions
+	 */
+	public void setBoletinSeleccions(List<BoletinSeleccion> boletinSeleccions) {
+		this.boletinSeleccions = boletinSeleccions;
+	}
+
+	/**
+	 * Gets the motivo rechazo.
+	 *
+	 * @return the motivo rechazo
+	 */
+	public MotivoRechazo getMotivoRechazo() {
+		return motivoRechazo;
+	}
+
+	/**
+	 * Sets the motivo rechazo.
+	 *
+	 * @param motivoRechazo the new motivo rechazo
+	 */
+	public void setMotivoRechazo(MotivoRechazo motivoRechazo) {
+		this.motivoRechazo = motivoRechazo;
+	}
+
+	/**
+	 * Gets the motivo envio ts.
+	 *
+	 * @return the motivo envio ts
+	 */
+	public MotivoEnvioTS getMotivoEnvioTS() {
+		return motivoEnvioTS;
+	}
+
+	/**
+	 * Sets the motivo envio ts.
+	 *
+	 * @param motivoEnvioTS the new motivo envio ts
+	 */
+	public void setMotivoEnvioTS(MotivoEnvioTS motivoEnvioTS) {
+		this.motivoEnvioTS = motivoEnvioTS;
+	}
+
+	/**
+	 * Gets the cual beca.
+	 *
+	 * @return the cual beca
+	 */
+	public String getCualBeca() {
+		return cualBeca;
+	}
+
+	/**
+	 * Sets the cual beca.
+	 *
+	 * @param cualBeca the new cual beca
+	 */
+	public void setCualBeca(String cualBeca) {
+		this.cualBeca = cualBeca;
+	}
+
+	/**
+	 * Gets the perfil ts.
+	 *
+	 * @return the perfil ts
+	 */
+	public PerfilTS getPerfilTS() {
+		return perfilTS;
+	}
+
+	/**
+	 * Sets the perfil ts.
+	 *
+	 * @param perfilTS the new perfil ts
+	 */
+	public void setPerfilTS(PerfilTS perfilTS) {
+		this.perfilTS = perfilTS;
+	}
+
+	/**
+	 * Gets the nombre periodo.
+	 *
+	 * @return the nombre periodo
+	 */
+	public String getNombrePeriodo() {
+		return nombrePeriodo;
+	}
+
+	/**
+	 * Sets the nombre periodo.
+	 *
+	 * @param nombrePeriodo the new nombre periodo
+	 */
+	public void setNombrePeriodo(String nombrePeriodo) {
+		this.nombrePeriodo = nombrePeriodo;
+	}
+
+	/**
+	 * Gets the nombre ciclo.
+	 *
+	 * @return the nombre ciclo
+	 */
+	public String getNombreCiclo() {
+		return nombreCiclo;
+	}
+
+	/**
+	 * Sets the nombre ciclo.
+	 *
+	 * @param nombreCiclo the new nombre ciclo
+	 */
+	public void setNombreCiclo(String nombreCiclo) {
+		this.nombreCiclo = nombreCiclo;
+	}
+	
+	/**
+	 * Gets the ingresos totales ficha familiar.
+	 *
+	 * @return the ingresos totales ficha familiar
+	 */
+	public Integer getIngresosTotalesFichaFamiliar() {
+		return ingresosTotalesFichaFamiliar;
+	}
+
+	/**
+	 * Sets the ingresos totales ficha familiar.
+	 *
+	 * @param ingresosTotalesFichaFamiliar the new ingresos totales ficha familiar
+	 */
+	public void setIngresosTotalesFichaFamiliar(Integer ingresosTotalesFichaFamiliar) {
+		this.ingresosTotalesFichaFamiliar = ingresosTotalesFichaFamiliar;
+	}
+
+	/**
+	 * Gets the observaciones generales.
+	 *
+	 * @return the observaciones generales
+	 */
+	public String getObservacionesGenerales() {
+		return observacionesGenerales;
+	}
+
+	/**
+	 * Sets the observaciones generales.
+	 *
+	 * @param observacionesGenerales the new observaciones generales
+	 */
+	public void setObservacionesGenerales(String observacionesGenerales) {
+		this.observacionesGenerales = observacionesGenerales;
+	}
+
+	/**
+	 * Gets the motivo repitencia.
+	 *
+	 * @return the motivo repitencia
+	 */
+	public String getMotivoRepitencia() {
+		return motivoRepitencia;
+	}
+
+	/**
+	 * Sets the motivo repitencia.
+	 *
+	 * @param motivoRepitencia the new motivo repitencia
+	 */
+	public void setMotivoRepitencia(String motivoRepitencia) {
+		this.motivoRepitencia = motivoRepitencia;
+	}
+
+	/**
+	 * Gets the observaciones egreso ingreso.
+	 *
+	 * @return the observaciones egreso ingreso
+	 */
+	public String getObservacionesEgresoIngreso() {
+		return observacionesEgresoIngreso;
+	}
+
+	/**
+	 * Sets the observaciones egreso ingreso.
+	 *
+	 * @param observacionesEgresoIngreso the new observaciones egreso ingreso
+	 */
+	public void setObservacionesEgresoIngreso(String observacionesEgresoIngreso) {
+		this.observacionesEgresoIngreso = observacionesEgresoIngreso;
+	}
+
+	/**
+	 * Gets the otro motivo rechazo.
+	 *
+	 * @return the otro motivo rechazo
+	 */
+	public String getOtroMotivoRechazo() {
+		return otroMotivoRechazo;
+	}
+
+	/**
+	 * Sets the otro motivo rechazo.
+	 *
+	 * @param otroMotivoRechazo the new otro motivo rechazo
+	 */
+	public void setOtroMotivoRechazo(String otroMotivoRechazo) {
+		this.otroMotivoRechazo = otroMotivoRechazo;
+	}
+
+	public List<AnioEscolar> getAnioRepitio() {
+		return anioRepitio;
+	}
+
+	public void setAnioRepitio(List<AnioEscolar> anioRepitio) {
+		this.anioRepitio = anioRepitio;
+	}
+
+	public List<AnioEscolar> getAnioAbandono() {
+		return anioAbandono;
+	}
+
+	public void setAnioAbandono(List<AnioEscolar> anioAbandono) {
+		this.anioAbandono = anioAbandono;
+	}
+
+	public String getObservacionesMaterias() {
+		return observacionesMaterias;
+	}
+
+	public void setObservacionesMaterias(String observacionesMaterias) {
+		this.observacionesMaterias = observacionesMaterias;
+	}
+
+	public Boolean getMateriaCienciasNaturales() {
+		return materiaCienciasNaturales;
+	}
+
+	public void setMateriaCienciasNaturales(Boolean materiaCienciasNaturales) {
+		this.materiaCienciasNaturales = materiaCienciasNaturales;
+	}
+
+	/**
+	 * @return the idPerfilAlumno
+	 */
+	public Long getIdPerfilAlumno() {
+		return idPerfilAlumno;
+	}
+
+	/**
+	 * @param idPerfilAlumno the idPerfilAlumno to set
+	 */
+	public void setIdPerfilAlumno(Long idPerfilAlumno) {
+		this.idPerfilAlumno = idPerfilAlumno;
+	}
+
+	
+	
+}

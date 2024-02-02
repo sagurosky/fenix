@@ -1,0 +1,223 @@
+package org.cimientos.intranet.web.controller;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.cimientos.intranet.modelo.ubicacion.Localidad;
+import org.cimientos.intranet.modelo.ubicacion.ZonaCimientos;
+import org.cimientos.intranet.servicio.LocalidadSrv;
+import org.cimientos.intranet.servicio.ZonaCimientosSrv;
+import org.cimientos.intranet.utils.CategoriaSrv;
+import org.cimientos.intranet.utils.ConstantesMenu;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.cimientos.intranet.enumerativos.Categoria;
+
+@Controller
+@RequestMapping("/zona/*")
+public class ZonaController extends BaseController 
+{
+
+	@Autowired
+	private ZonaCimientosSrv srvZona;
+	
+	@Autowired
+	private CategoriaSrv srvCategoria;
+	
+	@Autowired
+	private LocalidadSrv srvLocalidad;
+	
+	/**
+	 * Recupera la lista de todas los zonas (activos e inactivos) persistidas en la DB.
+	 * @return la vista de la lista de zonas persistidas
+	 */
+	@RequestMapping("/zona/listaZonas.do")
+	public ModelAndView listaZonas(HttpServletRequest req){
+		HttpSession session = req.getSession();
+		session.setAttribute("menu", ConstantesMenu.menuAdministracionMaestros);
+		Map<String, Object> resul = new HashMap<String, Object>();
+		resul.put("zonas", srvZona.obtenerTodos());
+		return forward("/zona/listaZonas", resul);
+	}
+	
+	/**
+	 * Setea como inactivo a la zona que se quiere eliminar y se guarda el estado.
+	 * @param idZona
+	 * @return
+	 */
+	@RequestMapping("/zona/eliminarZona.do")
+	public ModelAndView eliminarZona(@RequestParam("idZona") Long idZona) 
+	{
+		Map<String, Object> resul = new HashMap<String, Object>();
+		ZonaCimientos zona = srvZona.obtenerZonaCimientos(idZona);
+		List<Localidad> localidadesDeUnaZona = zona.getLocalidades();
+		for (Localidad localidad : localidadesDeUnaZona) 
+		{
+			localidad.setZona(null);
+		}
+		zona.setLocalidades(null);
+		zona.setActivo(false);
+		srvZona.agregarZona(zona);
+		
+		resul.put("zonas", srvZona.obtenerTodos());
+		resul.put("mensaje", "La zona ha sido eliminada");
+		return forward("/zona/listaZonas", resul);
+	}
+	
+	/**
+	 * Este metodo recupera la zona por id y la retorna
+	 * @param idZona
+	 * @return la vista con la zona a modificar
+	 */
+	@RequestMapping("/zona/modificarView.do")
+	public ModelAndView modificar(@RequestParam("idZona") Long idZona) 
+	{
+		ZonaCimientos zona = srvZona.obtenerZonaCimientos(idZona);
+		Map<String, Object> model = new HashMap<String, Object>();
+		model.put("zona", zona);
+		
+		model.put("categorias", srvCategoria.obtenerCategoriasDeZona());
+		model.put("localidades", srvLocalidad.obtenerLocalidadesSinZona());
+		
+		return forward("/zona/modificarView", model);
+	}
+	
+	/**
+	 * Este metodo permite modificar los datos de la zona
+	 * @param categoria
+	 * @param localidadesIds
+	 * @param idZona
+	 * @return la lista de todas las zonas (activos e inactivos) persistidos
+	 */
+	@RequestMapping("/zona/modificar.do")
+	public ModelAndView modificarZona(
+			@RequestParam("localidades") List<Long> localidadesIds,
+			@RequestParam("nombre") String nombre,			
+			@RequestParam("idZona") Long idZona,
+			@RequestParam("eae") String eae,
+			@RequestParam("categoria") Integer categoria) 
+	{
+		ZonaCimientos zona = srvZona.obtenerZonaCimientos(idZona);
+		List<Localidad> localidadesActuales = zona.getLocalidades();
+		Map<String, Object> model = new HashMap<String, Object>();
+		List<Localidad> localidades = srvLocalidad.obtenerGrupo(localidadesIds);
+		List<String> nombresLocalidadesSeleccionadas = srvLocalidad.obtenerNombresLocalidades(localidadesIds);
+		boolean tieneZona = srvZona.obtenerPorLocalidadExistente(zona, nombresLocalidadesSeleccionadas);
+		if(srvZona.buscarZonaPorNombre(nombre, String.valueOf(idZona)))
+		{
+			model.put("error", "Ya existe una zona con ese nombre");
+			model.put("zona", zona);
+		
+			model.put("categorias", srvCategoria.obtenerCategoriasDeZona());
+			model.put("localidades", srvLocalidad.obtenerTodos());
+			return forward("/zona/modificarView", model);
+		}
+		if (tieneZona)
+		{
+			model.put("error", "La/las localidades seleccionada/s ya pertenece a una zona ");
+			model.put("zona", zona);
+			model.put("categorias", srvCategoria.obtenerCategoriasDeZona());
+			model.put("localidades", srvLocalidad.obtenerTodos());
+			return forward("/zona/modificarView", model);
+		}
+		else
+		{	
+			for (Localidad locAct : localidadesActuales) 
+			{
+			locAct.setZona(null);
+			}
+			
+			for (Localidad loc : localidades) 
+			{
+				loc.setZona(zona);
+			}
+			zona.setLocalidades(localidades);
+			srvZona.agregarZona(zona);
+			model.put("zonas", srvZona.obtenerTodos());
+			model.put("mensaje", "Se han actualizado los datos de la zona \"" +zona.getNombre()+"\"");
+		}
+		zona.setNombre(nombre);
+		zona.setLocalidades(localidades);
+		zona.setCategoria(Categoria.getCategoria(categoria));
+		zona.setEae(eae);
+		srvZona.agregarZona(zona);
+		model.put("categorias", srvCategoria.obtenerCategoriasDeZona());
+		model.put("localidades", srvLocalidad.obtenerTodos());
+		model.put("zonas", srvZona.obtenerTodos());
+		return forward("/zona/listaZonas", model);
+	}
+
+	
+	/**
+	 * Este metodo devuelve el formulario de alta de la zona
+	 * @param idZona
+	 * @return la vista con la zona a crear
+	 */
+	@RequestMapping("/zona/registrarView.do")
+	public ModelAndView registrar() 
+	{
+		Map<String, Object> model = new HashMap<String, Object>();
+		List<Categoria> categorias = srvCategoria.obtenerCategoriasDeZona();
+		
+		model.put("categorias", categorias);
+		model.put("localidades", srvLocalidad.obtenerLocalidadesSinZona());
+		return forward("/zona/registrarView", model);
+	}
+	
+	
+	
+
+	/**
+	 * Este metodo permite crear una zona
+	 * @param categoria
+	 * @param localidadesIds
+	 * @param idZona
+	 * @return la lista de todas las zonas (activos e inactivos) persistidos
+	 */
+	@RequestMapping("/zona/registrar.do")
+	public ModelAndView registrarZona( 
+			@RequestParam("localidades") List<Long> localidadesIds,
+			@RequestParam("categoria") Integer categoria,
+			@RequestParam("eae") String eae,
+			@RequestParam("nombre") String nombre){
+		
+			Map<String, Object> model = new HashMap<String, Object>();
+			
+			//Si existe una zona con ese nombre devuelto un msj de error
+			if(srvZona.getZonaPorNombre(nombre)){
+				model.put("error", "Ya existe una zona con ese nombre");
+				model.put("categorias", srvCategoria.obtenerCategoriasDeZona());
+				model.put("localidades", srvLocalidad.obtenerTodos());
+				
+				return forward("/zona/registrarView", model);
+			}
+			//Si no existe la creo
+			ZonaCimientos zona = new ZonaCimientos();
+			zona.setActivo(true);
+			zona.setNombre(nombre);
+			zona.setCategoria(Categoria.getCategoria(categoria));
+			zona.setEae(eae);
+			List<Localidad> localidades = srvLocalidad.obtenerGrupo(localidadesIds);
+			
+			for (Localidad loc : localidades){
+				loc.setZona(zona);
+			}
+			zona.setLocalidades(localidades);
+			
+			srvZona.agregarZona(zona);
+			model.put("mensaje", "Se ha registrado la zona \"" +zona.getNombre()+"\"");
+			
+			model.put("zonas", srvZona.obtenerTodos());
+			return forward("/zona/listaZonas", model);
+			}
+
+		
+}

@@ -1,0 +1,66 @@
+package com.cimientos.intranet.enumerativos.entrevista;
+
+import java.security.InvalidParameterException;
+import java.util.Arrays;
+import java.util.List;
+
+public enum MotivoAusencia {
+	
+	ENFERMEDAD(1,"Enfermedad"),
+	EVENTUALIDAD(2,"Eventualidad de ultimo momento"),
+	INASISTENCIA(3,"Becado o RA no podian asistir"),
+	OTROS(4,"Otros");
+	
+	
+	
+	private Integer id;
+	private String valor;
+	
+	
+	private MotivoAusencia(Integer id, String valor) {
+		this.id = id;
+		this.valor = valor;
+	}
+
+
+	public Integer getId() {
+		return id;
+	}
+
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+
+	public String getValor() {
+		return valor;
+	}
+
+
+	public void setValor(String valor) {
+		this.valor = valor;
+	}
+	
+	
+	public static MotivoAusencia getMotivoAusencia(Integer id){
+		switch (id) {
+		case 1:
+			return ENFERMEDAD;
+		case 2:
+			return EVENTUALIDAD;
+		case 3:
+			return INASISTENCIA;
+		case 4:
+			return OTROS;
+		
+		default:
+			throw new InvalidParameterException("Motivo de ausencia desconocido: "
+					+ id);
+		}
+	}
+
+	public static List<MotivoAusencia> getMotivoAusencias(){
+		return Arrays.asList(values());
+	}
+}

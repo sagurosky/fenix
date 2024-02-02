@@ -1,0 +1,85 @@
+package com.cimientos.intranet.dto;
+
+public class MateriaDTO {
+	
+	private String nombre;
+	
+	private String notaPrimero;
+	
+	private String notaSegundo;
+	
+	private String notaTercero;
+	
+	private String notaFin;
+	
+	private String notaDic;
+	
+	private String notaMarzo;
+	
+	//solo se usa en el pdf para las materias previas
+	private String ciclo;
+	
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getNotaPrimero() {
+		return notaPrimero;
+	}
+
+	public void setNotaPrimero(String notaPrimero) {
+		this.notaPrimero = notaPrimero;
+	}
+
+	public String getNotaSegundo() {
+		return notaSegundo;
+	}
+
+	public void setNotaSegundo(String notaSegundo) {
+		this.notaSegundo = notaSegundo;
+	}
+
+	public String getNotaTercero() {
+		return notaTercero;
+	}
+
+	public void setNotaTercero(String notaTercero) {
+		this.notaTercero = notaTercero;
+	}
+
+	public String getNotaFin() {
+		return notaFin;
+	}
+
+	public void setNotaFin(String notaFin) {
+		this.notaFin = notaFin;
+	}
+
+	public String getNotaDic() {
+		return notaDic;
+	}
+
+	public void setNotaDic(String notaDic) {
+		this.notaDic = notaDic;
+	}
+
+	public String getNotaMarzo() {
+		return notaMarzo;
+	}
+
+	public void setNotaMarzo(String notaMarzo) {
+		this.notaMarzo = notaMarzo;
+	}
+
+	public String getCiclo() {
+		return ciclo;
+	}
+
+	public void setCiclo(String ciclo) {
+		this.ciclo = ciclo;
+	}
+}
