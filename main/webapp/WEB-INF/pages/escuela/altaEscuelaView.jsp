@@ -147,6 +147,8 @@ $(function() {
 
 $(document).ready(function(){
  	$("#altaEscuela").validate();
+ 	if($("#modalidadTrabajoEscuela option:selected" ).text()=='Contacto Virtual')
+ 		$("#ocultarVirtual").hide();
  });
 function validarLocalidad()
 {
@@ -212,6 +214,14 @@ function cambiarMotivos(){
 }
 
 function habilitarCampos(){
+	if($("#modalidadTrabajoEscuela option:selected" ).text()=='Contacto Virtual')
+		{
+		$("#ocultarVirtual").hide(500);
+		}else
+			{
+			$("#ocultarVirtual").show(500);
+			}
+	
 	if((document.getElementById("modalidadTrabajoEscuela").value == 4) 
 			|| (document.getElementById("modalidadTrabajoEscuela").value == 5)){
 		document.getElementById("comProy").disabled = false;
@@ -1265,6 +1275,12 @@ function validarIndicador(obj){
 			</td>
 			
 <!-- 			ocultar a partir de aca si es no es presencial -->
+</table>
+
+
+
+<br><br>
+<table id="ocultarVirtual" >
 <tr>
 				<td align="left">El equipo directivo o referente facilita el espacio para el acompañamiento</td>
 				<td>
@@ -1397,7 +1413,11 @@ function validarIndicador(obj){
 					</select>
 				</td>
 			</tr>	
-			<tr>
+						
+	</table>
+	<br>
+	<table>
+	<tr>
 				<td>Participación en Escuelas que Acompañan</td>
 				<td>
 					<select class="textbox2" id="eqa" name="eqa" style='width:auto'>							
@@ -1418,9 +1438,8 @@ function validarIndicador(obj){
 					</c:choose>			
 					</select>
 				</td>	
-			</tr>			
+			</tr>
 	</table>
-	
 	<br><br>
 		<table>	
 			
