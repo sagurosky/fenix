@@ -459,8 +459,16 @@ public class Escuela implements Serializable{
 	
 	@Column(length=50)
 	private String equipoDirectivo;
+
+	@Column(length=50)
+	private String aniosParticipacionEQA;
+
+	@Column(length=50)
+	private String cualesOtrasPropuestas;
+	@Column(length=200)
+	private String cualOtroEspacioApoyo;
 	
-	
+	private Boolean participoOtrasPropuestas;
 	
 	
 	
@@ -471,6 +479,39 @@ public class Escuela implements Serializable{
 	
 
 	
+
+	public String getCualOtroEspacioApoyo() {
+		return cualOtroEspacioApoyo;
+	}
+
+	public void setCualOtroEspacioApoyo(String cualOtroEspacioApoyo) {
+		this.cualOtroEspacioApoyo = cualOtroEspacioApoyo;
+	}
+
+	public String getCualesOtrasPropuestas() {
+		return cualesOtrasPropuestas;
+	}
+
+	public void setCualesOtrasPropuestas(String cualesOtrasPropuestas) {
+		this.cualesOtrasPropuestas = cualesOtrasPropuestas;
+	}
+
+	public void setParticipoOtrasPropuestas(Boolean participoOtrasPropuestas) {
+		this.participoOtrasPropuestas = participoOtrasPropuestas;
+	}
+
+
+	public Boolean getParticipoOtrasPropuestas() {
+		return participoOtrasPropuestas;
+	}
+
+	public String getAniosParticipacionEQA() {
+		return aniosParticipacionEQA;
+	}
+
+	public void setAniosParticipacionEQA(String aniosParticipacionEQA) {
+		this.aniosParticipacionEQA = aniosParticipacionEQA;
+	}
 
 	public String getEquipoDirectivo() {
 		return equipoDirectivo;

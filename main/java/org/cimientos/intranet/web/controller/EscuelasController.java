@@ -199,7 +199,6 @@ public class EscuelasController extends BaseController {
 	public ModelAndView modificarView(
 		@RequestParam("idEscuela") Long idEscuela,
 		@RequestParam(required=false,value="urlRegreso") String urlRegreso){
-		
 		map = new HashMap<String, Object>();
 
 		map.put("escuela", escuelaService.obtenerEscuelaPorId(idEscuela));

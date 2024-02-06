@@ -6,6 +6,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*" %>
 <%@ page import="java.text.SimpleDateFormat"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -144,12 +145,45 @@ $(function() {
 	});
 });
 
-
 $(document).ready(function(){
  	$("#altaEscuela").validate();
  	if($("#modalidadTrabajoEscuela option:selected" ).text()=='Contacto Virtual')
  		$("#ocultarVirtual").hide();
+ 	
+ 	//mostrar u ocultar "otro" en espacios de apoyo
+ 	
+ 	if ($("#espacioApoyoid option:selected[value='15']").length > 0) {
+            $("#muestraCual").show();
+            $("#cualOtroEspacioApoyo").show();
+        } else {
+            $("#muestraCual").hide();
+            $("#cualOtroEspacioApoyo").hide();
+        }
+ 	
+ 	
+
+ 	
+ 	 
+ 	
+ 	
+ 	
+ 	
  });
+ 
+
+ function mostrarCual(){
+	 if ($("#espacioApoyoid option:selected[value='15']").length > 0) {
+	        // Muestra la otra parte
+	        $("#muestraCual").show();
+	        $("#cualOtroEspacioApoyo").show();
+	    } else {
+	        // Oculta la otra parte
+	        $("#muestraCual").hide();
+	        $("#cualOtroEspacioApoyo").hide();
+	    }
+ }
+ 
+ 
 function validarLocalidad()
 {
 	if ($("#nombreLocalidad").val() == '')
@@ -309,6 +343,7 @@ function validarIndicador(obj){
     </center>
 <!--     <fieldset style="width:1000px;"> -->
 <%-- 		<legend><strong>INFORMACIÓN PARA CONSULTAR CON EL/LA REFERENTE ESCOLAR</strong></legend> --%>
+<fieldset>
 		<table>			
 			<tr>
 				<td>Nombre de la Escuela<br>(no usar comillas)*</td>
@@ -404,7 +439,9 @@ function validarIndicador(obj){
 				</td>
 			</tr>	
 	</table>
+	</fieldset>
 	</br></br>
+<fieldset>	
 	<legend><strong>INFORMACIÓN INSTITUCIONAL DEL NIVEL SECUNDARIO</strong></legend>
 	</br>
 	<table>
@@ -472,7 +509,10 @@ function validarIndicador(obj){
 				<td><input type="text" class="textbox2" id="mail" name="mail" value="${escuela.mail}"></td>
 			</tr>
 	</table>
+	
 	<br><br>
+	<center>
+	<fieldset style="width:90%;">
 	<legend><strong>AUTORIDADES</strong></legend>	
 	<br>
 	<table style="width:100%;  text-align:center " >
@@ -1012,6 +1052,8 @@ function validarIndicador(obj){
 			<td><input type="text" class="textbox2"id="esReferenteAutoridad5" name="esReferenteAutoridad5"value="${escuela.esReferenteAutoridad5}"/></td>
 		</tr>
 	</table>
+	</fieldset>
+	</center>
 	<br>
 	<br>
 	
@@ -1049,10 +1091,9 @@ function validarIndicador(obj){
 					<input type="text" id="matricula" name="matricula"  class="textbox2" class="digits" value="${escuela.matricula}">
 				</td>
 				
-<!-- 				DMS pendiente -->
 				<td align="left">Total equipo directivo</td>
 				<td>
-					<input type="text"  id="equipoDirectivo"  name="equipoDirectivo" class="textbox2" class="digits" value="$escuela.equipoDirectivo">
+					<input type="text"  id="equipoDirectivo"  name="equipoDirectivo"  class="digits textbox2" value="${escuela.equipoDirectivo}">
 				</td>
 				
 				<td align="left">	
@@ -1071,17 +1112,21 @@ function validarIndicador(obj){
 			</tr>
 			
 	</table>
+</fieldset>	
 			<br>
 			<br>
+<fieldset>			
 	<legend><strong>INSTALACIONES DE LA ESCUELA</strong></legend>			
 	<table >
 		<tr>	
 			<td>ESPACIOS Y RECURSOS (marcar todas las que corresponda)<br> <strong>Este campo va a la FP e IS1</strong><img src="../static/images/atencion.gif" width=10></td>					
 			<td>
-				<form:select class="textbox2" path="espacioApoyo">
+				<form:select class="textbox2" path="espacioApoyo" id="espacioApoyoid" onchange="mostrarCual()">
 				<form:options items="${espaciosApoyo}" itemLabel="valor" itemValue="id"/>				
 				</form:select>
 			</td>
+				<td id="muestraCual">¿Cuál/es?</td>
+				<td id="muestraCual"><textarea class="textbox2" rows="4" cols="38" name="cualOtroEspacioApoyo" id="cualOtroEspacioApoyo" onblur="chequearLongitud(this,200);"onkeypress="chequearLongitud(this,200);">${escuela.cualOtroEspacioApoyo}</textarea></td>
 		</tr>
 			<tr>
 				<td align="left">¿La escuela trabaja en articulación con <br>otras organizaciones y/o programa de becas?	</td>			
@@ -1097,9 +1142,10 @@ function validarIndicador(obj){
 		
 			</tr>
 	</table>
+</fieldset>	
 			<br><br>
-			
-	<legend><strong>INSTALACIONES DE LA ESCUELA</strong></legend>			
+<fieldset>			
+	<legend><strong>ACCESIBILIDAD</strong></legend>			
 	<table >
 		<tr>	
 			<td align="left">Está ubicada dentro de un barrio de emergencia</td>
@@ -1175,11 +1221,12 @@ function validarIndicador(obj){
 					</select>
 				</td>	
 			</tr>
-	</table>		
+	</table>	
+	</fieldset>	
 	<br><br>
 	
-	<!-- 			DMS señalador -->
-	<fieldset style="width:1000px;">
+	
+	<fieldset >
 		<legend><strong>ARTICULACIÓN CIMIENTOS</strong></legend>	
 		<br><font color="#8C3F99">INFORMACIÓN PARA COMPLETAR POR EL EA SIN EL/LA REFERENTE ESCOLAR</font><br><br>
 	<table>	
@@ -1201,8 +1248,9 @@ function validarIndicador(obj){
 	</table>
 	</fieldset>
 	
-	
 	<br><br>
+	<fieldset >		
+	
 	<legend><strong>PROGRAMAS QUE SE IMPLEMENTAN</strong></legend>	
 	<table>
 		<tr>
@@ -1437,35 +1485,68 @@ function validarIndicador(obj){
 					    </c:otherwise>													    								
 					</c:choose>			
 					</select>
-				</td>	
+				</td>
+				<td>Año de participación en EQA: </td>
+				<td>
+<!-- 			DMS señalador -->	
+<!-- 					DMS quiero evitar la complejidad de guardar un dato multiple, por eso lo guardo como string en un solo campo en la bd -->
+
+					<select multiple id="aniosParticipacionEQA" name="aniosParticipacionEQA" class="textbox2" >
+						<option value="2020" <c:if test="${fn:contains(escuela.aniosParticipacionEQA, '2020')}"> selected </c:if>>2020</option>
+						<option value="2021" <c:if test="${fn:contains(escuela.aniosParticipacionEQA, '2021')}"> selected </c:if>>2021</option>
+						<option value="2022" <c:if test="${fn:contains(escuela.aniosParticipacionEQA, '2022')}"> selected </c:if>>2022</option>
+						<option value="2023" <c:if test="${fn:contains(escuela.aniosParticipacionEQA, '2023')}"> selected </c:if>>2023</option>
+						<option value="2024" <c:if test="${fn:contains(escuela.aniosParticipacionEQA, '2024')}"> selected </c:if>>2024</option>
+						<option value="2025" <c:if test="${fn:contains(escuela.aniosParticipacionEQA, '2025')}"> selected </c:if>>2025</option>
+						<option value="2026" <c:if test="${fn:contains(escuela.aniosParticipacionEQA, '2026')}"> selected </c:if>>2026</option>
+						<option value="2027" <c:if test="${fn:contains(escuela.aniosParticipacionEQA, '2027')}"> selected </c:if>>2027</option>
+					</select>			
+				
+				</td>
+			</tr>
+			<tr>
+			
+			
+				<td align="left">¿Participó de otras propuestas o iniciativas de Cimientos?	</td>			
+			<td>
+			Si <input class="textbox2" type="radio" value="true" id="participoOtrasPropuestas" name="participoOtrasPropuestas" class="required textbox2"
+			<c:if test="${escuela.participoOtrasPropuestas}"> checked="checked"</c:if> > 
+			No<input class="textbox2" type="radio" id="participoOtrasPropuestas" value="false" name="participoOtrasPropuestas"
+			<c:if test="${escuela.participoOtrasPropuestas == false}"> checked="checked"</c:if>></td>	
+			</tr>
+			<tr>
+			<td>¿Cuáles?</td>
+			<td><textarea class="textbox2" rows="4" cols="38" name="cualesOtrasPropuestas" id="cualesOtrasPropuestas" onblur="chequearLongitud(this,3000);"onkeypress="chequearLongitud(this,3000);">${escuela.cualesOtrasPropuestas}</textarea></td>			
+			
+			
 			</tr>
 	</table>
+	
+	</fieldset>
 	<br><br>
 		<table>	
-			
 			
 			<tr>
 				
 	
 				
-				<td>Subsidio estatal *</td>
-				<td>	Si<input type="radio" class="textbox2" id="subsidioEstatal" value="true" name="subsidioEstatal" class="required textbox2"
+<!-- 				<td>Subsidio estatal *</td> -->
+				<td>
+<!-- 					Si -->
+				<input type="hidden" class="textbox2" id="subsidioEstatal" value="true" name="subsidioEstatal" class="required textbox2"
 						<c:if test="${escuela.subsidioEstatal}"> checked="checked"</c:if> > 
-					No<input type="radio"class="textbox2"  id="subsidioEstatal" value="false" name="subsidioEstatal"
+<!-- 					No -->
+					<input type="radio"class="textbox2"  id="subsidioEstatal" value="false" name="subsidioEstatal" style="display:none"
 						<c:if test="${escuela.subsidioEstatal == false}"> checked="checked"</c:if>>
-					<input type="hidden" class="textbox2" id="rural" name="rural" value="0">
+					<input type="radio" class="textbox2" id="rural" name="rural" value="0"style="display:none">
 				</td>
-				
-				
-					
-					
-			</tr>
-			<tr>			
-							
-				<td>Implementa Secundaria 2030</td>
-				<td>	Si<input type="radio" class="textbox2" id="is2030" value="true" name="is2030" class="required textbox2"
+<!-- 				<td>Implementa Secundaria 2030</td> -->
+				<td>	
+<!-- 				Si -->
+				<input type="hidden" class="textbox2" id="is2030" value="true" name="is2030" class="required textbox2"
 						<c:if test="${escuela.is2030}"> checked="checked"</c:if> > 
-					No<input type="radio"class="textbox2"  id="i2030" value="false" name="i2030"
+<!-- 					No -->
+					<input type="hidden"class="textbox2"  id="i2030" value="false" name="i2030"
 						<c:if test="${escuela.is2030 == false}"> checked="checked"</c:if>>
 				</td>			
 			
@@ -1486,8 +1567,8 @@ function validarIndicador(obj){
 	
 	
 <center>
-	<fieldset style="width:1000px; ">		
-		<legend><strong>INFORMACION PARA CIMIENTOS BRINDADA POR EL EQUIPO DIRECTIVO</strong></legend>
+	<fieldset >		
+		<legend><strong>INDICADORES EDUCATIVOS</strong></legend>
 		<br>
 		<font color="#8C3F99">PRINCIPALES INDICADORES EDUCATIVOS (completar con los datos de la TRAYECTORIA DE MATRÍCULA según lo reportado en el cuadernillo MÁS RECIENTE del RELEVAMIENTO ANUAL  para Educación Común del Ministerio de Educación - CUADERNILLO CELESTE)
 		</font><br><br>
@@ -1518,11 +1599,11 @@ function validarIndicador(obj){
 			<thead>
 				<tr>								
 					<th>Año de<br>estudio</th>					
-					<th>Matrícula<br>inicial<br>(a)</th>
-					<th>Entrados<br>(b)</th>
-					<th>Salidos<br>con pase<br>(c)</th>
-					<th>Salidos<br>sin pase<br>(d)</th>
-					<th>(1)+(2)+(3)<br>Matrícula<br>final<br>(a)+(b)-(c)-(d)</th>
+<!-- 					<th>Matrícula<br>inicial<br>(a)</th> -->
+<!-- 					<th>Entrados<br>(b)</th> -->
+<!-- 					<th>Salidos<br>con pase<br>(c)</th> -->
+<!-- 					<th>Salidos<br>sin pase<br>(d)</th> -->
+<!-- 					<th>(1)+(2)+(3)<br>Matrícula<br>final<br>(a)+(b)-(c)-(d)</th> -->
 					<th>Promovidos<br>el último día<br>de clase<br>(1)</th>
 					<th>Promovidos<br>con exámen<br>(2)</th>
 					<th>No Promovidos<br>(3)</th>
@@ -1533,77 +1614,153 @@ function validarIndicador(obj){
 			<tbody>
 				<tr>
 					<td>1°</td>
-					<td><input class="textbox2" type="text" id="mi1" name="mi1" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.mi1}"></td>
-					<td><input class="textbox2" type="text" id="en1" name="en1" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.en1}"></td>
-					<td><input class="textbox2" type="text" id="scp1" name="scp1" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.scp1}"></td>
-					<td><input class="textbox2" type="text" id="ssp1" name="ssp1" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.ssp1}"></td>
-					<td><input class="textbox2"  type="text" id="mf1" name="mf1" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.mf1}"></td>
+<!-- 					<td> -->
+					<input class="textbox2" type="hidden" id="mi1" name="mi1" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.mi1}">
+<!-- 					</td> -->
+<!-- 					<td> -->
+					<input class="textbox2" type="hidden" id="en1" name="en1" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.en1}">
+<!-- 					</td> -->
+<!-- 					<td> -->
+					<input class="textbox2" type="hidden" id="scp1" name="scp1" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.scp1}">
+<!-- 					</td> -->
+<!-- 					<td> -->
+					<input class="textbox2" type="hidden" id="ssp1" name="ssp1" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.ssp1}">
+<!-- 					</td> -->
+<!-- 					<td> -->
+					<input class="textbox2"  type="hidden" id="mf1" name="mf1" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.mf1}">
+					</td>
+					
 					<td><input class="textbox2"  type="text" id="pudc1" name="pudc1" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.pudc1}"></td>
 					<td><input class="textbox2"  type="text" id="pcf1" name="pcf1" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.pcf1}"></td>
 					<td><input class="textbox2"  type="text" id="np1" name="np1" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.np1}"></td>
 				</tr>
 				<tr>
 					<td>2°</td>
-					<td><input class="textbox2" type="text" id="mi2" name="mi2" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.mi2}"></td>
-					<td><input class="textbox2" type="text" id="en2" name="en2" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.en2}"></td>
-					<td><input class="textbox2" type="text" id="scp2" name="scp2" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.scp2}"></td>
-					<td><input class="textbox2" type="text" id="ssp2" name="ssp2" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.ssp2}"></td>
-					<td><input class="textbox2"  type="text" id="mf2" name="mf2" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.mf2}"></td>
+<!-- 					<td> -->
+					<input class="textbox2" type="hidden" id="mi2" name="mi2" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.mi2}">
+<!-- 					</td> -->
+<!-- 					<td> -->
+					<input class="textbox2" type="hidden" id="en2" name="en2" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.en2}">
+<!-- 					</td> -->
+<!-- 					<td> -->
+					<input class="textbox2" type="hidden" id="scp2" name="scp2" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.scp2}">
+<!-- 					</td> -->
+<!-- 					<td> -->
+					<input class="textbox2" type="hidden" id="ssp2" name="ssp2" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.ssp2}">
+<!-- 					</td> -->
+<!-- 					<td> -->
+					<input class="textbox2"  type="hidden" id="mf2" name="mf2" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.mf2}">
+<!-- 					</td> -->
+					
 					<td><input class="textbox2"  type="text" id="pudc2" name="pudc2" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.pudc2}"></td>
 					<td><input class="textbox2"  type="text" id="pcf2" name="pcf2" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.pcf2}"></td>
 					<td><input class="textbox2"  type="text" id="np2" name="np2" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.np2}"></td>
 				</tr>
 				<tr>
 					<td>3°</td>
-					<td><input class="textbox2" type="text" id="mi3" name="mi3" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.mi3}"></td>
-					<td><input class="textbox2" type="text" id="en3" name="en3" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.en3}"></td>
-					<td><input class="textbox2" type="text" id="scp3" name="scp3" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.scp3}"></td>
-					<td><input class="textbox2" type="text" id="ssp3" name="ssp3" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.ssp3}"></td>
-					<td><input class="textbox2"  type="text" id="mf3" name="mf3" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.mf3}"></td>
+<!-- 					<td> -->
+					<input class="textbox2" type="hidden" id="mi3" name="mi3" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.mi3}">
+<!-- 					</td> -->
+<!-- 					<td> -->
+					<input class="textbox2" type="hidden" id="en3" name="en3" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.en3}">
+<!-- 					</td> -->
+<!-- 					<td> -->
+					<input class="textbox2" type="hidden" id="scp3" name="scp3" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.scp3}">
+<!-- 					</td> -->
+<!-- 					<td> -->
+					<input class="textbox2" type="hidden" id="ssp3" name="ssp3" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.ssp3}">
+<!-- 					</td> -->
+<!-- 					<td> -->
+					<input class="textbox2"  type="hidden" id="mf3" name="mf3" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.mf3}">
+<!-- 					</td> -->
+					
 					<td><input class="textbox2"  type="text" id="pudc3" name="pudc3" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.pudc3}"></td>
 					<td><input class="textbox2"  type="text" id="pcf3" name="pcf3" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.pcf3}"></td>
 					<td><input class="textbox2"  type="text" id="np3" name="np3" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.np3}"></td>
 				</tr>
 				<tr>
 					<td>4°</td>
-					<td><input class="textbox2" type="text" id="mi4" name="mi4" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.mi4}"></td>
-					<td><input class="textbox2" type="text" id="en4" name="en4" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.en4}"></td>
-					<td><input class="textbox2" type="text" id="scp4" name="scp4" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.scp4}"></td>
-					<td><input class="textbox2" type="text" id="ssp4" name="ssp4" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.ssp4}"></td>
-					<td><input class="textbox2"  type="text" id="mf4" name="mf4" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.mf4}"></td>
+<!-- 					<td> -->
+					<input class="textbox2" type="hidden" id="mi4" name="mi4" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.mi4}">
+<!-- 					</td> -->
+<!-- 					<td> -->
+					<input class="textbox2" type="hidden" id="en4" name="en4" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.en4}">
+<!-- 					</td> -->
+<!-- 					<td> -->
+					<input class="textbox2" type="hidden" id="scp4" name="scp4" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.scp4}">
+<!-- 					</td> -->
+<!-- 					<td> -->
+					<input class="textbox2" type="hidden" id="ssp4" name="ssp4" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.ssp4}">
+<!-- 					</td> -->
+<!-- 					<td> -->
+					<input class="textbox2"  type="hidden" id="mf4" name="mf4" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.mf4}">
+<!-- 					</td> -->
+					
 					<td><input class="textbox2"  type="text" id="pudc4" name="pudc4" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.pudc4}"></td>
 					<td><input class="textbox2"  type="text" id="pcf4" name="pcf4" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.pcf4}"></td>
 					<td><input class="textbox2"  type="text" id="np4" name="np4" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.np4}"></td>
 				</tr>			
 				<tr>
 					<td>5°</td>
-					<td><input class="textbox2" type="text" id="mi5" name="mi5" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.mi5}"></td>
-					<td><input class="textbox2" type="text" id="en5" name="en5" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.en5}"></td>
-					<td><input class="textbox2" type="text" id="scp5" name="scp5" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.scp5}"></td>
-					<td><input class="textbox2" type="text" id="ssp5" name="ssp5" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.ssp5}"></td>
-					<td><input class="textbox2"  type="text" id="mf5" name="mf5" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.mf5}"></td>
+<!-- 					<td> -->
+					<input class="textbox2" type="hidden" id="mi5" name="mi5" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.mi5}">
+<!-- 					</td> -->
+<!-- 					<td> -->
+					<input class="textbox2" type="hidden" id="en5" name="en5" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.en5}">
+<!-- 					</td> -->
+<!-- 					<td> -->
+					<input class="textbox2" type="hidden" id="scp5" name="scp5" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.scp5}">
+<!-- 					</td> -->
+<!-- 					<td> -->
+					<input class="textbox2" type="hidden" id="ssp5" name="ssp5" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.ssp5}">
+<!-- 					</td> -->
+<!-- 					<td> -->
+					<input class="textbox2"  type="hidden" id="mf5" name="mf5" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.mf5}">
+<!-- 					</td> -->
+					
 					<td><input class="textbox2"  type="text" id="pudc5" name="pudc5" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.pudc5}"></td>
 					<td><input class="textbox2"  type="text" id="pcf5" name="pcf5" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.pcf5}"></td>
 					<td><input class="textbox2"  type="text" id="np5" name="np5" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.np5}"></td>
 				</tr>
 				<tr>
 					<td>6°</td>
-					<td><input class="textbox2" type="text" id="mi6" name="mi6" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.mi6}"></td>
-					<td><input class="textbox2" type="text" id="en6" name="en6" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.en6}"></td>
-					<td><input class="textbox2" type="text" id="scp6" name="scp6" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.scp6}"></td>
-					<td><input class="textbox2" type="text" id="ssp6" name="ssp6" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.ssp6}"></td>
-					<td><input class="textbox2"  type="text" id="mf6" name="mf6" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.mf6}"></td>
+<!-- 					<td> -->
+					<input class="textbox2" type="hidden" id="mi6" name="mi6" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.mi6}">
+<!-- 					</td> -->
+<!-- 					<td> -->
+					<input class="textbox2" type="hidden" id="en6" name="en6" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.en6}">
+<!-- 					</td> -->
+<!-- 					<td> -->
+					<input class="textbox2" type="hidden" id="scp6" name="scp6" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.scp6}">
+<!-- 					</td> -->
+<!-- 					<td> -->
+					<input class="textbox2" type="hidden" id="ssp6" name="ssp6" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.ssp6}">
+<!-- 					</td> -->
+<!-- 					<td> -->
+					<input class="textbox2"  type="hidden" id="mf6" name="mf6" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.mf6}">
+<!-- 					</td> -->
 					<td><input class="textbox2"  type="text" id="pudc6" name="pudc6" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.pudc6}"></td>
 					<td><input class="textbox2"  type="text" id="pcf6" name="pcf6" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.pcf6}"></td>
 					<td><input class="textbox2"  type="text" id="np6" name="np6" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.np6}"></td>
 				</tr>
 				<tr>
 					<td>7°</td>
-					<td><input class="textbox2" type="text" id="mi7" name="mi7" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.mi7}"></td>
-					<td><input class="textbox2" type="text" id="en7" name="en7" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.en7}"></td>
-					<td><input class="textbox2" type="text" id="scp7" name="scp7" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.scp7}"></td>
-					<td><input class="textbox2" type="text" id="ssp7" name="ssp7" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.ssp7}"></td>
-					<td><input class="textbox2"  type="text" id="mf7" name="mf7" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.mf7}"></td>
+<!-- 					<td> -->
+					<input class="textbox2" type="hidden" id="mi7" name="mi7" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.mi7}">
+<!-- 					</td> -->
+<!-- 					<td> -->
+					<input class="textbox2" type="hidden" id="en7" name="en7" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.en7}">
+<!-- 					</td> -->
+<!-- 					<td> -->
+					<input class="textbox2" type="hidden" id="scp7" name="scp7" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.scp7}">
+<!-- 					</td> -->
+<!-- 					<td> -->
+					<input class="textbox2" type="hidden" id="ssp7" name="ssp7" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.ssp7}">
+<!-- 					</td> -->
+<!-- 					<td> -->
+					<input class="textbox2"  type="hidden" id="mf7" name="mf7" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.mf7}">
+<!-- 					</td> -->
+					
 					<td><input class="textbox2"  type="text" id="pudc7" name="pudc7" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.pudc7}"></td>
 					<td><input class="textbox2"  type="text" id="pcf7" name="pcf7" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.pcf7}"></td>
 					<td><input class="textbox2"  type="text" id="np17" name="np7" size="5" onchange="validarIndicador(this)" onkeypress="return validarDecimal(event, this);" value="${escuela.np7}"></td>
@@ -1611,80 +1768,54 @@ function validarIndicador(obj){
 			</tbody>	
 		</table>
 </center>
+
+
+<!-- DMS a partir de aca todo oculto (informacion vieja ) -->
+
+
 	<br>
 	<table>	
 		<tr>
-			
-			
-		</tr>
-		<tr>
-				
-			
-		
-			<td></td><td></td>
-		</tr>
-		<tr>
-			
-			<td align="left">Detallar otros</td>
-			<td><textarea class="textbox2" rows="4" cols="38" name="otrosEspacios" id="otrosEspacios" onblur="chequearLongitud(this,3000);"onkeypress="chequearLongitud(this,3000);">${escuela.otrosEspacios}</textarea></td>
-		</tr>
-		<tr>
-			<td align="left">¿Qué necesidades identifican en su escuela?</td>			
-			<td><form:select class="textbox2" path="necesidadesEscuela">
-				<form:options items="${necesidadesEscuela}" itemLabel="valor" itemValue="id"/>				
+<!-- 			<td align="left">Detallar otros</td> -->
+			<td><input type="hidden"  class="textbox2" rows="4" cols="38" name="otrosEspacios" id="otrosEspacios" onblur="chequearLongitud(this,3000);"onkeypress="chequearLongitud(this,3000);"value="${escuela.otrosEspacios}"></td>
+<!-- 			<td align="left">¿Qué necesidades identifican en su escuela?</td>			 -->
+			<td><form:select class="textbox2" path="necesidadesEscuela" style="display:none" >
+				<form:options items="${necesidadesEscuela}" itemLabel="valor" itemValue="id" />				
 				</form:select>
 			</td>		
-			<td align="left">Brinde mayor información sobre las respuestas anteriores</td>
-			<td><textarea class="textbox2" rows="4" cols="38" name="mayorInformacion" id="mayorInformacion" onblur="chequearLongitud(this,3000);"onkeypress="chequearLongitud(this,3000);">${escuela.mayorInformacion}</textarea></td>			
-		</tr>
-		<tr>
+<!-- 			<td align="left">Brinde mayor información sobre las respuestas anteriores</td> -->
+			<td><input type="hidden"  class="textbox2" rows="4" cols="38" name="mayorInformacion" id="mayorInformacion" onblur="chequearLongitud(this,3000);"onkeypress="chequearLongitud(this,3000);"value="${escuela.mayorInformacion}"/></td>			
 		</tr>
 	</table>	
 	</fieldset>
 	<br><br>
-	<fieldset style="width:1000px;">
-		<legend><strong>ARTICULACIÓN PFE:</strong></legend>	
+<!-- 	<fieldset style="width:1000px;"> -->
+<%-- 		<legend><strong>ARTICULACIÓN PFE:</strong></legend>	 --%>
 		<table>
 			<tr>				
-				<td colspan="1" style="vertical-align:middle;">Recomendación para llegar a la Escuela (transporte, horarios, costos, etc)</td>				
-				<td colspan="3" style="vertical-align:middle;">	<textarea class="textbox2" rows="4" cols="80" name="obsGenerales" id="obsGenerales" onblur="chequearLongitud(this,3000);"onkeypress="chequearLongitud(this,3000);">${escuela.obsGenerales}</textarea>			
+<!-- 				<td colspan="1" style="vertical-align:middle;">Recomendación para llegar a la Escuela (transporte, horarios, costos, etc)</td>				 -->
+				<td colspan="3" style="vertical-align:middle;">	<input type="hidden"  class="textbox2" rows="4" cols="80" name="obsGenerales" id="obsGenerales" onblur="chequearLongitud(this,3000);"onkeypress="chequearLongitud(this,3000);"value="${escuela.obsGenerales}">			
 				</td>
-			</tr>
-			<tr>
-				<td align="left">¿LA ESCUELA BRINDA ALGÚN REFERENTE PARA EL SEGUIMIENTO DE LOS BECADOS?</td>
+<!-- 				<td align="left">¿LA ESCUELA BRINDA ALGÚN REFERENTE PARA EL SEGUIMIENTO DE LOS BECADOS?</td> -->
 				<td>	
-					Si <input type="radio" value="true" id="referneteSiNo" name="referenteSiNo" class="required textbox2"
+<!-- 					Si  -->
+					<input type="radio" value="true" id="referneteSiNo" name="referenteSiNo" class="required textbox2"style="display:none"
 						<c:if test="${escuela.referenteSiNo}"> checked="checked"</c:if> > 
-					No<input type="radio" id="referenteSiNo" value="false" name="referenteSiNo"
+<!-- 					No -->
+					<input type="radio" id="referenteSiNo" value="false" name="referenteSiNo"style="display:none"
 						<c:if test="${escuela.referenteSiNo == false}"> checked="checked"</c:if>>
 				</td>
-				<td align="left">Nombre y Cargo Referente</td>
-				<td><input type="text" class="textbox2" id="referenteAB" name="referenteAB" value="${escuela.referenteAB}"></td>
-			</tr>
-			
-			<tr>
-				<td align="left">Celular Referente</td>
-				<td><input type="text" class="textbox2" id="referenteABECelular" name="referenteABCelular" value="${escuela.referenteABCelular}"></td>
+<!-- 				<td align="left">Nombre y Cargo Referente</td> -->
+				<td><input type="hidden" class="textbox2" id="referenteAB" name="referenteAB" value="${escuela.referenteAB}"></td>
+<!-- 				<td align="left">Celular Referente</td> -->
+				<td><input type="hidden" class="textbox2" id="referenteABECelular" name="referenteABCelular" value="${escuela.referenteABCelular}"></td>
 	
-				<td align="left">Mail Referente</td>
-				<td><input type="text" class="textbox2" id="referenteABMail" name="referenteABMail" value="${escuela.referenteABMail}"></td>
-			</tr>
-			<tr><td><br></td></tr>
-			<tr>
-				<td colspan=4 nowrap="nowrap" align="center"><strong>Evalúe las siguientes frases</strong></td>
-			</tr>	
-			<tr><td><br></td></tr>
-			
-			<tr><td><br></td></tr>
-			
-			<tr><td><br></td></tr>
-			<tr>				
-				<td colspan=4 align="center"><strong>INFORMACIÓN PARA CIMIENTOS</strong></td>
-			</tr>
-			<tr><td><br></td></tr>
-			<tr>
-				<td align="left">Programa que se implementa *</td>
-				<td><select name="idPrograma" id="programa" class="required textbox2" style="width: auto;">
+<!-- 				<td align="left">Mail Referente</td> -->
+				<td><input type="hidden" class="textbox2" id="referenteABMail" name="referenteABMail" value="${escuela.referenteABMail}"></td>
+<%-- 				<td colspan=4 nowrap="nowrap" align="center"><strong>Evalúe las siguientes frases</strong></td> --%>
+<%-- 				<td colspan=4 align="center"><strong>INFORMACIÓN PARA CIMIENTOS</strong></td> --%>
+<!-- 				<td align="left">Programa que se implementa *</td> -->
+				<td><select name="idPrograma" id="programa" class="required textbox2" style="width: auto; display:'none'" hidden>
 						<option></option>
 						<c:forEach items="${programas}" var="programa">
 							<c:choose>
@@ -1719,18 +1850,12 @@ function validarIndicador(obj){
 					</select>
 				</td>		
 				
-			</tr>
-			<tr><td><br></td></tr>
-			<tr>				
-				<td colspan=4 align="center"><strong>ACCESIBILIDAD</strong>
+				<td colspan=4 align="center"><strong>
+<!-- 				ACCESIBILIDAD -->
+				</strong>
 					<input type="hidden" name="idAccesibilidad" id="accesibilidad" value="1">
 				</td>
 			</tr>
-			<tr><td><br></td></tr>				
-			
-			
-			<tr><td><br></td></tr>
-			
 	</table>
 		
 		
@@ -1760,7 +1885,7 @@ function validarIndicador(obj){
 			<input type="hidden" name="idEpep" id="epep" style="width: auto;" value="1">
 			 -->
 				
-		</fieldset>
+<!-- 		</fieldset> -->
 
 
 			
