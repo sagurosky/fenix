@@ -14,6 +14,7 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -139,6 +140,7 @@ public class EscuelasController extends BaseController {
 		map.put("espaciosApoyo", EspacioApoyo.getEspacioApoyo());
 		map.put("necesidadesEscuela", NecesidadesEscuela.getnNecesidadesEscuelas() );
 		
+		
 		return forward("/escuela/altaEscuelaView", map);
 	}
 	
@@ -252,7 +254,20 @@ public class EscuelasController extends BaseController {
 		map.put("espaciosApoyo", EspacioApoyo.getEspacioApoyo());
 		map.put("necesidadesEscuela", NecesidadesEscuela.getnNecesidadesEscuelas() );
 		map.put("urlRegreso", urlRegreso);
+
+		List<Integer> aniosEQA= new ArrayList<Integer>();
 		
+		 Calendar calendar = Calendar.getInstance();
+       int anioActual = calendar.get(Calendar.YEAR);
+		int anio=2020;
+		aniosEQA.add(anio);
+		//DMS mando a la vista la lista de años desde el 2020 hasta elactual 
+		do{
+			anio++;
+			aniosEQA.add(anio);
+		}while(anio<anioActual);
+		
+		map.put("aniosEQA", aniosEQA);
 		return forward("/escuela/altaEscuelaView", map);
 	}
 	
@@ -261,7 +276,7 @@ public class EscuelasController extends BaseController {
 		@RequestParam("idEscuela") Long idEscuela,
 		@RequestParam(required=false,value="urlRegreso") String urlRegreso) throws SQLException{
 		map = new HashMap<String, Object>(); 
-		String url = "jdbc:mysql://localhost/cimientos_prod";
+		String url = "jdbc:mysql://localhost/cimientos_testing";
 		Connection cn = DriverManager.getConnection(url,"root","root");
 		Statement stmt = cn.createStatement();
         ResultSet rs = null;
@@ -464,7 +479,7 @@ public class EscuelasController extends BaseController {
 	@RequestMapping("/escuela/listaEscuelas")
 	public ModelAndView listasEscuelasCandidatas() throws SQLException{ 
 		map = new HashMap<String, Object>(); 
-		String url = "jdbc:mysql://localhost/cimientos_prod";
+		String url = "jdbc:mysql://localhost/cimientos_testing";
 		Connection cn = DriverManager.getConnection(url,"root","root");
 		Statement stmt = cn.createStatement();
 		cn = Conexion.getConexion();

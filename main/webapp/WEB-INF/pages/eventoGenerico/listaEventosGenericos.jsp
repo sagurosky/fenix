@@ -264,7 +264,7 @@ $(function() {
 		<c:if test="${!empty rr}">
 			<tr>
 				<td>
-					<sql:setDataSource var = "snapshot" driver = "com.mysql.jdbc.Driver" url = "jdbc:mysql://localhost/cimientos_prod" user = "root"  password = "root"/>
+					<sql:setDataSource var = "snapshot" driver = "com.mysql.jdbc.Driver" url = "jdbc:mysql://localhost/cimientos_testing" user = "root"  password = "root"/>
 					<sql:query dataSource = "${snapshot}" var = "result">
 						select perfilea, persona.apellido, persona.nombre
 						from perfilea, perfilrr, persona

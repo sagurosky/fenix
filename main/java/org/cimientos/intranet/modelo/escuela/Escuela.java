@@ -462,6 +462,8 @@ public class Escuela implements Serializable{
 
 	@Column(length=50)
 	private String aniosParticipacionEQA;
+	@Column(length=50)
+	private String redEQA;
 
 	@Column(length=50)
 	private String cualesOtrasPropuestas;
@@ -479,6 +481,14 @@ public class Escuela implements Serializable{
 	
 
 	
+
+	public String getRedEQA() {
+		return redEQA;
+	}
+
+	public void setRedEQA(String redEQA) {
+		this.redEQA = redEQA;
+	}
 
 	public String getCualOtroEspacioApoyo() {
 		return cualOtroEspacioApoyo;

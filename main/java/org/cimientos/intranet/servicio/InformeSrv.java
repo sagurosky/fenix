@@ -1708,7 +1708,7 @@ public class InformeSrv {
 			reporteDTO.setHabiliaddes(is1.getHsTrabajarAño());
 			
 			if(is1.getBecado().getEscuela().getEspacioApoyo()!= null)
-				reporteDTO.setEspacioEscuela(parsearListaEspacios(informe.getBecado().getEscuela().getEspacioApoyo()));
+				reporteDTO.setEspacioEscuela(parsearListaEspacios(informe.getBecado().getEscuela().getEspacioApoyo(),informe.getBecado().getEscuela().getCualOtroEspacioApoyo()));
 			
 			
 			String conducta="";
@@ -2070,13 +2070,18 @@ public class InformeSrv {
 		return materia;
 	}
 	
-	private String parsearListaEspacios(List<EspacioApoyo> espacioApoyo) {
+	private String parsearListaEspacios(List<EspacioApoyo> espacioApoyo,String otro) {
 		StringBuffer valor = new StringBuffer("");
 		if(!espacioApoyo.isEmpty()){
 			for (EspacioApoyo espacio : espacioApoyo) {
 				valor.append( espacio.getValor().toLowerCase() + ", ");			
 			}
 			valor.replace(0, espacioApoyo.get(0).getValor().length(), espacioApoyo.get(0).getValor());		
+			if(otro!=null)
+				{
+				valor.append( otro + ", ");		
+				valor.replace(0, valor.length(), valor.toString().replace("Otro, ", ""));
+				}
 			valor.deleteCharAt(valor.lastIndexOf(","));
 			valor.deleteCharAt(valor.length() - 1);
 			valor.append(".");			

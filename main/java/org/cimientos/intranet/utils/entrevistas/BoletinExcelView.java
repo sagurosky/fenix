@@ -98,7 +98,7 @@ public class BoletinExcelView extends AbstractExcelView{
 				sheet = workbook.getSheet("Boletines");
 			}
 			
-			String url = "jdbc:mysql://localhost/cimientos_prod";
+			String url = "jdbc:mysql://localhost/cimientos_testing";
 			Connection cn = DriverManager.getConnection(url,"root","root");	
 			cn = null;
 	        CallableStatement cl = null;

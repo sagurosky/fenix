@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 
 public class Conexion {
     //La url con la cual nos conectariamos a la base de datos
-    private static String url = "jdbc:mysql://localhost/cimientos_prod";
+    private static String url = "jdbc:mysql://localhost/cimientos_testing";
     //El usuario de la base de datos
     private static String user = "root";
     //La clave del usuario de la base de datos

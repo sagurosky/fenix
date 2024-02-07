@@ -137,7 +137,7 @@ public class InformeFPController extends BaseController
 			
 			/*
 			//update	        
-    		String url = "jdbc:mysql://localhost/cimientos_prod";
+    		String url = "jdbc:mysql://localhost/cimientos_testing";
 			Connection cn = DriverManager.getConnection(url,"root","root");						        	        	      
 	        String query = "update informe i join entrevista e " +
 						 " ON i.becado=e.perfil_alumno " +
@@ -309,7 +309,7 @@ public class InformeFPController extends BaseController
 		System.out.println(ficha.getIncorporacion());
 		if(ficha.getIncorporacion() == null){
 			//update	        
-    		String url = "jdbc:mysql://localhost/cimientos_prod";
+    		String url = "jdbc:mysql://localhost/cimientos_testing";
 			Connection cn = DriverManager.getConnection(url,"root","root");						        	        	      
 	        String query = "update informe i join entrevista e " +
 						 " ON i.becado=e.perfil_alumno " +
@@ -407,7 +407,7 @@ public class InformeFPController extends BaseController
 				e.printStackTrace();			
 			
 			}
-			url = "jdbc:mysql://localhost/cimientos_prod";
+			url = "jdbc:mysql://localhost/cimientos_testing";
 			cn = DriverManager.getConnection(url,"root","root");						        	        	      
 	        query = "select vos_mismo, situacion_escolar, observaciones_generales,incorporacion, observaciones_no_incorporacion, proposito_anual from informe where id="+ + ficha.getId() + "  ;";
 	        CallableStatement cl = null;
@@ -437,7 +437,7 @@ public class InformeFPController extends BaseController
 			}else{
 				
 				//update	        
-	    		String url = "jdbc:mysql://localhost/cimientos_prod";
+	    		String url = "jdbc:mysql://localhost/cimientos_testing";
 				Connection cn = DriverManager.getConnection(url,"root","root");						        	        	      
 		        String query = "update informe i join entrevista e " +
 							 " ON i.becado=e.perfil_alumno " +

@@ -2383,8 +2383,7 @@ public class EnvioInformeController extends BaseController
 		informeDTO.sethSE(informe.getHsTrabajarAño());
 		
 		if(informe.getBecado().getEscuela().getEspacioApoyo()!= null)
-			informeDTO.setEspacioEscuela(parsearListaEspacios(informe.getBecado().getEscuela().getEspacioApoyo()));
-		
+			informeDTO.setEspacioEscuela(parsearListaEspacios(informe.getBecado().getEscuela().getEspacioApoyo(),informe.getBecado().getEscuela().getCualOtroEspacioApoyo()));
 		//2021
 		File file = new File(getProps().getProperty(ConstantesInformes.pathImagen) 
 				+ informe.getBecado().getDatosPersonales().getDni().toString() + ConstantesInformes.extensionImagen);
@@ -2748,17 +2747,20 @@ public class EnvioInformeController extends BaseController
 		return valor.toString();
 	}
 	
-	private String parsearListaEspacios(List<EspacioApoyo> espacioApoyo) {
+	private String parsearListaEspacios(List<EspacioApoyo> espacioApoyo, String otroEspacioApoyo) {
 		StringBuffer valor = new StringBuffer("");
 		if(!espacioApoyo.isEmpty()){
 			for (EspacioApoyo espacio : espacioApoyo) {
 				valor.append( espacio.getValor().toLowerCase() + ", ");			
 			}
+			valor.append( otroEspacioApoyo.toLowerCase() + ", ");			
+			
 			valor.replace(0, espacioApoyo.get(0).getValor().length(), espacioApoyo.get(0).getValor());		
 			valor.deleteCharAt(valor.lastIndexOf(","));
 			valor.deleteCharAt(valor.length() - 1);
 			valor.append(".");			
 		}
+		System.out.println("###### valor parseado: "+valor.toString());
 		return valor.toString();
 	}
 
@@ -2911,7 +2913,7 @@ public class EnvioInformeController extends BaseController
 			informeDTO.setTiempoLibre(informe.getTiempoLibre());
 			
 			if(informe.getBecado().getEscuela().getEspacioApoyo()!= null)
-				informeDTO.setEspacioEscuela(parsearListaEspacios(informe.getBecado().getEscuela().getEspacioApoyo()));
+				informeDTO.setEspacioEscuela(parsearListaEspacios(informe.getBecado().getEscuela().getEspacioApoyo(),informe.getBecado().getEscuela().getCualOtroEspacioApoyo()));
 		
 			if(StringUtils.isNotBlank(informe.getMateriasMasCuesta()))
 				informeDTO.setMateriasCuestan(informe.getMateriasMasCuesta());

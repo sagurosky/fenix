@@ -1086,7 +1086,7 @@ function validarIndicador(obj){
 			
 
 			<tr>
-				<td align="left">Total matrícula inicial</td>
+				<td align="left">Matrícula Total de estudiantes</td>
 				<td>
 					<input type="text" id="matricula" name="matricula"  class="textbox2" class="digits" value="${escuela.matricula}">
 				</td>
@@ -1099,14 +1099,14 @@ function validarIndicador(obj){
 				<td align="left">	
 					<input type="hidden" name="idEstadoEscuela" id="estadoEscuela" value="1">
 					<input type="hidden" id="motivoNoSeleccion" name="motivoNoSeleccion" value="${escuela.motivoNoSeleccion}">
-					Total <strong>docentes</strong> en la <br>institución del año en curso</td>	
+					Total docentes</td>	
 				<td><input type="text" id="totalDocentes" name="totalDocentes" class="textbox2" value="${escuela.totalDocentes}"></td>
 			</tr>
 			<tr>
 			
-			<td align="left">Total de <strong>preceptores</strong> en la <br>institución del año en curso</td>
+			<td align="left">Total de preceptores</td>
 			<td><input type="text" id="totalPreceptores" name="totalPreceptores" class="textbox2" value="${escuela.totalPreceptores}"></td>
-			<td align="left">Total de personal de <strong>Gabinete / Equipo de <br>orientación Escolar</strong> del año en curso</td>
+			<td align="left">Total de personal de Gabinete / Equipo <br>de orientación Escolar </td>
 			<td><input type="text" id="totalPersonal" name="totalPersonal" class="textbox2" value="${escuela.totalPersonal}"></td>
 			
 			</tr>
@@ -1228,7 +1228,6 @@ function validarIndicador(obj){
 	
 	<fieldset >
 		<legend><strong>ARTICULACIÓN CIMIENTOS</strong></legend>	
-		<br><font color="#8C3F99">INFORMACIÓN PARA COMPLETAR POR EL EA SIN EL/LA REFERENTE ESCOLAR</font><br><br>
 	<table>	
 			<tr>
 				<td colspan=4 align="center"><strong>BREVE DESCRIPCIÓN DE LA ESCUELA</strong></td> 
@@ -1258,7 +1257,7 @@ function validarIndicador(obj){
 			<td>
 				<select class="textbox2" disabled="disabled">
 					<c:choose>
-						<c:when test="${escuela.programa.id==2}">
+						<c:when test="${(escuela.programa.id==2)&&(escuela.becadosActivos>0)}">
 							<option value="SI" selected>SI</option>
 							<option value="NO">NO</option>
 						</c:when>					
@@ -1464,11 +1463,11 @@ function validarIndicador(obj){
 						
 	</table>
 	<br>
-	<table>
+	<table >
 	<tr>
 				<td>Participación en Escuelas que Acompañan</td>
 				<td>
-					<select class="textbox2" id="eqa" name="eqa" style='width:auto'>							
+					<select class="textbox2" id="eqa" name="eqa" >							
 					<c:choose>
 						<c:when test="${escuela.eqa == 'Si'}">
 								<option value="Si" selected="selected">Sí</option>
@@ -1479,7 +1478,7 @@ function validarIndicador(obj){
 								<option value="No" selected="selected">No</option>    	
 					    </c:when>
 					    <c:otherwise>
-					    	<option value="0" >Seleccionar opción</option>
+					    	<option value="0" selected>Seleccionar opción</option>
 					    	<option value="Si" >Sí</option>
 							<option value="No" >No</option>
 					    </c:otherwise>													    								
@@ -1490,18 +1489,32 @@ function validarIndicador(obj){
 				<td>
 <!-- 			DMS señalador -->	
 <!-- 					DMS quiero evitar la complejidad de guardar un dato multiple, por eso lo guardo como string en un solo campo en la bd -->
-
 					<select multiple id="aniosParticipacionEQA" name="aniosParticipacionEQA" class="textbox2" >
-						<option value="2020" <c:if test="${fn:contains(escuela.aniosParticipacionEQA, '2020')}"> selected </c:if>>2020</option>
-						<option value="2021" <c:if test="${fn:contains(escuela.aniosParticipacionEQA, '2021')}"> selected </c:if>>2021</option>
-						<option value="2022" <c:if test="${fn:contains(escuela.aniosParticipacionEQA, '2022')}"> selected </c:if>>2022</option>
-						<option value="2023" <c:if test="${fn:contains(escuela.aniosParticipacionEQA, '2023')}"> selected </c:if>>2023</option>
-						<option value="2024" <c:if test="${fn:contains(escuela.aniosParticipacionEQA, '2024')}"> selected </c:if>>2024</option>
-						<option value="2025" <c:if test="${fn:contains(escuela.aniosParticipacionEQA, '2025')}"> selected </c:if>>2025</option>
-						<option value="2026" <c:if test="${fn:contains(escuela.aniosParticipacionEQA, '2026')}"> selected </c:if>>2026</option>
-						<option value="2027" <c:if test="${fn:contains(escuela.aniosParticipacionEQA, '2027')}"> selected </c:if>>2027</option>
+						<c:forEach var="anio" items="${aniosEQA }">
+							<option value="${anio}" <c:if test="${fn:contains(escuela.aniosParticipacionEQA, anio)}"> selected </c:if>>${anio}</option>
+						</c:forEach>
 					</select>			
 				
+				</td>
+				<td>¿Participa de la Red de Escuelas <br>que Acompañan?</td>
+				<td>
+					<select class="textbox2" id="redEqa" name="redEqa" >							
+					<c:choose>
+						<c:when test="${escuela.redEQA == 'Si'}">
+								<option value="Si" selected="selected">Sí</option>
+								<option value="No" >No</option>    	
+					    </c:when>													    
+					    <c:when test="${escuela.redEQA == 'No'}">       						
+								<option value="Si" >Sí</option>
+								<option value="No" selected="selected">No</option>    	
+					    </c:when>
+					    <c:otherwise>
+					    	<option value="0" >Seleccionar opción</option>
+					    	<option value="Si" >Sí</option>
+							<option value="No" >No</option>
+					    </c:otherwise>													    								
+					</c:choose>			
+					</select>
 				</td>
 			</tr>
 			<tr>
@@ -1514,13 +1527,15 @@ function validarIndicador(obj){
 			No<input class="textbox2" type="radio" id="participoOtrasPropuestas" value="false" name="participoOtrasPropuestas"
 			<c:if test="${escuela.participoOtrasPropuestas == false}"> checked="checked"</c:if>></td>	
 			</tr>
+	</table>
+	<table>
 			<tr>
 			<td>¿Cuáles?</td>
 			<td><textarea class="textbox2" rows="4" cols="38" name="cualesOtrasPropuestas" id="cualesOtrasPropuestas" onblur="chequearLongitud(this,3000);"onkeypress="chequearLongitud(this,3000);">${escuela.cualesOtrasPropuestas}</textarea></td>			
 			
 			
 			</tr>
-	</table>
+	</table>			
 	
 	</fieldset>
 	<br><br>
@@ -1570,7 +1585,7 @@ function validarIndicador(obj){
 	<fieldset >		
 		<legend><strong>INDICADORES EDUCATIVOS</strong></legend>
 		<br>
-		<font color="#8C3F99">PRINCIPALES INDICADORES EDUCATIVOS (completar con los datos de la TRAYECTORIA DE MATRÍCULA según lo reportado en el cuadernillo MÁS RECIENTE del RELEVAMIENTO ANUAL  para Educación Común del Ministerio de Educación - CUADERNILLO CELESTE)
+		<font color="#8C3F99">(completar con los datos de la trayectoria de matrícula según lo reportado en el cuadernillo más reciente del Relevamiento Anual para Educación Común del Ministerio de Educación - CUADERNILLO CELESTE)
 		</font><br><br>
 		<table>
 			<tr>

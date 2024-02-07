@@ -513,7 +513,7 @@ System.out.println(fechaE);
 				<tr>
 					<td><strong>Titular Cuenta Bancaria</strong></td>
 					<td>
-					<sql:query var="q1" dataSource="jdbc/cimientos_prod">					
+					<sql:query var="q1" dataSource="jdbc/cimientos_testing">					
 					
  						SELECT * from responsable_adulto where id_alumno=?
 						<sql:param value="${alumno.id}" />

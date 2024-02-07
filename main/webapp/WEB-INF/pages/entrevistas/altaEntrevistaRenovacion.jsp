@@ -795,7 +795,7 @@ for (var i = 0; i < inputs.length; i++) {
 <body onload="entrada()">
 
 <sql:setDataSource driver="com.mysql.jdbc.Driver"
- url="jdbc:mysql://localhost:3306/cimientos_prod"
+ url="jdbc:mysql://localhost:3306/cimientos_testing"
  user="root"
  password="root"/>
 <c:set var="idBecado" value="${alumno.id}"/>
