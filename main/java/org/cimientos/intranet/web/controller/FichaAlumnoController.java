@@ -390,7 +390,7 @@ public class FichaAlumnoController extends BaseController{
 			    alumno.getResponsable2().setCelular(cbuRa2);
 		    }
 		    
-			String url = "jdbc:mysql://localhost/cimientos_testing";
+			String url = "jdbc:mysql://localhost/cimientos_prod";
 			Connection cn = DriverManager.getConnection(url, "root", "root");
 			String query = "update perfil_alumno set modificado='2024' where id=" + idAlumno;
 			// System.out.println(query);

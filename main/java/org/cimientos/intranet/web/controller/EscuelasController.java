@@ -276,7 +276,7 @@ public class EscuelasController extends BaseController {
 		@RequestParam("idEscuela") Long idEscuela,
 		@RequestParam(required=false,value="urlRegreso") String urlRegreso) throws SQLException{
 		map = new HashMap<String, Object>(); 
-		String url = "jdbc:mysql://localhost/cimientos_testing";
+		String url = "jdbc:mysql://localhost/cimientos_prod";
 		Connection cn = DriverManager.getConnection(url,"root","root");
 		Statement stmt = cn.createStatement();
         ResultSet rs = null;
@@ -479,7 +479,7 @@ public class EscuelasController extends BaseController {
 	@RequestMapping("/escuela/listaEscuelas")
 	public ModelAndView listasEscuelasCandidatas() throws SQLException{ 
 		map = new HashMap<String, Object>(); 
-		String url = "jdbc:mysql://localhost/cimientos_testing";
+		String url = "jdbc:mysql://localhost/cimientos_prod";
 		Connection cn = DriverManager.getConnection(url,"root","root");
 		Statement stmt = cn.createStatement();
 		cn = Conexion.getConexion();

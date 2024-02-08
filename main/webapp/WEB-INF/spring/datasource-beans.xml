@@ -30,7 +30,7 @@
 	<bean id="cimientosPool" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
 	    <property name="driverClass" value="com.mysql.jdbc.Driver" />
 		<!-- RECORDAR DE CAMBIAR EN CONEXION LA BASE DE DATOS --> 
-		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/cimientos_testing" /><!-- RECORDAR DE CAMBIAR EN CONEXION LA BASE DE DATOS -->
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/cimientos_prod" /><!-- RECORDAR DE CAMBIAR EN CONEXION LA BASE DE DATOS -->
 		<property name="user" value="root" />
 		<property name="password" value="root" />
 	<!-- C3P0 connection pool configuration 

@@ -822,7 +822,7 @@ public class AjaxController {
 		}
 		
 		
-		String url = "jdbc:mysql://localhost/cimientos_testing";
+		String url = "jdbc:mysql://localhost/cimientos_prod";
 		Connection cn = DriverManager.getConnection(url,"root","root");
 		Statement stmt = cn.createStatement();
         ResultSet rs = null;

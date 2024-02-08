@@ -2747,20 +2747,25 @@ public class EnvioInformeController extends BaseController
 		return valor.toString();
 	}
 	
-	private String parsearListaEspacios(List<EspacioApoyo> espacioApoyo, String otroEspacioApoyo) {
+	private String parsearListaEspacios(List<EspacioApoyo> espacioApoyo, String otro) {
 		StringBuffer valor = new StringBuffer("");
 		if(!espacioApoyo.isEmpty()){
 			for (EspacioApoyo espacio : espacioApoyo) {
 				valor.append( espacio.getValor().toLowerCase() + ", ");			
 			}
-			valor.append( otroEspacioApoyo.toLowerCase() + ", ");			
-			
+			if((otro!=null)&&(!otro.equals("")))
+			{
+			valor.append( otro + ", ");		
+			valor.replace(0, valor.length(), valor.toString().replace("Otro, ", ""));
+			}			
 			valor.replace(0, espacioApoyo.get(0).getValor().length(), espacioApoyo.get(0).getValor());		
 			valor.deleteCharAt(valor.lastIndexOf(","));
 			valor.deleteCharAt(valor.length() - 1);
-			valor.append(".");			
+			valor.append(".");		
+			
+			
+			
 		}
-		System.out.println("###### valor parseado: "+valor.toString());
 		return valor.toString();
 	}
 

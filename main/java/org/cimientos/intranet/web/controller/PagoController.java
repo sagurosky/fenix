@@ -1182,7 +1182,7 @@ public class PagoController extends BaseController{
 
 				
 				// alta pago historia				
-				String url = "jdbc:mysql://localhost/cimientos_testing";
+				String url = "jdbc:mysql://localhost/cimientos_prod";
 				Connection cn = DriverManager.getConnection(url,"root","root");						        
 		        String call=null;	        
 		        call="insert into pago_historia (idPago,estado,motivo,usuario) values(?,?,?,?)";

@@ -2077,7 +2077,7 @@ public class InformeSrv {
 				valor.append( espacio.getValor().toLowerCase() + ", ");			
 			}
 			valor.replace(0, espacioApoyo.get(0).getValor().length(), espacioApoyo.get(0).getValor());		
-			if(otro!=null)
+			if((otro!=null)&&(!otro.equals("")))
 				{
 				valor.append( otro + ", ");		
 				valor.replace(0, valor.length(), valor.toString().replace("Otro, ", ""));

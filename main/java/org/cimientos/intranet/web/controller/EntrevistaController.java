@@ -4380,7 +4380,7 @@ public class EntrevistaController extends BaseController {
 				List<String> contenidosTrabajarEnElAnioList = new ArrayList<String>(
 						Arrays.asList(contenidosTrabajarEnElAnio.split(",")));
 
-				String url = "jdbc:mysql://localhost/cimientos_testing";
+				String url = "jdbc:mysql://localhost/cimientos_prod";
 
 				Long pasarStringALong = 0L;
 				for (int i = 0; i < contenidosTrabajarEnElAnioList.size(); i++) {
@@ -9770,7 +9770,7 @@ public class EntrevistaController extends BaseController {
 
 		if (idBoletin.equals("")) {
 			// alta boletin
-			String url = "jdbc:mysql://localhost/cimientos_testing";
+			String url = "jdbc:mysql://localhost/cimientos_prod";
 			Connection cn = DriverManager.getConnection(url, "root", "root");
 			String call = null;
 			call = "insert into boletin_nuevo (idBecado,becado,ciclo,anioEscolar,anioAdicional,inas1,inas2,inas3,alumnoRegular,qma1,qma2,qma3,qmasf,qmaer,qmd1,qmd2,qmd3,qmdsf,qmder,qmsc1,qmsc2,qmsc3,qmscsf,qmscer,qmt1,qmt2,qmt3,qmtsf,qmter,cl1t,cl2t,cl3t,clsf,cler,cm1t,cm2t,cm3t,cmsf,cmer,cmp20201t,cmp20202t,cmp20203t,cmp2020sf,cmp2020er) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -9851,7 +9851,7 @@ public class EntrevistaController extends BaseController {
 			cn.close();
 		} else {
 			// update
-			String url = "jdbc:mysql://localhost/cimientos_testing";
+			String url = "jdbc:mysql://localhost/cimientos_prod";
 			Connection cn = DriverManager.getConnection(url, "root", "root");
 			String query = "update boletin_nuevo set inas1='" + inas1
 					+ "',inas2='" + inas2 + "',inas3='" + inas3 + "',qma1='"
@@ -9882,7 +9882,7 @@ public class EntrevistaController extends BaseController {
 			}
 
 			// update
-			url = "jdbc:mysql://localhost/cimientos_testing";
+			url = "jdbc:mysql://localhost/cimientos_prod";
 			cn = DriverManager.getConnection(url, "root", "root");
 			//System.out.println(query);
 			query = "update perfil_alumno set boletin_nuevo=" + idBoletin
@@ -9907,7 +9907,7 @@ public class EntrevistaController extends BaseController {
 
 		if (!mp1.equals("Seleccioná")) {
 			if (idPrevia1.equals("")) {
-				String url = "jdbc:mysql://localhost/cimientos_testing";
+				String url = "jdbc:mysql://localhost/cimientos_prod";
 				Connection cn = DriverManager
 						.getConnection(url, "root", "root");
 				String call = null;
@@ -9925,7 +9925,7 @@ public class EntrevistaController extends BaseController {
 				preparedStmt.execute();
 				cn.close();
 			} else {
-				String url = "jdbc:mysql://localhost/cimientos_testing";
+				String url = "jdbc:mysql://localhost/cimientos_prod";
 				Connection cn = DriverManager
 						.getConnection(url, "root", "root");
 				String query = "update previas_nuevo set idBecado='" + idBecado
@@ -9953,7 +9953,7 @@ public class EntrevistaController extends BaseController {
 		}
 		if (!mp2.equals("Seleccioná")) {
 			if (idPrevia2.equals("")) {
-				String url = "jdbc:mysql://localhost/cimientos_testing";
+				String url = "jdbc:mysql://localhost/cimientos_prod";
 				Connection cn = DriverManager
 						.getConnection(url, "root", "root");
 				String call = null;
@@ -9971,7 +9971,7 @@ public class EntrevistaController extends BaseController {
 				preparedStmt.execute();
 				cn.close();
 			} else {
-				String url = "jdbc:mysql://localhost/cimientos_testing";
+				String url = "jdbc:mysql://localhost/cimientos_prod";
 				Connection cn = DriverManager
 						.getConnection(url, "root", "root");
 				String query = "update previas_nuevo set idBecado='" + idBecado
@@ -9998,7 +9998,7 @@ public class EntrevistaController extends BaseController {
 
 		if (!mp3.equals("Seleccioná")) {
 			if (idPrevia3.equals("")) {
-				String url = "jdbc:mysql://localhost/cimientos_testing";
+				String url = "jdbc:mysql://localhost/cimientos_prod";
 				Connection cn = DriverManager
 						.getConnection(url, "root", "root");
 				String call = null;
@@ -10016,7 +10016,7 @@ public class EntrevistaController extends BaseController {
 				preparedStmt.execute();
 				cn.close();
 			} else {
-				String url = "jdbc:mysql://localhost/cimientos_testing";
+				String url = "jdbc:mysql://localhost/cimientos_prod";
 				Connection cn = DriverManager
 						.getConnection(url, "root", "root");
 				String query = "update previas_nuevo set idBecado='" + idBecado
@@ -10043,7 +10043,7 @@ public class EntrevistaController extends BaseController {
 
 		if (!mp4.equals("Seleccioná")) {
 			if (idPrevia4.equals("")) {
-				String url = "jdbc:mysql://localhost/cimientos_testing";
+				String url = "jdbc:mysql://localhost/cimientos_prod";
 				Connection cn = DriverManager
 						.getConnection(url, "root", "root");
 				String call = null;
@@ -10061,7 +10061,7 @@ public class EntrevistaController extends BaseController {
 				preparedStmt.execute();
 				cn.close();
 			} else {
-				String url = "jdbc:mysql://localhost/cimientos_testing";
+				String url = "jdbc:mysql://localhost/cimientos_prod";
 				Connection cn = DriverManager
 						.getConnection(url, "root", "root");
 				String query = "update previas_nuevo set idBecado='" + idBecado
@@ -10088,7 +10088,7 @@ public class EntrevistaController extends BaseController {
 
 		if (!mp5.equals("Seleccioná")) {
 			if (idPrevia5.equals("")) {
-				String url = "jdbc:mysql://localhost/cimientos_testing";
+				String url = "jdbc:mysql://localhost/cimientos_prod";
 				Connection cn = DriverManager
 						.getConnection(url, "root", "root");
 				String call = null;
@@ -10106,7 +10106,7 @@ public class EntrevistaController extends BaseController {
 				preparedStmt.execute();
 				cn.close();
 			} else {
-				String url = "jdbc:mysql://localhost/cimientos_testing";
+				String url = "jdbc:mysql://localhost/cimientos_prod";
 				Connection cn = DriverManager
 						.getConnection(url, "root", "root");
 				String query = "update previas_nuevo set idBecado='" + idBecado
@@ -10133,7 +10133,7 @@ public class EntrevistaController extends BaseController {
 
 		if (!mp6.equals("Seleccioná")) {
 			if (idPrevia6.equals("")) {
-				String url = "jdbc:mysql://localhost/cimientos_testing";
+				String url = "jdbc:mysql://localhost/cimientos_prod";
 				Connection cn = DriverManager
 						.getConnection(url, "root", "root");
 				String call = null;
@@ -10151,7 +10151,7 @@ public class EntrevistaController extends BaseController {
 				preparedStmt.execute();
 				cn.close();
 			} else {
-				String url = "jdbc:mysql://localhost/cimientos_testing";
+				String url = "jdbc:mysql://localhost/cimientos_prod";
 				Connection cn = DriverManager
 						.getConnection(url, "root", "root");
 				String query = "update previas_nuevo set idBecado='" + idBecado
@@ -10176,7 +10176,7 @@ public class EntrevistaController extends BaseController {
 			}
 		}
 
-		String url = "jdbc:mysql://localhost/cimientos_testing";
+		String url = "jdbc:mysql://localhost/cimientos_prod";
 		Connection cn = DriverManager.getConnection(url, "root", "root");
 		String query = "update alumno_panelea set alumno_panelea.cantidad_previas="
 				+ cantidadPrevias
@@ -10192,7 +10192,7 @@ public class EntrevistaController extends BaseController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		url = "jdbc:mysql://localhost/cimientos_testing";
+		url = "jdbc:mysql://localhost/cimientos_prod";
 		cn = DriverManager.getConnection(url, "root", "root");
 		query = "update alumno_panelea set alumno_panelea.color_boletin='red' where alumno_panelea.id_perfil_alumno="
 				+ idBecado;

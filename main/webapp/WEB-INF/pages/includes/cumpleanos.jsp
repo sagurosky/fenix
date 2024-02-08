@@ -29,7 +29,7 @@ ResultSetMetaData rsmd = null;
 	      //System.out.println("Error occurred " + e);
 	     }
 	     try {
-	    	String url = "jdbc:mysql://localhost/cimientos_testing";
+	    	String url = "jdbc:mysql://localhost/cimientos_prod";
 			Connection cn = DriverManager.getConnection(url,"root","root");
 			cn.close();				
 			cn = DriverManager.getConnection(url,"root","root");
