@@ -568,7 +568,6 @@ public class FichaAlumnoController extends BaseController{
 				{
 					responsableAdulto2Base = new ResponsableAdulto();
 					responsable2 = alumno.getResponsable2();
-					System.out.println("#######"+responsable2.getNombre());
 					responsableAdulto2Base.setNombre(responsable2.getNombre());
 					responsableAdulto2Base.setActivo(true);
 					responsableAdulto2Base.setApellido(responsable2.getApellido());
@@ -791,6 +790,7 @@ public class FichaAlumnoController extends BaseController{
 					resul.put("listNivelEducativo", NivelEducativo.getListaNivelEducativo());
 					resul.put("listRelacionVivienda", RelacionVivienda.getRelacionViviendas());
 					resul.put("volver","volver");
+					System.out.println("###########");
 					return forward("fichaAlumno/fichaAlumnoView", resul);			
 				}
 			}

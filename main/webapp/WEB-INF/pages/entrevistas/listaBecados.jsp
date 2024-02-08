@@ -32,6 +32,7 @@ var selected =  new Array();
 var asInitVals = new Array();
 
 $(document).ready(function() {
+	
 	$('#becadosForm').submit( function() {
 		var selected = fnGetIdsOfSelectedRows(fnGetSelected(oTable2));
 		jQuery("#alumnosSeleccionados").val(selected);
@@ -179,6 +180,9 @@ $(document).ready(function() {
 		    return aReturn;
 		}
 
+		
+		
+		
 } );
 
 
@@ -398,11 +402,12 @@ function confirmacionBoletin(idAlumno, colorBoletin)
 									<tr>
 										
 										<td>
-											Tenés que actualizar el alumno
+											Tenés que actualizar el alumnos
 											<img src="<c:url value='/static/images/iconos/red_light.png'></c:url>" width="15px">
 											
 											<div style="width:0.5cm" class="ui-state-default ui-corner-all" title="Detalle Estudiante">
-												<a  href="<c:url value='/fichaAlumno/fichaAlumnoView.do?idAlumno=${a.idPerfilAlumno}&urlRegreso=${urlRegreso}'/>"> 
+<%-- 												<a  href="<c:url value='/fichaAlumno/fichaAlumnoView.do?idAlumno=${a.idPerfilAlumno}&urlRegreso=${urlRegreso}'/>">  --%>
+												<a  href="<c:url value='/fichaAlumno/fichaAlumnoView.do?idAlumno=${a.idPerfilAlumno}&urlRegreso=/entrevistas/listarBecados.do'/>"> 
 												<span class="ui-icon ui-icon-search" ></span>
 												</a>			
 											</div>

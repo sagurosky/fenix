@@ -404,7 +404,7 @@ td
 											<option value="Otro"selected>Otro</option>
 											<option value="Otro">No Aplica</option>
 										</c:when>
-										<c:when test="${(ficha.abandonoRepitencia == 'No Aplica')||(ficha.abandonoRepitencia == 0)||(ficha.abandonoRepitencia == null)||(ficha.abandonoRepitencia == '')}">
+										<c:when test="${(ficha.abandonoRepitencia == 'No Aplica')||(ficha.abandonoRepitencia == '0')||(ficha.abandonoRepitencia == null)||(ficha.abandonoRepitencia == '')}">
 											<option value="">Seleccione una opci&oacute;n:</option>
 											<option value="Formal, relación de dependencia" >Formal, relación de dependencia</option>
 											<option value="Formal, contrato temporario">Formal, contrato temporario</option>

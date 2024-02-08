@@ -1086,7 +1086,7 @@ function validarIndicador(obj){
 			
 
 			<tr>
-				<td align="left">Matrícula Total de estudiantes</td>
+				<td align="left">Matrícula total de estudiantes</td>
 				<td>
 					<input type="text" id="matricula" name="matricula"  class="textbox2" class="digits" value="${escuela.matricula}">
 				</td>
@@ -1106,7 +1106,7 @@ function validarIndicador(obj){
 			
 			<td align="left">Total de preceptores</td>
 			<td><input type="text" id="totalPreceptores" name="totalPreceptores" class="textbox2" value="${escuela.totalPreceptores}"></td>
-			<td align="left">Total de personal de Gabinete / Equipo <br>de orientación Escolar </td>
+			<td align="left">Total de personal de gabinete / Equipo <br>de orientación escolar </td>
 			<td><input type="text" id="totalPersonal" name="totalPersonal" class="textbox2" value="${escuela.totalPersonal}"></td>
 			
 			</tr>
