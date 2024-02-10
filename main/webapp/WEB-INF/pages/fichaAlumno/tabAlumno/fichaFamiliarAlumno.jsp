@@ -12,7 +12,6 @@
 <html>
 <head>
 <script type="text/javascript">
-// prueba git
 var counter = 0;
 
 function incrementarCounter(){

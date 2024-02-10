@@ -32,6 +32,7 @@ public class EscuelaDTO {
 	private String tel1;
 	private String tel2;
 	private String mail;
+//	10/2/24 DMS sistema anterior
 	private String director;
 	private String directorCel;
 	private String directorMail;
@@ -41,6 +42,54 @@ public class EscuelaDTO {
 	private String resonsable;
 	private String responsableCel;
 	private String responsablMail;
+//	10/2/24 DMS sistema nuevo
+	
+	
+	private String rolAutoridad1;
+	private String rolAutoridad2;
+	private String rolAutoridad3;
+	private String rolAutoridad4;
+	private String rolAutoridad5;
+
+	private String nombreApellidoAutoridad1;
+	private String nombreApellidoAutoridad2;
+	private String nombreApellidoAutoridad3;
+	private String nombreApellidoAutoridad4;
+	private String nombreApellidoAutoridad5;
+
+	private String telefonoAutoridad1;
+	private String telefonoAutoridad2;
+	private String telefonoAutoridad3;
+	private String telefonoAutoridad4;
+	private String telefonoAutoridad5;
+
+	private String mailAutoridad1;
+	private String mailAutoridad2;
+	private String mailAutoridad3;
+	private String mailAutoridad4;
+	private String mailAutoridad5;
+
+	private String esReferenteAutoridad1;
+	private String esReferenteAutoridad2;
+	private String esReferenteAutoridad3;
+	private String esReferenteAutoridad4;
+	private String esReferenteAutoridad5;
+
+	
+	
+	private String equipoDirectivo;
+	private String totalDocentes;
+	private String totalPreceptores;
+	private String totalPersonal;
+	private String cualOtroEspacioApoyo;
+	private String aniosParticipacionEQA;
+	
+	
+	
+	
+	
+	
+	
 	private String rural;
 	private String subsidio;	
 	private String observacionesGrales;	
@@ -499,6 +548,258 @@ public class EscuelaDTO {
 
 		public void setResponsablMail(String responsablMail) {
 			this.responsablMail = responsablMail;
+		}
+
+		
+		
+		
+		
+		public String getRolAutoridad1() {
+			return rolAutoridad1;
+		}
+
+		public void setRolAutoridad1(String rolAutoridad1) {
+			this.rolAutoridad1 = rolAutoridad1;
+		}
+
+		public String getRolAutoridad2() {
+			return rolAutoridad2;
+		}
+
+		public void setRolAutoridad2(String rolAutoridad2) {
+			this.rolAutoridad2 = rolAutoridad2;
+		}
+
+		public String getRolAutoridad3() {
+			return rolAutoridad3;
+		}
+
+		public void setRolAutoridad3(String rolAutoridad3) {
+			this.rolAutoridad3 = rolAutoridad3;
+		}
+
+		public String getRolAutoridad4() {
+			return rolAutoridad4;
+		}
+
+		public void setRolAutoridad4(String rolAutoridad4) {
+			this.rolAutoridad4 = rolAutoridad4;
+		}
+
+		public String getRolAutoridad5() {
+			return rolAutoridad5;
+		}
+
+		public void setRolAutoridad5(String rolAutoridad5) {
+			this.rolAutoridad5 = rolAutoridad5;
+		}
+
+		public String getNombreApellidoAutoridad1() {
+			return nombreApellidoAutoridad1;
+		}
+
+		public void setNombreApellidoAutoridad1(String nombreApellidoAutoridad1) {
+			this.nombreApellidoAutoridad1 = nombreApellidoAutoridad1;
+		}
+
+		public String getNombreApellidoAutoridad2() {
+			return nombreApellidoAutoridad2;
+		}
+
+		public void setNombreApellidoAutoridad2(String nombreApellidoAutoridad2) {
+			this.nombreApellidoAutoridad2 = nombreApellidoAutoridad2;
+		}
+
+		public String getNombreApellidoAutoridad3() {
+			return nombreApellidoAutoridad3;
+		}
+
+		public void setNombreApellidoAutoridad3(String nombreApellidoAutoridad3) {
+			this.nombreApellidoAutoridad3 = nombreApellidoAutoridad3;
+		}
+
+		public String getNombreApellidoAutoridad4() {
+			return nombreApellidoAutoridad4;
+		}
+
+		public void setNombreApellidoAutoridad4(String nombreApellidoAutoridad4) {
+			this.nombreApellidoAutoridad4 = nombreApellidoAutoridad4;
+		}
+
+		public String getNombreApellidoAutoridad5() {
+			return nombreApellidoAutoridad5;
+		}
+
+		public void setNombreApellidoAutoridad5(String nombreApellidoAutoridad5) {
+			this.nombreApellidoAutoridad5 = nombreApellidoAutoridad5;
+		}
+
+		public String getTelefonoAutoridad1() {
+			return telefonoAutoridad1;
+		}
+
+		public void setTelefonoAutoridad1(String telefonoAutoridad1) {
+			this.telefonoAutoridad1 = telefonoAutoridad1;
+		}
+
+		public String getTelefonoAutoridad2() {
+			return telefonoAutoridad2;
+		}
+
+		public void setTelefonoAutoridad2(String telefonoAutoridad2) {
+			this.telefonoAutoridad2 = telefonoAutoridad2;
+		}
+
+		public String getTelefonoAutoridad3() {
+			return telefonoAutoridad3;
+		}
+
+		public void setTelefonoAutoridad3(String telefonoAutoridad3) {
+			this.telefonoAutoridad3 = telefonoAutoridad3;
+		}
+
+		public String getTelefonoAutoridad4() {
+			return telefonoAutoridad4;
+		}
+
+		public void setTelefonoAutoridad4(String telefonoAutoridad4) {
+			this.telefonoAutoridad4 = telefonoAutoridad4;
+		}
+
+		public String getTelefonoAutoridad5() {
+			return telefonoAutoridad5;
+		}
+
+		public void setTelefonoAutoridad5(String telefonoAutoridad5) {
+			this.telefonoAutoridad5 = telefonoAutoridad5;
+		}
+
+		public String getMailAutoridad1() {
+			return mailAutoridad1;
+		}
+
+		public void setMailAutoridad1(String mailAutoridad1) {
+			this.mailAutoridad1 = mailAutoridad1;
+		}
+
+		public String getMailAutoridad2() {
+			return mailAutoridad2;
+		}
+
+		public void setMailAutoridad2(String mailAutoridad2) {
+			this.mailAutoridad2 = mailAutoridad2;
+		}
+
+		public String getMailAutoridad3() {
+			return mailAutoridad3;
+		}
+
+		public void setMailAutoridad3(String mailAutoridad3) {
+			this.mailAutoridad3 = mailAutoridad3;
+		}
+
+		public String getMailAutoridad4() {
+			return mailAutoridad4;
+		}
+
+		public void setMailAutoridad4(String mailAutoridad4) {
+			this.mailAutoridad4 = mailAutoridad4;
+		}
+
+		public String getMailAutoridad5() {
+			return mailAutoridad5;
+		}
+
+		public void setMailAutoridad5(String mailAutoridad5) {
+			this.mailAutoridad5 = mailAutoridad5;
+		}
+
+		public String getEsReferenteAutoridad1() {
+			return esReferenteAutoridad1;
+		}
+
+		public void setEsReferenteAutoridad1(String esReferenteAutoridad1) {
+			this.esReferenteAutoridad1 = esReferenteAutoridad1;
+		}
+
+		public String getEsReferenteAutoridad2() {
+			return esReferenteAutoridad2;
+		}
+
+		public void setEsReferenteAutoridad2(String esReferenteAutoridad2) {
+			this.esReferenteAutoridad2 = esReferenteAutoridad2;
+		}
+
+		public String getEsReferenteAutoridad3() {
+			return esReferenteAutoridad3;
+		}
+
+		public void setEsReferenteAutoridad3(String esReferenteAutoridad3) {
+			this.esReferenteAutoridad3 = esReferenteAutoridad3;
+		}
+
+		public String getEsReferenteAutoridad4() {
+			return esReferenteAutoridad4;
+		}
+
+		public void setEsReferenteAutoridad4(String esReferenteAutoridad4) {
+			this.esReferenteAutoridad4 = esReferenteAutoridad4;
+		}
+
+		public String getEsReferenteAutoridad5() {
+			return esReferenteAutoridad5;
+		}
+
+		public void setEsReferenteAutoridad5(String esReferenteAutoridad5) {
+			this.esReferenteAutoridad5 = esReferenteAutoridad5;
+		}
+
+		public String getEquipoDirectivo() {
+			return equipoDirectivo;
+		}
+
+		public void setEquipoDirectivo(String equipoDirectivo) {
+			this.equipoDirectivo = equipoDirectivo;
+		}
+		
+		public String getTotalDocentes() {
+			return totalDocentes;
+		}
+
+		public void setTotalDocentes(String totalDocentes) {
+			this.totalDocentes = totalDocentes;
+		}
+		
+		public String getTotalPreceptores() {
+			return totalPreceptores;
+		}
+
+		public void setTotalPreceptores(String totalPreceptores) {
+			this.totalPreceptores = totalPreceptores;
+		}
+
+		public String getTotalPersonal() {
+			return totalPersonal;
+		}
+
+		public void setTotalPersonal(String totalPersonal) {
+			this.totalPersonal = totalPersonal;
+		}
+
+		public String getCualOtroEspacioApoyo() {
+			return cualOtroEspacioApoyo;
+		}
+
+		public void setCualOtroEspacioApoyo(String cualOtroEspacioApoyo) {
+			this.cualOtroEspacioApoyo = cualOtroEspacioApoyo;
+		}
+
+		public String getAniosParticipacionEQA() {
+			return aniosParticipacionEQA;
+		}
+
+		public void setAniosParticipacionEQA(String aniosParticipacionEQA) {
+			this.aniosParticipacionEQA = aniosParticipacionEQA;
 		}
 
 		public String getRural() {
