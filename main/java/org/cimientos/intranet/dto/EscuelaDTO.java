@@ -83,6 +83,9 @@ public class EscuelaDTO {
 	private String totalPersonal;
 	private String cualOtroEspacioApoyo;
 	private String aniosParticipacionEQA;
+	private String redEQA;
+	private String participoOtrasPropuestas;
+	private String cualesOtrasPropuestas;
 	
 	
 	
@@ -802,6 +805,35 @@ public class EscuelaDTO {
 			this.aniosParticipacionEQA = aniosParticipacionEQA;
 		}
 
+		
+		
+		
+		public String getRedEQA() {
+			return redEQA;
+		}
+
+		public void setRedEQA(String redEQA) {
+			this.redEQA = redEQA;
+		}
+
+		
+		public String getParticipoOtrasPropuestas() {
+			return participoOtrasPropuestas;
+		}
+
+		public void setParticipoOtrasPropuestas(String participoOtrasPropuestas) {
+			this.participoOtrasPropuestas = participoOtrasPropuestas;
+		}
+		
+		public String getCualesOtrasPropuestas() {
+			return cualesOtrasPropuestas;
+		}
+
+		public void setCualesOtrasPropuestas(String cualesOtrasPropuestas) {
+			this.cualesOtrasPropuestas = cualesOtrasPropuestas;
+		}
+
+		//dms señalador
 		public String getRural() {
 			return rural;
 		}

@@ -481,6 +481,195 @@ public class EscuelasExcelView extends AbstractExcelView{
             		resDTO.setEqa("");
             	}
             	
+            	//DMS 14/2/24 datos nuevos
+            	//autoridad rol
+            	if (rs.getString("rol_autoridad1")!=null){
+            		resDTO.setRolAutoridad1(rs.getString("rol_autoridad1"));
+            	}else{
+            		resDTO.setRolAutoridad1("");
+            	}
+            	if (rs.getString("rol_autoridad2")!=null){
+            		resDTO.setRolAutoridad2(rs.getString("rol_autoridad2"));
+            	}else{
+            		resDTO.setRolAutoridad2("");
+            	}
+            	if (rs.getString("rol_autoridad3")!=null){
+            		resDTO.setRolAutoridad3(rs.getString("rol_autoridad3"));
+            	}else{
+            		resDTO.setRolAutoridad3("");
+            	}
+            	if (rs.getString("rol_autoridad4")!=null){
+            		resDTO.setRolAutoridad4(rs.getString("rol_autoridad4"));
+            	}else{
+            		resDTO.setRolAutoridad4("");
+            	}
+            	if (rs.getString("rol_autoridad5")!=null){
+            		resDTO.setRolAutoridad5(rs.getString("rol_autoridad5"));
+            	}else{
+            		resDTO.setRolAutoridad5("");
+            	}
+            	//nombre_apellido_autoridad1
+            	if (rs.getString("nombre_apellido_autoridad1")!=null){
+            		resDTO.setNombreApellidoAutoridad1(rs.getString("nombre_apellido_autoridad1"));
+            	}else{
+            		resDTO.setNombreApellidoAutoridad1("");
+            	}
+            	if (rs.getString("nombre_apellido_autoridad2")!=null){
+            		resDTO.setNombreApellidoAutoridad2(rs.getString("nombre_apellido_autoridad2"));
+            	}else{
+            		resDTO.setNombreApellidoAutoridad2("");
+            	}
+            	if (rs.getString("nombre_apellido_autoridad3")!=null){
+            		resDTO.setNombreApellidoAutoridad3(rs.getString("nombre_apellido_autoridad3"));
+            	}else{
+            		resDTO.setNombreApellidoAutoridad3("");
+            	}
+            	if (rs.getString("nombre_apellido_autoridad4")!=null){
+            		resDTO.setNombreApellidoAutoridad4(rs.getString("nombre_apellido_autoridad4"));
+            	}else{
+            		resDTO.setNombreApellidoAutoridad4("");
+            	}
+            	if (rs.getString("nombre_apellido_autoridad5")!=null){
+            		resDTO.setNombreApellidoAutoridad5(rs.getString("nombre_apellido_autoridad5"));
+            	}else{
+            		resDTO.setNombreApellidoAutoridad5("");
+            	}
+            	//autoridad telefono1
+            	if (rs.getString("telefono_autoridad1")!=null){
+            		resDTO.setTelefonoAutoridad1(rs.getString("telefono_autoridad1"));
+            	}else{
+            		resDTO.setTelefonoAutoridad1("");
+            	}
+            	if (rs.getString("telefono_autoridad2")!=null){
+            		resDTO.setTelefonoAutoridad2(rs.getString("telefono_autoridad2"));
+            	}else{
+            		resDTO.setTelefonoAutoridad2("");
+            	}
+            	if (rs.getString("telefono_autoridad3")!=null){
+            		resDTO.setTelefonoAutoridad3(rs.getString("telefono_autoridad3"));
+            	}else{
+            		resDTO.setTelefonoAutoridad3("");
+            	}
+            	if (rs.getString("telefono_autoridad4")!=null){
+            		resDTO.setTelefonoAutoridad4(rs.getString("telefono_autoridad4"));
+            	}else{
+            		resDTO.setTelefonoAutoridad4("");
+            	}
+            	if (rs.getString("telefono_autoridad5")!=null){
+            		resDTO.setTelefonoAutoridad5(rs.getString("telefono_autoridad5"));
+            	}else{
+            		resDTO.setTelefonoAutoridad5("");
+            	}
+            	
+            	//mail_autoridad1
+            	if (rs.getString("mail_autoridad1")!=null){
+            		resDTO.setMailAutoridad1(rs.getString("mail_autoridad1"));
+            	}else{
+            		resDTO.setMailAutoridad1("");
+            	}
+            	if (rs.getString("mail_autoridad2")!=null){
+            		resDTO.setMailAutoridad2(rs.getString("mail_autoridad2"));
+            	}else{
+            		resDTO.setMailAutoridad2("");
+            	}
+            	if (rs.getString("mail_autoridad3")!=null){
+            		resDTO.setMailAutoridad3(rs.getString("mail_autoridad3"));
+            	}else{
+            		resDTO.setMailAutoridad3("");
+            	}
+            	if (rs.getString("mail_autoridad4")!=null){
+            		resDTO.setMailAutoridad4(rs.getString("mail_autoridad4"));
+            	}else{
+            		resDTO.setMailAutoridad4("");
+            	}
+            	if (rs.getString("mail_autoridad5")!=null){
+            		resDTO.setMailAutoridad5(rs.getString("mail_autoridad5"));
+            	}else{
+            		resDTO.setMailAutoridad5("");
+            	}
+            	//es_referente_autoridad1
+            	if (rs.getString("es_referente_autoridad1")!=null){
+            		resDTO.setEsReferenteAutoridad1(rs.getString("es_referente_autoridad1"));
+            	}else{
+            		resDTO.setEsReferenteAutoridad1("");
+            	}
+            	if (rs.getString("es_referente_autoridad2")!=null){
+            		resDTO.setEsReferenteAutoridad2(rs.getString("es_referente_autoridad2"));
+            	}else{
+            		resDTO.setEsReferenteAutoridad2("");
+            	}
+            	if (rs.getString("es_referente_autoridad3")!=null){
+            		resDTO.setEsReferenteAutoridad3(rs.getString("es_referente_autoridad3"));
+            	}else{
+            		resDTO.setEsReferenteAutoridad3("");
+            	}
+            	if (rs.getString("es_referente_autoridad4")!=null){
+            		resDTO.setEsReferenteAutoridad4(rs.getString("es_referente_autoridad4"));
+            	}else{
+            		resDTO.setEsReferenteAutoridad4("");
+            	}
+            	if (rs.getString("es_referente_autoridad5")!=null){
+            		resDTO.setEsReferenteAutoridad5(rs.getString("es_referente_autoridad5"));
+            	}else{
+            		resDTO.setEsReferenteAutoridad5("");
+            	}
+            	
+            	//matricula
+            	if (rs.getString("matricula")!=null){
+            		resDTO.setMatricula(rs.getString("matricula"));
+            	}else{
+            		resDTO.setMatricula("");
+            	}
+
+            	//equipo_directivo
+            	if (rs.getString("equipo_directivo")!=null){
+            		resDTO.setEquipoDirectivo(rs.getString("equipo_directivo"));
+            	}else{
+            		resDTO.setEquipoDirectivo("");
+            	}
+
+            	//total_docentes
+            	if (rs.getString("total_docentes")!=null){
+            		resDTO.setTotalDocentes(rs.getString("total_docentes"));
+            	}else{
+            		resDTO.setTotalDocentes("");
+            	}
+            	//total_Preceptores
+            	if (rs.getString("total_Preceptores")!=null){
+            		resDTO.setTotalPreceptores(rs.getString("total_Preceptores"));
+            	}else{
+            		resDTO.setTotalPreceptores("");
+            	}
+            	//total_Personal
+            	if (rs.getString("total_Personal")!=null){
+            		resDTO.setTotalPersonal(rs.getString("total_Personal"));
+            	}else{
+            		resDTO.setTotalPersonal("");
+            	}
+            	//cual_otro_espacio_apoyo
+            	if (rs.getString("cual_otro_espacio_apoyo")!=null){
+            		resDTO.setCualOtroEspacioApoyo(rs.getString("cual_otro_espacio_apoyo"));
+            	}else{
+            		resDTO.setCualOtroEspacioApoyo("");
+            	}
+            	//anios_participacioneqa
+            	if (rs.getString("anios_participacioneqa")!=null){
+            		resDTO.setAniosParticipacionEQA(rs.getString("anios_participacioneqa"));
+            	}else{
+            		resDTO.setAniosParticipacionEQA("");
+            	}
+            	//redeqa
+            	if (rs.getString("redeqa")!=null){
+            		resDTO.setRedEQA(rs.getString("redeqa"));
+            	}else{
+            		resDTO.setRedEQA("");
+            	}
+            	//cuales_otras_propuestas
+            	if (rs.getString("cuales_otras_propuestas")!=null){
+            		resDTO.setCualesOtrasPropuestas(rs.getString("cuales_otras_propuestas"));
+            	}else{
+            		resDTO.setCualesOtrasPropuestas("");
+            	}
             	
             	// Turnos
             	Connection cn1 = null;
@@ -574,11 +763,31 @@ public class EscuelasExcelView extends AbstractExcelView{
 		
 // 		tanda de datos nuevos, agregar en el llamado a la bd		
 		
-		row.createCell(12).setCellValue("Rol: "+e.getRolAutoridad1()+", nombre y apellido: "+e.getNombreApellidoAutoridad1()+", telefono: "+e.getTelefonoAutoridad1()+", mail: "+e.getMailAutoridad1()+", es referente :"+e.getEsReferenteAutoridad1());
-		row.createCell(13).setCellValue("Rol: "+e.getRolAutoridad2()+", nombre y apellido: "+e.getNombreApellidoAutoridad2()+", telefono: "+e.getTelefonoAutoridad2()+", mail: "+e.getMailAutoridad2()+", es referente :"+e.getEsReferenteAutoridad2());
-		row.createCell(14).setCellValue("Rol: "+e.getRolAutoridad3()+", nombre y apellido: "+e.getNombreApellidoAutoridad3()+", telefono: "+e.getTelefonoAutoridad3()+", mail: "+e.getMailAutoridad3()+", es referente :"+e.getEsReferenteAutoridad3());
-		row.createCell(15).setCellValue("Rol: "+e.getRolAutoridad4()+", nombre y apellido: "+e.getNombreApellidoAutoridad4()+", telefono: "+e.getTelefonoAutoridad4()+", mail: "+e.getMailAutoridad4()+", es referente :"+e.getEsReferenteAutoridad4());
-		row.createCell(16).setCellValue("Rol: "+e.getRolAutoridad5()+", nombre y apellido: "+e.getNombreApellidoAutoridad5()+", telefono: "+e.getTelefonoAutoridad5()+", mail: "+e.getMailAutoridad5()+", es referente :"+e.getEsReferenteAutoridad5());
+		String autoridad1="Rol: "+e.getRolAutoridad1()+", nombre y apellido: "+e.getNombreApellidoAutoridad1()+", telefono: "+e.getTelefonoAutoridad1()+", mail: "+e.getMailAutoridad1()+", es referente :"+e.getEsReferenteAutoridad1();
+		if(e.getRolAutoridad1()==null&&e.getNombreApellidoAutoridad1()==null&&e.getTelefonoAutoridad1()==null&&e.getMailAutoridad1()==null&&e.getEsReferenteAutoridad1()==null)autoridad1="";
+
+		String autoridad2="Rol: "+e.getRolAutoridad2()+", nombre y apellido: "+e.getNombreApellidoAutoridad2()+", telefono: "+e.getTelefonoAutoridad2()+", mail: "+e.getMailAutoridad2()+", es referente :"+e.getEsReferenteAutoridad2();
+		if(e.getRolAutoridad2()==null&&e.getNombreApellidoAutoridad2()==null&&e.getTelefonoAutoridad2()==null&&e.getMailAutoridad2()==null&&e.getEsReferenteAutoridad2()==null)autoridad2="";
+
+		String autoridad3="Rol: "+e.getRolAutoridad3()+", nombre y apellido: "+e.getNombreApellidoAutoridad3()+", telefono: "+e.getTelefonoAutoridad3()+", mail: "+e.getMailAutoridad3()+", es referente :"+e.getEsReferenteAutoridad3();
+		if(e.getRolAutoridad3()==null&&e.getNombreApellidoAutoridad3()==null&&e.getTelefonoAutoridad3()==null&&e.getMailAutoridad3()==null&&e.getEsReferenteAutoridad3()==null)autoridad3="";
+		
+		String autoridad4="Rol: "+e.getRolAutoridad4()+", nombre y apellido: "+e.getNombreApellidoAutoridad4()+", telefono: "+e.getTelefonoAutoridad4()+", mail: "+e.getMailAutoridad4()+", es referente :"+e.getEsReferenteAutoridad4();
+		if(e.getRolAutoridad4()==null&&e.getNombreApellidoAutoridad4()==null&&e.getTelefonoAutoridad4()==null&&e.getMailAutoridad4()==null&&e.getEsReferenteAutoridad4()==null)autoridad4="";
+
+		String autoridad5="Rol: "+e.getRolAutoridad5()+", nombre y apellido: "+e.getNombreApellidoAutoridad5()+", telefono: "+e.getTelefonoAutoridad5()+", mail: "+e.getMailAutoridad5()+", es referente :"+e.getEsReferenteAutoridad5();
+		if(e.getRolAutoridad5()==null&&e.getNombreApellidoAutoridad5()==null&&e.getTelefonoAutoridad5()==null&&e.getMailAutoridad5()==null&&e.getEsReferenteAutoridad5()==null)autoridad5="";
+
+		
+		
+		
+		
+		row.createCell(12).setCellValue(autoridad1);
+		row.createCell(13).setCellValue(autoridad2);
+		row.createCell(14).setCellValue(autoridad3);
+		row.createCell(15).setCellValue(autoridad4);
+		row.createCell(16).setCellValue(autoridad5);
+		
 
 		row.createCell(17).setCellValue(e.getMatricula());
 		row.createCell(18).setCellValue(e.getEquipoDirectivo());
@@ -594,33 +803,34 @@ public class EscuelasExcelView extends AbstractExcelView{
 		row.createCell(23).setCellValue(e.getCualOtroEspacioApoyo());	
 //		fin nuevo
 		row.createCell(24).setCellValue(e.getTcoo());
-		row.createCell(24).setCellValue(e.getDsoo());
-		row.createCell(25).setCellValue(e.getEudbe().getValor());
-		row.createCell(26).setCellValue(e.getTpacl().getValor());
-		row.createCell(27).setCellValue(e.getSplftp().getValor());
-		row.createCell(28).setCellValue(e.getEuscp().getValor());
-		row.createCell(29).setCellValue(e.getObservacionesGrales());
+		row.createCell(25).setCellValue(e.getDsoo());
+		row.createCell(26).setCellValue(e.getEudbe().getValor());
+		row.createCell(27).setCellValue(e.getTpacl().getValor());
+		row.createCell(28).setCellValue(e.getSplftp().getValor());
+		row.createCell(29).setCellValue(e.getEuscp().getValor());
+		row.createCell(30).setCellValue(e.getObservacionesGrales());
 		if((e.getPrograma().equals("PFE"))&&(Integer.parseInt(e.getBecadosActivos())>0))
 		{
-			row.createCell(30).setCellValue("SI");	
+			row.createCell(31).setCellValue("SI");	
 		}else
 		{
-			row.createCell(30).setCellValue("NO");	
+			row.createCell(31).setCellValue("NO");	
 		};
 				
-		row.createCell(31).setCellValue(e.getBecadosActivos());
-		row.createCell(32).setCellValue(e.getAnioComienzoPBE());
-		row.createCell(33).setCellValue(e.getModalidadTrabajoEscuela());
-		row.createCell(34).setCellValue(e.getEdfea().getValor());
-		row.createCell(35).setCellValue(e.getEdbis().getValor());
-		row.createCell(36).setCellValue(e.getEdccpa().getValor());
-		row.createCell(37).setCellValue(e.getRaeea().getValor());
-		row.createCell(38).setCellValue(e.getEcdPFE().getValor());		
-		row.createCell(39).setCellValue(e.getCed().getValor());
-		row.createCell(40).setCellValue(e.getProyeccionPFE().getValor());
-		row.createCell(41).setCellValue(e.getEqa());
+		row.createCell(32).setCellValue(e.getBecadosActivos());
+		row.createCell(33).setCellValue(e.getAnioComienzoPBE());
+		row.createCell(34).setCellValue(e.getModalidadTrabajoEscuela());
+		row.createCell(35).setCellValue(e.getEdfea().getValor());
+		row.createCell(36).setCellValue(e.getEdbis().getValor());
+		row.createCell(37).setCellValue(e.getEdccpa().getValor());
+		row.createCell(38).setCellValue(e.getRaeea().getValor());
+		row.createCell(39).setCellValue(e.getEcdPFE().getValor());		
+		row.createCell(40).setCellValue(e.getCed().getValor());
+		row.createCell(41).setCellValue(e.getProyeccionPFE().getValor());
+		row.createCell(42).setCellValue(e.getEqa());
 		//nuevo
-		row.createCell(41).setCellValue(e.getAniosParticipacionEQA());
+		row.createCell(43).setCellValue(e.getAniosParticipacionEQA());
+		row.createCell(44).setCellValue(e.getRedEQA()+" "+e.getCualesOtrasPropuestas());
 		//fin nuevo
 		
 		//continuar desde aca
@@ -630,54 +840,54 @@ public class EscuelasExcelView extends AbstractExcelView{
 		
 		
 		
-		row.createCell(21).setCellValue(e.getRural());
-		row.createCell(22).setCellValue(e.getSubsidio());
-		row.createCell(24).setCellValue(e.getEstado());
-		row.createCell(25).setCellValue(e.getMotivoNoSeleccion());
-		row.createCell(26).setCellValue(e.getPrograma());
-		row.createCell(28).setCellValue(e.getAnioComienzoProyecto());
-		row.createCell(30).setCellValue(e.getFase());
-		row.createCell(31).setCellValue(e.getObjetivoProyecto());
-		row.createCell(32).setCellValue(e.getObservaciones());		
-		row.createCell(34).setCellValue(e.getRepitencia());
-		row.createCell(35).setCellValue(e.getAbandono());
-		row.createCell(36).setCellValue(e.getInasistencias());
-		row.createCell(37).setCellValue(e.getTurnos());
-		row.createCell(39).setCellValue(e.getCcephe());
-		row.createCell(41).setCellValue(e.getRefp().getValor());
-		row.createCell(44).setCellValue(e.getAccesibilidad().getValor());
-		row.createCell(46).setCellValue(e.getEctaes().getValor());
-		row.createCell(47).setCellValue(e.getEddes().getValor());
-		row.createCell(52).setCellValue(e.getErsb().getValor());
-		row.createCell(53).setCellValue(e.getEpep().getValor());
-		row.createCell(55).setCellValue(e.getCd1());
-		row.createCell(56).setCellValue(e.getCd2());
-		row.createCell(57).setCellValue(e.getCd3());
-		row.createCell(58).setCellValue(e.getCd4());
-		row.createCell(59).setCellValue(e.getCd5());
-		row.createCell(60).setCellValue(e.getCd6());
-		row.createCell(61).setCellValue(e.getCd7());
-		row.createCell(62).setCellValue(e.getMat1());
-		row.createCell(63).setCellValue(e.getMat2());
-		row.createCell(64).setCellValue(e.getMat3());
-		row.createCell(65).setCellValue(e.getMat4());
-		row.createCell(66).setCellValue(e.getMat5());
-		row.createCell(67).setCellValue(e.getMat6());
-		row.createCell(68).setCellValue(e.getMat7());
-		row.createCell(69).setCellValue(e.getRep1());
-		row.createCell(70).setCellValue(e.getRep2());
-		row.createCell(71).setCellValue(e.getRep3());
-		row.createCell(72).setCellValue(e.getRep4());
-		row.createCell(73).setCellValue(e.getRep5());
-		row.createCell(74).setCellValue(e.getRep6());
-		row.createCell(75).setCellValue(e.getRep7());
-		row.createCell(76).setCellValue(e.getAb1());
-		row.createCell(77).setCellValue(e.getAb2());
-		row.createCell(78).setCellValue(e.getAb3());
-		row.createCell(79).setCellValue(e.getAb4());
-		row.createCell(80).setCellValue(e.getAb5());
-		row.createCell(81).setCellValue(e.getAb6());
-		row.createCell(82).setCellValue(e.getAb7());
+//		row.createCell(21).setCellValue(e.getRural());
+//		row.createCell(22).setCellValue(e.getSubsidio());
+//		row.createCell(24).setCellValue(e.getEstado());
+//		row.createCell(25).setCellValue(e.getMotivoNoSeleccion());
+//		row.createCell(26).setCellValue(e.getPrograma());
+//		row.createCell(28).setCellValue(e.getAnioComienzoProyecto());
+//		row.createCell(30).setCellValue(e.getFase());
+//		row.createCell(31).setCellValue(e.getObjetivoProyecto());
+//		row.createCell(32).setCellValue(e.getObservaciones());		
+//		row.createCell(34).setCellValue(e.getRepitencia());
+//		row.createCell(35).setCellValue(e.getAbandono());
+//		row.createCell(36).setCellValue(e.getInasistencias());
+//		row.createCell(37).setCellValue(e.getTurnos());
+//		row.createCell(39).setCellValue(e.getCcephe());
+//		row.createCell(41).setCellValue(e.getRefp().getValor());
+//		row.createCell(44).setCellValue(e.getAccesibilidad().getValor());
+//		row.createCell(46).setCellValue(e.getEctaes().getValor());
+//		row.createCell(47).setCellValue(e.getEddes().getValor());
+//		row.createCell(52).setCellValue(e.getErsb().getValor());
+//		row.createCell(53).setCellValue(e.getEpep().getValor());
+//		row.createCell(55).setCellValue(e.getCd1());
+//		row.createCell(56).setCellValue(e.getCd2());
+//		row.createCell(57).setCellValue(e.getCd3());
+//		row.createCell(58).setCellValue(e.getCd4());
+//		row.createCell(59).setCellValue(e.getCd5());
+//		row.createCell(60).setCellValue(e.getCd6());
+//		row.createCell(61).setCellValue(e.getCd7());
+//		row.createCell(62).setCellValue(e.getMat1());
+//		row.createCell(63).setCellValue(e.getMat2());
+//		row.createCell(64).setCellValue(e.getMat3());
+//		row.createCell(65).setCellValue(e.getMat4());
+//		row.createCell(66).setCellValue(e.getMat5());
+//		row.createCell(67).setCellValue(e.getMat6());
+//		row.createCell(68).setCellValue(e.getMat7());
+//		row.createCell(69).setCellValue(e.getRep1());
+//		row.createCell(70).setCellValue(e.getRep2());
+//		row.createCell(71).setCellValue(e.getRep3());
+//		row.createCell(72).setCellValue(e.getRep4());
+//		row.createCell(73).setCellValue(e.getRep5());
+//		row.createCell(74).setCellValue(e.getRep6());
+//		row.createCell(75).setCellValue(e.getRep7());
+//		row.createCell(76).setCellValue(e.getAb1());
+//		row.createCell(77).setCellValue(e.getAb2());
+//		row.createCell(78).setCellValue(e.getAb3());
+//		row.createCell(79).setCellValue(e.getAb4());
+//		row.createCell(80).setCellValue(e.getAb5());
+//		row.createCell(81).setCellValue(e.getAb6());
+//		row.createCell(82).setCellValue(e.getAb7());
 
 //		row.createCell(0).setCellValue(e.getIdEscuela());
 //		row.createCell(1).setCellValue(e.getNombre());
