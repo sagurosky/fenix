@@ -235,7 +235,9 @@ public class EscuelasExcelView extends AbstractExcelView{
             		resDTO.setCcephe("No");
             	}
             	if (rs.getString("escuela.ced")!=null){
-            		resDTO.setCed(DesplegadoEscuelaCED.getPrograma(Integer.parseInt(rs.getString("escuela.ced"))));
+            		resDTO.setCed(DesplegadoEscuelaCED.getPrograma(
+            				Integer.parseInt(rs.getString("escuela.ced"))>4?0:(Integer.parseInt(rs.getString("escuela.ced"))+1)
+            				));
             	}
             	else{
             		resDTO.setCed(DesplegadoEscuelaCED.getPrograma(0));
@@ -263,7 +265,9 @@ public class EscuelasExcelView extends AbstractExcelView{
             		resDTO.setAccesibilidad(DesplegadoEscuelaAccesibilidad.getPrograma(0));
             	}
             	if (rs.getString("escuela.proyeccionpfe")!=null){
-            		resDTO.setProyeccionPFE(DesplegadoEscuelaProyeccionPFE.getPrograma(Integer.parseInt(rs.getString("escuela.proyeccionpfe"))));
+            		resDTO.setProyeccionPFE(DesplegadoEscuelaProyeccionPFE.getPrograma(
+            				Integer.parseInt(rs.getString("escuela.proyeccionpfe"))>3?0:(Integer.parseInt(rs.getString("escuela.proyeccionpfe"))+1)
+            				));
             	}else{
             		resDTO.setProyeccionPFE(DesplegadoEscuelaProyeccionPFE.getPrograma(0));
             	}
@@ -278,58 +282,110 @@ public class EscuelasExcelView extends AbstractExcelView{
             		resDTO.setEddes(DesplegadoEscuela.getPrograma(0));
             	}
             	if (rs.getString("escuela.edfea")!=null){
-            		resDTO.setEdfea(DesplegadoEscuela.getPrograma(Integer.parseInt(rs.getString("escuela.edfea"))));
+            		//DMS hay algunos datos mal en la bd que se ve se han agregado a mano. Para que no falle agrego seguridad
+            		resDTO.setEdfea(DesplegadoEscuela.getPrograma(
+            				Integer.parseInt(rs.getString("escuela.edfea"))>2?0:(Integer.parseInt(rs.getString("escuela.edfea"))+1)
+            				));
+            	
             	}else{
             		resDTO.setEdfea(DesplegadoEscuela.getPrograma(0));
             	}
             	if (rs.getString("escuela.edbis")!=null){
-            		resDTO.setEdbis(DesplegadoEscuela.getPrograma(Integer.parseInt(rs.getString("escuela.edbis"))));
+            		//DMS hay algunos datos mal en la bd que se ve se han agregado a mano. Para que no falle agrego seguridad
+
+            		resDTO.setEdbis(DesplegadoEscuela.getPrograma(
+            				Integer.parseInt(rs.getString("escuela.edbis"))>3?0:(Integer.parseInt(rs.getString("escuela.edbis"))+1)
+            				));
             	}else{
             		resDTO.setEdbis(DesplegadoEscuela.getPrograma(0));
             	}
             	if (rs.getString("escuela.edccpa")!=null){
-            		resDTO.setEdccpa(DesplegadoEscuela.getPrograma(Integer.parseInt(rs.getString("escuela.edccpa"))));
+            		//DMS hay algunos datos mal en la bd que se ve se han agregado a mano. Para que no falle agrego seguridad
+
+            		resDTO.setEdccpa(DesplegadoEscuela.getPrograma(
+            				Integer.parseInt(rs.getString("escuela.edccpa"))>3?0:(Integer.parseInt(rs.getString("escuela.edccpa"))+1)
+            				));
             	}else{
             		resDTO.setEdccpa(DesplegadoEscuela.getPrograma(0));
             	}
             	if (rs.getString("escuela.raeea")!=null){
-            		resDTO.setRaeea(DesplegadoEscuela.getPrograma(Integer.parseInt(rs.getString("escuela.raeea"))));
+            		//DMS hay algunos datos mal en la bd que se ve se han agregado a mano. Para que no falle agrego seguridad
+
+            		resDTO.setRaeea(DesplegadoEscuela.getPrograma(
+            				Integer.parseInt(rs.getString("escuela.raeea"))>3?0:(Integer.parseInt(rs.getString("escuela.raeea"))+1)
+            				));
             	}else{
             		resDTO.setRaeea(DesplegadoEscuela.getPrograma(0));
             	}
             	if (rs.getString("escuela.ersb")!=null){
-            		resDTO.setErsb(DesplegadoEscuelaSINO.getPrograma(Integer.parseInt(rs.getString("escuela.ersb"))));
+            		//DMS hay algunos datos mal en la bd que se ve se han agregado a mano. Para que no falle agrego seguridad
+
+            		resDTO.setErsb(DesplegadoEscuelaSINO.getPrograma(
+            				Integer.parseInt(rs.getString("escuela.ersb"))>1?0:(Integer.parseInt(rs.getString("escuela.ersb"))+1)
+            				));
             	}else{
             		resDTO.setErsb(DesplegadoEscuelaSINO.getPrograma(0));
             	}
             	if (rs.getString("escuela.epep")!=null){
-            		resDTO.setEpep(DesplegadoEscuela.getPrograma(Integer.parseInt(rs.getString("escuela.epep"))));
+            		//DMS hay algunos datos mal en la bd que se ve se han agregado a mano. Para que no falle agrego seguridad
+
+            		resDTO.setEpep(DesplegadoEscuela.getPrograma(
+            				Integer.parseInt(rs.getString("escuela.epep"))>3?0:(Integer.parseInt(rs.getString("escuela.epep"))+1)
+            				));
             	}else{
             		resDTO.setEpep(DesplegadoEscuela.getPrograma(0));
             	}
             	if (rs.getString("escuela.ecdpfe")!=null){
-            		resDTO.setEcdPFE(DesplegadoEscuelaSINO.getPrograma(Integer.parseInt(rs.getString("escuela.ecdpfe"))));
+            		//DMS hay algunos datos mal en la bd que se ve se han agregado a mano. Para que no falle agrego seguridad
+
+            		resDTO.setEcdPFE(DesplegadoEscuela.getPrograma(
+            				Integer.parseInt(rs.getString("escuela.ecdpfe"))>3?0:(Integer.parseInt(rs.getString("escuela.ecdpfe"))+1)
+            				));
             	}else{
-            		resDTO.setEcdPFE(DesplegadoEscuelaSINO.getPrograma(0));
+            		resDTO.setEcdPFE(DesplegadoEscuela.getPrograma(0));
             	}
             	
             	if (rs.getString("escuela.eudbe")!=null){
-            		resDTO.setEudbe(DesplegadoEscuelaSINO.getPrograma(Integer.parseInt(rs.getString("escuela.eudbe"))));
+            		if(rs.getString("escuela.eudbe").equals("2"))
+            		{
+            			resDTO.setEudbe(DesplegadoEscuelaSINO.getPrograma(0));
+            		}else
+            		{
+            			resDTO.setEudbe(DesplegadoEscuelaSINO.getPrograma(Integer.parseInt(rs.getString("escuela.eudbe"))+1));
+            		}
             	}else{
             		resDTO.setEudbe(DesplegadoEscuelaSINO.getPrograma(0));
             	}
             	if (rs.getString("escuela.tpacl")!=null){
-            		resDTO.setTpacl(DesplegadoEscuelaSINO.getPrograma(Integer.parseInt(rs.getString("escuela.tpacl"))));
+            		if(rs.getString("escuela.tpacl").equals("2"))
+            		{
+            			resDTO.setTpacl(DesplegadoEscuelaSINO.getPrograma(0));
+            		}else
+            		{
+            			resDTO.setTpacl(DesplegadoEscuelaSINO.getPrograma(Integer.parseInt(rs.getString("escuela.tpacl"))+1));
+            		}
             	}else{
             		resDTO.setTpacl(DesplegadoEscuelaSINO.getPrograma(0));
             	}
             	if (rs.getString("escuela.splftp")!=null){
-            		resDTO.setSplftp(DesplegadoEscuelaSINO.getPrograma(Integer.parseInt(rs.getString("escuela.splftp"))));
+            		if(rs.getString("escuela.splftp").equals("2"))
+            		{
+            			resDTO.setSplftp(DesplegadoEscuelaSINO.getPrograma(0));
+            		}else
+            		{
+            			resDTO.setSplftp(DesplegadoEscuelaSINO.getPrograma(Integer.parseInt(rs.getString("escuela.splftp"))+1));
+            		}
             	}else{
             		resDTO.setSplftp(DesplegadoEscuelaSINO.getPrograma(0));
             	}
             	if (rs.getString("escuela.euscp")!=null){
-            		resDTO.setEuscp(DesplegadoEscuelaSINO.getPrograma(Integer.parseInt(rs.getString("escuela.euscp"))));
+            		if(rs.getString("escuela.euscp").equals("2"))
+            		{
+            			resDTO.setEuscp(DesplegadoEscuelaSINO.getPrograma(0));
+            		}else
+            		{
+            			resDTO.setEuscp(DesplegadoEscuelaSINO.getPrograma(Integer.parseInt(rs.getString("escuela.euscp"))+1));
+            		}
             	}else{
             		resDTO.setEuscp(DesplegadoEscuelaSINO.getPrograma(0));
             	}
@@ -664,12 +720,26 @@ public class EscuelasExcelView extends AbstractExcelView{
             	}else{
             		resDTO.setRedEQA("");
             	}
+            	//participo_otras_propuestas
+            	if (rs.getString("participo_otras_propuestas")!=null){
+            		if(rs.getString("participo_otras_propuestas").equals("1"))
+            			{
+            			resDTO.setParticipoOtrasPropuestas("Si");
+            			}else
+            			{
+            			resDTO.setParticipoOtrasPropuestas("No");
+            			}
+            	}else{
+            		resDTO.setParticipoOtrasPropuestas("");
+            	}
             	//cuales_otras_propuestas
             	if (rs.getString("cuales_otras_propuestas")!=null){
             		resDTO.setCualesOtrasPropuestas(rs.getString("cuales_otras_propuestas"));
             	}else{
             		resDTO.setCualesOtrasPropuestas("");
             	}
+            	//niveles
+            	
             	
             	// Turnos
             	Connection cn1 = null;
@@ -687,35 +757,109 @@ public class EscuelasExcelView extends AbstractExcelView{
                 //e insertarlo en nuestro array
                 String turnos="";
                 while (rs1.next()) {         
-                	turnos=rs1.getString(1)+" ";
+                	turnos+=rs1.getString(1)+" ";
         	
                 }	
             	resDTO.setTurnos(turnos);
             	Conexion.cerrarCall(cl1);
                 Conexion.cerrarConexion(cn1);
             	// Espacio Apoyo Escuela
-            	Connection cn2 = null;
+                
+                Connection cn2 = null;
             	CallableStatement cl2 = null;
                 ResultSet rs2 = null;
-                String call2=null;
-                call2 = "{CALL SP_TraerEspacioApoyoEscuela(?)}";
+                String query2=null;
+                query2 = "Select "
+                		+ "if (espacio_apoyo_escuela.element=0,'Gabinete/Equipo de orientación escolar',"
+                		+ "if (espacio_apoyo_escuela.element=1,'Sala de profesores',"
+                		+ "if (espacio_apoyo_escuela.element=2,'Biblioteca',"
+                		+ "if (espacio_apoyo_escuela.element=3,'Laboratorio/Taller',"
+                		+ "if (espacio_apoyo_escuela.element=4,'Sala de Computación',"
+                		+ "if (espacio_apoyo_escuela.element=5,'Salón de usos múltiples',"
+                		+ "if (espacio_apoyo_escuela.element=6,'Centro de Estudiantes',"
+                		+ "if (espacio_apoyo_escuela.element=7,'Apoyo escolar',"
+                		+ "if (espacio_apoyo_escuela.element=8,'Sala de música',"
+                		+ "if (espacio_apoyo_escuela.element=9,'Acceso a internet',"
+                		+ "if (espacio_apoyo_escuela.element=10,'Comedor',"
+                		+ "if (espacio_apoyo_escuela.element=11,'Cooperadora',"
+                		+ "if (espacio_apoyo_escuela.element=12,'Cocina',"
+                		+ "if (espacio_apoyo_escuela.element=13,'Almuerzo/Merienda',"
+                		+ "if (espacio_apoyo_escuela.element=14,'Otro',"
+                		+ "''))))))))))))))) as espacios"
+                		+ "	from espacio_apoyo_escuela "
+                		+ "where escuela="+idEscuela+";";
+                
         		cn2 = Conexion.getConexion();
-                cl2 = cn.prepareCall(call2);	
-                cl2.setLong(1, idEscuela);
-        	        
-                //La sentencia lo almacenamos en un resulset
+        	     cl2=cn2.prepareCall(query2);   
                 rs2 = cl2.executeQuery();
                 //Consultamos si hay datos para recorrerlo
                 //e insertarlo en nuestro array
-                String espacio="";
+                String espacios="";
                 while (rs2.next()) {         
-                	espacio=rs2.getString(1)+" ";
-        	
+                	espacios +=rs2.getString(1)+" ";
                 }	
-            	resDTO.setEspacios(espacio);
+            	resDTO.setEspacios(espacios);
             	//Lo adicionamos a nuestra lista
             	Conexion.cerrarCall(cl2);
                 Conexion.cerrarConexion(cn2);
+                
+                
+ //              DMS forma vieja, borrar 
+//            	Connection cn2 = null;
+//            	CallableStatement cl2 = null;
+//                ResultSet rs2 = null;
+//                String call2=null;
+//                call2 = "{CALL SP_TraerEspacioApoyoEscuela(?)}";
+//        		cn2 = Conexion.getConexion();
+//                cl2 = cn.prepareCall(call2);	
+//                cl2.setLong(1, idEscuela);
+//        	        
+//                //La sentencia lo almacenamos en un resulset
+//                rs2 = cl2.executeQuery();
+//                //Consultamos si hay datos para recorrerlo
+//                //e insertarlo en nuestro array
+//                String espacio="";
+//                while (rs2.next()) {         
+//                	espacio+=rs2.getString(1)+" ";
+//        	
+//                }	
+//            	resDTO.setEspacios(espacio);
+//            	//Lo adicionamos a nuestra lista
+//            	Conexion.cerrarCall(cl2);
+//                Conexion.cerrarConexion(cn2);
+                //niveles
+
+           
+            	Connection cn3 = null;
+            	CallableStatement cl3 = null;
+                ResultSet rs3 = null;
+                String query3=null;
+                query3 = "Select "
+                		+ "if (niveles_atiende_escuela.element=2,'Secundaria',"
+                		+ "if (niveles_atiende_escuela.element=11,'Primaria',"
+                		+ "if (niveles_atiende_escuela.element=12,'Superior',''))) as nivel"
+                		+ "	from niveles_atiende_escuela "
+                		+ "where escuela="+idEscuela+";";
+                
+        		cn3 = Conexion.getConexion();
+        	     cl3=cn3.prepareCall(query3);   
+                rs3 = cl3.executeQuery();
+                //Consultamos si hay datos para recorrerlo
+                //e insertarlo en nuestro array
+                String niveles="";
+                while (rs3.next()) {         
+                	niveles+=rs3.getString(1)+" ";
+                }	
+                niveles=niveles.replace("Manana", "Mañana");
+            	resDTO.setNiveles(niveles);
+            	//Lo adicionamos a nuestra lista
+            	Conexion.cerrarCall(cl3);
+                Conexion.cerrarConexion(cn3);
+                
+                
+                
+                
+                
                 lista.add(resDTO);
         	}       
             Conexion.cerrarCall(cl);
@@ -739,7 +883,13 @@ public class EscuelasExcelView extends AbstractExcelView{
 		row.createCell(2).setCellValue(e.getCue());
 		row.createCell(3).setCellValue(e.getModalidad());
 		row.createCell(4).setCellValue(e.getOrientacion());
-		row.createCell(5).setCellValue(e.getNivel());
+		if(e.getNiveles()!=null&&e.getNiveles()!="")
+		{
+			row.createCell(5).setCellValue(e.getNiveles());
+		}else
+		{
+			row.createCell(5).setCellValue(e.getNivel());
+		}
 		row.createCell(6).setCellValue(e.getTurnos());
 		row.createCell(7).setCellValue(e.getDependencia());
 		row.createCell(8).setCellValue(e.getCalle() +" " + e.getNumero()+" CP: " +  e.getCp()+ " - "+e.getBarrio()+" - "+ e.getLocalidad()+" - "+e.getProvincia());		
@@ -808,8 +958,9 @@ public class EscuelasExcelView extends AbstractExcelView{
 		row.createCell(27).setCellValue(e.getTpacl().getValor());
 		row.createCell(28).setCellValue(e.getSplftp().getValor());
 		row.createCell(29).setCellValue(e.getEuscp().getValor());
-		row.createCell(30).setCellValue(e.getObservacionesGrales());
-		if((e.getPrograma().equals("PFE"))&&(Integer.parseInt(e.getBecadosActivos())>0))
+		row.createCell(30).setCellValue(e.getObservaciones());
+		Integer becadosActivos=(e.getBecadosActivos()==null||e.getBecadosActivos()=="")?0: Integer.parseInt(e.getBecadosActivos());
+		if((e.getPrograma().equals("PFE"))&&(becadosActivos>0))
 		{
 			row.createCell(31).setCellValue("SI");	
 		}else
@@ -822,162 +973,19 @@ public class EscuelasExcelView extends AbstractExcelView{
 		row.createCell(34).setCellValue(e.getModalidadTrabajoEscuela());
 		row.createCell(35).setCellValue(e.getEdfea().getValor());
 		row.createCell(36).setCellValue(e.getEdbis().getValor());
-		row.createCell(37).setCellValue(e.getEdccpa().getValor());
-		row.createCell(38).setCellValue(e.getRaeea().getValor());
-		row.createCell(39).setCellValue(e.getEcdPFE().getValor());		
-		row.createCell(40).setCellValue(e.getCed().getValor());
-		row.createCell(41).setCellValue(e.getProyeccionPFE().getValor());
-		row.createCell(42).setCellValue(e.getEqa());
+		row.createCell(37).setCellValue(e.getRaeea().getValor());
+		row.createCell(38).setCellValue(e.getEcdPFE().getValor());		
+		row.createCell(39).setCellValue(e.getCed().getValor());
+		row.createCell(40).setCellValue(e.getProyeccionPFE().getValor());
+		row.createCell(41).setCellValue(e.getEqa());
 		//nuevo
-		row.createCell(43).setCellValue(e.getAniosParticipacionEQA());
-		row.createCell(44).setCellValue(e.getRedEQA()+" "+e.getCualesOtrasPropuestas());
+		row.createCell(42).setCellValue(e.getAniosParticipacionEQA());
+		
+		row.createCell(43).setCellValue(e.getRedEQA());
+		
+		row.createCell(44).setCellValue(e.getParticipoOtrasPropuestas()+" "+e.getCualesOtrasPropuestas());
 		//fin nuevo
 		
-		//continuar desde aca
-		
-		
-		
-		
-		
-		
-//		row.createCell(21).setCellValue(e.getRural());
-//		row.createCell(22).setCellValue(e.getSubsidio());
-//		row.createCell(24).setCellValue(e.getEstado());
-//		row.createCell(25).setCellValue(e.getMotivoNoSeleccion());
-//		row.createCell(26).setCellValue(e.getPrograma());
-//		row.createCell(28).setCellValue(e.getAnioComienzoProyecto());
-//		row.createCell(30).setCellValue(e.getFase());
-//		row.createCell(31).setCellValue(e.getObjetivoProyecto());
-//		row.createCell(32).setCellValue(e.getObservaciones());		
-//		row.createCell(34).setCellValue(e.getRepitencia());
-//		row.createCell(35).setCellValue(e.getAbandono());
-//		row.createCell(36).setCellValue(e.getInasistencias());
-//		row.createCell(37).setCellValue(e.getTurnos());
-//		row.createCell(39).setCellValue(e.getCcephe());
-//		row.createCell(41).setCellValue(e.getRefp().getValor());
-//		row.createCell(44).setCellValue(e.getAccesibilidad().getValor());
-//		row.createCell(46).setCellValue(e.getEctaes().getValor());
-//		row.createCell(47).setCellValue(e.getEddes().getValor());
-//		row.createCell(52).setCellValue(e.getErsb().getValor());
-//		row.createCell(53).setCellValue(e.getEpep().getValor());
-//		row.createCell(55).setCellValue(e.getCd1());
-//		row.createCell(56).setCellValue(e.getCd2());
-//		row.createCell(57).setCellValue(e.getCd3());
-//		row.createCell(58).setCellValue(e.getCd4());
-//		row.createCell(59).setCellValue(e.getCd5());
-//		row.createCell(60).setCellValue(e.getCd6());
-//		row.createCell(61).setCellValue(e.getCd7());
-//		row.createCell(62).setCellValue(e.getMat1());
-//		row.createCell(63).setCellValue(e.getMat2());
-//		row.createCell(64).setCellValue(e.getMat3());
-//		row.createCell(65).setCellValue(e.getMat4());
-//		row.createCell(66).setCellValue(e.getMat5());
-//		row.createCell(67).setCellValue(e.getMat6());
-//		row.createCell(68).setCellValue(e.getMat7());
-//		row.createCell(69).setCellValue(e.getRep1());
-//		row.createCell(70).setCellValue(e.getRep2());
-//		row.createCell(71).setCellValue(e.getRep3());
-//		row.createCell(72).setCellValue(e.getRep4());
-//		row.createCell(73).setCellValue(e.getRep5());
-//		row.createCell(74).setCellValue(e.getRep6());
-//		row.createCell(75).setCellValue(e.getRep7());
-//		row.createCell(76).setCellValue(e.getAb1());
-//		row.createCell(77).setCellValue(e.getAb2());
-//		row.createCell(78).setCellValue(e.getAb3());
-//		row.createCell(79).setCellValue(e.getAb4());
-//		row.createCell(80).setCellValue(e.getAb5());
-//		row.createCell(81).setCellValue(e.getAb6());
-//		row.createCell(82).setCellValue(e.getAb7());
-
-//		row.createCell(0).setCellValue(e.getIdEscuela());
-//		row.createCell(1).setCellValue(e.getNombre());
-//		row.createCell(2).setCellValue(e.getCue());
-//		row.createCell(3).setCellValue(e.getModalidad());
-//		row.createCell(4).setCellValue(e.getOrientacion());
-//		row.createCell(5).setCellValue(e.getNivel());
-//		row.createCell(6).setCellValue(e.getAnios());
-//		row.createCell(7).setCellValue(e.getDependencia());
-//		row.createCell(8).setCellValue(e.getCalle() +" " + e.getNumero()+" CP: " +  e.getCp()+ " - "+e.getBarrio()+" - "+ e.getLocalidad()+" - "+e.getProvincia());		
-//		row.createCell(9).setCellValue(e.getZona());
-//		row.createCell(10).setCellValue("Tel1: "+e.getTel1()+" - Tel2: "+ e.getTel2());		
-//		row.createCell(11).setCellValue(e.getMail());
-//		row.createCell(12).setCellValue(e.getDirector());
-//		row.createCell(13).setCellValue(e.getDirectorCel());
-//		row.createCell(14).setCellValue(e.getDirectorMail());
-//		row.createCell(15).setCellValue(e.getSecretario());
-//		row.createCell(16).setCellValue(e.getSecretarioCel());
-//		row.createCell(17).setCellValue(e.getSecretarioMail());
-//		row.createCell(18).setCellValue(e.getResonsable());
-//		row.createCell(19).setCellValue(e.getResponsableCel());
-//		row.createCell(20).setCellValue(e.getResponsablMail());
-//		row.createCell(21).setCellValue(e.getRural());
-//		row.createCell(22).setCellValue(e.getSubsidio());
-//		row.createCell(23).setCellValue(e.getObservacionesGrales());
-//		row.createCell(24).setCellValue(e.getEstado());
-//		row.createCell(25).setCellValue(e.getMotivoNoSeleccion());
-//		row.createCell(26).setCellValue(e.getPrograma());
-//		row.createCell(27).setCellValue(e.getModalidadTrabajoEscuela());
-//		row.createCell(28).setCellValue(e.getAnioComienzoProyecto());
-//		row.createCell(29).setCellValue(e.getAnioComienzoPBE());
-//		row.createCell(30).setCellValue(e.getFase());
-//		row.createCell(31).setCellValue(e.getObjetivoProyecto());
-//		row.createCell(32).setCellValue(e.getObservaciones());		
-//		row.createCell(33).setCellValue(e.getMatricula());
-//		row.createCell(34).setCellValue(e.getRepitencia());
-//		row.createCell(35).setCellValue(e.getAbandono());
-//		row.createCell(36).setCellValue(e.getInasistencias());
-//		row.createCell(37).setCellValue(e.getTurnos());
-//		row.createCell(38).setCellValue(e.getEspacios());		
-//		row.createCell(39).setCellValue(e.getCcephe());
-//		row.createCell(40).setCellValue(e.getCed().getValor());
-//		row.createCell(41).setCellValue(e.getRefp().getValor());
-//		row.createCell(42).setCellValue(e.getTcoo());
-//		row.createCell(43).setCellValue(e.getDsoo());
-//		row.createCell(44).setCellValue(e.getAccesibilidad().getValor());
-//		row.createCell(45).setCellValue(e.getProyeccionPFE().getValor());
-//		row.createCell(46).setCellValue(e.getEctaes().getValor());
-//		row.createCell(47).setCellValue(e.getEddes().getValor());
-//		row.createCell(48).setCellValue(e.getEdfea().getValor());
-//		row.createCell(49).setCellValue(e.getEdbis().getValor());
-//		row.createCell(50).setCellValue(e.getEdccpa().getValor());
-//		row.createCell(51).setCellValue(e.getRaeea().getValor());
-//		row.createCell(52).setCellValue(e.getErsb().getValor());
-//		row.createCell(53).setCellValue(e.getEpep().getValor());
-//		row.createCell(54).setCellValue(e.getEcdPFE().getValor());		
-//		row.createCell(55).setCellValue(e.getCd1());
-//		row.createCell(56).setCellValue(e.getCd2());
-//		row.createCell(57).setCellValue(e.getCd3());
-//		row.createCell(58).setCellValue(e.getCd4());
-//		row.createCell(59).setCellValue(e.getCd5());
-//		row.createCell(60).setCellValue(e.getCd6());
-//		row.createCell(61).setCellValue(e.getCd7());
-//		row.createCell(62).setCellValue(e.getMat1());
-//		row.createCell(63).setCellValue(e.getMat2());
-//		row.createCell(64).setCellValue(e.getMat3());
-//		row.createCell(65).setCellValue(e.getMat4());
-//		row.createCell(66).setCellValue(e.getMat5());
-//		row.createCell(67).setCellValue(e.getMat6());
-//		row.createCell(68).setCellValue(e.getMat7());
-//		row.createCell(69).setCellValue(e.getRep1());
-//		row.createCell(70).setCellValue(e.getRep2());
-//		row.createCell(71).setCellValue(e.getRep3());
-//		row.createCell(72).setCellValue(e.getRep4());
-//		row.createCell(73).setCellValue(e.getRep5());
-//		row.createCell(74).setCellValue(e.getRep6());
-//		row.createCell(75).setCellValue(e.getRep7());
-//		row.createCell(76).setCellValue(e.getAb1());
-//		row.createCell(77).setCellValue(e.getAb2());
-//		row.createCell(78).setCellValue(e.getAb3());
-//		row.createCell(79).setCellValue(e.getAb4());
-//		row.createCell(80).setCellValue(e.getAb5());
-//		row.createCell(81).setCellValue(e.getAb6());
-//		row.createCell(82).setCellValue(e.getAb7());
-//		row.createCell(83).setCellValue(e.getEudbe().getValor());
-//		row.createCell(84).setCellValue(e.getTpacl().getValor());
-//		row.createCell(85).setCellValue(e.getSplftp().getValor());
-//		row.createCell(86).setCellValue(e.getEuscp().getValor());
-//		row.createCell(87).setCellValue(e.getEqa());
-//		row.createCell(88).setCellValue(e.getBecadosActivos());
 		
 		
 		

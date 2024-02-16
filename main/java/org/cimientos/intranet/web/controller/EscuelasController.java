@@ -366,8 +366,7 @@ public class EscuelasController extends BaseController {
 			@RequestParam(required=false,value="idCicloIndicador") Integer idCicloIndicador,
 			@RequestParam(required=false,value="urlRegreso") String urlRegreso
 		){
-//		dms señalador
-		
+System.out.println("entra: "+escuela.getRedEQA());		
 		map = new HashMap<String, Object>();
 		Date dNow = new Date();
 		SimpleDateFormat ft = 

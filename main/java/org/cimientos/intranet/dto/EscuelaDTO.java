@@ -20,6 +20,7 @@ public class EscuelaDTO {
 	private String modalidad;
 	private String orientacion;
 	private String nivel;
+	private String niveles;
 	private String anios;
 	private String dependencia;
 	private String cp;
@@ -163,7 +164,7 @@ public class EscuelaDTO {
 		private DesplegadoEscuelaSINO  ersb;
 		
 		@Enumerated(EnumType.ORDINAL)	
-		private DesplegadoEscuelaSINO ecdPFE;
+		private DesplegadoEscuela ecdPFE;
 		
 		@Enumerated(EnumType.ORDINAL)	
 		private DesplegadoEscuelaSINO eudbe;
@@ -238,7 +239,7 @@ public class EscuelaDTO {
 				DesplegadoEscuela edfea, DesplegadoEscuela edbis,
 				DesplegadoEscuela edccpa, DesplegadoEscuela raeea,
 				DesplegadoEscuela epep, DesplegadoEscuelaSINO ersb,
-				DesplegadoEscuelaSINO ecdPFE, String cd1, String cd2,
+				DesplegadoEscuela ecdPFE, String cd1, String cd2,
 				String cd3, String cd4, String cd5, String cd6, String cd7,
 				String mat1, String mat2, String mat3, String mat4,
 				String mat5, String mat6, String mat7, String rep1,
@@ -833,6 +834,14 @@ public class EscuelaDTO {
 			this.cualesOtrasPropuestas = cualesOtrasPropuestas;
 		}
 
+		public String getNiveles() {
+			return niveles;
+		}
+
+		public void setNiveles(String niveles) {
+			this.niveles = niveles;
+		}
+
 		//dms señalador
 		public String getRural() {
 			return rural;
@@ -1106,12 +1115,12 @@ public class EscuelaDTO {
 			this.ersb = ersb;
 		}
 
-		public DesplegadoEscuelaSINO getEcdPFE() {
+		public DesplegadoEscuela getEcdPFE() {
 			return ecdPFE;
 		}
 
-		public void setEcdPFE(DesplegadoEscuelaSINO ecdPFE) {
-			this.ecdPFE = ecdPFE;
+		public void setEcdPFE(DesplegadoEscuela desplegadoEscuela) {
+			this.ecdPFE = desplegadoEscuela;
 		}
 
 		public String getCd1() {

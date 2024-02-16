@@ -69,9 +69,11 @@
  	System.out.println("SEA: "+egreso2);
 	System.out.println("ciclo: "+ciclo);
 	String enBase="0";
+	if(qma==null)qma="";
 	if (qma.equals("")){
 		qma="0";
 	}
+	if(qmd==null)qmd="";
 	if (qmd.equals("")){
 		qmd="0";
 	}

@@ -375,7 +375,7 @@ function validarIndicador(obj){
 				<td>Nivel que atiende *<br>(opción múltiple)</td>
 				<td>
 				
-				<select name="idNivelAtiendeEscuela" id="nivelAtiendeEscuela" class="required textbox2" style="width: 11em;" hidden>
+				<select name="idNivelAtiendeEscuela" id="nivelAtiendeEscuela" class=" textbox2" style="width: 11em;" hidden>
 					<option></option>
 					<c:forEach items="${nivelesEscuela}" var="nivelEscuela">
 						
@@ -1498,7 +1498,7 @@ function validarIndicador(obj){
 				</td>
 				<td>¿Participa de la Red de Escuelas <br>que Acompañan?</td>
 				<td>
-					<select class="textbox2" id="redEqa" name="redEqa" >							
+					<select class="textbox2" id="redEQA" name="redEQA" >							
 					<c:choose>
 						<c:when test="${escuela.redEQA == 'Si'}">
 								<option value="Si" selected="selected">Sí</option>
