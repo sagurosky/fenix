@@ -413,15 +413,15 @@ public class Escuela implements Serializable{
 	@Column(length=50)
 	private String rolAutoridad5;;
 
-	@Column(length=50)
+	@Column(length=100)
 	private String nombreApellidoAutoridad1;
-	@Column(length=50)
+	@Column(length=100)
 	private String nombreApellidoAutoridad2;
-	@Column(length=50)
+	@Column(length=100)
 	private String nombreApellidoAutoridad3;
-	@Column(length=50)
+	@Column(length=100)
 	private String nombreApellidoAutoridad4;
-	@Column(length=50)
+	@Column(length=100)
 	private String nombreApellidoAutoridad5;
 
 	@Column(length=50)
@@ -435,15 +435,15 @@ public class Escuela implements Serializable{
 	@Column(length=50)
 	private String telefonoAutoridad5;
 
-	@Column(length=50)
+	@Column(length=100)
 	private String mailAutoridad1;
-	@Column(length=50)
+	@Column(length=100)
 	private String mailAutoridad2;
-	@Column(length=50)
+	@Column(length=100)
 	private String mailAutoridad3;
-	@Column(length=50)
+	@Column(length=100)
 	private String mailAutoridad4;
-	@Column(length=50)
+	@Column(length=100)
 	private String mailAutoridad5;
 
 	@Column(length=50)

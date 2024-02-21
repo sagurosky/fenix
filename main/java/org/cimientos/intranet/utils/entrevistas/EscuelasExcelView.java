@@ -95,7 +95,7 @@ public class EscuelasExcelView extends AbstractExcelView{
 		HSSFSheet sheet = workbook.getSheet("Escuelas");
 		
 		List<EscuelaDTO> escuelas = null;
-		int rowNum = 1;
+		int rowNum = 2;
 		int parcial = 0;
 		int inicial = 0;
 		int totalRows=1000;
@@ -892,10 +892,11 @@ public class EscuelasExcelView extends AbstractExcelView{
 		}
 		row.createCell(6).setCellValue(e.getTurnos());
 		row.createCell(7).setCellValue(e.getDependencia());
-		row.createCell(8).setCellValue(e.getCalle() +" " + e.getNumero()+" CP: " +  e.getCp()+ " - "+e.getBarrio()+" - "+ e.getLocalidad()+" - "+e.getProvincia());		
-		row.createCell(9).setCellValue(e.getZona());
-		row.createCell(10).setCellValue("Tel1: "+e.getTel1()+" - Tel2: "+ e.getTel2());		
-		row.createCell(11).setCellValue(e.getMail());
+		row.createCell(8).setCellValue(e.getCalle() +" " + e.getNumero()+" CP: " +  e.getCp()+ " - "+e.getBarrio()+" - "+ e.getLocalidad());		
+		row.createCell(9).setCellValue(e.getProvincia());		
+		row.createCell(10).setCellValue(e.getZona());
+		row.createCell(11).setCellValue("Tel1: "+e.getTel1()+" - Tel2: "+ e.getTel2());		
+		row.createCell(12).setCellValue(e.getMail());
 		
 		
 //		DMS 10/2/24 sistema anterior
@@ -913,77 +914,104 @@ public class EscuelasExcelView extends AbstractExcelView{
 		
 // 		tanda de datos nuevos, agregar en el llamado a la bd		
 		
-		String autoridad1="Rol: "+e.getRolAutoridad1()+", nombre y apellido: "+e.getNombreApellidoAutoridad1()+", telefono: "+e.getTelefonoAutoridad1()+", mail: "+e.getMailAutoridad1()+", es referente :"+e.getEsReferenteAutoridad1();
-		if(e.getRolAutoridad1()==null&&e.getNombreApellidoAutoridad1()==null&&e.getTelefonoAutoridad1()==null&&e.getMailAutoridad1()==null&&e.getEsReferenteAutoridad1()==null)autoridad1="";
+		
+//		DMS no les gustó todo junto asi que lo despliego en 25 celdas
+//		
+//		String autoridad1="Rol: "+e.getRolAutoridad1()+", nombre y apellido: "+e.getNombreApellidoAutoridad1()+", telefono: "+e.getTelefonoAutoridad1()+", mail: "+e.getMailAutoridad1()+", es referente :"+e.getEsReferenteAutoridad1();
+//		if(e.getRolAutoridad1()==null&&e.getNombreApellidoAutoridad1()==null&&e.getTelefonoAutoridad1()==null&&e.getMailAutoridad1()==null&&e.getEsReferenteAutoridad1()==null)autoridad1="";
+//
+//		String autoridad2="Rol: "+e.getRolAutoridad2()+", nombre y apellido: "+e.getNombreApellidoAutoridad2()+", telefono: "+e.getTelefonoAutoridad2()+", mail: "+e.getMailAutoridad2()+", es referente :"+e.getEsReferenteAutoridad2();
+//		if(e.getRolAutoridad2()==null&&e.getNombreApellidoAutoridad2()==null&&e.getTelefonoAutoridad2()==null&&e.getMailAutoridad2()==null&&e.getEsReferenteAutoridad2()==null)autoridad2="";
+//
+//		String autoridad3="Rol: "+e.getRolAutoridad3()+", nombre y apellido: "+e.getNombreApellidoAutoridad3()+", telefono: "+e.getTelefonoAutoridad3()+", mail: "+e.getMailAutoridad3()+", es referente :"+e.getEsReferenteAutoridad3();
+//		if(e.getRolAutoridad3()==null&&e.getNombreApellidoAutoridad3()==null&&e.getTelefonoAutoridad3()==null&&e.getMailAutoridad3()==null&&e.getEsReferenteAutoridad3()==null)autoridad3="";
+//		
+//		String autoridad4="Rol: "+e.getRolAutoridad4()+", nombre y apellido: "+e.getNombreApellidoAutoridad4()+", telefono: "+e.getTelefonoAutoridad4()+", mail: "+e.getMailAutoridad4()+", es referente :"+e.getEsReferenteAutoridad4();
+//		if(e.getRolAutoridad4()==null&&e.getNombreApellidoAutoridad4()==null&&e.getTelefonoAutoridad4()==null&&e.getMailAutoridad4()==null&&e.getEsReferenteAutoridad4()==null)autoridad4="";
+//
+//		String autoridad5="Rol: "+e.getRolAutoridad5()+", nombre y apellido: "+e.getNombreApellidoAutoridad5()+", telefono: "+e.getTelefonoAutoridad5()+", mail: "+e.getMailAutoridad5()+", es referente :"+e.getEsReferenteAutoridad5();
+//		if(e.getRolAutoridad5()==null&&e.getNombreApellidoAutoridad5()==null&&e.getTelefonoAutoridad5()==null&&e.getMailAutoridad5()==null&&e.getEsReferenteAutoridad5()==null)autoridad5="";
 
-		String autoridad2="Rol: "+e.getRolAutoridad2()+", nombre y apellido: "+e.getNombreApellidoAutoridad2()+", telefono: "+e.getTelefonoAutoridad2()+", mail: "+e.getMailAutoridad2()+", es referente :"+e.getEsReferenteAutoridad2();
-		if(e.getRolAutoridad2()==null&&e.getNombreApellidoAutoridad2()==null&&e.getTelefonoAutoridad2()==null&&e.getMailAutoridad2()==null&&e.getEsReferenteAutoridad2()==null)autoridad2="";
+		
+		
+		
+		
+		row.createCell(13).setCellValue(e.getRolAutoridad1());
+		row.createCell(14).setCellValue(e.getNombreApellidoAutoridad1());
+		row.createCell(15).setCellValue(e.getTelefonoAutoridad1());
+		row.createCell(16).setCellValue(e.getMailAutoridad1());
+		row.createCell(17).setCellValue(e.getEsReferenteAutoridad1());
+		
+		row.createCell(18).setCellValue(e.getRolAutoridad2());
+		row.createCell(19).setCellValue(e.getNombreApellidoAutoridad2());
+		row.createCell(20).setCellValue(e.getTelefonoAutoridad2());
+		row.createCell(21).setCellValue(e.getMailAutoridad2());
+		row.createCell(22).setCellValue(e.getEsReferenteAutoridad2());
+	
+		row.createCell(23).setCellValue(e.getRolAutoridad3());
+		row.createCell(24).setCellValue(e.getNombreApellidoAutoridad3());
+		row.createCell(25).setCellValue(e.getTelefonoAutoridad3());
+		row.createCell(26).setCellValue(e.getMailAutoridad3());
+		row.createCell(27).setCellValue(e.getEsReferenteAutoridad3());
+		
+		row.createCell(28).setCellValue(e.getRolAutoridad4());
+		row.createCell(29).setCellValue(e.getNombreApellidoAutoridad4());
+		row.createCell(30).setCellValue(e.getTelefonoAutoridad4());
+		row.createCell(31).setCellValue(e.getMailAutoridad4());
+		row.createCell(32).setCellValue(e.getEsReferenteAutoridad4());
+		
+		row.createCell(33).setCellValue(e.getRolAutoridad5());
+		row.createCell(34).setCellValue(e.getNombreApellidoAutoridad5());
+		row.createCell(35).setCellValue(e.getTelefonoAutoridad5());
+		row.createCell(36).setCellValue(e.getMailAutoridad5());
+		row.createCell(37).setCellValue(e.getEsReferenteAutoridad5());
+		
 
-		String autoridad3="Rol: "+e.getRolAutoridad3()+", nombre y apellido: "+e.getNombreApellidoAutoridad3()+", telefono: "+e.getTelefonoAutoridad3()+", mail: "+e.getMailAutoridad3()+", es referente :"+e.getEsReferenteAutoridad3();
-		if(e.getRolAutoridad3()==null&&e.getNombreApellidoAutoridad3()==null&&e.getTelefonoAutoridad3()==null&&e.getMailAutoridad3()==null&&e.getEsReferenteAutoridad3()==null)autoridad3="";
-		
-		String autoridad4="Rol: "+e.getRolAutoridad4()+", nombre y apellido: "+e.getNombreApellidoAutoridad4()+", telefono: "+e.getTelefonoAutoridad4()+", mail: "+e.getMailAutoridad4()+", es referente :"+e.getEsReferenteAutoridad4();
-		if(e.getRolAutoridad4()==null&&e.getNombreApellidoAutoridad4()==null&&e.getTelefonoAutoridad4()==null&&e.getMailAutoridad4()==null&&e.getEsReferenteAutoridad4()==null)autoridad4="";
-
-		String autoridad5="Rol: "+e.getRolAutoridad5()+", nombre y apellido: "+e.getNombreApellidoAutoridad5()+", telefono: "+e.getTelefonoAutoridad5()+", mail: "+e.getMailAutoridad5()+", es referente :"+e.getEsReferenteAutoridad5();
-		if(e.getRolAutoridad5()==null&&e.getNombreApellidoAutoridad5()==null&&e.getTelefonoAutoridad5()==null&&e.getMailAutoridad5()==null&&e.getEsReferenteAutoridad5()==null)autoridad5="";
-
-		
-		
-		
-		
-		row.createCell(12).setCellValue(autoridad1);
-		row.createCell(13).setCellValue(autoridad2);
-		row.createCell(14).setCellValue(autoridad3);
-		row.createCell(15).setCellValue(autoridad4);
-		row.createCell(16).setCellValue(autoridad5);
-		
-
-		row.createCell(17).setCellValue(e.getMatricula());
-		row.createCell(18).setCellValue(e.getEquipoDirectivo());
-		row.createCell(19).setCellValue(e.getTotalDocentes());
-		row.createCell(20).setCellValue(e.getTotalPreceptores());
-		row.createCell(21).setCellValue(e.getTotalPersonal());
+		row.createCell(38).setCellValue(e.getMatricula());
+		row.createCell(39).setCellValue(e.getEquipoDirectivo());
+		row.createCell(40).setCellValue(e.getTotalDocentes());
+		row.createCell(41).setCellValue(e.getTotalPreceptores());
+		row.createCell(42).setCellValue(e.getTotalPersonal());
 		
 		
 // 		fin tanda de datos nuevos		
-		row.createCell(22).setCellValue(e.getEspacios());	
+		row.createCell(43).setCellValue(e.getEspacios());	
 		
 //		nuevo
-		row.createCell(23).setCellValue(e.getCualOtroEspacioApoyo());	
+		row.createCell(44).setCellValue(e.getCualOtroEspacioApoyo());	
 //		fin nuevo
-		row.createCell(24).setCellValue(e.getTcoo());
-		row.createCell(25).setCellValue(e.getDsoo());
-		row.createCell(26).setCellValue(e.getEudbe().getValor());
-		row.createCell(27).setCellValue(e.getTpacl().getValor());
-		row.createCell(28).setCellValue(e.getSplftp().getValor());
-		row.createCell(29).setCellValue(e.getEuscp().getValor());
-		row.createCell(30).setCellValue(e.getObservaciones());
+		row.createCell(45).setCellValue(e.getTcoo());
+		row.createCell(46).setCellValue(e.getDsoo());
+		row.createCell(47).setCellValue(e.getEudbe().getValor());
+		row.createCell(48).setCellValue(e.getTpacl().getValor());
+		row.createCell(49).setCellValue(e.getSplftp().getValor());
+		row.createCell(50).setCellValue(e.getEuscp().getValor());
+		row.createCell(51).setCellValue(e.getObservaciones());
 		Integer becadosActivos=(e.getBecadosActivos()==null||e.getBecadosActivos()=="")?0: Integer.parseInt(e.getBecadosActivos());
 		if((e.getPrograma().equals("PFE"))&&(becadosActivos>0))
 		{
-			row.createCell(31).setCellValue("SI");	
+			row.createCell(52).setCellValue("SI");	
 		}else
 		{
-			row.createCell(31).setCellValue("NO");	
+			row.createCell(52).setCellValue("NO");	
 		};
 				
-		row.createCell(32).setCellValue(e.getBecadosActivos());
-		row.createCell(33).setCellValue(e.getAnioComienzoPBE());
-		row.createCell(34).setCellValue(e.getModalidadTrabajoEscuela());
-		row.createCell(35).setCellValue(e.getEdfea().getValor());
-		row.createCell(36).setCellValue(e.getEdbis().getValor());
-		row.createCell(37).setCellValue(e.getRaeea().getValor());
-		row.createCell(38).setCellValue(e.getEcdPFE().getValor());		
-		row.createCell(39).setCellValue(e.getCed().getValor());
-		row.createCell(40).setCellValue(e.getProyeccionPFE().getValor());
-		row.createCell(41).setCellValue(e.getEqa());
+		row.createCell(53).setCellValue(e.getBecadosActivos());
+		row.createCell(54).setCellValue(e.getAnioComienzoPBE());
+		row.createCell(55).setCellValue(e.getModalidadTrabajoEscuela());
+		row.createCell(56).setCellValue(e.getEdfea().getValor());
+		row.createCell(57).setCellValue(e.getEdbis().getValor());
+		row.createCell(58).setCellValue(e.getRaeea().getValor());
+		row.createCell(59).setCellValue(e.getEcdPFE().getValor());		
+		row.createCell(60).setCellValue(e.getCed().getValor());
+		row.createCell(61).setCellValue(e.getProyeccionPFE().getValor());
+		row.createCell(62).setCellValue(e.getEqa());
 		//nuevo
-		row.createCell(42).setCellValue(e.getAniosParticipacionEQA());
+		row.createCell(63).setCellValue(e.getAniosParticipacionEQA());
 		
-		row.createCell(43).setCellValue(e.getRedEQA());
+		row.createCell(64).setCellValue(e.getRedEQA());
 		
-		row.createCell(44).setCellValue(e.getParticipoOtrasPropuestas()+" "+e.getCualesOtrasPropuestas());
+		row.createCell(65).setCellValue(e.getParticipoOtrasPropuestas()+" "+e.getCualesOtrasPropuestas());
 		//fin nuevo
 		
 		
