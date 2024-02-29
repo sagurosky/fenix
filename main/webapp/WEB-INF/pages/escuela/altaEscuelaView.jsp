@@ -749,7 +749,7 @@ function validarIndicador(obj){
 				<c:if test="${(escuela.nombreApellidoAutoridad2==null)||(escuela.nombreApellidoAutoridad2=='')}">
 					<input type="text" class="textbox2"id="nombreApellidoAutoridad2" name="nombreApellidoAutoridad2"value="${escuela.secretario}"/>
 				</c:if>
-				<c:if test="${(escuela.nombreApellidoAutoridad2!=null)&&(escuela.mailAutoridad2!='')}">
+				<c:if test="${(escuela.nombreApellidoAutoridad2!=null)&&(escuela.nombreApellidoAutoridad2!='')}">
 					<input type="text" class="textbox2"id="nombreApellidoAutoridad2" name="nombreApellidoAutoridad2"value="${escuela.nombreApellidoAutoridad2}"/>
 				</c:if>			
 			</td>
@@ -1131,7 +1131,7 @@ function validarIndicador(obj){
 			<tr>
 				<td align="left">¿La escuela trabaja en articulación con <br>otras organizaciones y/o programa de becas?	</td>			
 			<td>
-			Si <input class="textbox2" type="radio" value="true" id="tcoo" name="tcoo" class="required textbox2"
+			Si <input class="textbox2" type="radio" value="true" id="tcoo" name="tcoo" class=" textbox2"
 			<c:if test="${escuela.tcoo}"> checked="checked"</c:if> > 
 			No<input class="textbox2" type="radio" id="tcoo" value="false" name="tcoo"
 			<c:if test="${escuela.tcoo == false}"> checked="checked"</c:if>></td>	
@@ -1522,7 +1522,7 @@ function validarIndicador(obj){
 			
 				<td align="left">¿Participó de otras propuestas o iniciativas de Cimientos?	</td>			
 			<td>
-			Si <input class="textbox2" type="radio" value="true" id="participoOtrasPropuestas" name="participoOtrasPropuestas" class="required textbox2"
+			Si <input class="textbox2" type="radio" value="true" id="participoOtrasPropuestas" name="participoOtrasPropuestas" class=" textbox2"
 			<c:if test="${escuela.participoOtrasPropuestas}"> checked="checked"</c:if> > 
 			No<input class="textbox2" type="radio" id="participoOtrasPropuestas" value="false" name="participoOtrasPropuestas"
 			<c:if test="${escuela.participoOtrasPropuestas == false}"> checked="checked"</c:if>></td>	
@@ -1548,7 +1548,7 @@ function validarIndicador(obj){
 <!-- 				<td>Subsidio estatal *</td> -->
 				<td>
 <!-- 					Si -->
-				<input type="hidden" class="textbox2" id="subsidioEstatal" value="true" name="subsidioEstatal" class="required textbox2"
+				<input type="radio" class="textbox2" id="subsidioEstatal" value="true" name="subsidioEstatal" class=" textbox2"style="display:none"
 						<c:if test="${escuela.subsidioEstatal}"> checked="checked"</c:if> > 
 <!-- 					No -->
 					<input type="radio"class="textbox2"  id="subsidioEstatal" value="false" name="subsidioEstatal" style="display:none"
@@ -1558,7 +1558,7 @@ function validarIndicador(obj){
 <!-- 				<td>Implementa Secundaria 2030</td> -->
 				<td>	
 <!-- 				Si -->
-				<input type="hidden" class="textbox2" id="is2030" value="true" name="is2030" class="required textbox2"
+				<input type="hidden" class="textbox2" id="is2030" value="true" name="is2030" class=" textbox2"
 						<c:if test="${escuela.is2030}"> checked="checked"</c:if> > 
 <!-- 					No -->
 					<input type="hidden"class="textbox2"  id="i2030" value="false" name="i2030"
@@ -1830,7 +1830,7 @@ function validarIndicador(obj){
 <%-- 				<td colspan=4 nowrap="nowrap" align="center"><strong>Evalúe las siguientes frases</strong></td> --%>
 <%-- 				<td colspan=4 align="center"><strong>INFORMACIÓN PARA CIMIENTOS</strong></td> --%>
 <!-- 				<td align="left">Programa que se implementa *</td> -->
-				<td><select name="idPrograma" id="programa" class="required textbox2" style="width: auto; display:'none'" hidden>
+				<td><select name="idPrograma" id="programa" class=" textbox2" style="width: auto; display:'none'" hidden>
 						<option></option>
 						<c:forEach items="${programas}" var="programa">
 							<c:choose>

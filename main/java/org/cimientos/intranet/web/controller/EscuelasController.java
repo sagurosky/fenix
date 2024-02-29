@@ -376,7 +376,7 @@ System.out.println("entra: "+escuela.getRedEQA());
 		
 		escuela.setActivo(true);
 		escuela.setEstadoEscuela(EstadoEscuela.getEstados(idEstadoEscuela));
-		escuela.setPrograma(Programa.getPrograma(idPrograma));
+		if(idPrograma!=null)escuela.setPrograma(Programa.getPrograma(idPrograma));
 		escuela.setModalidad(Modalidad.getModalidad(idModalidad));
 		if(idModalidadTrabajoEscuela != null)
 			escuela.setModalidadTrabajoEscuela(ModalidadTrabajoEscuela.getModalidadEscuela(idModalidadTrabajoEscuela));

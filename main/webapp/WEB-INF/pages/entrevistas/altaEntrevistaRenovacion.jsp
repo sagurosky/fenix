@@ -1782,13 +1782,14 @@ SELECT * FROM boletin_nuevo where ciclo=2023 and idBecado=${alumno.id}
 	<form:textarea path="oeaioe" class="form-control" name="oeaioe" id="oeaioe" rows="4" style="width:500px"
 	onblur="chequearLongitud(this);" onkeypress="chequearLongitud(this);"/>
 </div>
-
+<%  %>
 
 <div class="form-group form-inline">
-	<label class="text-danger">Situación de Riesgo &nbsp;&nbsp;</label>						
+	<label class="text-danger">Situaciones Complejas y/o de riesgo extra-escolar &nbsp;&nbsp;</label>						
 	<form:select path="situacionCrisis" style='width:auto' class="form-control">
 		<form:options items="${situacionCrisis}" itemLabel="valor" itemValue="id"/>				
-	</form:select>							
+	</form:select>	
+						
 </div>
 
 <!-- div class="form-group form-inline">

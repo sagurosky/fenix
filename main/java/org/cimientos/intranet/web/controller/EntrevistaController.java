@@ -3646,7 +3646,38 @@ public class EntrevistaController extends BaseController {
 				ContenidosAbordados.getContenidosAbordadosEntrevistaMensual());
 		model.put("contenidosTrabajarEnElAnio",
 				ContenidosTrabajarEnElAnio.getContenidosTrabajarEnElAnio());
-		model.put("situacionCrisis", SituacionCrisis.getSituacionCrisis());
+		//DMS 29/2/24 ordeno la lista para que se despliegue como lo piden
+		
+		ArrayList<SituacionCrisis> situaciones= new ArrayList<SituacionCrisis>();
+		situaciones.add(SituacionCrisis.getSituacionCrisis(1));
+		situaciones.add(SituacionCrisis.getSituacionCrisis(2));
+		situaciones.add(SituacionCrisis.getSituacionCrisis(4));
+		situaciones.add(SituacionCrisis.getSituacionCrisis(13));
+		situaciones.add(SituacionCrisis.getSituacionCrisis(8));
+		situaciones.add(SituacionCrisis.getSituacionCrisis(3));
+		situaciones.add(SituacionCrisis.getSituacionCrisis(21));
+		situaciones.add(SituacionCrisis.getSituacionCrisis(14));
+		situaciones.add(SituacionCrisis.getSituacionCrisis(15));
+		situaciones.add(SituacionCrisis.getSituacionCrisis(16));
+		situaciones.add(SituacionCrisis.getSituacionCrisis(17));
+		situaciones.add(SituacionCrisis.getSituacionCrisis(18));
+		situaciones.add(SituacionCrisis.getSituacionCrisis(19));
+		situaciones.add(SituacionCrisis.getSituacionCrisis(20));
+		situaciones.add(SituacionCrisis.getSituacionCrisis(10));
+		situaciones.add(SituacionCrisis.getSituacionCrisis(11));
+
+		situaciones.add(SituacionCrisis.getSituacionCrisis(5));
+		situaciones.add(SituacionCrisis.getSituacionCrisis(6));
+		situaciones.add(SituacionCrisis.getSituacionCrisis(7));
+		situaciones.add(SituacionCrisis.getSituacionCrisis(9));
+		situaciones.add(SituacionCrisis.getSituacionCrisis(12));
+		
+		//5 6 7 9 12
+		
+		// DMS señalador
+		
+		model.put("situacionCrisis", situaciones);
+//		model.put("situacionCrisis", SituacionCrisis.getSituacionCrisis());
 		model.put("situacionRiesgoEscolar",
 				SituacionRiesgoEscolar.getSituacionRiesgoEscolar());
 		model.put("motivoSuspension", MotivoSuspension.getMotivoSuspension());
@@ -4801,6 +4832,8 @@ public class EntrevistaController extends BaseController {
 					}
 				});
 
+		
+		
 		// SituacionCrisis binding
 		binder.registerCustomEditor(SituacionCrisis.class,
 				new PropertyEditorSupport() {

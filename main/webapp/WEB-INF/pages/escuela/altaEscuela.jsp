@@ -12,7 +12,7 @@
 <title>..:: Registrar Escuelas Candidatas ::..</title>
 
 <script type="text/javascript" src="<c:url  value="/static/js/jquery.js"/>"></script>
-<script type="text/javascript" src="<c:url  value="/static/js/jquery.validate.js"/>"></script>
+<%-- <script type="text/javascript" src="<c:url  value="/static/js/jquery.validate.js"/>"></script> --%>
 <script type="text/javascript" src="<c:url  value="/static/js/jquery-ui-1.8.5.custom.min.js"/>"></script>
 
 
@@ -106,7 +106,7 @@ function enviarForm(action){
 <form:form id="altaEscuela" class="cmxform" action="registrarEscuela.do" method="post" commandName="escuela" name="altaEscuela">
 <form:hidden path="id"/>
 <div id="accordion"  style="width:80%"   >
-<h3  class="ui-accordion-header  ui-state-default ui-corner-all"  align="left" ><a href="#" onclick="mostrar(1)" >Datos del Candidato</a></h3>
+<h3  class="ui-accordion-header  ui-state-default ui-corner-all"  align="left" ><a href="#" onclick="mostrar(1)" >Datos del Candidatoooo</a></h3>
 	<div id="datosCandidato"  style=" height:850px; ;overflow:scroll;">  	
 			  	
 			
@@ -135,7 +135,7 @@ function enviarForm(action){
 	<label>Provincia</label>
 		<c:choose>
 			<c:when test="${escuela.provincia != null}">
-				<input id="nombreProvincia" value="${escuela.provincia.descripcion}" disabled="disabled"/ class="required">
+				<input id="nombreProvincia" value="${escuela.provincia.descripcion}" disabled="disabled" class="required">
 				<input type="hidden" name="provincia.id" id="provinciaId" value="${escuela.provincia.id}"/>
 			</c:when>
 			<c:otherwise>

@@ -196,10 +196,18 @@ function validarFiltros2(){
 					 <select id="cicloId" name="cicloId" class="required"  style="width:150px;">
 						<option value="Todos">Todos</option>
 						<c:forEach var="ciclo" items="${ciclos}">
-							<c:if test="${ciclo.id == cicloId}">
-								<option selected="selected" id="ciclo" value="${ciclo.id}">${ciclo.nombre}</option>
+							<c:if test="${cicloId!='Todos'}">
+								<c:if test="${ciclo.id == cicloId}">
+									<option selected="selected" id="ciclo" value="${ciclo.id}">${ciclo.nombre}</option>
+								</c:if>
 							</c:if>
-							<c:if test="${ciclo.id != cicloId}">
+							<c:if test="${cicloId!='Todos'}">
+								<c:if test="${ciclo.id != cicloId}">
+								<option id="ciclo" value="${ciclo.id}">${ciclo.nombre}</option>
+								</c:if>
+							</c:if>
+							
+							<c:if test="${cicloId=='Todos'}">
 							<option id="ciclo" value="${ciclo.id}">${ciclo.nombre}</option>
 							</c:if>
 						</c:forEach>

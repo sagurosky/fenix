@@ -80,7 +80,11 @@
 						<c:url value="/becadosPorEa/postPFE.jsp" var="completeURL">  
  							<c:param name="ea" value='${principal.username}' />  							 
 						</c:url>  
-						<a href=${completeURL} >Listado Post PFE</a>
+						<a href=${completeURL} >Actualización Egresados</a>
+					</li>
+<!-- 					<li>Actualización datos de Escuelas</li> -->
+					<li>
+						<a href='<c:url value="/escuela/listaEscuelas.do" />' >Actualización datos de Escuelas</a>
 					</li>
 				
 				</ul>

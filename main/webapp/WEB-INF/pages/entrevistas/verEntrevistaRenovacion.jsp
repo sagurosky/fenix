@@ -1624,12 +1624,85 @@ for (var i = 0; i < inputs.length; i++) {
 
 
 <div class="form-group form-inline">
-	<label class="text-danger">Situación de Riesgo extra-escolar &nbsp;&nbsp;</label>						
-	<form:select path="situacionCrisis" style='width:auto' class="form-control">
+	<label class="text-danger">Situaciones Complejas y/o de riesgo extra-escolar &nbsp;&nbsp;</label>						
+	<form:select path="situacionCrisis" style='width:auto' class="form-control"id="situacionCrisis">
 		<form:options items="${situacionCrisis}" itemLabel="valor" itemValue="id"/>				
-	</form:select>							
+	</form:select>	
+							
 </div>
+${entrevista.id} 
+<script>
 
+$(document).ready(function(){  
+//  	console.log(document.getElementById("situacionCrisis").value);
+//  	console.log(document.getElementById("situacionCrisis").options.length);
+	var seleccion=document.getElementById("situacionCrisis");
+	
+	var index5=false;
+	var index6=false;
+	var index7=false;
+	var index9=false;
+	var index12=false;
+	
+	
+	for(var i=0;i<seleccion.options.length;i++)
+		{
+// 		console.log(seleccion.options[i].value);
+		if(seleccion.options[i].selected)
+			{
+			
+			console.log(seleccion.options[i].value);
+// si es un valor de los antiguos (antes de que se modifique la lista) lo agrego dinamicamente
+			if(seleccion.options[i].value==5)index5=true;
+			
+			if(seleccion.options[i].value==6)index6=true;
+			
+			if(seleccion.options[i].value==7)index7=true;
+			
+			if(seleccion.options[i].value==9)index9=true;
+			
+			if(seleccion.options[i].value==12)index12=true;
+			
+			}
+
+		}
+	console.log(index5,index6,index7,index9,index12);
+	var indice=16;
+ 	if(!index5)
+ 		{
+ 		seleccion.remove(indice);
+ 		indice--;
+ 		}
+ 	if(!index6)
+ 		{
+ 		seleccion.remove(indice+1);
+ 		indice--;
+ 		}
+ 	if(!index7)
+ 		{
+ 		seleccion.remove(indice+2);
+ 		indice--;
+ 		}
+ 	if(!index9)
+ 		{
+ 		seleccion.remove(indice+3);
+ 		indice--;
+ 		}
+ 	if(!index12)
+ 		{
+ 		seleccion.remove(indice+4);
+ 		}
+ 	
+ 	for(var i=0;i<seleccion.options.length;i++)
+ 		{
+ 		console.log(seleccion.options[i].value);
+ 		}
+});
+
+
+
+
+</script>
 <div class="form-group form-inline">
 	<label class="text-danger">Situación de Riesgo escolar &nbsp;&nbsp;</label>						
 	<form:select path="situacionRiesgoEscolar" style='width:auto' class="form-control">

@@ -285,7 +285,7 @@ $(document).ready(function() {
 <table id="tContabilidad" class="display" cellspacing="0" width="70%">
 	<thead>
 		<tr>								
-			<th>Ciclo</th>					
+			<th>Ciclo - idBeca</th>					
 			<th>Padrino</th>
 			<th>Tipo<br>Padrino</th>
 			
@@ -303,7 +303,7 @@ $(document).ready(function() {
 	</thead>
 	<tfoot>
          <tr>
-         	<th>Ciclo</th>					
+         	<th>Ciclo - idBeca</th>					
 			<th>Padrino</th>
 			<th>Tipo<br>Padrino</th>
 			
@@ -333,7 +333,7 @@ $(document).ready(function() {
    	cl = null;
    	rs = null;
    	//String call = "{CALL SP_TraerBecasDisponiblesIndividuos(?)}";
-	String call="select ciclo_programa.nombre, beca.padrino, persona.apellido,persona.nombre, " 
+	String call="select beca.id, ciclo_programa.nombre, beca.padrino, persona.apellido,persona.nombre, " 
 			+ " if((perfil_padrino.tipo= 0), 'Corporativo', 'Individuo') as tipo_padrino, "
 			+ " perfil_padrino.nro_ctes_plataforma_contable, beca.estado,periodo.nombre, "
 			+ " if((beca.estado= 0), 'Estimada',if((beca.estado= 1),'Confirmada','Inactiva')) as beca_estado, "
@@ -356,7 +356,7 @@ $(document).ready(function() {
     //cl.setString(1, anio);
     rs = cl.executeQuery();    while (rs.next()) {
     	ReporteBecaDisposible rBD = new ReporteBecaDisposible();
-    	rBD.setCiclo(rs.getString("ciclo_programa.nombre"));
+    	rBD.setCiclo(rs.getString("ciclo_programa.nombre") + " - " + rs.getString("beca.id"));
     	rBD.setPadrino(rs.getString("persona.apellido") +", "+rs.getString("persona.nombre"));
     	rBD.setTipoPadrino(rs.getString("tipo_padrino"));
     	rBD.setPeriodo(rs.getString("periodo.nombre"));
@@ -378,7 +378,7 @@ $(document).ready(function() {
    	cl = null;
    	rs = null;
    	//call = "{CALL SP_TraerBecasDisponiblesCorpo(?)}";
-	call= "select ciclo_programa.nombre, beca.padrino, empresa.denominacion,empresa.id, " 
+	call= "select beca.id, ciclo_programa.nombre, beca.padrino, empresa.denominacion,empresa.id, " 
 			+" if((perfil_padrino.tipo= 0), 'Corporativo', 'Individuo') as tipo_padrino, " 
 			+" perfil_padrino.nro_ctes_plataforma_contable, beca.estado,periodo.nombre, "
 			+" if((beca.estado= 0), 'Estimada',if((beca.estado= 1),'Confirmada', 'Inactiva')) as beca_estado, "
@@ -395,7 +395,6 @@ $(document).ready(function() {
 			+" and beca.activo=1 "
 			+" order by empresa.denominacion;";
    	
-			System.out.println("######:"+call);
    	
    	
    	cn = Conexion.getConexion();
@@ -404,16 +403,24 @@ $(document).ready(function() {
     rs = cl.executeQuery();
     while (rs.next()) {
     	ReporteBecaDisposible rBD = new ReporteBecaDisposible();
-    	rBD.setCiclo(rs.getString("ciclo_programa.nombre"));
+    	rBD.setCiclo(rs.getString("ciclo_programa.nombre") + " - " + rs.getString("beca.id"));
     	rBD.setPadrino(rs.getString("empresa.denominacion"));
     	rBD.setTipoPadrino(rs.getString("tipo_padrino"));
     	rBD.setPeriodo(rs.getString("periodo.nombre"));
     	rBD.setEstado(rs.getString("beca_estado"));
     	rBD.setZona(rs.getString("zona_cimientos.nombre"));
     	rBD.setTipo(rs.getString("tipo_beca"));
+    	//DMS 23/2/24 agrego seguridad por si los datos son null
+    	if(rs.getString("beca.cantidad")!=null)
     	rBD.setCantidadBecas(Long.parseLong(rs.getString("beca.cantidad")));
-    	rBD.setBecasAsignadas(Long.parseLong(rs.getString("beca.cantidad_asignada")));
-    	rBD.setDiferencia(Long.parseLong(rs.getString("beca.cantidad"))-Long.parseLong(rs.getString("beca.cantidad_asignada")));
+    	if((rs.getString("beca.cantidad_asignada")!=null)&&(rs.getString("beca.cantidad")!=null))
+    	{
+    		rBD.setBecasAsignadas(Long.parseLong(rs.getString("beca.cantidad_asignada")));
+	    	rBD.setDiferencia(Long.parseLong(rs.getString("beca.cantidad"))-Long.parseLong(rs.getString("beca.cantidad_asignada")));
+    	}
+    	
+    	
+    	
     	listaRBD.add(rBD);
     }
     Conexion.cerrarCall(cl);
@@ -421,16 +428,16 @@ $(document).ready(function() {
     for (ReporteBecaDisposible rBD : listaRBD) {
 	%>	
     	<tr>
-			<td  align="left" ><%=rBD.getCiclo()%></td>	    
-		    <td  align="left"  ><%=rBD.getPadrino()%></td>
-		    <td align="left"  ><%=rBD.getTipoPadrino()%></td>		    
-		    <td align="left"  ><%=rBD.getPeriodo()%></td>
-		    <td align="left"  ><%=rBD.getEstado()%></td>	    
-		    <td align="left"  ><%=rBD.getZona()%></td>
-		    <td align="left"  ><%=rBD.getTipo()%></td>	    
-		    <td  align="center"  ><%=rBD.getCantidadBecas()%></td>
-		    <td  align="center"  ><%=rBD.getBecasAsignadas()%></td>
-		    <td  align="center"  ><%=rBD.getDiferencia()%></td>	    		
+		<td align="center" ><%=rBD.getCiclo()%></td>	    
+		<td align="left"  ><%=rBD.getPadrino()%></td>
+		<td align="left"  ><%=rBD.getTipoPadrino()%></td>		    
+		<td align="left"  ><%=rBD.getPeriodo()%></td>
+		<td align="left"  ><%=rBD.getEstado()%></td>	    
+		<td align="left"  ><%=rBD.getZona()%></td>
+		<td align="left"  ><%=rBD.getTipo()%></td>	    
+		<td align="center"  ><%=rBD.getCantidadBecas()%></td>
+		<td align="center"  ><%=rBD.getBecasAsignadas()%></td>
+		<td align="center"  ><%=rBD.getDiferencia()%></td>	    		
         </tr>	
     <%}%>
 	</tbody>

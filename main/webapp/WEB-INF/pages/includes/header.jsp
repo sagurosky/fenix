@@ -32,7 +32,7 @@
   				<sec:authorize access="hasRole('ADM') or hasRole('CPBE') or hasRole('SYS') or hasRole('ASIST') or hasRole('RR')">
   					<sec:authorize access="hasRole('EA')">
 		  				<%						
-			  				//System.out.println(Globales.id);
+			  				//System.out.println("hola: " + Globales.id);
 		  					cantidadCuentas=0L;
 							Connection cn = null;
 						    CallableStatement cl = null;

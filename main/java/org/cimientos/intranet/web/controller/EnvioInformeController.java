@@ -1850,7 +1850,9 @@ public class EnvioInformeController extends BaseController
 		else{
 			if(informe.getBecado().getAnioEscolar() != null)
 				informeDTO.setAnio(informe.getBecado().getAnioEscolar().getValor());
-			informeDTO.setAnioEgreso(0,informe.getBecado().getAnioAdicional());
+			//DMS 26/2 cuando anio adicional era null fallaba, agrego seguridad para evitarlo
+			informeDTO.setAnioEgreso(0,(informe.getBecado().getAnioAdicional()==null)?false:informe.getBecado().getAnioAdicional());
+		
 		}
 		
 		// MODIFICAR TODOS LOS AÑOS
@@ -2383,7 +2385,8 @@ public class EnvioInformeController extends BaseController
 		informeDTO.sethSE(informe.getHsTrabajarAño());
 		
 		if(informe.getBecado().getEscuela().getEspacioApoyo()!= null)
-			informeDTO.setEspacioEscuela(parsearListaEspacios(informe.getBecado().getEscuela().getEspacioApoyo(),informe.getBecado().getEscuela().getCualOtroEspacioApoyo()));
+			informeDTO.setEspacioEscuela(parsearListaEspacios(informe.getBecado().getEscuela().getEspacioApoyo()));
+		
 		//2021
 		File file = new File(getProps().getProperty(ConstantesInformes.pathImagen) 
 				+ informe.getBecado().getDatosPersonales().getDni().toString() + ConstantesInformes.extensionImagen);
@@ -2747,24 +2750,16 @@ public class EnvioInformeController extends BaseController
 		return valor.toString();
 	}
 	
-	private String parsearListaEspacios(List<EspacioApoyo> espacioApoyo, String otro) {
+	private String parsearListaEspacios(List<EspacioApoyo> espacioApoyo) {
 		StringBuffer valor = new StringBuffer("");
 		if(!espacioApoyo.isEmpty()){
 			for (EspacioApoyo espacio : espacioApoyo) {
 				valor.append( espacio.getValor().toLowerCase() + ", ");			
 			}
-			if((otro!=null)&&(!otro.equals("")))
-			{
-			valor.append( otro + ", ");		
-			valor.replace(0, valor.length(), valor.toString().replace("Otro, ", ""));
-			}			
 			valor.replace(0, espacioApoyo.get(0).getValor().length(), espacioApoyo.get(0).getValor());		
 			valor.deleteCharAt(valor.lastIndexOf(","));
 			valor.deleteCharAt(valor.length() - 1);
-			valor.append(".");		
-			
-			
-			
+			valor.append(".");			
 		}
 		return valor.toString();
 	}
@@ -2918,7 +2913,7 @@ public class EnvioInformeController extends BaseController
 			informeDTO.setTiempoLibre(informe.getTiempoLibre());
 			
 			if(informe.getBecado().getEscuela().getEspacioApoyo()!= null)
-				informeDTO.setEspacioEscuela(parsearListaEspacios(informe.getBecado().getEscuela().getEspacioApoyo(),informe.getBecado().getEscuela().getCualOtroEspacioApoyo()));
+				informeDTO.setEspacioEscuela(parsearListaEspacios(informe.getBecado().getEscuela().getEspacioApoyo()));
 		
 			if(StringUtils.isNotBlank(informe.getMateriasMasCuesta()))
 				informeDTO.setMateriasCuestan(informe.getMateriasMasCuesta());

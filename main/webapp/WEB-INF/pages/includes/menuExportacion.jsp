@@ -15,7 +15,7 @@
 		  		or hasRole('DI') or hasRole('SYS') or hasRole('ASIST') or hasRole('Visita') or hasRole('SuperUsuario')
 		  		or hasRole('ADM')">	
 		  				
-					<li><a  href='<c:url value="/escuela/listaEscuelas.do" />' >Listado y Alta de Escuelas</a></li>				
+					<li><a  href='<c:url value="/escuela/listaEscuelas.do" />' >Listado de Escuelas</a></li>				
 				
 		   		<li>
 		   			<a class="mee" href='<c:url value="/exportacionEntrevistas/verExportarEntrevistas.do" />' >Listado de Entrevistas</a>

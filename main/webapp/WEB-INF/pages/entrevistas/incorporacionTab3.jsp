@@ -240,7 +240,7 @@
 	</tr>	
 	
 	<tr>
-		<td nowrap="nowrap"><label>Situación de Riesgo</label></td>
+		<td nowrap="nowrap"><label>Situaciones Complejas y/o de riesgo extra-escolar</label></td>
 		<td>			
 			<form:select path="situacionCrisis" class="textbox2">
 				<form:options items="${situacionCrisis}" itemLabel="valor" itemValue="id"/>				

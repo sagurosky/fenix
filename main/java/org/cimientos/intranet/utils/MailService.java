@@ -171,6 +171,15 @@ public class MailService {
 			for (int i = 0; i < recipients.length; i++) {
 				addressTo[i] = new InternetAddress(recipients[i]);
 			}
+			for (InternetAddress internetAddress : addressTo) {
+				System.out.println("######### "+internetAddress.getAddress());
+				
+			}
+			System.out.println("################### "+message.getContentType());
+			System.out.println("################### "+message.getDescription());
+			System.out.println("################### "+message.getContentID());
+			System.out.println("################### "+message.getFileName());
+			
 			message.setRecipients(Message.RecipientType.TO, addressTo);
 			message.setRecipients(Message.RecipientType.BCC, getProps().getProperty("mail.smtp.mailFrom"));
 			//message.setRecipients(Message.RecipientType.BCC, bcc);

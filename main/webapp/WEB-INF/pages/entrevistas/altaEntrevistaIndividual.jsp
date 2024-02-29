@@ -732,7 +732,7 @@ function alerta(){
 				<form:input path="motivoInasistencia" id="motivoInasistencia"  class="form-control" style="width:500px;"/>
 			</div>	
 			<div class="form-group form-inline">
-			<label>Situación de Riesgo&nbsp;&nbsp;</label>						
+			<label>Situaciones Complejas y/o de riesgo extra-escolar&nbsp;&nbsp;</label>						
 				<form:select path="situacionCrisis" style='width:auto' class="form-control">
 					<form:options items="${situacionCrisis}" itemLabel="valor" itemValue="id"/>				
 				</form:select>							
